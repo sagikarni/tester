@@ -24,7 +24,6 @@ export default new Router({
               component: About,
           },
       ],
-
     },
         {
             path: '/full',

@@ -9,7 +9,15 @@ import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
-Vue.use(Vuetify);
+
+Vue.use(Vuetify, {
+    theme: {
+        primary: '#3f51b5',
+        secondary: '#b0bec5',
+        accent: '#8c9eff',
+        error: '#b0bec5',
+    },
+});
 
 new Vue({
   router,

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <v-app id="inspire" dark>
-        <router-view></router-view>
+    <v-app id="inspire">
+        <transition name="page" mode="out-in">
+         <router-view></router-view>
+        </transition>
     </v-app>
   </div>
 </template>
@@ -17,5 +19,5 @@
 </script>
 
 <style lang="scss">
-
+    @import "./assets/css/styles.scss";
 </style>

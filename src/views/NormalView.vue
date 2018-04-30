@@ -5,6 +5,7 @@
                 temporary
                 v-model="drawer"
                 app
+                color="red"
         >
             <v-list dense>
                 <v-list-tile @click="">
@@ -12,7 +13,7 @@
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Dashboard</v-list-tile-title>
+                        <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile @click="">
@@ -20,19 +21,29 @@
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Settings</v-list-tile-title>
+                        <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-action>
+                        <v-icon>settings</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <router-link to="/slideshow">   <v-list-tile-title>SlideShow</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar app fixed clipped-left>
+        <v-toolbar app fixed clipped-left >
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Application</v-toolbar-title>
         </v-toolbar>
         <v-content>
             <v-container >
                 <v-layout justify-center align-center>
-                    <router-view></router-view>
+                    <transition name="page" mode="out-in">
+                        <router-view></router-view>
+                    </transition>
                 </v-layout>
             </v-container>
         </v-content>
@@ -62,5 +73,6 @@
 
 
 <style scoped>
+
 
 </style>

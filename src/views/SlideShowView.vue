@@ -1,6 +1,7 @@
 <template>
     <div>
-    Full Screen Activity
+     Full Screen Activity
+        <router-link to="/">home</router-link>
     </div>
 </template>
 
