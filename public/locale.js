@@ -1,5 +1,7 @@
 var dictionary = {
-    home : {},
+    home : {
+        name : 'sagikarni the lion'
+    },
     activities : {
         name : 'kar',
     },
