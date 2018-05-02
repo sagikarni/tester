@@ -1,18 +1,18 @@
-import Vue from "vue";
+import Vue from 'vue';
 
 
-export interface  ilocale {
-    home : {
-        name : string
-    },
-    activities : {
-        name : string,
-    },
+export interface  Ilocale {
+    home: {
+        name: string,
+    };
+    activities: {
+        name: string,
+    };
 }
 
-declare var dictionary : any;
+declare var dictionary: any;
 
-export const locale : ilocale = dictionary;
+export const locale: Ilocale = dictionary;
 
 // export type PluginFunction<T> = (Vue: typeof _Vue, options?: T) => void;
 export function LocalePlugin(Vue1: typeof Vue, options?: any): void {
