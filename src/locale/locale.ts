@@ -5,7 +5,16 @@ export interface  Ilocale {
     home: {
         name: string,
     };
-    activities: {
+    general: {
+        name: string,
+    };
+    cognitive: {
+        name: string,
+    };
+    collections: {
+        name: string,
+    };
+    communication: {
         name: string,
     };
 }
