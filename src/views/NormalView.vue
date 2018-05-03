@@ -6,9 +6,10 @@
                 v-model="drawer"
                 app
                 color="red"
+                @transitionend="menuStateChanged"
         >
             <v-list dense>
-                <v-list-tile @click="">
+                <v-list-tile    class="menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -16,7 +17,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile @click="">
+                <v-list-tile    class="menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -24,7 +25,7 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile @click="">
+                <v-list-tile    class="menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -61,13 +62,32 @@
 <script lang="ts">
     import Vue from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
+    import TimelineMax from 'gsap';
 
     @Component
     export default class NormalView extends Vue {
         public drawer: boolean = false;
 
+
         @Prop()
-        private source!: string;
+        public source!: string;
+
+        public menuStateChanged($event: any) {
+            if ($event.propertyName === 'transform') {
+                if (this.drawer) {
+                    TweenMax.staggerFromTo('.menuItem', 1, {
+                        y: '-200px',
+                        opacity: 0,
+                        ease: Expo.easeOut,
+                        scale: '0.8',
+                    }, {opacity: 1, y: '0', ease: Expo.easeOut, scale: '1'}, 0.1);
+                } else {
+                    TweenMax.set('.menuItem', {opacity: 0});
+                }
+            }
+
+        }
+
     }
 </script>
 

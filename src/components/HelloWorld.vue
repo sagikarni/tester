@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-<h1>{{$locale.home.name}}</h1>
-    <h1>{{ msg }}</h1>
+<h1 ref="mymsg1">{{$locale.home.name}}</h1>
+    <h1 ref="mymsg">{{ msg }}</h1>
     kkkkkkkkkkkkkkkkkkkkkkkkkkk
     <p>
       For guide and recipes on how to configure / customize this project,<br>
@@ -63,10 +63,19 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import TimelineMax from 'gsap';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+    private mounted() {
+        setTimeout(() => {
+            (TimelineMax as any).from(this.$refs.mymsg1, 1, {y : '-200px' ,  delay: 1, ease: Expo.easeOut});
+            (TimelineMax as any).from(this.$refs.mymsg, 1, {y : '-200px' ,  delay: 4 , ease: Expo.easeOut});
+        } , 10);
+    }
+
 }
 </script>
 
