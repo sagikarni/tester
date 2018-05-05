@@ -13,6 +13,8 @@
     import Vue from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
     import Loading from '@/modules/utils/loading.vue';
+    import {commonService} from './modules/common/api';
+
     @Component({
         components: {
             Loading,
@@ -20,8 +22,12 @@
     })
     export default class App extends Vue {
 
-
-
+    public mounted() {
+        commonService.getActivityDetails();
+        setTimeout(()=> {
+            (this.$refs.loading as Loading).show();
+        } , 2000);
+      }
     }
 </script>
 
