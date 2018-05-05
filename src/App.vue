@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <loading ref="loading"></loading>
     <v-app id="inspire">
         <transition name="page" mode="out-in">
          <router-view></router-view>
@@ -11,9 +12,15 @@
 <script lang="ts">
     import Vue from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
-
-    @Component
+    import Loading from '@/modules/utils/loading.vue';
+    @Component({
+        components: {
+            Loading,
+        },
+    })
     export default class App extends Vue {
+
+
 
     }
 </script>

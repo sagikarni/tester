@@ -8,8 +8,10 @@ import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import {LocalePlugin} from '@/locale/locale';
-Vue.config.productionTip = false;
+// Import component
 
+
+Vue.config.productionTip = false;
 
 Vue.use(LocalePlugin);
 
@@ -27,3 +29,5 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount('#app');
+
+
