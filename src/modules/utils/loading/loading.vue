@@ -12,18 +12,18 @@
         public isLoading: boolean = false;
 
 
+
+        public close (){
+             (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
+                    this.isLoading = false;
+
+                } });
+        }
         public show(): void {
-             this.isLoading = true;
+            this.isLoading = true;
              setTimeout(() => {
                  (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
              } , 20);
-        }
-
-        public hide(): void {
-                (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
-                        this.isLoading = false;
-
-                    } });
         }
 
 

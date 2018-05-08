@@ -9,7 +9,7 @@
                 @transitionend="menuStateChanged"
         >
             <v-list dense>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -17,7 +17,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -25,7 +25,31 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
+                    <v-list-tile-action>
+                        <v-icon>settings</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <router-link to="/Search">   <v-list-tile-title>Search</v-list-tile-title></router-link>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile    class="hidden menuItem" @click="">
+                    <v-list-tile-action>
+                        <v-icon>dashboard</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile    class="hidden menuItem" @click="">
+                    <v-list-tile-action>
+                        <v-icon>settings</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -33,7 +57,7 @@
                         <router-link to="/slideshow">   <v-list-tile-title>SlideShow</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -41,7 +65,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -49,31 +73,7 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/slideshow">   <v-list-tile-title>SlideShow</v-list-tile-title></router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
-                    <v-list-tile-action>
-                        <v-icon>dashboard</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile    class="menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" @click="">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -123,14 +123,14 @@
         public menuStateChanged($event: any) {
             if ($event.propertyName === 'transform') {
                 if (this.drawer) {
-                    TweenMax.staggerFromTo('.menuItem', 1, {
+                    TweenMax.staggerFromTo('.hidden', 1, {
                         x: '-200px',
                         opacity: 0,
                         ease: Expo.easeOut,
                         scale: '0.8',
                     }, {opacity: 1, x: '0', ease: Expo.easeOut, scale: '1'}, 0.1);
                 } else {
-                    TweenMax.set('.menuItem', {opacity: 0});
+                    TweenMax.set('.hidden', {opacity: 0});
                 }
             }
 

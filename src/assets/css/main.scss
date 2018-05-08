@@ -1,10 +1,11 @@
 .page-enter-active, .page-leave-active {
-  transition: opacity 1s, transform 1s;
+  transition: opacity 0.5s, transform 1s;
 }
 .page-enter, .page-leave-to {
   opacity: 0;
-  transform: translateY(-30%);
+  //transform: translateY(-30%);
 }
-.menuItem{
+
+.hidden{
   opacity: 0;
 }

@@ -1,3 +1,8 @@
 export interface IRootState {
-    isLoading: boolean;
+    systemLoading?: ISystemLoading | undefined | null,
+}
+
+export interface ISystemLoading {
+    isLoading?: boolean;
+    message?: string;
 }
