@@ -4,14 +4,21 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import {ISystemLoading} from "../../common/store/types";
+    import {State, Action, Getter} from 'vuex-class';
     import TimelineMax from 'gsap';
 
     @Component
     export default class Loading extends Vue {
         public isLoading: boolean = false;
+        @State(state => state.systemLoading) public loadingInfo?: ISystemLoading;
 
 
+        @Watch('loadingInfo')
+        public onPropertyChanged(value: ISystemLoading, oldValue: ISystemLoading) {
+             value.isLoading ?  this.show() : this.close();
+        }
 
         public close() {
              (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {

@@ -23,19 +23,6 @@
         },
     })
     export default class App extends Vue {
-        @State(state => state.systemLoading) public loadingInfo?: ISystemLoading;
-
-
-        @Watch('loadingInfo')
-        public onPropertyChanged(value: ISystemLoading, oldValue: ISystemLoading) {
-
-
-            const loading = this.$refs.loading as Loading;
-            value.isLoading ?  (loading as Loading).show() : (loading as Loading).close();
-         }
-
-
-
 
     }
 </script>
