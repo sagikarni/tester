@@ -2,7 +2,7 @@
 import { Module } from 'vuex';
 import {ISearchState} from './types';
 import {getters} from './getters';
-import {IRootState} from '../../common/store/types';
+import {IRootState} from '../../store/types';
 import {actions} from './actions';
 import {mutations} from './mutations';
 

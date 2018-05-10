@@ -5,7 +5,7 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-    import {ISystemLoading} from "../../common/store/types";
+    import {ISystemLoading} from "../../store/types";
     import {State, Action, Getter} from 'vuex-class';
     import TimelineMax from 'gsap';
 
@@ -21,14 +21,17 @@
         }
 
         public close() {
+            setTimeout(() => {
+                console.log('close');
              (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
                     this.isLoading = false;
-
                 } });
+            } , 21);
         }
         public show(): void {
             this.isLoading = true;
             setTimeout(() => {
+                console.log('open');
                  (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
              } , 20);
         }

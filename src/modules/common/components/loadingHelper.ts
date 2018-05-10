@@ -1,4 +1,4 @@
-import {ISystemLoading} from "@/modules/common/store/types";
+import {ISystemLoading} from "../../store/types";
 
 export class SystemLoadingInfoHelper {
     public static getLoadingInfo(isLoading: boolean, message?: string): ISystemLoading {

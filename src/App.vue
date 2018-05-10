@@ -12,9 +12,9 @@
 <script lang="ts">
     import Vue from 'vue';
     import { Component, Prop, Watch } from 'vue-property-decorator';
-    import Loading from '@/modules/utils/loading/loading.vue';
+    import Loading from '@/modules/common/components/loading.vue';
     import {State, Action, Getter} from 'vuex-class';
-    import {IRootState, ISystemLoading} from "./modules/common/store/types";
+    import {IRootState, ISystemLoading} from "./modules/store/types";
 
 
     @Component({

@@ -6,7 +6,7 @@ export interface  Ilocale {
         name: string,
     };
     general: {
-        name: string,
+        common: string,
     };
     cognitive: {
         name: string,
@@ -15,6 +15,12 @@ export interface  Ilocale {
         name: string,
     };
     communication: {
+        name: string,
+    };
+    search: {
+        name: string,
+    };
+    admin: {
         name: string,
     };
 }

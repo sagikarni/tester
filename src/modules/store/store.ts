@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {IRootState} from './types';
-import {search} from '@/modules/search/store';
+import {search} from '../search/store/index';
 import {actions} from "./actions";
 import {mutations} from "./mutations";
 
