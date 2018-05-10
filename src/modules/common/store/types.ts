@@ -1,5 +1,5 @@
 export interface IRootState {
-    systemLoading?: ISystemLoading | undefined | null,
+    systemLoading?: ISystemLoading | undefined | null;
 }
 
 export interface ISystemLoading {

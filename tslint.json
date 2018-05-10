@@ -4,10 +4,13 @@
     "tslint:recommended"
   ],
   "rules": {
-    "indent": [true, "spaces", 2],
+    "quotemark": [false],
+    "indent": [false],
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "no-consecutive-blank-lines": false
+    "max-classes-per-file": [false],
+    "no-consecutive-blank-lines": false,
+    "arrow-parens": false
   }
 }

@@ -14,7 +14,7 @@
     import { Component, Prop, Watch } from 'vue-property-decorator';
     import Loading from '@/modules/utils/loading/loading.vue';
     import {State, Action, Getter} from 'vuex-class';
-    import {IRootState,ISystemLoading} from "./modules/common/store/types";
+    import {IRootState, ISystemLoading} from "./modules/common/store/types";
 
 
     @Component({
@@ -23,15 +23,15 @@
         },
     })
     export default class App extends Vue {
-        @State(state=>state.systemLoading) loadingInfo?: ISystemLoading;
+        @State(state => state.systemLoading) public loadingInfo?: ISystemLoading;
 
 
         @Watch('loadingInfo')
-        onPropertyChanged(value: ISystemLoading, oldValue: ISystemLoading){
+        public onPropertyChanged(value: ISystemLoading, oldValue: ISystemLoading) {
 
 
-            let loading = this.$refs.loading as Loading;
-            value.isLoading ?  (loading as Loading).show(): (loading as Loading).close();
+            const loading = this.$refs.loading as Loading;
+            value.isLoading ?  (loading as Loading).show() : (loading as Loading).close();
          }
 
 

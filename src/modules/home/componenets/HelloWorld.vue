@@ -20,7 +20,7 @@ const namespace: string = 'search';
 @Component
 export default class HelloWorld extends Vue {
 
-   @State(state=>state.search) searchState?: ISearchState;
+   @State(state => state.search) public searchState?: ISearchState;
    @Action('getSearchResults' , {namespace}) public getSearchResults: any;
 
   @Prop() private msg!: string;

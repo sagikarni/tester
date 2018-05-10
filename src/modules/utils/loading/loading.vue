@@ -13,7 +13,7 @@
 
 
 
-        public close (){
+        public close() {
              (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
                     this.isLoading = false;
 
@@ -21,7 +21,7 @@
         }
         public show(): void {
             this.isLoading = true;
-             setTimeout(() => {
+            setTimeout(() => {
                  (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
              } , 20);
         }

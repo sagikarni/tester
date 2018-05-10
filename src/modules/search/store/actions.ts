@@ -9,8 +9,8 @@ export const actions: ActionTree<ISearchState, IRootState> = {
 
       dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
       searchService.getSearchResults();
-      setTimeout(()=>{
+      setTimeout(() => {
           dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
-      }, 3000)
+      }, 3000);
   },
 };
