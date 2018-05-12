@@ -7,14 +7,12 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
-import {LocalePlugin} from '@/locale';
-// Import component
-
+import {Ilocale, LocalePlugin, DirectionPlugin} from '@/locale';
 
 Vue.config.productionTip = false;
 
 Vue.use(LocalePlugin);
-
+Vue.use(DirectionPlugin);
 Vue.use(Vuetify, {
     theme: {
         primary: '#3f51b5',
@@ -23,6 +21,8 @@ Vue.use(Vuetify, {
         error: '#b0bec5',
     },
 });
+
+
 
 new Vue({
   router,

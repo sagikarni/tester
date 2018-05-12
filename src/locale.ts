@@ -33,3 +33,12 @@ export const locale: Ilocale = dictionary;
 export function LocalePlugin(Vue1: typeof Vue, options?: any): void {
     Vue1.prototype.$locale = locale;
 }
+
+
+declare var rtl: boolean;
+export const isRTL: boolean = rtl;
+
+// export type PluginFunction<T> = (Vue: typeof _Vue, options?: T) => void;
+export function DirectionPlugin(Vue1: typeof Vue, options?: any): void {
+    Vue1.prototype.$isRTL = isRTL;
+}

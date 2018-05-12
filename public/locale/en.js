@@ -6,3 +6,5 @@ var dictionary = {
         name : 'kar',
     },
 };
+
+var rtl = false;

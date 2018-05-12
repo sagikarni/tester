@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
 <h1 ref="mymsg1" >{{$locale.home.name}}</h1>
+      <h1  >is rtl: {{$isRTL}}</h1>
 l;,f;l,fs;ldf
       dfs
       dfsd
