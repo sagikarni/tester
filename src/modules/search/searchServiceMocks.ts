@@ -1,4 +1,4 @@
-import {mock} from '@/http/main';
+import {mock} from '@/axios';
 
 mock.onGet('/getsearchresults').reply(200, {
     users: [

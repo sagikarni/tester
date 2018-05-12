@@ -22,8 +22,7 @@
 
         public close() {
             setTimeout(() => {
-                console.log('close');
-             (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
+              (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
                     this.isLoading = false;
                 } });
             } , 21);
@@ -31,8 +30,7 @@
         public show(): void {
             this.isLoading = true;
             setTimeout(() => {
-                console.log('open');
-                 (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
+                  (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
              } , 20);
         }
 
