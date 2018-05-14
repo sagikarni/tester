@@ -7,10 +7,13 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
-import {Ilocale, LocalePlugin, DirectionPlugin} from '@/locale';
-
+import {LocalePlugin, DirectionPlugin} from '@/plugins';
+import {httpClient} from '@/httpClient';
 Vue.config.productionTip = false;
 
+
+
+httpClient.setDefaultHeaders();
 Vue.use(LocalePlugin);
 Vue.use(DirectionPlugin);
 Vue.use(Vuetify, {

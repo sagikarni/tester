@@ -3,12 +3,13 @@ import {ISearchState} from './types';
 import {IRootState} from '../../store/types';
 import {searchService} from '../searchService';
 import {SystemLoadingInfoHelper} from '@/modules/common/components/loadingHelper';
+import axios, {AxiosRequestConfig, AxiosPromise} from 'axios';
 
 export const actions: ActionTree<ISearchState, IRootState> = {
   getSearchResults({ state, commit, rootState , dispatch }, prm: any): any {
       dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
       searchService.getSearchResults<any>().then((response) => {
-          dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
+         dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
 
       }).catch(() => {
           dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });

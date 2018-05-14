@@ -24,7 +24,7 @@ export default class HelloWorld extends Vue {
    @State(state => state.search) public searchState?: ISearchState;
    @Action('getSearchResults' , {namespace}) public getSearchResults: any;
 
-  @Prop() private msg!: string;
+  @Prop() private msg?: string;
 
     private mounted() {
              this.getSearchResults({name: 'sagi karni'});

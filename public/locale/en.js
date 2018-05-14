@@ -8,3 +8,6 @@ var dictionary = {
 };
 
 var rtl = false;
+
+var language = 'en';
+ 

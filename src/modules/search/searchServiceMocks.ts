@@ -1,6 +1,6 @@
-import {mock} from '@/axios';
+import {mock} from '@/httpClient';
 
-mock.onGet('/getsearchresults').reply(200, {
+mock.onGet('/getsearchresult').reply(200, {
     users: [
         { id: 1, name: 'John Smith' },
     ],
