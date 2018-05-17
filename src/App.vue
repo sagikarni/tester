@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <loading ref="loading"></loading>
-    <v-app id="inspire">
+    <v-app id="inspire" class="theme-dark">
         <transition name="page" mode="out-in">
          <router-view></router-view>
         </transition>

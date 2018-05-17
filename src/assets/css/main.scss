@@ -1,3 +1,7 @@
+
+@import "themify.scss";
+ 
+
 .hidden{
   opacity: 0;
 }
@@ -50,3 +54,9 @@
 
 /*#endregion scroll bars*/
 
+// .tr-container {
+//  @include themify($themes) {
+ //   color: themed('textColor');  
+//    background-color: themed('backgroundColor');  
+ // }
+// }

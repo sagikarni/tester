@@ -4,6 +4,12 @@
   <h1  >is rtl: {{$isRTL}}</h1>
 <br>
 <router-link to="/search">   Go to Search Page</router-link>
+<br>
+
+ <div class="tr-container">
+    A title 
+   
+  </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     
