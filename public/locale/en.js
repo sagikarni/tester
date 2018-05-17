@@ -1,6 +1,6 @@
 var dictionary = {
     home : {
-        name : 'sagikarni the lion'
+        name : 'This is a translated text'
     },
     activities : {
         name : 'kar',

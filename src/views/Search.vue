@@ -1,8 +1,11 @@
 <template>
     <v-layout wrap style="height: 200px;">
+   
         <v-container>
             <v-layout justify-center>
-                <v-btn dark color="pink" @click.stop="drawer = !drawer">Toggle</v-btn>
+                   <search-test></search-test>
+                   
+                <v-btn dark color="pink" @click.stop="drawer = !drawer">Refine</v-btn>
             </v-layout>
         </v-container>
         <v-navigation-drawer
@@ -36,9 +39,13 @@
 <script lang="ts">
     import Vue from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
+    import SearchTest from '@/modules/search/components/searchTest.vue'; // @ is an alias to /src
 
-
-    @Component
+    @Component({
+    components: {
+        SearchTest,
+       },
+    })
     export default class NormalView extends Vue {
         public drawer: boolean = false;
 
