@@ -4,7 +4,7 @@ import axios, {AxiosRequestConfig, AxiosPromise} from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {lang} from '@/locale';
 export const mock = new MockAdapter(axios,  { delayResponse: 2000 });
-//mock.restore();
+// mock.restore();
 
 export class HttpClient {
 
