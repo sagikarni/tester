@@ -9,14 +9,21 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         activityType: 2, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: 0, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
+        sessionsInfo : [
+            {id: 1, description: "Long", slidesCount: 18},
+            {id: 1, description: "Medium", slidesCount: 12},
+            {id: 1, description: "Short", slidesCount: 6},
+        ],
         thumbnails: [
             {
                 imgSrc: 'media/restricted/communication/photos/whquesstions/activity-name-1/thumbnails/adolescent-beautiful-blond-786801.jpg',
                 title: 'some title 1',
+                appearsInSession: [1, 2], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 imgSrc: 'media/restricted/communication/photos/whquesstions/activity-name-1/thumbnails/adult-alone-autumn-701747.jpg',
                 title: 'some title 2',
+                appearsInSession: [1, 2, 3],
             },
         ],
     },
