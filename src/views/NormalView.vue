@@ -89,20 +89,16 @@
         </v-toolbar>
         <v-content>
             <v-container >
-                <v-layout justify-center align-center>
                     <transition name="page" mode="out-in">
                         <router-view></router-view>
                     </transition>
-                </v-layout>
             </v-container>
         </v-content>
-        <v-footer height="auto" >
-            <v-layout justify-center align-center>
-               this is the footer
-                <br><br><br><br><br><br><br><br><br><br><br><br>
-                footer
-            </v-layout>
-        </v-footer>
+        <!--<v-footer height="auto" >-->
+            <!--<v-layout justify-center align-center>-->
+
+            <!--</v-layout>-->
+        <!--</v-footer>-->
     </div>
 </template>
 
