@@ -9,7 +9,7 @@
                 @transitionend="menuStateChanged"
         >
             <v-list dense>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -17,7 +17,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" >
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -25,7 +25,7 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -33,7 +33,7 @@
                         <router-link to="/Search">   <v-list-tile-title>Search</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -41,7 +41,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -49,7 +49,7 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -57,7 +57,7 @@
                         <router-link to="/slideshow">   <v-list-tile-title>SlideShow</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -65,7 +65,7 @@
                         <router-link to="/">   <v-list-tile-title>Home</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -73,7 +73,7 @@
                         <router-link to="/about">   <v-list-tile-title>About</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile    class="hidden menuItem" @click="">
+                <v-list-tile    class="hidden menuItem" >
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
