@@ -5,24 +5,25 @@ export interface  Ilocale {
     home: {
         name: string,
     };
-    general: {
-        common: string,
-    };
-    cognitive: {
-        name: string,
-    };
-    collections: {
-        name: string,
-    };
-    communication: {
-        name: string,
-    };
-    search: {
-        name: string,
-    };
-    admin: {
-        name: string,
-    };
+    activities: {
+        activityDetails: {
+         videoBasedText: string,
+         imageBasedText: string,
+         landscapeText: string,
+         portraitText: string,
+        },
+     },
+     general: {
+        slidesText: string,
+        social: {
+             shareText: string,
+             networks:{
+                 facebookText: string,
+                 googleText: string,
+                 twitterText: string,
+             }
+         },
+     }
 }
 
 declare var dictionary: any;
