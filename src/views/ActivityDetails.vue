@@ -36,11 +36,11 @@
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.shortText }}</p>
                             6 {{ $locale.general.slidesText }}
                         </v-btn>
-                        <v-btn flat value="medium" class="px-5">
+                        <v-btn flat value="medium" class="px-5 py-2">
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.mediumText }}</p>
                             12 {{ $locale.general.slidesText }}
                         </v-btn>
-                        <v-btn flat value="long" class="px-5">
+                        <v-btn flat value="long" class="px-5 py-2">
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.longText }}</p>
                             18 {{ $locale.general.slidesText }}
                         </v-btn>
@@ -51,6 +51,7 @@
         </div>
     </section>
 </template>
+
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
