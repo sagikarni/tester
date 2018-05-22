@@ -1,6 +1,9 @@
 
 @import "themify.scss";
 
+.rtl{
+  direction: rtl;
+}
 
 .hidden{
   opacity: 0;

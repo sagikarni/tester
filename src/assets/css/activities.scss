@@ -1,0 +1,71 @@
+.ex-activity-details-component{
+  .ex-back-arrow-icon{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url(../public/img/icons/arrow-down.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+  .ex-share-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(../public/img/icons/share.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-pin-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(../public/img/icons/pin.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-activity-main-details{
+    .ex-cover-image-wrapper{
+      width: 400px;
+      height: 200px;
+      img{
+        object-fit: cover;
+      }
+    }
+    .ex-slides{
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      /*background-image: url(../../public/img/icons/slides.png);*/
+      -webkit-background-size: contain;
+      background-size: contain;
+    }
+    .ex-play-video{
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      /*background-image: url(../../public/img/icons/videoPlay.png);*/
+      -webkit-background-size: contain;
+      background-size: contain;
+    }
+    .ex-landscape{
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      /*background-image: url(../../public/img/icons/landscape.png);*/
+      -webkit-background-size: contain;
+      background-size: contain;
+      -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+  }
+  .ex-session-info{
+    text-align: center;
+    h5{
+      font-weight: 400;
+    }
+  }
+}
