@@ -27,22 +27,22 @@
             </v-flex>
         </v-layout>
         <activity-main-details></activity-main-details>
-        <div class="ex-session-info">
+        <div class="ex-session-info mt-5 pt-3">
             <h5>Session Length:</h5>
             <v-layout justify-center class="mb-3">
                 <div class="d-inline-flex py-2">
                     <v-btn-toggle v-model="sessionLength" mandatory>
-                        <v-btn flat value="short" class="px-4">
+                        <v-btn flat value="short" class="px-5 py-2">
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.shortText }}</p>
-                            {{ $locale.general.slidesText }}
+                            6 {{ $locale.general.slidesText }}
                         </v-btn>
-                        <v-btn flat value="medium" class="px-4">
+                        <v-btn flat value="medium" class="px-5">
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.mediumText }}</p>
-                            {{ $locale.general.slidesText }}
+                            12 {{ $locale.general.slidesText }}
                         </v-btn>
-                        <v-btn flat value="long" class="px-4">
+                        <v-btn flat value="long" class="px-5">
                             <p class="mb-0">{{ $locale.activities.sessionsInfo.longText }}</p>
-                            {{ $locale.general.slidesText }}
+                            18 {{ $locale.general.slidesText }}
                         </v-btn>
                     </v-btn-toggle>
                 </div>

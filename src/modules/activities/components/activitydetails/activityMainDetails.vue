@@ -2,7 +2,7 @@
     <v-layout row class="ex-activity-main-details">
         <v-flex class="hidden-sm-and-down mr-4">
             <div class="ex-cover-image-wrapper">
-                <img :src="coverImagePath" alt="img" width="100%" height="100%">
+                <img src="../../../../../public/img/coverDemo.png" alt="img" width="100%" height="100%">
             </div>
         </v-flex>
         <v-flex>
@@ -30,7 +30,5 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
 
     @Component
-    export default class ActivityMainDetails extends Vue {
-        public coverImagePath: string = "../public/img/coverDemo.png";
-    }
+    export default class ActivityMainDetails extends Vue {}
 </script>
