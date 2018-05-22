@@ -21,11 +21,11 @@ export class SessionsInfo {
     public description?: string;
     public slidesCount?: number;
 }
-enum Orientation {
+export enum Orientation {
     Landscape = 1,
     Portrait = 2,
 }
-enum MediaType {
+export enum MediaType {
     Photo = 1,
     Video = 2,
 }
