@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {IRootState} from './types';
 import {search} from '../search/store/index';
+import {Activities} from '../activities/store/index';
 import {actions} from "./actions";
 import {mutations} from "./mutations";
 
@@ -13,6 +14,7 @@ export default new Vuex.Store<IRootState>({
     },
     modules: {
         search,
+        Activities,
     },
     mutations,
     actions,
