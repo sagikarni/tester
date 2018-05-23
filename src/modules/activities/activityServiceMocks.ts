@@ -1,4 +1,5 @@
 import {mock} from '@/httpClient';
+import {MediaType, Orientation} from './store/types';
 
 mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
@@ -7,8 +8,9 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         coverPhoto: 'media/restricted/communication/photos/whquesstions/activity-name-1/cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 2, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
-        mediaType: 0, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
         sessionsInfo : [
             {id: 1, description: "Long", slidesCount: 18},
             {id: 1, description: "Medium", slidesCount: 12},
