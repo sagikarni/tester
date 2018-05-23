@@ -54,7 +54,12 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import {State, Action, Getter} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
+    import {IActivitiesState} from "@/modules/activities/store/types";
+
+    const namespace: string = 'activities';
+
 
     @Component({
         components: {
@@ -62,6 +67,8 @@
         },
     })
     export default class ActivityDetails extends Vue {
+         @State(state => state.activities) public activitiesState?: IActivitiesState;
+
         public socialNetworks: object[];
         public sessionLength: string = 'long';
         // public $isRTL: boolean = true;

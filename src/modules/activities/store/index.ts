@@ -1,8 +1,14 @@
 
 import { Module } from 'vuex';
-import {IGeneralState} from './types';
+import {IActivitiesState} from './types';
+import {IRootState} from '../../store/types';
 
+const namespaced: boolean = true;
 
-export const state: IGeneralState = {
+export const state: IActivitiesState = {
     activity: undefined,
+};
+export const Activities: Module<IActivitiesState, IRootState> = {
+    namespaced,
+    state,
 };
