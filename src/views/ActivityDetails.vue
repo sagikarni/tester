@@ -49,6 +49,7 @@
             </v-layout>
             <v-btn large color="primary">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
         </div>
+        <image-gallery></image-gallery>
     </section>
 </template>
 
@@ -56,6 +57,7 @@
     import { Component, Vue } from 'vue-property-decorator';
     import {State, Action, Getter} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
+    import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import {IActivitiesState} from "@/modules/activities/store/types";
 
     const namespace: string = 'activities';
@@ -64,6 +66,7 @@
     @Component({
         components: {
             ActivityMainDetails,
+            ImageGallery,
         },
     })
     export default class ActivityDetails extends Vue {
