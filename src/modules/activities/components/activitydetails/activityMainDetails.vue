@@ -5,7 +5,7 @@
                 <img src="../../../../../public/img/coverDemo.png" alt="img" width="100%" height="100%">
             </div>
         </v-flex>
-        <v-flex>
+        <v-flex :class="{'ex-rtl': $isRTL === true}">
             <h2>Card Deck Name</h2>
             <p>This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)</p>
             <v-layout row justify-space-around class="text-xs-center">

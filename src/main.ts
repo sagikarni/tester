@@ -9,6 +9,8 @@ import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import {LocalePlugin, DirectionPlugin} from '@/plugins';
 import {httpClient} from '@/httpClient';
+
+
 Vue.config.productionTip = false;
 
 
