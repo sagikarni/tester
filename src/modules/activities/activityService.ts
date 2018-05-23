@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AxiosPromise} from "axios";
-import './searchServiceMocks';
+import './activityServiceMocks';
 import {httpClient} from '@/httpClient';
 
 export class ActivityService {

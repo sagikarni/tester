@@ -1,7 +1,5 @@
-import Vue from 'vue';
 
-
-export interface  Ilocale {
+export interface Ilocale {
     home: {
         name: string,
     };
@@ -12,18 +10,19 @@ export interface  Ilocale {
          landscapeText: string,
          portraitText: string,
         },
-     },
-     general: {
+    };
+    general: {
         slidesText: string,
         social: {
+             pin: string,
              shareText: string,
-             networks:{
+             networks: {
                  facebookText: string,
                  googleText: string,
                  twitterText: string,
-             }
+             },
          },
-     }
+    };
 }
 
 declare var dictionary: any;
