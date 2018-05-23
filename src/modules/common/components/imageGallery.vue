@@ -17,8 +17,10 @@
     @Component
     export default class ImageGallery extends Vue {
         get binding() {
-            const binding = {};
-            if (this.$vuetify.breakpoint.xsOnly) binding.column = true;
+            const binding = {column: false};
+            if (this.$vuetify.breakpoint.xsOnly) {
+                binding.column = true;
+            }
             return binding;
         }
     }
