@@ -1,5 +1,26 @@
+export class SessionsInfo {
+    public id?: number = 0;
+    public description?: string;
+    public slidesCount?: number;
+}
+export enum Orientation {
+    Landscape = 1,
+    Portrait = 2,
+}
+export enum MediaType {
+    Photo = 1,
+    Video = 2,
+}
+export enum ActivityType {
+    TBD1 = 1,
+    TBD2 = 2,
+}
+export enum Category {
+    Communication = 1,
+    Cognitive = 2,
+}
 
-export  interface IActivitiesState {
+export interface IActivitiesState {
     activity: {
         details: {
             title: string,
@@ -14,26 +35,4 @@ export  interface IActivitiesState {
         },
         content: { },
     } | undefined;
-  }
-
-export class SessionsInfo {
-    public id?: number = 0;
-    public description?: string;
-    public slidesCount?: number;
-}
-export enum Orientation {
-    Landscape = 1,
-    Portrait = 2,
-}
-export enum MediaType {
-    Photo = 1,
-    Video = 2,
-}
-enum ActivityType {
-    TBD1 = 1,
-    TBD2 = 2,
-}
-enum Category {
-    Communication = 1,
-    Cognitive = 2,
 }

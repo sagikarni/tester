@@ -18,11 +18,13 @@ var dictionary = {
     },
     general:{
         social:{
-            shareText: 'Share',
             pin: 'Pin',
-            facebook: 'Facebook',
-            google: 'Google',
-            twitter: 'Twitter'
+            shareText: 'Share',
+            networks: {
+                facebookText: 'Facebook',
+                googleText: 'Google',
+                twitterText: 'Twitter',
+            },
         },
         slidesText: 'Slides',
     }
