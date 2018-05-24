@@ -12,7 +12,7 @@
 <script lang="ts">
     import { Component } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {State, Action, Getter} from 'vuex-class';
+    import {Action} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
@@ -31,8 +31,14 @@
         },
     })
     export default class ActivityDetails extends BaseComponent {
+        @Action('getActivity' , {namespace}) public getActivity: any;
+
         constructor() {
             super();
+        }
+
+        public created() {
+            this.getActivity({activity: "1"});
         }
     }
 </script>
