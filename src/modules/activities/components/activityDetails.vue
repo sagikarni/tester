@@ -11,7 +11,7 @@
 
 <script lang="ts">
     import { Component } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/BaseComponent.vue';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {State, Action, Getter} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
     import ImageGallery from '@/modules/common/components/imageGallery.vue';

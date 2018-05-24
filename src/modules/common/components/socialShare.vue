@@ -17,7 +17,7 @@
                     {{ $locale.general.social.shareText }}
                 </v-btn>
                 <v-list>
-                    <v-list-tile v-for="network in socialNetworks" :key="network.id" @click="">
+                    <v-list-tile v-for="network in socialNetworks" :key="network.id">
                         <v-icon class="mr-2">{{ network.icon }}</v-icon>
                         <v-list-tile-title class="text-xs-left">{{ network.title }}</v-list-tile-title>
                     </v-list-tile>
@@ -51,10 +51,10 @@
 
 <script lang="ts">
     import { Component } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/BaseComponent.vue';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component
-    export default class ActivityDetails extends BaseComponent {
+    export default class SocialShare extends BaseComponent {
 
         public socialNetworks: object[];
 

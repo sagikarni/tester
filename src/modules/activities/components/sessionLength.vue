@@ -25,7 +25,7 @@
 
 <script lang="ts">
     import { Component, Watch } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/BaseComponent.vue';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {State, Action, Getter} from 'vuex-class';
     const namespace: string = 'activities';
 
@@ -41,7 +41,7 @@
         constructor() {
             super();
         }
-        public mounted() {
+        public created() {
             this.getActivity({activity: "1"});
         }
 
