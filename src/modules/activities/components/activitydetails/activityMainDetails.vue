@@ -27,14 +27,13 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch, Vue } from 'vue-property-decorator';
+    import { Component, Watch, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {State} from 'vuex-class';
     import {MediaType, Orientation} from '../../store/types';
 
     @Component
     export default class ActivityMainDetails extends BaseComponent {
-        @State(state => state.activities.activity) public activityState?: any;
+        @Prop() public activity?: any;
 
         public dataExist: boolean = false;
         public title: string = "";
@@ -52,7 +51,7 @@
             super();
         }
 
-        @Watch('activityState')
+        @Watch('activity')
         public onPropertyChanged(value: any, oldValue: any) {
             if (value && value.details) {
                 this.dataExist = true;

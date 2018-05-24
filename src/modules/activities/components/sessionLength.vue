@@ -16,28 +16,28 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch } from 'vue-property-decorator';
+    import { Component, Watch, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {State} from 'vuex-class';
 
     @Component
     export default class SessionLength extends BaseComponent {
-        @State(state => state.activities.activity) public activityState?: any;
 
         public sessionLength: string = 'Long';
         public sessionInfo: object[];
 
-        // public $isRTL: boolean = true;
+        @Prop() public activity?: any;
+
         constructor() {
             super();
             this.sessionInfo = [];
         }
 
-        @Watch('activityState')
+        @Watch('activity')
         public onPropertyChanged(value: any, oldValue: any) {
-            this.sessionInfo = value.details.sessionsInfo;
+            if (value && value.details) {
+                this.sessionInfo = value.details.sessionsInfo;
+            }
         }
-
     }
 </script>
 

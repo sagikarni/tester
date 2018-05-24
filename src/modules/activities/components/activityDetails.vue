@@ -1,18 +1,18 @@
 <template>
     <section class="ex-activity-details-component">
         <social-share></social-share>
-        <activity-main-details></activity-main-details>
+        <activity-main-details :activity="activityState"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
-            <session-length></session-length>
+            <session-length :activity="activityState"></session-length>
         </div>
         <image-gallery></image-gallery>
     </section>
 </template>
 
 <script lang="ts">
-    import { Component } from 'vue-property-decorator';
+    import { Component, Watch } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {Action} from 'vuex-class';
+    import {State, Action} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
@@ -31,6 +31,7 @@
         },
     })
     export default class ActivityDetails extends BaseComponent {
+        @State(state => state.activities.activity) public activityState?: any;
         @Action('getActivity' , {namespace}) public getActivity: any;
 
         constructor() {
