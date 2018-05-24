@@ -36,6 +36,7 @@
 
         constructor() {
             super();
+            let test = 0;
         }
 
        get sessionsInfo(): SessionsInfo[] {
