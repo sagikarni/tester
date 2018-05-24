@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ActivityDetails from './ActivityDetails.vue';
+import ActivityDetails from '@/modules/activities/components/activityDetails.vue';
 
 @Component({
   components: {

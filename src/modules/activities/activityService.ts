@@ -8,6 +8,6 @@ export class ActivityService {
         return httpClient.get(`/general/getActivity` ,  { params: { activityId: activity } });
     }
 }
-export const searchService = new ActivityService();
+export const activityService = new ActivityService();
 
 

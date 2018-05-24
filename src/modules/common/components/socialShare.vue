@@ -51,10 +51,10 @@
 
 <script lang="ts">
     import { Component } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/BaseComponent.vue';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component
-    export default class ActivityDetails extends BaseComponent {
+    export default class SocialShare extends BaseComponent {
 
         public socialNetworks: object[];
 

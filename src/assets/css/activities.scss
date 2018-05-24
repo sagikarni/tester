@@ -27,39 +27,51 @@
     background-size: contain;
   }
   .ex-activity-main-details{
-    .ex-cover-image-wrapper{
-      width: 400px;
-      height: 200px;
-      img{
-        object-fit: cover;
+    @media screen and (max-width: 800px) and (min-width: 600px) {
+      flex-direction: column;
+      .ex-fixed-image-scope{
+        flex: initial!important;
+        margin-bottom: 15px;
       }
     }
-    .ex-slides{
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      background-image: url(../public/img/icons/slides.png);
-      -webkit-background-size: contain;
-      background-size: contain;
+    .ex-fixed-image-scope{
+      flex: 0 0 400px;
+      .ex-cover-image-wrapper{
+        height: 250px;
+        img{
+          object-fit: cover;
+        }
+      }
     }
-    .ex-play-video{
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      background-image: url(../public/img/icons/videoPlay.png);
-      -webkit-background-size: contain;
-      background-size: contain;
-    }
-    .ex-landscape{
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      background-image: url(../public/img/icons/landscape.png);
-      -webkit-background-size: contain;
-      background-size: contain;
-      -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-      transform: rotate(90deg);
+    .ex-main-info-wrapper{
+      height: 100%;
+      .ex-slides{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(../public/img/icons/slides.png);
+        -webkit-background-size: contain;
+        background-size: contain;
+      }
+      .ex-play-video{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(../public/img/icons/videoPlay.png);
+        -webkit-background-size: contain;
+        background-size: contain;
+      }
+      .ex-landscape{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(../public/img/icons/landscape.png);
+        -webkit-background-size: contain;
+        background-size: contain;
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
     }
   }
   .ex-session-info{
