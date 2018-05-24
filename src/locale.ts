@@ -13,6 +13,7 @@ export interface Ilocale {
     };
     general: {
         slidesText: string,
+        sesstionLength: string,
         social: {
              pin: string,
              shareText: string,

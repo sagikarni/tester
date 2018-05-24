@@ -1,25 +1,25 @@
 <template>
-    <v-layout row class="ex-activity-main-details">
+    <v-layout row class="ex-activity-main-details" v-if="dataExist">
         <v-flex class="hidden-xs-only mr-4">
             <div class="ex-cover-image-wrapper">
-                <img src="../../../../../public/img/coverDemo.png" alt="img" width="100%" height="100%">
+                <img :src="coverPhoto" alt="img" width="100%" height="100%">
             </div>
         </v-flex>
         <v-flex :class="{'ex-rtl': $isRTL === true}">
-            <h2>Card Deck Name</h2>
-            <p>This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)</p>
+            <h2>{{title}}</h2>
+            <p>{{description}}</p>
             <v-layout row justify-space-around class="text-xs-center">
                 <v-flex>
-                    <p class="mb-1">18 {{ $locale.general.slidesText }}</p>
+                    <p class="mb-1">{{mediaCount}} {{ $locale.general.slidesText }}</p>
                     <i class="ex-slides"></i>
                 </v-flex>
                 <v-flex>
-                    <p class="mb-1">{{$locale.activities.activityDetails.videoBasedText}}</p>
-                    <i class="ex-play-video"></i>
+                    <p class="mb-1">{{mediaTypeText}}</p>
+                    <i :class="mediaTypeIconClass"></i>
                 </v-flex>
                 <v-flex>
-                    <p class="mb-1">{{$locale.activities.activityDetails.landscapeText}}</p>
-                    <i class="ex-landscape"></i>
+                    <p class="mb-1">{{orientationText}}</p>
+                    <i :class="orientationIconClass"></i>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -27,8 +27,58 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Watch, Vue } from 'vue-property-decorator';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import {State} from 'vuex-class';
+    import {MediaType, Orientation} from '../../store/types';
 
     @Component
-    export default class ActivityMainDetails extends Vue {}
+    export default class ActivityMainDetails extends BaseComponent {
+        @State(state => state.activities.activity) public activityState?: any;
+
+        public dataExist: boolean = false;
+        public title: string = "";
+        public description: string = "";
+        public coverPhoto: string = "";
+        public mediaCount: number = 0;
+        public mediaType: number = 0;
+        public mediaTypeText: string = "";
+        public mediaTypeIconClass: string = "";
+        public orientation: number = 0;
+        public orientationText: string = "";
+        public orientationIconClass: string = "";
+
+        constructor() {
+            super();
+        }
+
+        @Watch('activityState')
+        public onPropertyChanged(value: any, oldValue: any) {
+            if (value && value.details) {
+                this.dataExist = true;
+                this.title = value.details.title;
+                this.description = value.details.description;
+                this.coverPhoto = value.details.coverPhoto;
+                this.mediaCount = value.details.mediaCount;
+
+                this.mediaType = value.details.mediaType;
+                if (value.details.mediaType === MediaType.Photo) {
+                    this.mediaTypeText = this.$locale.activities.activityDetails.photoBasedText;
+                    this.mediaTypeIconClass = "ex-photo";
+                } else if (value.details.mediaType === MediaType.Video) {
+                    this.mediaTypeText = this.$locale.activities.activityDetails.videoBasedText;
+                    this.mediaTypeIconClass = "ex-play-video";
+                }
+                //
+                this.orientation = value.details.orientation;
+                if (value.details.orientation === Orientation.Landscape) {
+                    this.orientationText = this.$locale.activities.activityDetails.landscapeText;
+                    this.orientationIconClass = "ex-landscape";
+                } else if (value.details.orientation === Orientation.Portrait) {
+                    this.orientationText = this.$locale.activities.activityDetails.portraitText;
+                    this.orientationIconClass = "ex-portrait";
+                }
+            }
+        }
+    }
 </script>

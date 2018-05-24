@@ -1,20 +1,12 @@
 <template>
-    <div>
-        <h5>Session Length:</h5>
+    <div v-if="sessionInfo && sessionInfo.length > 0">
+        <h5>{{ $locale.general.sessionLengthText }}</h5>
         <v-layout justify-center class="mb-3">
             <div class="d-inline-flex py-2">
                 <v-btn-toggle v-model="sessionLength" mandatory>
-                    <v-btn flat value="short" class="px-5 py-2">
-                        <p class="mb-0">{{ $locale.activities.sessionsInfo.shortText }}</p>
-                        6 {{ $locale.general.slidesText }}
-                    </v-btn>
-                    <v-btn flat value="medium" class="px-5 py-2">
-                        <p class="mb-0">{{ $locale.activities.sessionsInfo.mediumText }}</p>
-                        12 {{ $locale.general.slidesText }}
-                    </v-btn>
-                    <v-btn flat value="long" class="px-5 py-2">
-                        <p class="mb-0">{{ $locale.activities.sessionsInfo.longText }}</p>
-                        18 {{ $locale.general.slidesText }}
+                    <v-btn v-for="infoItem in sessionInfo" :key="infoItem.id" flat :value="infoItem.description" class="px-5 py-2">
+                        <p class="mb-0">{{infoItem.description}}</p>
+                        {{infoItem.slidesCount}} {{ $locale.general.slidesText }}
                     </v-btn>
                 </v-btn-toggle>
             </div>
@@ -26,23 +18,24 @@
 <script lang="ts">
     import { Component, Watch } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {State, Action, Getter} from 'vuex-class';
-    const namespace: string = 'activities';
+    import {State} from 'vuex-class';
 
     @Component
     export default class SessionLength extends BaseComponent {
+        @State(state => state.activities.activity) public activityState?: any;
 
-        @State(state => state.activity) public activityState?: any;
-        @Action('getActivity' , {namespace}) public getActivity: any;
-
-        public sessionLength: string = 'long';
+        public sessionLength: string = 'Long';
+        public sessionInfo: object[];
 
         // public $isRTL: boolean = true;
         constructor() {
             super();
+            this.sessionInfo = [];
         }
-        public created() {
-            this.getActivity({activity: "1"});
+
+        @Watch('activityState')
+        public onPropertyChanged(value: any, oldValue: any) {
+            this.sessionInfo = value.details.sessionsInfo;
         }
 
     }

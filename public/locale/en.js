@@ -6,7 +6,9 @@ var dictionary = {
         name : 'kar',
         activityDetails:{
             videoBasedText: 'Video based',
-            landscapeText: 'Landscape'
+            photoBasedText: 'Video based',
+            landscapeText: 'Landscape',
+            portraitText: 'portrait',
         },
         sessionsInfo:{
             sessionLengthText: 'Session Length:',
@@ -27,6 +29,7 @@ var dictionary = {
             },
         },
         slidesText: 'Slides',
+        sessionLengthText: 'Session Length',
     }
 };
 
