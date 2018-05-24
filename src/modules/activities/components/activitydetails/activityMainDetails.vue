@@ -1,6 +1,6 @@
 <template>
-    <v-layout row class="ex-activity-main-details">
-        <v-flex class="hidden-xs-only mr-4">
+    <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}">
+        <v-flex class="hidden-xs-only" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
                 <img src="../../../../../public/img/coverDemo.png" alt="img" width="100%" height="100%">
             </div>

@@ -5,6 +5,10 @@
   direction: rtl;
 }
 
+.ex-dir-row-reverse{
+  flex-direction: row-reverse!important;
+}
+
 .hidden{
   opacity: 0;
 }

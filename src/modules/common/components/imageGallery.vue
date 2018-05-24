@@ -1,10 +1,10 @@
 <template>
     <v-container grid-list-md class="mt-5 pa-0">
         <h3>What's inside:</h3>
-        <v-layout v-bind="binding" wrap>
-            <v-flex sm4 v-for="i in 12" :key="i">
+        <v-layout v-bind="addColumnProp" wrap>
+            <v-flex sm6 md4 v-for="i in 12" :key="i">
                 <v-card>
-                    <v-card-media src="https://thumb.ibb.co/ivFuRT/cover_Demo.png" height="200px" style="object-fit: contain"></v-card-media>
+                    <img src="https://thumb.ibb.co/ivFuRT/cover_Demo.png" alt="img" width="100%" height="100%">
                 </v-card>
             </v-flex>
         </v-layout>
@@ -16,12 +16,12 @@
 
     @Component
     export default class ImageGallery extends Vue {
-        get binding() {
-            const binding = {column: false};
+        get addColumnProp() {
+            const addColumnProp = {column: false};
             if (this.$vuetify.breakpoint.xsOnly) {
-                binding.column = true;
+                addColumnProp.column = true;
             }
-            return binding;
+            return addColumnProp;
         }
     }
 </script>
