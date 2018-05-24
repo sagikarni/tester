@@ -1,26 +1,30 @@
 <template>
     <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}" v-if="dataExist">
-        <v-flex class="hidden-xs-only" :class="[$isRTL ? 'ml-4' : 'mr-4']">
+        <v-flex class="hidden-xs-only ex-fixed-image-scope" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
                 <img :src="coverPhoto" alt="img" width="100%" height="100%">
             </div>
         </v-flex>
         <v-flex :class="{'ex-rtl': $isRTL === true}">
-            <h2>{{title}}</h2>
-            <p>{{description}}</p>
-            <v-layout row justify-space-around class="text-xs-center">
-                <v-flex>
-                    <p class="mb-1">{{mediaCount}} {{ $locale.general.slidesText }}</p>
-                    <i class="ex-slides"></i>
-                </v-flex>
-                <v-flex>
-                    <p class="mb-1">{{mediaTypeText}}</p>
-                    <i :class="mediaTypeIconClass"></i>
-                </v-flex>
-                <v-flex>
-                    <p class="mb-1">{{orientationText}}</p>
-                    <i :class="orientationIconClass"></i>
-                </v-flex>
+            <v-layout column class="ex-main-info-wrapper">
+                <h2>{{title}}</h2>
+                <p>{{description}}</p>
+                <section class="ex-mt-auto">
+                    <v-layout row justify-space-around class="text-xs-center">
+                        <v-flex>
+                            <p class="mb-1">{{mediaCount}} {{ $locale.general.slidesText }}</p>
+                            <i class="ex-slides"></i>
+                        </v-flex>
+                        <v-flex>
+                            <p class="mb-1">{{mediaTypeText}}</p>
+                            <i :class="mediaTypeIconClass"></i>
+                        </v-flex>
+                        <v-flex>
+                            <p class="mb-1">{{orientationText}}</p>
+                            <i :class="orientationIconClass"></i>
+                        </v-flex>
+                    </v-layout>
+                </section>
             </v-layout>
         </v-flex>
     </v-layout>
