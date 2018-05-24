@@ -3,7 +3,7 @@
         <social-share></social-share>
         <activity-main-details :activity="activityState"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
-            <session-length :activity="activityState"></session-length>
+            <session-length :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
         <image-gallery></image-gallery>
     </section>
@@ -17,7 +17,7 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState} from "@/modules/activities/store/types";
+    import {IActivitiesState, SessionsInfo} from "@/modules/activities/store/types";
 
     const namespace: string = 'activities';
 
@@ -38,8 +38,17 @@
             super();
         }
 
+       get sessionsInfo(): SessionsInfo[] {
+            return this.activityState && this.activityState.details  &&  this.activityState.details.sessionsInfo;
+         }
         public created() {
             this.getActivity({activity: "1"});
+            // please remove after you test
+            setTimeout(() => {
+                 //this.activityState.details = null;
+                 //this.activityState.details.sessionsInfo[0].slidesCount = 111;
+                 // this.activityState.details.sessionsInfo.push({id: 44 , description: 'temp', slidesCount: 88});
+            }, 5000);
         }
     }
 </script>
