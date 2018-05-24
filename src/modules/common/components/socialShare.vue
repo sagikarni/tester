@@ -17,7 +17,7 @@
                     {{ $locale.general.social.shareText }}
                 </v-btn>
                 <v-list>
-                    <v-list-tile v-for="network in socialNetworks" :key="network.id">
+                    <v-list-tile v-for="network in socialNetworks" :key="network.id" @click="">
                         <v-icon class="mr-2">{{ network.icon }}</v-icon>
                         <v-list-tile-title class="text-xs-left">{{ network.title }}</v-list-tile-title>
                     </v-list-tile>
