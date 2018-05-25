@@ -43,19 +43,8 @@
        }
 
        get activityMainDetailsInfo(): ActivityMainDetailsInfo {
-            const detailsInfo = {
-               dataExist: false,
-               title: "",
-               description: "",
-               coverPhoto: "",
-               mediaCount: 0,
-               mediaType: 0,
-               mediaTypeText: "",
-               mediaTypeIconClass: "",
-               orientation: 0,
-               orientationText: "",
-               orientationIconClass: "",
-            };
+            const detailsInfo = new ActivityMainDetailsInfo();
+
             if (this.activityState && this.activityState.details) {
                 detailsInfo.dataExist = true;
                 detailsInfo.title = this.activityState.details.title;
