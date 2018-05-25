@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}" v-if="activityMainDetailsInfo.dataExist">
+    <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}">
         <v-flex class="hidden-xs-only ex-fixed-image-scope" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
                 <img :src="activityMainDetailsInfo.coverPhoto" alt="img" width="100%" height="100%">
@@ -13,11 +13,11 @@
                     <v-layout row justify-space-around class="text-xs-center">
                         <v-flex>
                             <p class="mb-1">{{activityMainDetailsInfo.mediaCount}} {{ $locale.general.slidesText }}</p>
-                            <i class="ex-slides"></i>
+                             <v-icon>far fa-images</v-icon>
                         </v-flex>
                         <v-flex>
                             <p class="mb-1">{{activityMainDetailsInfo.mediaTypeText}}</p>
-                            <i :class="activityMainDetailsInfo.mediaTypeIconClass"></i>
+                            <v-icon>{{ activityMainDetailsInfo.mediaTypeIconClass }}</v-icon>
                         </v-flex>
                         <v-flex>
                             <p class="mb-1">{{activityMainDetailsInfo.orientationText}}</p>
