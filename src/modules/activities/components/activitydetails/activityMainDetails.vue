@@ -1,27 +1,27 @@
 <template>
-    <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}" v-if="dataExist">
+    <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}">
         <v-flex class="hidden-xs-only ex-fixed-image-scope" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
-                <img :src="coverPhoto" alt="img" width="100%" height="100%">
+                <img :src="activityMainDetailsInfo.coverPhoto" alt="img" width="100%" height="100%">
             </div>
         </v-flex>
         <v-flex :class="{'ex-rtl': $isRTL === true}">
             <v-layout column class="ex-main-info-wrapper">
-                <h2>{{title}}</h2>
-                <p>{{description}}</p>
+                <h2>{{activityMainDetailsInfo.title}}</h2>
+                <p>{{activityMainDetailsInfo.description}}</p>
                 <section class="ex-mt-auto">
                     <v-layout row justify-space-around class="text-xs-center">
                         <v-flex>
-                            <p class="mb-1">{{mediaCount}} {{ $locale.general.slidesText }}</p>
-                            <i class="ex-slides"></i>
+                            <p class="mb-1">{{activityMainDetailsInfo.mediaCount}} {{ $locale.general.slidesText }}</p>
+                             <v-icon>far fa-images</v-icon>
                         </v-flex>
                         <v-flex>
-                            <p class="mb-1">{{mediaTypeText}}</p>
-                            <i :class="mediaTypeIconClass"></i>
+                            <p class="mb-1">{{activityMainDetailsInfo.mediaTypeText}}</p>
+                            <v-icon>{{ activityMainDetailsInfo.mediaTypeIconClass }}</v-icon>
                         </v-flex>
                         <v-flex>
-                            <p class="mb-1">{{orientationText}}</p>
-                            <i :class="orientationIconClass"></i>
+                            <p class="mb-1">{{activityMainDetailsInfo.orientationText}}</p>
+                            <i :class="activityMainDetailsInfo.orientationIconClass"></i>
                         </v-flex>
                     </v-layout>
                 </section>
@@ -31,57 +31,17 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch, Prop } from 'vue-property-decorator';
+    import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {MediaType, Orientation} from '../../store/types';
+    import {ActivityMainDetailsInfo} from '../../store/types';
 
     @Component
     export default class ActivityMainDetails extends BaseComponent {
-        @Prop() public activity?: any;
 
-        public dataExist: boolean = false;
-        public title: string = "";
-        public description: string = "";
-        public coverPhoto: string = "";
-        public mediaCount: number = 0;
-        public mediaType: number = 0;
-        public mediaTypeText: string = "";
-        public mediaTypeIconClass: string = "";
-        public orientation: number = 0;
-        public orientationText: string = "";
-        public orientationIconClass: string = "";
+        @Prop() public activityMainDetailsInfo?: ActivityMainDetailsInfo;
 
         constructor() {
             super();
-        }
-
-        @Watch('activity')
-        public onPropertyChanged(value: any, oldValue: any) {
-            if (value && value.details) {
-                this.dataExist = true;
-                this.title = value.details.title;
-                this.description = value.details.description;
-                this.coverPhoto = value.details.coverPhoto;
-                this.mediaCount = value.details.mediaCount;
-
-                this.mediaType = value.details.mediaType;
-                if (value.details.mediaType === MediaType.Photo) {
-                    this.mediaTypeText = this.$locale.activities.activityDetails.photoBasedText;
-                    this.mediaTypeIconClass = "ex-photo";
-                } else if (value.details.mediaType === MediaType.Video) {
-                    this.mediaTypeText = this.$locale.activities.activityDetails.videoBasedText;
-                    this.mediaTypeIconClass = "ex-play-video";
-                }
-                //
-                this.orientation = value.details.orientation;
-                if (value.details.orientation === Orientation.Landscape) {
-                    this.orientationText = this.$locale.activities.activityDetails.landscapeText;
-                    this.orientationIconClass = "ex-landscape";
-                } else if (value.details.orientation === Orientation.Portrait) {
-                    this.orientationText = this.$locale.activities.activityDetails.portraitText;
-                    this.orientationIconClass = "ex-portrait";
-                }
-            }
         }
     }
 </script>

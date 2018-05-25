@@ -1,6 +1,5 @@
 <template>
     <div ref="loadingOverlay" v-if ='isLoading' class = "tera-overlay"></div>
-
 </template>
 
 <script lang="ts">

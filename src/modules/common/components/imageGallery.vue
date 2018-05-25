@@ -2,9 +2,9 @@
     <v-container grid-list-md class="mt-5 pa-0">
         <h3>What's inside:</h3>
         <v-layout v-bind="addColumnProp">
-            <v-flex sm6 md4 v-for="i in 12" :key="i">
+            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <v-card>
-                    <img src="https://thumb.ibb.co/ivFuRT/cover_Demo.png" alt="img" width="100%" height="100%">
+                    <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%">
                 </v-card>
             </v-flex>
         </v-layout>
@@ -12,10 +12,19 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import {ImageGalleryInfo, Thumbnail} from '@/modules/activities/store/types';
+
 
     @Component
     export default class ImageGallery extends Vue {
+
+
+        public thumbnails?: object[] = [];
+
+        @Prop() public imageGalleryInfo?: ImageGalleryInfo;
+        @Prop() public sessionInfoId?: number;
+
         get addColumnProp() {
             const addColumnProp = {column: false, wrap: true};
             if (this.$vuetify.breakpoint.xsOnly) {
@@ -23,6 +32,34 @@
                 addColumnProp.wrap = false;
             }
             return addColumnProp;
+        }
+
+        @Watch('imageGalleryInfo')
+        public onPropertyChanged(value: any, oldValue: any) {
+            this.chooseGalleryThumbnails(value, this.sessionInfoId);
+        }
+
+        @Watch('sessionInfoId')
+        public onPropertyChanged2(value: any, oldValue: any) {
+            this.chooseGalleryThumbnails(this.imageGalleryInfo, value);
+        }
+
+        public chooseGalleryThumbnails(galleryInfo: any, sessionInfoId: any) {
+            if (galleryInfo && galleryInfo.thumbnails) {
+                const thumbnailItems: object[] = [];
+                galleryInfo.thumbnails.forEach((item: Thumbnail) => {
+                    if (item.appearsInSession && galleryInfo && galleryInfo.sessionInfoId) {
+                        let id = galleryInfo.sessionInfoId;
+                        if (sessionInfoId !== undefined) {
+                            id = sessionInfoId;
+                        }
+                        if (item.appearsInSession.includes(id)) {
+                            thumbnailItems.push({imgSrc: item.imgSrc, title: item.title});
+                        }
+                    }
+                });
+                this.thumbnails = thumbnailItems;
+            }
         }
     }
 </script>
