@@ -16,4 +16,7 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
         });
     },
+    updateSessionInfoType({ state, commit, rootState , dispatch }, prm: any): any {
+        commit('updateSessionInfoId' , {sessionInfoId: prm.sessionInfoId});
+    },
 };

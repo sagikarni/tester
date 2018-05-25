@@ -31,9 +31,9 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch, Prop } from 'vue-property-decorator';
+    import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {MediaType, Orientation, ActivityMainDetailsInfo} from '../../store/types';
+    import {ActivityMainDetailsInfo} from '../../store/types';
 
     @Component
     export default class ActivityMainDetails extends BaseComponent {
