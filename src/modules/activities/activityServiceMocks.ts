@@ -18,12 +18,12 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         ],
         thumbnails: [
             {
-                imgSrc: 'media/restricted/communication/photos/whquesstions/activity-name-1/thumbnails/adolescent-beautiful-blond-786801.jpg',
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
                 title: 'some title 1',
                 appearsInSession: [1, 2], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
-                imgSrc: 'media/restricted/communication/photos/whquesstions/activity-name-1/thumbnails/adult-alone-autumn-701747.jpg',
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
                 title: 'some title 2',
                 appearsInSession: [1, 2, 3],
             },

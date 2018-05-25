@@ -1,11 +1,11 @@
 <template>
-    <section class="ex-activity-details-component">
+    <section class="ex-activity-details-component" @sessionInfoIdChanged="changedSessionInfoId">
         <social-share></social-share>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
             <session-length :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
-        <image-gallery></image-gallery>
+        <image-gallery :imageGalleryInfo="imageGalleryInfo" :sessionInfoId="sessionBtnId"></image-gallery>
     </section>
 </template>
 
@@ -17,7 +17,7 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
+    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo, MediaType, Orientation} from "@/modules/activities/store/types";
 
     const namespace: string = 'activities';
 
@@ -32,6 +32,7 @@
     })
     export default class ActivityDetails extends BaseComponent {
         @State(state => state.activities.activity) public activityState?: any;
+        @State(state => state.activities.sessionInfoId) public sessionInfoId?: number;
         @Action('getActivity' , {namespace}) public getActivity: any;
 
         constructor() {
@@ -71,6 +72,24 @@
                 }
             }
             return detailsInfo;
+       }
+
+       get imageGalleryInfo(): ImageGalleryInfo {
+            const imageGalleryInfo = new ImageGalleryInfo();
+
+            if (this.activityState && this.activityState.details) {
+                imageGalleryInfo.sessionInfoId = 1; // TODO need to confirm this is a default value = "short" toggle button
+                imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
+            }
+            return imageGalleryInfo;
+       }
+
+       get sessionBtnId(): number | undefined {
+            return this.sessionInfoId;
+       }
+
+       public changedSessionInfoId(sessionId: number) {
+            // console.log('sessionId', sessionId); // TODO here can be $emit response
        }
 
         public created() {
