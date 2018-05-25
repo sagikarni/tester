@@ -1,4 +1,6 @@
+
 .ex-activity-details-component{
+  opacity: 0;
   .ex-back-arrow-icon{
     width: 20px;
     height: 20px;
@@ -32,6 +34,7 @@
       .ex-fixed-image-scope{
         flex: initial!important;
         margin-bottom: 15px;
+        margin-right: 0!important;
       }
     }
     .ex-fixed-image-scope{
@@ -45,14 +48,6 @@
     }
     .ex-main-info-wrapper{
       height: 100%;
-      .ex-slides{
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        background-image: url(../public/img/icons/slides.png);
-        -webkit-background-size: contain;
-        background-size: contain;
-      }
       .ex-play-video{
         width: 20px;
         height: 20px;

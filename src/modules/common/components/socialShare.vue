@@ -58,13 +58,12 @@
 
         public socialNetworks: object[];
 
-        // public $isRTL: boolean = true;
         constructor() {
             super();
             this.socialNetworks = [
-                { id: 1, title: this.$locale.general.social.networks.facebookText, icon: 'fa-facebook' },
-                { id: 2, title: this.$locale.general.social.networks.googleText, icon: 'fa-google-plus' },
-                { id: 3, title: this.$locale.general.social.networks.twitterText, icon: 'fa-twitter' },
+                { id: 1, title: this.$locale.general.social.networks.facebookText, icon: 'fab fa-facebook-f' },
+                { id: 2, title: this.$locale.general.social.networks.googleText, icon: 'fab fa-google-plus-g' },
+                { id: 3, title: this.$locale.general.social.networks.twitterText, icon: 'fab fa-twitter' },
             ];
         }
     }
