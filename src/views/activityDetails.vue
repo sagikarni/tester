@@ -41,7 +41,9 @@
 
         constructor() {
             super();
+
           }
+
 
         @Watch('activityMainDetailsInfo')
         public onPropertyChanged(value: ActivityMainDetailsInfo, oldValue: ActivityMainDetailsInfo) {
