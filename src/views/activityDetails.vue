@@ -5,7 +5,7 @@
         <div class="ex-session-info mt-5 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
-        <image-gallery :imageGalleryInfo="imageGalleryInfo" :sessionInfoId="sessionBtnId"></image-gallery>
+        <image-gallery :imageGalleryInfo="imageGalleryInfo" :selectedSessionInfoId="sessionBtnId"></image-gallery>
     </section>
 </template>
 
@@ -17,7 +17,8 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo,  MediaType, Orientation} from "@/modules/activities/store/types";
+    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
+    import { ImageGalleryInfo } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
 
     const namespace: string = 'activities';
@@ -90,7 +91,7 @@
             const imageGalleryInfo = new ImageGalleryInfo();
 
             if (this.activityState && this.activityState.details) {
-                imageGalleryInfo.sessionInfoId = 3; // TODO need to confirm this is a default value = "Long" toggle button
+                imageGalleryInfo.selectedSessionInfoId = 3; // TODO need to confirm this is a default value = "Long" toggle button
                 imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
             }
             return imageGalleryInfo;

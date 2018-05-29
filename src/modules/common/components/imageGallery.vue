@@ -13,7 +13,7 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-    import {ImageGalleryInfo, Thumbnail} from '@/modules/activities/store/types';
+    import { ImageGalleryInfo, Thumbnail } from "@/modules/store/typeClasses";
 
 
     @Component
@@ -23,7 +23,7 @@
         public thumbnails?: object[] = [];
 
         @Prop() public imageGalleryInfo?: ImageGalleryInfo;
-        @Prop() public sessionInfoId?: number;
+        @Prop() public selectedSessionInfoId?: number;
 
         get addColumnProp() {
             const addColumnProp = {column: false, wrap: true};
@@ -36,22 +36,22 @@
 
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {
-            this.chooseGalleryThumbnails(value, this.sessionInfoId);
+            this.chooseGalleryThumbnails(value, this.selectedSessionInfoId);
         }
 
-        @Watch('sessionInfoId')
+        @Watch('selectedSessionInfoId')
         public onPropertyChanged2(value: any, oldValue: any) {
             this.chooseGalleryThumbnails(this.imageGalleryInfo, value);
         }
 
-        public chooseGalleryThumbnails(galleryInfo: any, sessionInfoId: any) {
+        public chooseGalleryThumbnails(galleryInfo: any, selectedSessionInfoId: any) {
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Thumbnail) => {
-                    if (item.appearsInSession && galleryInfo && galleryInfo.sessionInfoId) {
-                        let id = galleryInfo.sessionInfoId;
-                        if (sessionInfoId !== undefined) {
-                            id = sessionInfoId;
+                    if (item.appearsInSession && galleryInfo && galleryInfo.selectedSessionInfoId) {
+                        let id = galleryInfo.selectedSessionInfoId;
+                        if (selectedSessionInfoId !== undefined) {
+                            id = selectedSessionInfoId;
                         }
                         if (item.appearsInSession.includes(id)) {
                             thumbnailItems.push({imgSrc: item.imgSrc, title: item.title});
