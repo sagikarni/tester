@@ -15,7 +15,7 @@
     import {State, Action} from 'vuex-class';
     import ActivityMainDetails from '@/modules/activities/components/activitydetails/activityMainDetails.vue';
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
-    import SessionLength from '@/modules/activities/components/sessionLength.vue';
+    import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
     import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo,  MediaType, Orientation} from "@/modules/activities/store/types";
     import TimelineMax from 'gsap';
