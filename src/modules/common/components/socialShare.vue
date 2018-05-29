@@ -1,6 +1,8 @@
 <template>
     <v-layout row wrap class="mb-3">
-        <back-button></back-button>
+        <v-flex xs3>
+            <back-button :showButton="showBackButton"></back-button>
+        </v-flex>
         <v-flex xs9 class="text-xs-right" style="align-self: center">
             <v-menu v-if="!$isRTL"
                     offset-y
@@ -46,7 +48,7 @@
 </template>
 
 <script lang="ts">
-    import { Component } from 'vue-property-decorator';
+    import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import BackButton from '@/modules/common/components/backButton.vue';
 
@@ -56,6 +58,8 @@
         },
     })
     export default class SocialShare extends BaseComponent {
+
+        @Prop() public showBackButton?: boolean;
 
         public socialNetworks: object[];
 

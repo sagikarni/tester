@@ -1,6 +1,6 @@
 <template>
     <section class="ex-activity-details-component" v-show="drawContent" >
-        <social-share></social-share>
+        <social-share :showBackButton="showBackButton"></social-share>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
@@ -34,6 +34,7 @@
     })
     export default class ActivityDetails extends BaseComponent {
         public drawContent: boolean = false;
+        public showBackButton: boolean = false;
 
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
