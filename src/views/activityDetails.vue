@@ -1,9 +1,9 @@
 <template>
-    <section class="ex-activity-details-component" v-show="drawContent" @sessionInfoIdChanged="changedSessionInfoId">
+    <section class="ex-activity-details-component" v-show="drawContent" >
         <social-share></social-share>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
-            <session-length :sessionLengthInfo="sessionsInfo"></session-length>
+            <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
         <image-gallery :imageGalleryInfo="imageGalleryInfo" :sessionInfoId="sessionBtnId"></image-gallery>
     </section>
@@ -17,7 +17,7 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo, MediaType, Orientation} from "@/modules/activities/store/types";
+    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo, GetAvtivityParams,  MediaType, Orientation} from "@/modules/activities/store/types";
     import TimelineMax from 'gsap';
 
     const namespace: string = 'activities';
@@ -36,12 +36,14 @@
 
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => state.activities.sessionInfoId) public sessionInfoId?: number;
-        @Action('getActivity' , {namespace}) public getActivity: any;
+        @Action('getActivity' , {namespace}) public getActivity?: any;
+        @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
 
         constructor() {
             super();
-            let test = 0;
-        }
+
+          }
+
 
         @Watch('activityMainDetailsInfo')
         public onPropertyChanged(value: ActivityMainDetailsInfo, oldValue: ActivityMainDetailsInfo) {
@@ -99,10 +101,9 @@
             return this.sessionInfoId;
        }
 
-       public changedSessionInfoId(sessionId: number) {
-            // console.log('sessionId', sessionId); // TODO here can be $emit response
+        public changedSessionInfoId(value: any) {
+             this.updateSessionInfoType( {sessionInfoId: value} );
        }
-
         public created() {
             this.getActivity({activity: "1"});
         }

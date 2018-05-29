@@ -8,7 +8,6 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
 
     getActivity({ state, commit, rootState , dispatch }, prm: any): any {
         dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
-
         activityService.getActivity(prm.activity).then((response: any) => {
             commit('updateActivities' , {activity: response.data});
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
