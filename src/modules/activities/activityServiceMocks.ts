@@ -11,6 +11,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},

@@ -35,7 +35,7 @@
         public drawContent: boolean = false;
 
         @State(state => state.activities.activity) public activityState?: any;
-        @State(state => state.activities.sessionInfoId) public sessionInfoId?: number;
+        @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
         @Action('getActivity' , {namespace}) public getActivity?: any;
         @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
 
@@ -90,18 +90,18 @@
             const imageGalleryInfo = new ImageGalleryInfo();
 
             if (this.activityState && this.activityState.details) {
-                imageGalleryInfo.sessionInfoId = 3; // TODO need to confirm this is a default value = "short" toggle button
+                imageGalleryInfo.sessionInfoId = 3; // TODO need to confirm this is a default value = "Long" toggle button
                 imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
             }
             return imageGalleryInfo;
        }
 
        get sessionBtnId(): number | undefined {
-            return this.sessionInfoId;
+           return this.selectedSessionInfoId;
        }
 
-        public changedSessionInfoId(value: any) {
-             this.updateSessionInfoType( {sessionInfoId: value} );
+        public changedSessionInfoId(selectedSessionInfoId: number) {
+             this.updateSessionInfoType( {selectedSessionInfoId} );
        }
         public created() {
             this.getActivity({activity: "1"});

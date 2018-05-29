@@ -57,8 +57,9 @@ export interface IActivitiesState {
             orientation: Orientation,
             mediaCount: number, // number of videos or photos in this activity
             sessionsInfo: SessionsInfo[],
+            selectedSessionInfoId: number,
         },
         content: { },
     } | undefined;
-    sessionInfoId: number | undefined;
+
 }
