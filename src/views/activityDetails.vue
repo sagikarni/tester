@@ -40,6 +40,7 @@
 
         constructor() {
             super();
+            let test = 0;
         }
 
         @Watch('activityMainDetailsInfo')
