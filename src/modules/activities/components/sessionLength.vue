@@ -26,8 +26,6 @@
     @Component
     export default class SessionLength extends BaseComponent {
 
-        @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
-
         public sessionLength: string = '';
 
         @Prop() public sessionLengthInfo?: SessionsInfo[];
@@ -37,10 +35,8 @@
         }
 
         public sessionInfoIdChanged(sessionInfoId: number) {
-            // TODO need to check why this is not working. Tried @Emit, but it is not working too
-            // this.$emit('sessionInfoIdChanged', sessionInfoId);
-            this.updateSessionInfoType( {sessionInfoId} );
-        }
+              this.$emit('sessionInfoIdChanged', sessionInfoId);
+         }
     }
 </script>
 

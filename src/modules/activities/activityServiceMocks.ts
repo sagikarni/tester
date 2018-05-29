@@ -20,12 +20,37 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
             {
                 imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
                 title: 'some title 1',
-                appearsInSession: [1, 2], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
+                appearsInSession: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
                 title: 'some title 2',
                 appearsInSession: [1, 2, 3],
+            },
+            {
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+                title: 'some title 3',
+                appearsInSession: [1, 2, 3],
+            },
+            {
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+                title: 'some title 4',
+                appearsInSession: [3],
+            },
+            {
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+                title: 'some title 5',
+                appearsInSession: [3],
+            },
+            {
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+                title: 'some title 6',
+                appearsInSession: [2, 3],
+            },
+            {
+                imgSrc: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+                title: 'some title 7',
+                appearsInSession: [2, 3],
             },
         ],
     },
