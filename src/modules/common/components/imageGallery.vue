@@ -2,10 +2,8 @@
     <v-container grid-list-md class="mt-5 pa-0">
         <h3>What's inside:</h3>
         <v-layout v-bind="addColumnProp">
-            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <v-card>
-                    <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%">
-                </v-card>
+            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index" style="height: 200px">
+                <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover">
             </v-flex>
         </v-layout>
     </v-container>
