@@ -17,7 +17,7 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo, GetAvtivityParams,  MediaType, Orientation} from "@/modules/activities/store/types";
+    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, ImageGalleryInfo,  MediaType, Orientation} from "@/modules/activities/store/types";
     import TimelineMax from 'gsap';
 
     const namespace: string = 'activities';
@@ -43,7 +43,6 @@
             super();
 
           }
-
 
         @Watch('activityMainDetailsInfo')
         public onPropertyChanged(value: ActivityMainDetailsInfo, oldValue: ActivityMainDetailsInfo) {
@@ -91,7 +90,7 @@
             const imageGalleryInfo = new ImageGalleryInfo();
 
             if (this.activityState && this.activityState.details) {
-                imageGalleryInfo.sessionInfoId = 1; // TODO need to confirm this is a default value = "short" toggle button
+                imageGalleryInfo.sessionInfoId = 3; // TODO need to confirm this is a default value = "short" toggle button
                 imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
             }
             return imageGalleryInfo;

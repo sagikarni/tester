@@ -26,7 +26,7 @@
     @Component
     export default class SessionLength extends BaseComponent {
 
-        public sessionLength: string = '';
+        public sessionLength: string = 'Long';
 
         @Prop() public sessionLengthInfo?: SessionsInfo[];
 
