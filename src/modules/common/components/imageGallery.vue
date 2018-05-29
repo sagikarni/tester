@@ -2,10 +2,8 @@
     <v-container grid-list-md class="mt-5 pa-0">
         <h3>What's inside:</h3>
         <v-layout v-bind="addColumnProp">
-            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <v-card>
-                    <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%">
-                </v-card>
+            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index" style="height: 200px">
+                <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover">
             </v-flex>
         </v-layout>
     </v-container>
@@ -13,7 +11,7 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-    import {ImageGalleryInfo, Thumbnail} from '@/modules/activities/store/types';
+    import { ImageGalleryInfo, Thumbnail } from "@/modules/store/typeClasses";
 
 
     @Component
@@ -23,7 +21,7 @@
         public thumbnails?: object[] = [];
 
         @Prop() public imageGalleryInfo?: ImageGalleryInfo;
-        @Prop() public sessionInfoId?: number;
+        @Prop() public filterId?: number;
 
         get addColumnProp() {
             const addColumnProp = {column: false, wrap: true};
@@ -36,24 +34,20 @@
 
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {
-            this.chooseGalleryThumbnails(value, this.sessionInfoId);
+            this.chooseGalleryThumbnails(value, this.filterId);
         }
 
-        @Watch('sessionInfoId')
+        @Watch('filterId')
         public onPropertyChanged2(value: any, oldValue: any) {
             this.chooseGalleryThumbnails(this.imageGalleryInfo, value);
         }
 
-        public chooseGalleryThumbnails(galleryInfo: any, sessionInfoId: any) {
+        public chooseGalleryThumbnails(galleryInfo: any, filterId: any) {
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Thumbnail) => {
-                    if (item.appearsInSession && galleryInfo && galleryInfo.sessionInfoId) {
-                        let id = galleryInfo.sessionInfoId;
-                        if (sessionInfoId !== undefined) {
-                            id = sessionInfoId;
-                        }
-                        if (item.appearsInSession.includes(id)) {
+                    if (item.filterInfo && filterId) {
+                        if (item.filterInfo.includes(filterId)) {
                             thumbnailItems.push({imgSrc: item.imgSrc, title: item.title});
                         }
                     }

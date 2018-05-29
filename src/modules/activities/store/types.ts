@@ -20,15 +20,6 @@ export enum Category {
     Cognitive = 2,
 }
 
-export class Thumbnail {
-    public imgSrc?: string;
-    public title?: string;
-    public appearsInSession?: number[];
-}
-export class ImageGalleryInfo {
-    public sessionInfoId?: number;
-    public thumbnails?: Thumbnail[];
-}
 export class ActivityMainDetailsInfo {
     public dataExist: boolean = false;
     public title?: string;
@@ -57,8 +48,9 @@ export interface IActivitiesState {
             orientation: Orientation,
             mediaCount: number, // number of videos or photos in this activity
             sessionsInfo: SessionsInfo[],
+            selectedSessionInfoId: number,
         },
         content: { },
     } | undefined;
-    sessionInfoId: number | undefined;
+
 }

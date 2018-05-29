@@ -10,7 +10,6 @@ const namespaced: boolean = true;
 
 export const state: IActivitiesState = {
     activity: undefined,
-    sessionInfoId: undefined,
 };
 export const activities: Module<IActivitiesState, IRootState> = {
     namespaced,

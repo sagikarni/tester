@@ -16,6 +16,6 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
         });
     },
     updateSessionInfoType({ state, commit, rootState , dispatch }, prm: any): any {
-        commit('updateSessionInfoId' , {sessionInfoId: prm.sessionInfoId});
+        commit('updateSelectedSessionInfoId' , {selectedSessionInfoId: prm.selectedSessionInfoId});
     },
 };

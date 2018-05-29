@@ -18,15 +18,12 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {SessionsInfo } from '../store/types';
-    import {Action} from 'vuex-class';
-
-    const namespace: string = 'activities';
+    import {SessionsInfo } from '../../store/types';
 
     @Component
     export default class SessionLength extends BaseComponent {
 
-        public sessionLength: string = '';
+        public sessionLength: string = 'Long';
 
         @Prop() public sessionLengthInfo?: SessionsInfo[];
 
