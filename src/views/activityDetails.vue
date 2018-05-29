@@ -5,7 +5,7 @@
         <div class="ex-session-info mt-5 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
-        <image-gallery :imageGalleryInfo="imageGalleryInfo" :selectedSessionInfoId="sessionBtnId"></image-gallery>
+        <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
     </section>
 </template>
 
@@ -91,7 +91,6 @@
             const imageGalleryInfo = new ImageGalleryInfo();
 
             if (this.activityState && this.activityState.details) {
-                imageGalleryInfo.selectedSessionInfoId = 3; // TODO need to confirm this is a default value = "Long" toggle button
                 imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
             }
             return imageGalleryInfo;

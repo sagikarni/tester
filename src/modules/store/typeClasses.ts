@@ -1,10 +1,9 @@
 export class Thumbnail {
     public imgSrc?: string;
     public title?: string;
-    public appearsInSession?: number[];
+    public filterInfo?: number[];
 }
 
 export class ImageGalleryInfo {
-    public selectedSessionInfoId?: number;
     public thumbnails?: Thumbnail[];
 }

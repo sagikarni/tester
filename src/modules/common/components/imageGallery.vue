@@ -23,7 +23,7 @@
         public thumbnails?: object[] = [];
 
         @Prop() public imageGalleryInfo?: ImageGalleryInfo;
-        @Prop() public selectedSessionInfoId?: number;
+        @Prop() public filterId?: number;
 
         get addColumnProp() {
             const addColumnProp = {column: false, wrap: true};
@@ -36,24 +36,20 @@
 
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {
-            this.chooseGalleryThumbnails(value, this.selectedSessionInfoId);
+            this.chooseGalleryThumbnails(value, this.filterId);
         }
 
-        @Watch('selectedSessionInfoId')
+        @Watch('filterId')
         public onPropertyChanged2(value: any, oldValue: any) {
             this.chooseGalleryThumbnails(this.imageGalleryInfo, value);
         }
 
-        public chooseGalleryThumbnails(galleryInfo: any, selectedSessionInfoId: any) {
+        public chooseGalleryThumbnails(galleryInfo: any, filterId: any) {
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Thumbnail) => {
-                    if (item.appearsInSession && galleryInfo && galleryInfo.selectedSessionInfoId) {
-                        let id = galleryInfo.selectedSessionInfoId;
-                        if (selectedSessionInfoId !== undefined) {
-                            id = selectedSessionInfoId;
-                        }
-                        if (item.appearsInSession.includes(id)) {
+                    if (item.filterInfo && filterId) {
+                        if (item.filterInfo.includes(filterId)) {
                             thumbnailItems.push({imgSrc: item.imgSrc, title: item.title});
                         }
                     }
