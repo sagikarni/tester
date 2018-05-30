@@ -3,7 +3,7 @@
         <h3>What's inside:</h3>
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover">
+                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
             </v-flex>
         </v-layout>
     </v-container>
@@ -12,6 +12,7 @@
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
     import { ImageInfo, Image } from "@/modules/store/typeClasses";
+    import TimelineMax from 'gsap';
 
 
     @Component
@@ -47,13 +48,21 @@
                 const thumbnailItems: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Image) => {
                     if (item.filterInfo && filterId) {
+                        let imageItem: any;
                         if (item.filterInfo.includes(filterId)) {
-                            thumbnailItems.push(item);
+                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true};
+                        } else {
+                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: false};
                         }
+                        thumbnailItems.push(imageItem);
                     }
                 });
                 this.thumbnails = thumbnailItems;
             }
+            setTimeout(() => {
+                (TimelineMax as any).to('.active-item', 3, {filter : '' });
+                (TimelineMax as any).to('.inactive-item', 3, {filter : 'blur(2px) grayscale(100%) opacity(0.3)' });
+            }, 0);
         }
     }
 </script>
