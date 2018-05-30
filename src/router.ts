@@ -6,6 +6,8 @@ import FullScreenView from './views/FullScreenView.vue';
 import About from './views/About.vue';
 import SlideShowView from './views/SlideShowView.vue';
 import Search from './views/Search.vue';
+import ActivityDetails from './views/activityDetails.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -27,6 +29,10 @@ export default new Router({
           {
               path: '/Search',
               component: Search,
+          },
+          {
+              path: '/activity-details',
+              component: ActivityDetails,
           },
       ],
     },

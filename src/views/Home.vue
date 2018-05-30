@@ -1,15 +1,12 @@
 <template>
-    <activity-details></activity-details>
+    <div>
+        <p>This is a home page.</p>
+    </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ActivityDetails from './activityDetails.vue';
 
-@Component({
-  components: {
-      ActivityDetails,
-  },
-})
+@Component
 export default class Home extends Vue {}
 </script>
