@@ -1,6 +1,7 @@
 <template>
-    <v-btn flat icon color="dark" class="ml-0" @click="$router.go(-1)">
-        <i class="ex-back-arrow-icon"></i>
+    <v-btn flat color="dark" class="ma-0">
+        <i class="ex-pin-icon mr-2"></i>
+        {{ $locale.general.social.pin }}
     </v-btn>
 </template>
 
@@ -9,7 +10,7 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component
-    export default class BackButton extends BaseComponent {
+    export default class PinButton extends BaseComponent {
 
     }
 </script>

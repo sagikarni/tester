@@ -2,8 +2,8 @@
     <v-container grid-list-md class="mt-5 pa-0">
         <h3>What's inside:</h3>
         <v-layout v-bind="addColumnProp">
-            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index" style="height: 200px">
-                <img :src="thumbnail.imgSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover">
+            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
+                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
             </v-flex>
         </v-layout>
     </v-container>
@@ -11,7 +11,8 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-    import { ImageGalleryInfo, Thumbnail } from "@/modules/store/typeClasses";
+    import { ImageInfo, Image } from "@/modules/store/typeClasses";
+    import TimelineMax from 'gsap';
 
 
     @Component
@@ -20,7 +21,7 @@
 
         public thumbnails?: object[] = [];
 
-        @Prop() public imageGalleryInfo?: ImageGalleryInfo;
+        @Prop() public imageGalleryInfo?: ImageInfo;
         @Prop() public filterId?: number;
 
         get addColumnProp() {
@@ -45,15 +46,23 @@
         public chooseGalleryThumbnails(galleryInfo: any, filterId: any) {
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
-                galleryInfo.thumbnails.forEach((item: Thumbnail) => {
+                galleryInfo.thumbnails.forEach((item: Image) => {
                     if (item.filterInfo && filterId) {
+                        let imageItem: any;
                         if (item.filterInfo.includes(filterId)) {
-                            thumbnailItems.push({imgSrc: item.imgSrc, title: item.title});
+                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true};
+                        } else {
+                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: false};
                         }
+                        thumbnailItems.push(imageItem);
                     }
                 });
                 this.thumbnails = thumbnailItems;
             }
+            setTimeout(() => {
+                (TimelineMax as any).to('.active-item', 3, {filter : '' });
+                (TimelineMax as any).to('.inactive-item', 3, {filter : 'blur(2px) grayscale(100%) opacity(0.3)' });
+            }, 0);
         }
     }
 </script>

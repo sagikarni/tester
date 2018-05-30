@@ -1,9 +1,11 @@
-export class Thumbnail {
+export class Image {
+    public id?: number;
+    public thumbnailSrc?: string;
     public imgSrc?: string;
     public title?: string;
     public filterInfo?: number[];
 }
 
-export class ImageGalleryInfo {
-    public thumbnails?: Thumbnail[];
+export class ImageInfo {
+    public thumbnails?: Image[];
 }
