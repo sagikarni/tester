@@ -17,38 +17,52 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
         ],
-        thumbnails: [
+        images: [
             {
+                id: 1,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
+                id: 2,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
+                id: 3,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
+                id: 4,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
+                id: 5,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
+                id: 6,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
+                id: 7,
+                thumbnailSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 imgSrc: 'https://thumb.ibb.co/jruG5y/cover_Demo.png',
                 title: 'some title 7',
                 filterInfo: [2, 3],

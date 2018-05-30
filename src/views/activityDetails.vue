@@ -18,7 +18,7 @@
     import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
     import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
-    import { ImageGalleryInfo } from "@/modules/store/typeClasses";
+    import { ImageInfo } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
 
     const namespace: string = 'activities';
@@ -87,11 +87,11 @@
             return detailsInfo;
        }
 
-       get imageGalleryInfo(): ImageGalleryInfo {
-            const imageGalleryInfo = new ImageGalleryInfo();
+       get imageGalleryInfo(): ImageInfo {
+            const imageGalleryInfo = new ImageInfo();
 
             if (this.activityState && this.activityState.details) {
-                imageGalleryInfo.thumbnails = this.activityState.details.thumbnails;
+                imageGalleryInfo.thumbnails = this.activityState.details.images;
             }
             return imageGalleryInfo;
        }
