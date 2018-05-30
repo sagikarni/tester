@@ -15,7 +15,7 @@ var dictionary = {
             shortText: 'Short',
             mediumText: 'Medium',
             longText: 'Long',
-            startText: 'Start'
+            startText: 'Lets Start !'
         }
     },
     general:{

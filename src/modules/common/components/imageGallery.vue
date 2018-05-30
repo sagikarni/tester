@@ -60,8 +60,8 @@
                 this.thumbnails = thumbnailItems;
             }
             setTimeout(() => {
-                (TimelineMax as any).to('.active-item', 3, {filter : '' });
-                (TimelineMax as any).to('.inactive-item', 3, {filter : 'blur(2px) grayscale(100%) opacity(0.3)' });
+                (TimelineMax as any).to('.active-item', 1.5, {filter : '', opacity: 1});
+                (TimelineMax as any).to('.inactive-item', 1.5, {filter : 'blur(2px) grayscale(100%)', opacity: 0.3 });
             }, 0);
         }
     }
