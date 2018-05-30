@@ -5,7 +5,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
         title: 'Card Deck Name',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: 'https://thumb.ibb.co/ivFuRT/cover_Demo.png',
+        coverPhoto: 'media/restricted/collections/photos/collection-1/cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 2, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -20,49 +20,63 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                title: 'some title 7',
+                filterInfo: [2, 3],
+            },
+            {
+                id: 7,
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
+                title: 'some title 7',
+                filterInfo: [2, 3],
+            },
+            {
+                id: 7,
+                thumbnailSrc: 'media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
                 imgSrc: 'https://image.ibb.co/daNdJJ/water_waterfall_nature_214751.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
