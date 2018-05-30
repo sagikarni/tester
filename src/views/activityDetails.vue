@@ -1,6 +1,14 @@
 <template>
     <section class="ex-activity-details-component" v-show="drawContent" >
-        <social-share></social-share>
+        <v-layout row wrap class="mb-3">
+            <v-flex xs3>
+                <back-button></back-button>
+            </v-flex>
+            <v-flex xs9 class="text-xs-right" style="align-self: center">
+                <social-share></social-share>
+                <pin-button></pin-button>
+            </v-flex>
+        </v-layout>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
         <div class="ex-session-info mt-5 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
@@ -17,7 +25,9 @@
     import ImageGallery from '@/modules/common/components/imageGallery.vue';
     import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
-    import {IActivitiesState, SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
+    import BackButton from '@/modules/common/components/backButton.vue';
+    import PinButton from '@/modules/common/components/pinButton.vue';
+    import { SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
     import { ImageInfo } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
 
@@ -30,6 +40,8 @@
             ImageGallery,
             SocialShare,
             SessionLength,
+            BackButton,
+            PinButton,
         },
     })
     export default class ActivityDetails extends BaseComponent {
