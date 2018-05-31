@@ -4,11 +4,19 @@ export interface Ilocale {
         name: string,
     };
     activities: {
+        name : string,
         activityDetails: {
          videoBasedText: string,
          imageBasedText: string,
          landscapeText: string,
          portraitText: string,
+        },
+        sessionsInfo:{
+            sessionLengthText: string,
+            shortText: string,
+            mediumText: string,
+            longText: string,
+            startText: string,
         },
     };
     general: {
