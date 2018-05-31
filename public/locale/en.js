@@ -16,7 +16,10 @@ var dictionary = {
             mediumText: 'Medium',
             longText: 'Long',
             startText: 'Lets Start !'
-        }
+        },
+        galleryText: 'What\'s inside:',
+        pinSuccessText: 'Successfully saved activity',
+        pinErrorText: 'Error while saving your activity',
     },
     general:{
         social:{

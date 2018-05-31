@@ -34,6 +34,10 @@ export default new Router({
               path: '/activity-details',
               component: ActivityDetails,
           },
+          {
+              path: '/activity-details/:activityId',
+              component: ActivityDetails,
+          },
       ],
     },
         {

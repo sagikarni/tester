@@ -1,6 +1,5 @@
 <template>
-    <v-container grid-list-md class="mt-5 pa-0">
-        <h3>What's inside:</h3>
+    <v-container grid-list-md class="pa-0">
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
