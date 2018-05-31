@@ -47,6 +47,7 @@
     })
     export default class ActivityDetails extends BaseComponent {
         public drawContent: boolean = false;
+        public activityId: string = '1'; // TODO need to remove default value = '1'
 
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
@@ -56,8 +57,7 @@
 
         constructor() {
             super();
-
-          }
+        }
 
         @Watch('activityMainDetailsInfo')
         public onPropertyChanged(value: ActivityMainDetailsInfo, oldValue: ActivityMainDetailsInfo) {
@@ -118,7 +118,10 @@
              this.updateSessionInfoType( {selectedSessionInfoId} );
        }
         public created() {
-            this.getActivity({activity: "1"});
+            if (this.$route.params.activityId) {
+                this.activityId = this.$route.params.activityId;
+            }
+            this.getActivity({activity: this.activityId});
         }
         public show(): void {
             this.drawContent = true;
@@ -128,7 +131,7 @@
         }
 
         public makePin() {
-            this.pinActivity({activity: "1"}).then((res: any) => {
+            this.pinActivity({activity: this.activityId}).then((res: any) => {
                 if (res.data && res.data.status === true) {
                     this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
                 } else {
