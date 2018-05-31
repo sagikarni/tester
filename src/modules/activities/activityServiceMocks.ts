@@ -87,3 +87,5 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
 
     },
 });
+
+mock.onGet('/general/pinActivity', { params: { activityId: '1' } }).reply(200, { status: true});

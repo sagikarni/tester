@@ -10,6 +10,8 @@ export interface Ilocale {
          landscapeText: string,
          portraitText: string,
         },
+        pinSuccessText: string,
+        pinErrorText: string,
     };
     general: {
         slidesText: string,

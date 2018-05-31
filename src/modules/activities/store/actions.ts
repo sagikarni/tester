@@ -15,6 +15,16 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
         });
     },
+    pinActivity({ state, commit, rootState , dispatch }, prm: any): any {
+        dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
+        return activityService.pinActivity(prm.activity).then((response: any) => {
+            dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
+            return response;
+        }).catch((reject) => {
+            dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
+            return reject;
+        });
+    },
     updateSessionInfoType({ state, commit, rootState , dispatch }, prm: any): any {
         commit('updateSelectedSessionInfoId' , {selectedSessionInfoId: prm.selectedSessionInfoId});
     },

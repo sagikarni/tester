@@ -5,8 +5,8 @@
             <div class="d-inline-flex py-2">
                 <v-btn-toggle v-model="sessionLength" mandatory>
                     <v-btn v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" class="px-5 py-2" @click="sessionInfoIdChanged(infoItem.id)">
-                        <p class="mb-0">{{infoItem.description}}</p>
-                        {{infoItem.slidesCount}} {{ $locale.general.slidesText }}
+                        <p class="mb-0">{{infoItem.description}} <span class="hidden-xs-only">-&nbsp;</span></p>
+                        <p class="mb-0">{{infoItem.slidesCount}} {{ $locale.general.slidesText }}</p>
                     </v-btn>
                 </v-btn-toggle>
             </div>

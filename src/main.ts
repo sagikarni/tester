@@ -9,11 +9,12 @@ import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import {LocalePlugin, DirectionPlugin} from '@/plugins';
 import {httpClient} from '@/httpClient';
-
+import VueIziToast from 'vue-izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 Vue.config.productionTip = false;
 
-
+Vue.use(VueIziToast);
 
 httpClient.setDefaultHeaders();
 Vue.use(LocalePlugin);

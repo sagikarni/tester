@@ -6,11 +6,11 @@
             </v-flex>
             <v-flex xs9 class="text-xs-right" style="align-self: center">
                 <social-share></social-share>
-                <pin-button></pin-button>
+                <div class="menu" @click="makePin"><pin-button ></pin-button></div>
             </v-flex>
         </v-layout>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
-        <div class="ex-session-info mt-5 pt-3">
+        <div class="ex-session-info mt-3 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
         <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
@@ -50,6 +50,7 @@
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
         @Action('getActivity' , {namespace}) public getActivity?: any;
+        @Action('pinActivity' , {namespace}) public pinActivity?: any;
         @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
 
         constructor() {
@@ -123,6 +124,18 @@
             setTimeout(() => {
                 (TimelineMax as any).to('.ex-activity-details-component', 3, {opacity : 1 });
             } , 30);
+        }
+
+        public makePin() {
+            this.pinActivity({activity: "1"}).then((res: any) => {
+                if (res.data && res.data.status === true) {
+                    this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
+                } else {
+                    this.$toast.error(this.$locale.activities.pinErrorText, '', this.$notificationSystem.options.error);
+                }
+            }).catch((err: any) => {
+                this.$toast.error(err.toString(), '', this.$notificationSystem.options.error);
+            });
         }
     }
 </script>

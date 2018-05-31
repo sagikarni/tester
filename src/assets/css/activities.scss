@@ -84,8 +84,11 @@
           padding-right: 25px!important;
         }
         .btn__content{
-          flex-direction: column;
+          flex-direction: row;
           font-size: 12px;
+          @media screen and (max-width: 600px) {
+            flex-direction: column;
+          }
           p{
             font-size: 14px;
           }
