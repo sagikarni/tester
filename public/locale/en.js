@@ -16,7 +16,8 @@ var dictionary = {
             mediumText: 'Medium',
             longText: 'Long',
             startText: 'Lets Start !'
-        }
+        },
+        galleryText: 'What\'s inside:'
     },
     general:{
         social:{

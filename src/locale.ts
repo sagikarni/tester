@@ -18,6 +18,7 @@ export interface Ilocale {
             longText: string,
             startText: string,
         },
+        galleryText: string,
     };
     general: {
         slidesText: string,
