@@ -24,7 +24,15 @@
     width: 15px;
     height: 15px;
     display: inline-block;
-    background-image: url(../public/img/icons/pin.png);
+    background-image: url(../public/img/icons/pin-50.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-unpin-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(../public/img/icons/unpin-50.png);
     -webkit-background-size: contain;
     background-size: contain;
   }
