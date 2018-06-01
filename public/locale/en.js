@@ -19,11 +19,13 @@ var dictionary = {
         },
         galleryText: 'What\'s inside:',
         pinSuccessText: 'Successfully saved activity',
+        unPinSuccessText: 'Successfully unpinned activity',
         pinErrorText: 'Error while saving your activity',
     },
     general:{
         social:{
             pin: 'Pin',
+            unPin: 'Unpin',
             shareText: 'Share',
             networks: {
                 facebookText: 'Facebook',

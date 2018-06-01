@@ -6,7 +6,7 @@
             </v-flex>
             <v-flex xs9 class="text-xs-right" style="align-self: center">
                 <social-share></social-share>
-                <div class="menu" @click="makePin"><pin-button ></pin-button></div>
+                <div class="menu" @click="makePin(isPinned)"><pin-unpin-button :isPinned="isPinned"></pin-unpin-button></div>
             </v-flex>
         </v-layout>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
@@ -27,7 +27,7 @@
     import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
     import BackButton from '@/modules/common/components/backButton.vue';
-    import PinButton from '@/modules/common/components/pinButton.vue';
+    import PinUnpinButton from '@/modules/common/components/pinUnpinButton.vue';
     import { SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
     import { ImageInfo } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
@@ -42,12 +42,13 @@
             SocialShare,
             SessionLength,
             BackButton,
-            PinButton,
+            PinUnpinButton,
         },
     })
     export default class ActivityDetails extends BaseComponent {
         public drawContent: boolean = false;
         public activityId: string = '1'; // TODO need to remove default value = '1'
+        public isPinned: boolean = false;
 
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
@@ -121,7 +122,9 @@
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
             }
-            this.getActivity({activity: this.activityId});
+            this.getActivity({activity: this.activityId}).then((res: any) => {
+                this.isPinned = res.data && res.data.details && res.data.details.isPinned;
+            });
         }
         public show(): void {
             this.drawContent = true;
@@ -130,10 +133,17 @@
             } , 30);
         }
 
-        public makePin() {
-            this.pinActivity({activity: this.activityId}).then((res: any) => {
+        public makePin(isPinned: boolean) {
+            this.pinActivity({activity: this.activityId, pin: !isPinned}).then((res: any) => {
                 if (res.data && res.data.status === true) {
-                    this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
+                    if (this.activityState && this.activityState.details) {
+                        if (this.activityState.details.isPinned === true) { // Pinned
+                            this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
+                        } else { // Unpinned
+                            this.$toast.success(this.$locale.activities.unPinSuccessText, '', this.$notificationSystem.options.success);
+                        }
+                        this.isPinned = this.activityState.details.isPinned;
+                    }
                 } else {
                     this.$toast.error(this.$locale.activities.pinErrorText, '', this.$notificationSystem.options.error);
                 }
