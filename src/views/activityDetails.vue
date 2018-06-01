@@ -125,16 +125,16 @@
 
                 this.getActivity({activity: this.activityId}).then((res: any) => {
                     if (res.status === 500) {
-                        this.errorModalDialog({dialog: true, message: undefined});
+                        this.errorModalDialog({message: undefined});
                     } else if (res.status === 404) {
-                        this.errorModalDialog({dialog: true, message: this.$locale.activities.activityNotFound});
+                        this.errorModalDialog({message: this.$locale.activities.activityNotFound});
                     }
                     this.isPinned = res.data && res.data.details && res.data.details.isPinned;
                 }).catch((err: any) => {
-                    this.errorModalDialog({dialog: true, message: this.$locale.general.somethingWentWrong});
+                    this.errorModalDialog({message: this.$locale.general.somethingWentWrong});
                 });
             } else {
-                this.errorModalDialog({dialog: true, message: this.$locale.activities.noActivityChosen});
+                this.errorModalDialog({message: this.$locale.activities.noActivityChosen});
             }
 
         }

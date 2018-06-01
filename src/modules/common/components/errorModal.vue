@@ -19,6 +19,7 @@
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {Action} from 'vuex-class';
+    import {GeneralError} from "@/modules/store/types";
 
     @Component
     export default class ErrorModal extends BaseComponent {
@@ -31,6 +32,10 @@
             super();
         }
 
+        public showError(er: GeneralError) {
+            this.message = er.message;
+            this.dialog = true;
+        }
         public tryAgain() {
             this.hideModal();
             this.$router.go(0); // Reloading the current route like this this.$router.currentRoute
@@ -38,12 +43,15 @@
 
         public goToHomePage() {
             this.hideModal();
-            this.$router.push('/'); // Going to home page
+            setTimeout(() => {
+                 this.$router.push('/'); // Going to home page
+            }, 300);
         }
 
         private hideModal() {
+            this.dialog = false;
             setTimeout(() => {
-                this.errorModalDialog({dialog: false, message: ''});
+                this.errorModalDialog(null);
             }, 1000);
         }
     }
