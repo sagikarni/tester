@@ -88,6 +88,8 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
 
     },
 });
+mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(500, {});
+mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(404, {});
 
 mock.onGet('/general/pinActivity', { params: { activityId: '1', isPinned: true } }).reply(200, { status: true});
 mock.onGet('/general/unPinActivity', { params: { activityId: '1', isPinned: false } }).reply(200, { status: true});

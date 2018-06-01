@@ -13,8 +13,12 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
             return response;
         }).catch((reject: any) => {
+            let status = 500;
+            if (reject.response) {
+                status = reject.response.status;
+            }
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
-            return reject;
+            return {status, message: reject.message};
         });
     },
     pinActivity({ state, commit, rootState , dispatch }, prm: any): any {

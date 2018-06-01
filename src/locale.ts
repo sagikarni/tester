@@ -22,6 +22,8 @@ export interface Ilocale {
         pinSuccessText: string,
         unPinSuccessText: string,
         pinErrorText: string,
+        noActivityChosen: string,
+        activityNotFound: string,
     };
     general: {
         slidesText: string,
@@ -36,6 +38,10 @@ export interface Ilocale {
                  twitterText: string,
              },
          },
+        oopsTitleText: string,
+        tryAgainText: string,
+        homeText: string,
+        somethingWentWrong: string,
     };
 }
 

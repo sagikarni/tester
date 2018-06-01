@@ -21,6 +21,8 @@ var dictionary = {
         pinSuccessText: 'Successfully saved activity',
         unPinSuccessText: 'Successfully unpinned activity',
         pinErrorText: 'Error while saving your activity',
+        noActivityChosen: 'No activity was chosen',
+        activityNotFound: 'Activity not found',
     },
     general:{
         social:{
@@ -35,6 +37,10 @@ var dictionary = {
         },
         slidesText: 'Slides',
         sessionLengthText: 'Session Length',
+        oopsTitleText: 'OOPS...',
+        tryAgainText: 'Try Again',
+        homeText: 'Home',
+        somethingWentWrong: 'Something Went Wrong',
     }
 };
 

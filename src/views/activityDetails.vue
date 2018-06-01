@@ -55,6 +55,7 @@
         @Action('getActivity' , {namespace}) public getActivity?: any;
         @Action('pinActivity' , {namespace}) public pinActivity?: any;
         @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
+        @Action('errorModalDialog') public errorModalDialog?: any;
 
         constructor() {
             super();
@@ -121,10 +122,21 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
+
+                this.getActivity({activity: this.activityId}).then((res: any) => {
+                    if (res.status === 500) {
+                        this.errorModalDialog({dialog: true, message: undefined});
+                    } else if (res.status === 404) {
+                        this.errorModalDialog({dialog: true, message: this.$locale.activities.activityNotFound});
+                    }
+                    this.isPinned = res.data && res.data.details && res.data.details.isPinned;
+                }).catch((err: any) => {
+                    this.errorModalDialog({dialog: true, message: this.$locale.general.somethingWentWrong});
+                });
+            } else {
+                this.errorModalDialog({dialog: true, message: this.$locale.activities.noActivityChosen});
             }
-            this.getActivity({activity: this.activityId}).then((res: any) => {
-                this.isPinned = res.data && res.data.details && res.data.details.isPinned;
-            });
+
         }
         public show(): void {
             this.drawContent = true;
