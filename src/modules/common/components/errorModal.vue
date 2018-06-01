@@ -1,15 +1,15 @@
 <template>
     <v-layout row justify-center>
-        <v-dialog v-model="dialog" persistent max-width="50%">
-            <v-card>
-                <v-card-title class="headline">{{$locale.general.oopsTitleText}}</v-card-title>
-                <v-card-text v-if="message">{{message}}</v-card-text>
-                <v-card-text v-else>{{$locale.general.somethingWentWrong}}</v-card-text>
-                <v-card-actions>
+        <v-dialog v-model="dialog" persistent max-width="400px">
+            <v-card class="text-xs-center pt-3">
+                <v-card-text class="display-1 text-xs-center pb-0">{{$locale.general.oopsTitleText}}</v-card-text>
+                <v-card-text v-if="message" class="pa-0 title">{{message}}</v-card-text>
+                <v-card-text v-else class="pa-0 title">{{$locale.general.somethingWentWrong}}</v-card-text>
+                <v-card-text class="text-xs-center pa-4">
                     <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" flat @click.native="tryAgain">{{$locale.general.tryAgainText}}</v-btn>
-                    <v-btn color="green darken-1" flat @click.native="goToHomePage">{{$locale.general.homeText}}</v-btn>
-                </v-card-actions>
+                    <v-btn depressed outline  @click.native="tryAgain">{{$locale.general.tryAgainText}}</v-btn>
+                    <v-btn depressed outline @click.native="goToHomePage">{{$locale.general.homeText}}</v-btn>
+                </v-card-text>
             </v-card>
         </v-dialog>
     </v-layout>
@@ -50,6 +50,5 @@
 </script>
 
 <style scoped lang="scss">
-
 
 </style>

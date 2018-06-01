@@ -6,13 +6,8 @@
             </v-flex>
 
             <div row justify-center v-if="dialogSlideShow">
-                <v-dialog v-model="dialogSlideShow" persistent max-width="50%">
+                <v-dialog v-model="dialogSlideShow"  max-width="500px">
                     <v-card>
-                        <v-toolbar dark color="grey">
-                            <v-btn icon dark @click.native="dialogSlideShow = false">
-                                <v-icon>close</v-icon>
-                            </v-btn>
-                        </v-toolbar>
                         <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
                 </v-dialog>
@@ -96,5 +91,6 @@
     }
 </script>
 <style scoped>
+
 
 </style>
