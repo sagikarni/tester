@@ -8,20 +8,24 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
 
     getActivity({ state, commit, rootState , dispatch }, prm: any): any {
         dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
-        activityService.getActivity(prm.activity).then((response: any) => {
+        return activityService.getActivity(prm.activity).then((response: any) => {
             commit('updateActivities' , {activity: response.data});
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
-        }).catch(() => {
+            return response;
+        }).catch((reject: any) => {
+            let status = 500;
+            if (reject.response) {
+                status = reject.response.status;
+            }
             dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
+            return {status, message: reject.message};
         });
     },
     pinActivity({ state, commit, rootState , dispatch }, prm: any): any {
-        dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(true) ,  { root: true });
-        return activityService.pinActivity(prm.activity).then((response: any) => {
-            dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
+        return activityService.pinActivity(prm.activity, prm.pin).then((response: any) => {
+            commit('updateActivityIsPinned' , {isPinned: prm.pin}); // TODO here we need to add response from backend
             return response;
         }).catch((reject) => {
-            dispatch('loading' , SystemLoadingInfoHelper.getLoadingInfo(false) ,  { root: true });
             return reject;
         });
     },

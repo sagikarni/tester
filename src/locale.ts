@@ -20,13 +20,17 @@ export interface Ilocale {
         },
         galleryText: string,
         pinSuccessText: string,
+        unPinSuccessText: string,
         pinErrorText: string,
+        noActivityChosen: string,
+        activityNotFound: string,
     };
     general: {
         slidesText: string,
         sesstionLength: string,
         social: {
              pin: string,
+             unPin: string,
              shareText: string,
              networks: {
                  facebookText: string,
@@ -34,6 +38,10 @@ export interface Ilocale {
                  twitterText: string,
              },
          },
+        oopsTitleText: string,
+        tryAgainText: string,
+        homeText: string,
+        somethingWentWrong: string,
     };
 }
 

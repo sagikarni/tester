@@ -22,7 +22,7 @@
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <router-link to="/activity-details">   <v-list-tile-title>Activity Details</v-list-tile-title></router-link>
+                        <router-link to="/activity-details/1">   <v-list-tile-title>Activity Details</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile class="hidden menuItem" >

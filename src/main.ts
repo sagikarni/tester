@@ -1,20 +1,21 @@
 import Vue from 'vue';
+import Vuetify from 'vuetify';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueIziToast from 'vue-izitoast';
+import './registerServiceWorker';
 import App from './App.vue';
 import router from './router';
 import store from './modules/store/store';
-import './registerServiceWorker';
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
-import 'babel-polyfill';
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import {LocalePlugin, DirectionPlugin} from '@/plugins';
 import {httpClient} from '@/httpClient';
-import VueIziToast from 'vue-izitoast';
+import 'babel-polyfill';
+import 'swiper/dist/css/swiper.min.css';
 import 'izitoast/dist/css/iziToast.min.css';
+import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+
 
 Vue.config.productionTip = false;
-
-Vue.use(VueIziToast);
 
 httpClient.setDefaultHeaders();
 Vue.use(LocalePlugin);
@@ -28,6 +29,8 @@ Vue.use(Vuetify, {
     },
 });
 
+Vue.use(VueIziToast);
+Vue.use(VueAwesomeSwiper);
 
 
 new Vue({

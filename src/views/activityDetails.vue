@@ -6,14 +6,14 @@
             </v-flex>
             <v-flex xs9 class="text-xs-right" style="align-self: center">
                 <social-share></social-share>
-                <div class="menu" @click="makePin"><pin-button ></pin-button></div>
+                <div class="menu" @click="makePin(isPinned)"><pin-unpin-button :isPinned="isPinned"></pin-unpin-button></div>
             </v-flex>
         </v-layout>
         <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
         <div class="ex-session-info mt-3 pt-3">
             <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
         </div>
-        <h3 class="mt-5">{{ $locale.activities.galleryText }}</h3>
+        <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-5']">{{ $locale.activities.galleryText }}</h3>
         <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
     </section>
 </template>
@@ -27,7 +27,7 @@
     import SessionLength from '@/modules/activities/components/activitydetails/sessionLength.vue';
     import SocialShare from '@/modules/common/components/socialShare.vue';
     import BackButton from '@/modules/common/components/backButton.vue';
-    import PinButton from '@/modules/common/components/pinButton.vue';
+    import PinUnpinButton from '@/modules/common/components/pinUnpinButton.vue';
     import { SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
     import { ImageInfo } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
@@ -42,18 +42,20 @@
             SocialShare,
             SessionLength,
             BackButton,
-            PinButton,
+            PinUnpinButton,
         },
     })
     export default class ActivityDetails extends BaseComponent {
         public drawContent: boolean = false;
         public activityId: string = '1'; // TODO need to remove default value = '1'
+        public isPinned: boolean = false;
 
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
         @Action('getActivity' , {namespace}) public getActivity?: any;
         @Action('pinActivity' , {namespace}) public pinActivity?: any;
         @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
+        @Action('errorModalDialog') public errorModalDialog?: any;
 
         constructor() {
             super();
@@ -120,8 +122,21 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
+
+                this.getActivity({activity: this.activityId}).then((res: any) => {
+                    if (res.status === 500) {
+                        this.errorModalDialog({dialog: true, message: undefined});
+                    } else if (res.status === 404) {
+                        this.errorModalDialog({dialog: true, message: this.$locale.activities.activityNotFound});
+                    }
+                    this.isPinned = res.data && res.data.details && res.data.details.isPinned;
+                }).catch((err: any) => {
+                    this.errorModalDialog({dialog: true, message: this.$locale.general.somethingWentWrong});
+                });
+            } else {
+                this.errorModalDialog({dialog: true, message: this.$locale.activities.noActivityChosen});
             }
-            this.getActivity({activity: this.activityId});
+
         }
         public show(): void {
             this.drawContent = true;
@@ -130,10 +145,17 @@
             } , 30);
         }
 
-        public makePin() {
-            this.pinActivity({activity: this.activityId}).then((res: any) => {
+        public makePin(isPinned: boolean) {
+            this.pinActivity({activity: this.activityId, pin: !isPinned}).then((res: any) => {
                 if (res.data && res.data.status === true) {
-                    this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
+                    if (this.activityState && this.activityState.details) {
+                        if (this.activityState.details.isPinned === true) { // Pinned
+                            this.$toast.success(this.$locale.activities.pinSuccessText, '', this.$notificationSystem.options.success);
+                        } else { // Unpinned
+                            this.$toast.success(this.$locale.activities.unPinSuccessText, '', this.$notificationSystem.options.success);
+                        }
+                        this.isPinned = this.activityState.details.isPinned;
+                    }
                 } else {
                     this.$toast.error(this.$locale.activities.pinErrorText, '', this.$notificationSystem.options.error);
                 }

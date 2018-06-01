@@ -22,20 +22,20 @@
                     show: {
                         theme: 'dark',
                         icon: 'icon-person',
-                        position: 'bottomLeft',
+                        position: 'topCenter',
                         progressBarColor: 'rgb(0, 255, 184)',
                     },
                     info: {
-                        position: 'bottomLeft',
+                        position: 'topCenter',
                     },
                     success: {
-                        position: 'bottomLeft',
+                        position: 'topCenter',
                     },
                     warning: {
-                        position: 'bottomLeft',
+                        position: 'topCenter',
                     },
                     error: {
-                        position: 'bottomLeft',
+                        position: 'topCenter',
                     },
                 },
             };

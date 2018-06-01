@@ -2,8 +2,16 @@
     <v-container grid-list-md class="pa-0">
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
+                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
             </v-flex>
+
+            <div row justify-center v-if="dialogSlideShow">
+                <v-dialog v-model="dialogSlideShow"  max-width="500px">
+                    <v-card>
+                        <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
+                    </v-card>
+                </v-dialog>
+            </div>
         </v-layout>
     </v-container>
 </template>
@@ -11,14 +19,20 @@
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
     import { ImageInfo, Image } from "@/modules/store/typeClasses";
+    import SlideShow from '@/modules/common/components/slideShow.vue';
     import TimelineMax from 'gsap';
 
-
-    @Component
+    @Component({
+        components: {
+            SlideShow,
+        },
+    })
     export default class ImageGallery extends Vue {
 
-
         public thumbnails?: object[] = [];
+        public slideImages?: object[] = [];
+        public dialogSlideShow: boolean = false;
+        public selectedImgId: number = 0;
 
         @Prop() public imageGalleryInfo?: ImageInfo;
         @Prop() public filterId?: number;
@@ -45,11 +59,13 @@
         public chooseGalleryThumbnails(galleryInfo: any, filterId: any) {
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
+                const slideImages: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Image) => {
                     if (item.filterInfo && filterId) {
                         let imageItem: any;
                         if (item.filterInfo.includes(filterId)) {
-                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true};
+                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true, id: item.id};
+                            slideImages.push({id: item.id, title: item.title, imgSrc: item.imgSrc});
                         } else {
                             imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: false};
                         }
@@ -57,14 +73,24 @@
                     }
                 });
                 this.thumbnails = thumbnailItems;
+                this.slideImages = slideImages;
+
             }
             setTimeout(() => {
                 (TimelineMax as any).to('.active-item', 1.5, {filter : '', opacity: 1});
                 (TimelineMax as any).to('.inactive-item', 1.5, {filter : 'blur(2px) grayscale(100%)', opacity: 0.3 });
             }, 0);
         }
+
+        public showSlideImages(item: any) {
+            if (item.active) {
+                this.dialogSlideShow = true;
+                this.selectedImgId = item.id;
+            }
+        }
     }
 </script>
 <style scoped>
+
 
 </style>

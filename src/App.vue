@@ -6,24 +6,39 @@
          <router-view></router-view>
         </transition>
     </v-app>
+    <error-modal :dialog="dialog" :message="dialogMessage"></error-modal>
   </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import { Component, Prop, Watch } from 'vue-property-decorator';
+    import { Component } from 'vue-property-decorator';
     import Loading from '@/modules/common/components/loading.vue';
-    import {State, Action, Getter} from 'vuex-class';
-    import {IRootState, ISystemLoading} from "./modules/store/types";
-    import axios from 'axios';
+    import ErrorModal from '@/modules/common/components/errorModal.vue';
+    import { State } from 'vuex-class';
 
     @Component({
         components: {
             Loading,
+            ErrorModal,
         },
     })
     export default class App extends Vue {
+        @State(state => state.errorModalDialog) public errorModalDialog?: boolean;
+        @State(state => state.errorModalMessage) public errorModalMessage?: string;
 
+        get dialog(): boolean {
+            if (this.errorModalDialog === undefined) {
+                return false;
+            }
+            return this.errorModalDialog;
+        }
+        get dialogMessage(): string {
+            if (this.errorModalMessage === undefined) {
+                return 'Something Went Wrong';
+            }
+            return this.errorModalMessage;
+        }
     }
 </script>
 
