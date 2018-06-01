@@ -12,6 +12,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         selectedSessionInfoId: 3,
+        isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -88,4 +89,5 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     },
 });
 
-mock.onGet('/general/pinActivity', { params: { activityId: '1' } }).reply(200, { status: true});
+mock.onGet('/general/pinActivity', { params: { activityId: '1', isPinned: true } }).reply(200, { status: true});
+mock.onGet('/general/unPinActivity', { params: { activityId: '1', isPinned: false } }).reply(200, { status: true});

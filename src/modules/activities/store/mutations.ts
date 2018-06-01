@@ -10,4 +10,9 @@ export const mutations: MutationTree<IActivitiesState> = {
             state.activity.details.selectedSessionInfoId = payload.selectedSessionInfoId;
         }
     },
+    updateActivityIsPinned(state, payload: any) {
+        if (state.activity && state.activity.details) {
+            state.activity.details.isPinned = payload.isPinned;
+        }
+    },
 };

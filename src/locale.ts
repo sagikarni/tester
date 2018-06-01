@@ -20,6 +20,7 @@ export interface Ilocale {
         },
         galleryText: string,
         pinSuccessText: string,
+        unPinSuccessText: string,
         pinErrorText: string,
     };
     general: {
@@ -27,6 +28,7 @@ export interface Ilocale {
         sesstionLength: string,
         social: {
              pin: string,
+             unPin: string,
              shareText: string,
              networks: {
                  facebookText: string,

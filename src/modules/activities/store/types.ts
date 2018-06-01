@@ -49,6 +49,7 @@ export interface IActivitiesState {
             mediaCount: number, // number of videos or photos in this activity
             sessionsInfo: SessionsInfo[],
             selectedSessionInfoId: number,
+            isPinned: boolean,
         },
         content: { },
     } | undefined;
