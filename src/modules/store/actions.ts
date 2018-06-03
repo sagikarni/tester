@@ -1,13 +1,13 @@
 import {ActionTree} from "vuex";
 import {IRootState} from './types';
-import {ISystemLoading, IErrorModalDialog} from "@/modules/store/types";
+import {ISystemLoading, GeneralError} from "@/modules/store/types";
 
 
 export const actions: ActionTree<IRootState, IRootState> = {
     loading({commit} , loaadingInfo: ISystemLoading) {
         commit('loadingStateChanged' , loaadingInfo);
     },
-    errorModalDialog({commit} , item: IErrorModalDialog) {
+    errorModalDialog({commit} , item: GeneralError) {
         commit('updateErrorModalDialog' , item);
     },
 };

@@ -5,14 +5,15 @@
         <transition name="page" mode="out-in">
          <router-view></router-view>
         </transition>
+       <error-modal ref="errorModal"></error-modal>
     </v-app>
-    <error-modal :dialog="dialog" :message="dialogMessage"></error-modal>
+
   </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import { Component } from 'vue-property-decorator';
+    import { Component, Watch } from 'vue-property-decorator';
     import Loading from '@/modules/common/components/loading.vue';
     import ErrorModal from '@/modules/common/components/errorModal.vue';
     import { State } from 'vuex-class';
@@ -24,21 +25,13 @@
         },
     })
     export default class App extends Vue {
-        @State(state => state.errorModalDialog) public errorModalDialog?: boolean;
-        @State(state => state.errorModalMessage) public errorModalMessage?: string;
+        @State(state => state.generalGerror) public generalGerror?: any;
 
-        get dialog(): boolean {
-            if (this.errorModalDialog === undefined) {
-                return false;
-            }
-            return this.errorModalDialog;
-        }
-        get dialogMessage(): string {
-            if (this.errorModalMessage === undefined) {
-                return 'Something Went Wrong';
-            }
-            return this.errorModalMessage;
-        }
+        @Watch('generalGerror')
+        public onPropertyChanged(value: any, oldValue: any) {
+           const el: any = this.$refs.errorModal;
+           el.showError(value);
+         }
     }
 </script>
 

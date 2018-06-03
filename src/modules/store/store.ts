@@ -11,8 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store<IRootState>({
     state: {
         systemLoading:  undefined,
-        errorModalDialog:  undefined,
-        errorModalMessage:  undefined,
+        generalGerror:  undefined,
     },
     modules: {
         search,

@@ -1,7 +1,6 @@
 export interface IRootState {
     systemLoading?: ISystemLoading | undefined | null;
-    errorModalDialog?: boolean | undefined;
-    errorModalMessage?: string | undefined;
+    generalGerror: GeneralError | undefined;
 }
 
 export interface ISystemLoading {
@@ -9,7 +8,6 @@ export interface ISystemLoading {
     message?: string;
 }
 
-export interface IErrorModalDialog {
-    dialog?: boolean | undefined;
-    message?: string | undefined;
+export class GeneralError {
+     public message?: string | undefined;
 }
