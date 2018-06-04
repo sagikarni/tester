@@ -2,11 +2,18 @@
     <v-container grid-list-md class="pa-0">
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                <div class="img_cover">
+                    <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                </div>
             </v-flex>
 
             <div row justify-center v-if="dialogSlideShow">
-                <v-dialog v-model="dialogSlideShow"  max-width="500px">
+                <v-toolbar class="close_button">
+                    <v-btn icon dark @click.native="dialogSlideShow = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-dialog v-model="dialogSlideShow"  max-width="50%">
                     <v-card>
                         <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
@@ -91,6 +98,31 @@
     }
 </script>
 <style scoped>
-
-
+.img_cover{
+    height: 100%;
+    overflow: hidden;
+}
+.img_cover img {
+    -webkit-transition: 4.0s ease;
+    transition: 1.4s ease;
+}
+.img_cover img:hover {
+    cursor: pointer;
+    -webkit-transition: 4.0s ease;
+    transition: 4.4s ease;
+    -webkit-transform: scale(1.08);
+    transform: scale(1.08);
+}
+.close_button{
+    position: fixed;
+    top: 75px;
+    right: 50px;
+    width: 50px;
+    background: none;
+    box-shadow: none;
+    z-index: 1000;
+}
+.close_button div{
+    background: none;
+}
 </style>
