@@ -10,4 +10,7 @@ export const actions: ActionTree<IRootState, IRootState> = {
     errorModalDialog({commit} , item: GeneralError) {
         commit('updateErrorModalDialog' , item);
     },
+    errorPaneAction({commit} , item: GeneralError) {
+        commit('updateErrorPane' , item);
+    },
 };

@@ -1,21 +1,24 @@
 <template>
-    <section class="ex-activity-details-component" v-show="drawContent" >
-        <v-layout row wrap class="mb-3">
-            <v-flex xs3>
-                <back-button></back-button>
-            </v-flex>
-            <v-flex xs9 class="text-xs-right" style="align-self: center">
-                <social-share></social-share>
-                <div class="menu" @click="makePin(isPinned)"><pin-unpin-button :loading="loading" :disabled="loading" :isPinned="isPinned"></pin-unpin-button></div>
-            </v-flex>
-        </v-layout>
-        <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
-        <div class="ex-session-info mt-3 pt-3">
-            <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
-        </div>
-        <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-5']">{{ $locale.activities.galleryText }}</h3>
-        <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
-    </section>
+    <div>
+        <error-pane ref="errorPane"></error-pane>
+        <section class="ex-activity-details-component" v-show="drawContent" v-if="!showErrorPane" >
+            <v-layout row wrap class="mb-3">
+                <v-flex xs3>
+                    <back-button></back-button>
+                </v-flex>
+                <v-flex xs9 class="text-xs-right" style="align-self: center">
+                    <social-share></social-share>
+                    <div class="menu" @click="makePin(isPinned)"><pin-unpin-button :isPinned="isPinned" :loading="loading" :disabled="loading"></pin-unpin-button></div>
+                </v-flex>
+            </v-layout>
+            <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
+            <div class="ex-session-info mt-3 pt-3">
+                <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
+            </div>
+            <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-5']">{{ $locale.activities.galleryText }}</h3>
+            <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
+        </section>
+    </div>
 </template>
 
 <script lang="ts">
@@ -28,8 +31,9 @@
     import SocialShare from '@/modules/common/components/socialShare.vue';
     import BackButton from '@/modules/common/components/backButton.vue';
     import PinUnpinButton from '@/modules/common/components/pinUnpinButton.vue';
+    import ErrorPane from '@/modules/common/components/errorPane.vue';
     import { SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
-    import { ImageInfo } from "@/modules/store/typeClasses";
+    import { ImageInfo, GeneralError } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
 
     const namespace: string = 'activities';
@@ -43,20 +47,23 @@
             SessionLength,
             BackButton,
             PinUnpinButton,
+            ErrorPane,
         },
     })
     export default class ActivityDetails extends BaseComponent {
         public drawContent: boolean = false;
         public activityId: string = '1'; // TODO need to remove default value = '1'
         public isPinned: boolean = false;
+        public showErrorPane: boolean = false;
         public loading?: boolean = false;
 
+        @State(state => state.errorPane) public errorPane?: any;
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
         @Action('getActivity' , {namespace}) public getActivity?: any;
         @Action('pinActivity' , {namespace}) public pinActivity?: any;
         @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
-        @Action('errorModalDialog') public errorModalDialog?: any;
+        @Action('errorPaneAction') public errorPaneAction?: any;
 
         constructor() {
             super();
@@ -67,6 +74,11 @@
             if (value.dataExist) {
                this.show();
             }
+        }
+        @Watch('errorPane')
+        public onPropertyChanged2(value: GeneralError, oldValue: GeneralError) {
+            const el: any = this.$refs.errorPane;
+            el.showError(value);
         }
 
        get sessionsInfo(): SessionsInfo[] {
@@ -126,18 +138,23 @@
 
                 this.getActivity({activity: this.activityId}).then((res: any) => {
                     if (res.status === 500) {
-                        this.errorModalDialog({message: undefined});
+                        this.showErrorPane = true;
+                        this.errorPaneAction({message: undefined});
                     } else if (res.status === 404) {
-                        this.errorModalDialog({message: this.$locale.activities.activityNotFound});
+                        this.showErrorPane = true;
+                        this.errorPaneAction({message: this.$locale.activities.activityNotFound});
+                    } else {
+                        this.showErrorPane = false; // Important for hide error pane and show the activity section
                     }
                     this.isPinned = res.data && res.data.details && res.data.details.isPinned;
                 }).catch((err: any) => {
-                    this.errorModalDialog({message: this.$locale.general.somethingWentWrong});
+                    this.showErrorPane = true;
+                    this.errorPaneAction({message: this.$locale.general.somethingWentWrong});
                 });
             } else {
-                this.errorModalDialog({message: this.$locale.activities.noActivityChosen});
+                this.showErrorPane = true;
+                this.errorPaneAction({message: this.$locale.activities.noActivityChosen});
             }
-
         }
         public show(): void {
             this.drawContent = true;
