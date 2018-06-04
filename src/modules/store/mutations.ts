@@ -10,4 +10,7 @@ export const mutations: MutationTree<IRootState> = {
     updateErrorModalDialog(state, payload: GeneralError) {
         state.generalGerror = payload;
     },
+    updateErrorPane(state, payload: GeneralError) {
+        state.errorPane = payload;
+    },
 };
