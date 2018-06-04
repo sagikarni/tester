@@ -52,4 +52,11 @@
 
 <style scoped lang="scss">
 
+    .swiper-slide{
+        text-align: center;
+    }
+    .swiper-slide img{
+        width: 100%;
+    }
+
 </style>

@@ -9,3 +9,7 @@ export class Image {
 export class ImageInfo {
     public thumbnails?: Image[];
 }
+
+export class GeneralError {
+    public message?: string | undefined;
+}
