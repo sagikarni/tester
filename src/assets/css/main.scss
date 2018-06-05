@@ -67,6 +67,12 @@ h1,h2,h3,h4,h5,h6{
   background: transparent;
 }
 
+.ex-header-menu{
+  display: flex;
+  top: 64px !important;
+  position: fixed;
+}
+
 /*#endregion scroll bars*/
 
 // .tr-container {

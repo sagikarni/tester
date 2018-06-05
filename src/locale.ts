@@ -42,6 +42,7 @@ export interface Ilocale {
         tryAgainText: string,
         homeText: string,
         somethingWentWrong: string,
+        menuActivities: string,
     };
 }
 

@@ -32,6 +32,12 @@
            const el: any = this.$refs.errorModal;
            el.showError(value);
          }
+        @Watch('$route')
+        public onPropertyChanged2(value: any, oldValue: any) {
+            const el: any = this.$refs.loading;
+            el.show();
+            setTimeout(() => { el.close(); }, 1000);
+        }
     }
 </script>
 

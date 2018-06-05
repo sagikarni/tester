@@ -1,6 +1,12 @@
 <template>
     <swiper :options="swiperOption" ref="swiper">
-        <swiper-slide v-for="image in images" :key="image.id"><img :src="image.imgSrc" :alt="image.title"></swiper-slide>
+        <swiper-slide v-for="image in images" :key="image.id">
+            <div class="full-height table">
+                <div class="cell">
+                    <img style="width:100%;height:100%" class="object-fit_contain" :src="image.imgSrc" :alt="image.title">
+                </div>
+            </div>
+        </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -52,11 +58,30 @@
 
 <style scoped lang="scss">
 
-    .swiper-slide{
-        text-align: center;
+    .object-fit_contain { object-fit: contain }
+    .full-height{
+        height:100%;
+        background:#F8F8F8;
     }
-    .swiper-slide img{
+    .full-height.two{
+        background:#ACACAC;
+    }
+    .full-height.three{
+        background:#5E5E5E;
+    }
+    .table{
+        display:table;
+        width:100%;
+        position:relative;
+        background: transparent;
+    }
+    .cell {
+        display: table-cell;
+        vertical-align: middle;
         width: 100%;
+        margin: 0 auto;
+        height:100%;
+        text-align: center;
     }
 
 </style>

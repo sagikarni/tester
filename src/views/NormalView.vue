@@ -49,11 +49,29 @@
                         <router-link to="/slideshow">   <v-list-tile-title>SlideShow</v-list-tile-title></router-link>
                     </v-list-tile-content>
                 </v-list-tile>
+                <v-list-tile class="hidden menuItem"  v-for="(item, i) in items" :key="i" v-if="$vuetify.breakpoint.xsOnly">
+                    <v-list-tile-action>
+                        <v-icon>settings</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <router-link to="/">   <v-list-tile-title>{{ item.title }}</v-list-tile-title></router-link>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
         </v-navigation-drawer>
         <v-toolbar app fixed clipped-left>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-            <v-toolbar-title>Application</v-toolbar-title>
+            <v-menu offset-y content-class="ex-header-menu"  v-if="!$vuetify.breakpoint.xsOnly">
+                <v-toolbar-title slot="activator">{{ $locale.general.menuActivities }}</v-toolbar-title>
+                <v-list v-for="(item, i) in items" :key="i">
+                    <v-list-tile>
+                        <v-list-tile-title class="bottomColor"><strong>{{ item.title }}</strong></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile v-for="(item1, i) in item.data" :key="i" @click="">
+                        <router-link to="/">  <v-list-tile-title>{{ item1.title }}</v-list-tile-title></router-link>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
         </v-toolbar>
         <v-content>
             <v-container >
@@ -80,7 +98,53 @@
     export default class NormalView extends Vue {
         public drawer: boolean = false;
 
-
+        // TODO Data will come from Mocks/ServerSide
+        public items: any =  [
+            {
+                title: 'Collections',
+                data: [
+                    {
+                        title: 'Premium Collection',
+                    },
+                    {
+                        title: 'Point of View',
+                    },
+                ],
+            },
+            {
+                title: 'Communication',
+                data: [
+                    {
+                        title: 'Good Story',
+                    },
+                    {
+                        title: 'WH Questions',
+                    },
+                ],
+            },
+            {
+                title: 'Cognition',
+                data: [
+                    {
+                        title: 'Puzzle',
+                    },
+                    {
+                        title: 'Zoom',
+                    },
+                    {
+                        title: 'Categorization',
+                    },
+                ],
+            },
+            {
+                title: 'Speech',
+                data: [
+                    {
+                        title: 'Articulation',
+                    },
+                ],
+            },
+            ];
         @Prop()
         public source!: string;
 
@@ -105,6 +169,8 @@
 
 
 <style scoped>
-
+.bottomColor{
+    border-bottom: solid 2px #7ea875;
+}
 
 </style>

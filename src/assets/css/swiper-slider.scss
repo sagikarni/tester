@@ -1,0 +1,40 @@
+
+.ex-activity-details-component{
+  .close_button{
+    .btn--icon{
+      .btn__content{
+        font-size: 35px;
+        width: 36px;
+        border-radius: 50%;
+        background: #696969;
+
+      }
+    }
+  }
+
+}
+.swiper-container {
+  height: 90vh;
+}
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dialog{
+  box-shadow: none;
+}
+.theme--light .card{
+  background-color: transparent;
+  color: rgba(0,0,0,.87);
+  box-shadow: none;
+}
+.ex-social-menu{
+  a.list__tile{
+    i{
+      width: 30px;
+      font-size: 20px;
+      align-self: center;
+    }
+  }
+}
