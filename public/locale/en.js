@@ -41,6 +41,7 @@ var dictionary = {
         tryAgainText: 'Try Again',
         homeText: 'Home',
         somethingWentWrong: 'Something Went Wrong',
+        menuActivities: 'Activities',
     }
 };
 

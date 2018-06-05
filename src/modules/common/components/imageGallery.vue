@@ -13,7 +13,7 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-toolbar>
-                <v-dialog v-model="dialogSlideShow"  max-width="50%">
+                <v-dialog v-model="dialogSlideShow"  min-width="80%">
                     <v-card>
                         <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
@@ -98,31 +98,32 @@
     }
 </script>
 <style scoped>
-.img_cover{
-    height: 100%;
-    overflow: hidden;
-}
-.img_cover img {
-    -webkit-transition: 4.0s ease;
-    transition: 1.4s ease;
-}
-.img_cover img:hover {
-    cursor: pointer;
-    -webkit-transition: 4.0s ease;
-    transition: 4.4s ease;
-    -webkit-transform: scale(1.08);
-    transform: scale(1.08);
-}
-.close_button{
-    position: fixed;
-    top: 75px;
-    right: 50px;
-    width: 50px;
-    background: none;
-    box-shadow: none;
-    z-index: 1000;
-}
-.close_button div{
-    background: none;
-}
+    .dialog card{
+        min-height: 90vh;
+        box-shadow: none;
+        background: none;
+    }
+    .theme--light card{
+        background-color: transparent;
+        color: rgba(0,0,0,.87);
+        box-shadow: none;
+    }
+    .swiper-slide img{
+        width: 100%;
+    }
+    .close_button{
+        position: fixed;
+        top: 10px;
+        right: 50px;
+        width: 50px;
+        background: none;
+        box-shadow: none;
+        z-index: 1000;
+    }
+    .close_button div{
+        background: none;
+    }
+    .img_cover:hover{
+        cursor: pointer;
+    }
 </style>
