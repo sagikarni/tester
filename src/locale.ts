@@ -27,7 +27,7 @@ export interface Ilocale {
         notIncluded: {
             text: string,
             session: string,
-        }
+        },
     };
     general: {
         slidesText: string,

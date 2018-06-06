@@ -16,7 +16,7 @@
                 </v-toolbar>
                 <v-dialog v-model="dialogSlideShow"  min-width="80%">
                     <v-card>
-                        <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
+                        <slide-show @click.native="dialogSlideShow = false" :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
                 </v-dialog>
             </div>
