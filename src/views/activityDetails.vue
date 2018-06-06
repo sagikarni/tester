@@ -16,7 +16,7 @@
                 <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
             </div>
             <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-5']">{{ $locale.activities.galleryText }}</h3>
-            <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId"></image-gallery>
+            <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId" :sessionBtnDescription="sessionBtnDescription"></image-gallery>
         </section>
     </div>
 </template>
@@ -128,6 +128,12 @@
        get sessionBtnId(): number | undefined {
            return this.selectedSessionInfoId;
        }
+
+        get sessionBtnDescription(): string | undefined {
+            if (this.selectedSessionInfoId !== undefined && this.sessionsInfo) {
+                return this.sessionsInfo[this.selectedSessionInfoId - 1]['description']  ;
+            }
+        }
 
         public changedSessionInfoId(selectedSessionInfoId: number) {
              this.updateSessionInfoType( {selectedSessionInfoId} );

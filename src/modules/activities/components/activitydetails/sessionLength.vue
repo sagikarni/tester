@@ -1,19 +1,30 @@
 <template>
-    <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0">
-        <h5>{{ $locale.general.sessionLengthText }}</h5>
-        <v-layout justify-center class="mb-3">
-            <div class="d-inline-flex py-2">
-                <v-btn-toggle v-model="sessionLength" mandatory>
-                    <v-btn v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" class="px-5 py-2" @click="sessionInfoIdChanged(infoItem.id)">
-                        <p class="mb-0">{{infoItem.description}} <span class="hidden-xs-only">-&nbsp;</span></p>
-                        <p class="mb-0">{{infoItem.slidesCount}} {{ $locale.general.slidesText }}</p>
-                    </v-btn>
-                </v-btn-toggle>
-            </div>
-        </v-layout>
-        <v-btn large color="primary">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+
+    <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0 ">
+        <v-btn large outline color="grey darken-4" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+
+        <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
+            <v-expansion-panel-content>
+                <div slot="header">{{ $locale.general.sessionLengthText }}</div>
+                <v-card>
+                    <v-card-text>
+                        <v-container fluid>
+                            <v-radio-group v-model="sessionLength" mandatory row>
+                                <v-radio v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" @change="sessionInfoIdChanged(infoItem.id)"
+                                         :label="`${infoItem.description} Session  ${infoItem.slidesCount}  ${$locale.general.slidesText}`">
+                                </v-radio>
+                            </v-radio-group>
+
+                        </v-container>
+
+                    </v-card-text>
+                </v-card>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
     </div>
+
 </template>
+
 
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
@@ -37,6 +48,37 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .ex-session-info .expansion-panel__header{
+        justify-content: center;
+    }
+    .ex-session-info .expansion-panel__header div {
+        flex: initial;
+    }
+    .ex-session-info .expansion-panel__header .header__icon{
+        margin-left: unset;
+    }
+    .ex-session-info .expansion-panel {
+        box-shadow: none;
+    }
+    .ex-session-info  .theme--light .expansion-panel .expansion-panel__container {
+        background-color: unset!important;
+    }
+    .ex-session-info .expansion-panel__container.expansion-panel__container--active {
+        background-color: unset!important;
+    }
+    .ex-session-info .expansion-panel__container {
+        background-color: unset!important;
+    }
+    .ex-session-info  .theme--light .expansion-panel .expansion-panel__container {
+        background-color: unset!important;
+    }
+    .ex-session-info .expansion-panel__body {
+        background-color: unset!important;
+    }
+    .input-group__input label{
+        font-size: 14px;
+        color:rgba(0,0,0,.80)!important;
+        line-height: 24px;
+    }
 </style>

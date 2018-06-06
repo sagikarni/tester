@@ -4,6 +4,7 @@
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <div class="img_cover">
                     <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
                 </div>
             </v-flex>
 
@@ -15,7 +16,7 @@
                 </v-toolbar>
                 <v-dialog v-model="dialogSlideShow"  min-width="80%">
                     <v-card>
-                        <slide-show :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
+                        <slide-show @click.native="dialogSlideShow = false" :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
                 </v-dialog>
             </div>
@@ -43,6 +44,7 @@
 
         @Prop() public imageGalleryInfo?: ImageInfo;
         @Prop() public filterId?: number;
+        @Prop() public sessionBtnDescription?: string;
 
         get addColumnProp() {
             const addColumnProp = {column: false, wrap: true};
@@ -52,7 +54,11 @@
             }
             return addColumnProp;
         }
-
+        get sessionDescription() {
+            if (this.sessionBtnDescription) {
+                return this.sessionBtnDescription.toLocaleLowerCase();
+            }
+        }
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {
             this.chooseGalleryThumbnails(value, this.filterId);
@@ -113,8 +119,8 @@
     }
     .close_button{
         position: fixed;
-        top: 10px;
-        right: 50px;
+        top: 0;
+        right: 8px;
         width: 50px;
         background: none;
         box-shadow: none;
@@ -123,7 +129,18 @@
     .close_button div{
         background: none;
     }
+    .img_cover{
+        position: relative;
+    }
     .img_cover:hover{
         cursor: pointer;
+    }
+    .img_content{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+        padding: 0 10px;
     }
 </style>

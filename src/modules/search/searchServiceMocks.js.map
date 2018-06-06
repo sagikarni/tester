@@ -1,1 +1,0 @@
-{"version":3,"file":"searchServiceMocks.js","sourceRoot":"","sources":["searchServiceMocks.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,IAAI,EAAC,MAAM,cAAc,CAAC;AAElC,IAAI,CAAC,KAAK,CAAC,kBAAkB,CAAC,CAAC,KAAK,CAAC,GAAG,EAAE;IACtC,KAAK,EAAE;QACH,EAAE,EAAE,EAAE,CAAC,EAAE,IAAI,EAAE,YAAY,EAAE;KAChC;CACJ,CAAC,CAAC"}

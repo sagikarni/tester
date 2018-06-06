@@ -3,13 +3,13 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <img style="width:100%;height:100%" class="object-fit_contain" :src="image.imgSrc" :alt="image.title">
+                    <img style="height: 100%;"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
                 </div>
             </div>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-pagination swiper-pagination-white" @click.stop="closeModal" slot="pagination"></div>
+        <div class="swiper-button-prev swiper-button-white" @click.stop="closeModal" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" @click.stop="closeModal" slot="button-next"></div>
     </swiper>
 </template>
 
@@ -25,7 +25,7 @@
         @Prop() public selectedImgId?: number;
 
         public swiperOption: any;
-
+        public dialogSlideShow: boolean = false;
         constructor() {
             super();
             let selectedImgIndex = 0;
@@ -51,6 +51,9 @@
                     prevEl: '.swiper-button-prev',
                 },
             };
+        }
+        public closeModal() {
+            return true;
         }
 
     }

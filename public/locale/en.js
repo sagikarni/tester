@@ -23,6 +23,10 @@ var dictionary = {
         pinErrorText: 'Error while saving your activity',
         noActivityChosen: 'No activity was chosen',
         activityNotFound: 'Activity not found',
+        notIncluded: {
+            text: 'Not included in the',
+            session: 'session',
+        }
     },
     general:{
         social:{
