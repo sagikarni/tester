@@ -1,5 +1,5 @@
 <template>
-    <swiper :options="swiperOption" ref="swiper">
+    <swiper v-if="dialogSlideShow" :options="swiperOption" ref="swiper">
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
@@ -7,9 +7,9 @@
                 </div>
             </div>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
+        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
     </swiper>
 </template>
 
@@ -25,7 +25,7 @@
         @Prop() public selectedImgId?: number;
 
         public swiperOption: any;
-
+        public dialogSlideShow: boolean = false;
         constructor() {
             super();
             let selectedImgIndex = 0;
@@ -51,6 +51,12 @@
                     prevEl: '.swiper-button-prev',
                 },
             };
+        }
+        public showSlideImages(item: any) {
+            if (item.active) {
+                this.dialogSlideShow = true;
+                this.selectedImgId = item.id;
+            }
         }
 
     }

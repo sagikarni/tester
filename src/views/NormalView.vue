@@ -59,10 +59,10 @@
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar app fixed clipped-left>
+        <v-toolbar height="40px" app fixed clipped-left>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-menu offset-y content-class="ex-header-menu"  v-if="!$vuetify.breakpoint.xsOnly">
-                <v-toolbar-title slot="activator">{{ $locale.general.menuActivities }}</v-toolbar-title>
+                <v-toolbar-title slot="activator" class="toolbarTitle">{{ $locale.general.menuActivities }}</v-toolbar-title>
                 <v-list v-for="(item, i) in items" :key="i">
                     <v-list-tile>
                         <v-list-tile-title class="bottomColor"><strong>{{ item.title }}</strong></v-list-tile-title>
@@ -171,5 +171,8 @@
 <style scoped>
     .bottomColor {
         border-bottom: solid 1px #7ea875;
+    }
+    .toolbarTitle{
+        font-size: 13px;
     }
 </style>

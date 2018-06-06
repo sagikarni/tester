@@ -24,6 +24,10 @@ export interface Ilocale {
         pinErrorText: string,
         noActivityChosen: string,
         activityNotFound: string,
+        notIncluded: {
+            text: string,
+            session: string,
+        }
     };
     general: {
         slidesText: string,
