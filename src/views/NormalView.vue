@@ -51,10 +51,10 @@
                 </v-list-tile>
                 <v-list-tile class="hidden menuItem"  v-for="(item, i) in items" :key="i" v-if="$vuetify.breakpoint.xsOnly">
                     <v-list-tile-action>
-                        <v-icon>settings</v-icon>
+                        <v-icon>local_activity</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <router-link to="/">   <v-list-tile-title>{{ item.title }}</v-list-tile-title></router-link>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -67,8 +67,8 @@
                     <v-list-tile>
                         <v-list-tile-title class="bottomColor"><strong>{{ item.title }}</strong></v-list-tile-title>
                     </v-list-tile>
-                    <v-list-tile v-for="(item1, i) in item.data" :key="i" @click="">
-                        <router-link to="/">  <v-list-tile-title>{{ item1.title }}</v-list-tile-title></router-link>
+                    <v-list-tile class="activitiesList" v-for="(item1, i) in item.data" :key="i">
+                        <v-list-tile-title>{{ item1.title }}</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>
@@ -169,8 +169,7 @@
 
 
 <style scoped>
-.bottomColor{
-    border-bottom: solid 2px #7ea875;
-}
-
+    .bottomColor {
+        border-bottom: solid 1px #7ea875;
+    }
 </style>
