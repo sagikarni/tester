@@ -90,6 +90,7 @@
         @media (max-width: 600px) {
           padding-left: 25px!important;
           padding-right: 25px!important;
+
         }
         .btn__content{
           flex-direction: row;
@@ -119,5 +120,11 @@
       font-size: 20px;
       align-self: center;
     }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .object-fit_contain{
+    width: 100%;
   }
 }
