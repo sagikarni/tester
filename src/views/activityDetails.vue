@@ -15,7 +15,7 @@
             <div class="ex-session-info mt-3 pt-3">
                 <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
             </div>
-            <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-5']">{{ $locale.activities.galleryText }}</h3>
+            <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-1']">{{ $locale.activities.galleryText }}</h3>
             <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId" :sessionBtnDescription="sessionBtnDescription"></image-gallery>
         </section>
     </div>
