@@ -86,5 +86,7 @@
         height:100%;
         text-align: center;
     }
-
+    .dialog:not(.dialog--fullscreen) {
+        max-width: 95%;
+    }
 </style>
