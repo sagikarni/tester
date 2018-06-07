@@ -1,16 +1,16 @@
 <template>
 
     <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0 ">
-        <v-btn large outline color="grey darken-4" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+        <v-btn large color="primary" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
 
         <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
             <v-expansion-panel-content>
                 <div slot="header">{{ $locale.general.sessionLengthText }}</div>
-                <v-card>
+                <v-card class="ex-session-card">
                     <v-card-text>
                         <v-container fluid>
                             <v-radio-group v-model="sessionLength" mandatory row>
-                                <v-radio v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" @change="sessionInfoIdChanged(infoItem.id)"
+                                <v-radio class="ex-session-radio" v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" @change="sessionInfoIdChanged(infoItem.id)"
                                          :label="`${infoItem.description} Session  ${infoItem.slidesCount}  ${$locale.general.slidesText}`">
                                 </v-radio>
                             </v-radio-group>
@@ -64,6 +64,12 @@
     .ex-session-info  .theme--light .expansion-panel .expansion-panel__container {
         background-color: unset!important;
     }
+    .ex-session-info  .ex-session-card.card {
+        background-color: unset!important;
+    }
+    .ex-session-info  .ex-session-card .card__text{
+        padding: 0;
+    }
     .ex-session-info .expansion-panel__container.expansion-panel__container--active {
         background-color: unset!important;
     }
@@ -76,9 +82,15 @@
     .ex-session-info .expansion-panel__body {
         background-color: unset!important;
     }
-    .input-group__input label{
+    .ex-session-info  .input-group__input label{
         font-size: 14px;
         color:rgba(0,0,0,.80)!important;
         line-height: 24px;
+    }
+    .ex-session-info .input-group__input {
+        flex: 0 1 65%;
+    }
+    .ex-session-info .input-group.radio-group{
+        justify-content: center;
     }
 </style>

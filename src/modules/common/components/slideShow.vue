@@ -3,13 +3,13 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%;"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
+                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
                 </div>
             </div>
         </swiper-slide>
         <div class="swiper-pagination swiper-pagination-white" @click.stop="closeModal" slot="pagination"></div>
-        <div class="swiper-button-prev swiper-button-white" @click.stop="closeModal" slot="button-prev"></div>
-        <div class="swiper-button-next swiper-button-white" @click.stop="closeModal" slot="button-next"></div>
+        <div class="swiper-button-prev swiper-button-black" @click.stop="closeModal" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-black" @click.stop="closeModal" slot="button-next"></div>
     </swiper>
 </template>
 
@@ -86,5 +86,7 @@
         height:100%;
         text-align: center;
     }
-
+    .dialog:not(.dialog--fullscreen) {
+        max-width: 95%;
+    }
 </style>

@@ -4,3 +4,4 @@ declare module '*.vue' {
 }
 declare module 'vue-izitoast';
 declare module 'vue-awesome-swiper';
+declare module 'current-device';
