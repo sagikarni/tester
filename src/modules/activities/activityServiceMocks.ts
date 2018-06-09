@@ -1,5 +1,5 @@
 import {mock} from '@/httpClient';
-import {MediaType, Orientation} from './store/types';
+import {MediaType, Orientation, PremiumCollectionLayout} from './store/types';
 
 mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
@@ -85,7 +85,18 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         ],
     },
     content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                    '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                    '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg'],
+            },
 
+        ],
     },
 });
 mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(500, {});

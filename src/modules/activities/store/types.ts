@@ -19,7 +19,9 @@ export enum Category {
     Communication = 1,
     Cognitive = 2,
 }
-
+export enum PremiumCollectionLayout {
+     SingleMedia = 1,
+}
 export class ActivityMainDetailsInfo {
     public dataExist: boolean = false;
     public title?: string;

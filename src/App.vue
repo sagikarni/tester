@@ -5,8 +5,6 @@
         <transition name="page" mode="out-in">
          <router-view></router-view>
         </transition>
-        <p v-if="testOrientation === 1">Device orientation is portrait.</p>
-        <p v-else>Device orientation is landescape.</p>
        <error-modal ref="errorModal"></error-modal>
     </v-app>
 
@@ -18,7 +16,7 @@
     import { Component, Watch } from 'vue-property-decorator';
     import Loading from '@/modules/common/components/loading.vue';
     import ErrorModal from '@/modules/common/components/errorModal.vue';
-    import OrientationUtil from '@/modules/common/utils/orientationUtil.vue';
+    import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import { State } from 'vuex-class';
 
     @Component({
@@ -29,10 +27,11 @@
     })
     export default class App extends Vue {
         @State(state => state.generalGerror) public generalGerror?: any;
-        public OrientationUtil?: any = new OrientationUtil();
+        public orientationUtil?: any;
 
         constructor() {
             super();
+            this.orientationUtil = new OrientationUtil();
         }
 
         @Watch('generalGerror')
@@ -45,10 +44,6 @@
             const el: any = this.$refs.loading;
             el.show();
             setTimeout(() => { el.close(); }, 1000);
-        }
-        // TODO Remove after test
-        get testOrientation(): number {
-            return this.OrientationUtil.getOrientation();
         }
 
     }

@@ -3,6 +3,7 @@ import {IActivitiesState} from './types';
 import {IRootState} from '../../store/types';
 import {activityService} from '../activityService';
 import {SystemLoadingInfoHelper} from '@/modules/common/components/loadingHelper';
+import {ActivitiesManager} from "@/modules/activities/activitiesManager";
 
 export const actions: ActionTree<IActivitiesState, IRootState> = {
 
@@ -31,5 +32,8 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
     },
     updateSessionInfoType({ state, commit, rootState , dispatch }, prm: any): any {
         commit('updateSelectedSessionInfoId' , {selectedSessionInfoId: prm.selectedSessionInfoId});
+    },
+    executeActivity({ state, commit, rootState , dispatch }, prm: any): any {
+        ActivitiesManager.ExecuteActivity(state);
     },
 };

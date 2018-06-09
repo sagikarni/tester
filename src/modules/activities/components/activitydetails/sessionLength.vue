@@ -1,7 +1,7 @@
 <template>
 
     <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0 ">
-        <v-btn large color="primary" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+        <v-btn large color="primary" to="/premium-collection" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
 
         <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
             <v-expansion-panel-content>

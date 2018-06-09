@@ -7,6 +7,7 @@ import About from './views/About.vue';
 import SlideShowView from './views/SlideShowView.vue';
 import Search from './views/Search.vue';
 import ActivityDetails from './views/activityDetails.vue';
+import PremiumCollection from './views/PremiumCollection.vue';
 
 Vue.use(Router);
 
@@ -48,6 +49,10 @@ export default new Router({
                 {
                     path: '/slideshow',
                     component: SlideShowView,
+                },
+                {
+                    path: '/premium-collection',
+                    component: PremiumCollection,
                 },
             ],
 
