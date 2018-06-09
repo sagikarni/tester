@@ -82,9 +82,14 @@ h1,h2,h3,h4,h5,h6{
 
 /*#endregion scroll bars*/
 
-// .tr-container {
-//  @include themify($themes) {
- //   color: themed('textColor');
-//    background-color: themed('backgroundColor');
- // }
-// }
+.top_pane .toolbar__content{
+  background-color: rgba(33, 33, 33, .46);
+  -moz-transition: all 1s ease-in;
+  -webkit-transition: all 1s ease-in;
+  -o-transition: all 1s ease-in;
+  transition: all 1s ease-in;
+}
+.top_pane.top_pane_dark .toolbar__content{
+  background-color: rgba(33, 33, 33, .86);
+
+}
