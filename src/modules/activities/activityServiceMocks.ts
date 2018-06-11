@@ -12,6 +12,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         selectedSessionInfoId: 3,
+        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},

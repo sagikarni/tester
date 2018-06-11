@@ -9,15 +9,16 @@
         <swiper-slide>
             <div class="swiper-slide">Slide 3</div>
         </swiper-slide>
-        <div class="swiper-button-prev swiper-button-white" slot="button-prev">
-           </div>
-        <div class="swiper-button-next swiper-button-white" slot="button-next">
-          </div>
+        <swiper-slide @click.native="redirectBack">
+            <div class="swiper-slide"><h2>Click To Exit</h2></div>
+        </swiper-slide>
+        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
     </swiper>
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Component } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
 
@@ -32,7 +33,7 @@
             this.swiperOption = {
                 slidesPerView: 1,
                 spaceBetween: 30,
-                loop: true,
+                loop: false,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -45,6 +46,9 @@
                     touchMove: () => {
                         this.hiddenAfterClick();
                     },
+                    touchStart: () => {
+                        this.hiddenAfterClick();
+                    },
                     click: () => {
                         this.hiddenAfterClick();
                     },
@@ -54,6 +58,10 @@
         public created() {
             this.hidden();
         }
+
+        public redirectBack() {
+                this.$router.go(-1);
+        }
         public hidden(): void {
             setTimeout(() => {
                 (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0 });
@@ -61,9 +69,6 @@
         }
         public hiddenAfterClick(): void {
             (TimelineMax as any).to('.swiper-button-white', 0.5, {opacity : 0 });
-        }
-        public closeModal() {
-            return true;
         }
 
     }
@@ -80,25 +85,27 @@
         justify-content: center;
         align-items: center;
     }
-    .swiper-button-prev{
+
+    .swiper-button-white{
         height: 100%;
-        top: 0;
-        left: 0;
+        top: 48px;
         width: 100px;
         opacity: 0.5;
         margin-top: 0;
-        background-color: rgba(33, 33, 33, .86);
+        background-color: rgba(204,204, 255, .2);
         background-size: 60px;
     }
+    .swiper-button-prev{
+        left: 0;
+    }
     .swiper-button-next{
-        height: 100%;
-        top: 0;
         right: 0;
-        width: 100px;
-        opacity: 0.5;
-        margin-top: 0;
-        background-color: rgba(33, 33, 33, .86);
-        background-size: 60px;
+    }
+    @media only screen and (max-width: 960px) {
+        .swiper-button-white{
+            width: 50px;
+            background-size: 30px;
+        }
     }
 
 </style>

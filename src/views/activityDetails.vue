@@ -13,7 +13,7 @@
             </v-layout>
             <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
             <div class="ex-session-info mt-3 pt-3">
-                <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo"></session-length>
+                <session-length :activityId="activityId" @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo" :sessionSelectedItem="sessionSelectedItem"></session-length>
             </div>
             <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-1']">{{ $locale.activities.galleryText }}</h3>
             <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId" :sessionBtnDescription="sessionBtnDescription"></image-gallery>
@@ -56,14 +56,18 @@
         public isPinned: boolean = false;
         public showErrorPane: boolean = false;
         public loading?: boolean = false;
+        public sessionSelectedItem?: string = 'Long';
 
+        @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
         @State(state => state.errorPane) public errorPane?: any;
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
-        @Action('getActivity' , {namespace}) public getActivity?: any;
-        @Action('pinActivity' , {namespace}) public pinActivity?: any;
-        @Action('updateSessionInfoType' , {namespace}) public updateSessionInfoType: any;
+        @Action('updateActivity', {namespace}) public updateActivity?: any;
+        @Action('getActivity', {namespace}) public getActivity?: any;
+        @Action('pinActivity', {namespace}) public pinActivity?: any;
+        @Action('updateSessionInfoType', {namespace}) public updateSessionInfoType: any;
         @Action('errorPaneAction') public errorPaneAction?: any;
+        @Action('changeReloadActivityDetails') public changeReloadActivityDetails?: any;
 
         constructor() {
             super();
@@ -116,14 +120,13 @@
             return detailsInfo;
        }
 
-       get imageGalleryInfo(): ImageInfo {
+        get imageGalleryInfo(): ImageInfo {
             const imageGalleryInfo = new ImageInfo();
-
             if (this.activityState && this.activityState.details) {
                 imageGalleryInfo.thumbnails = this.activityState.details.images;
             }
             return imageGalleryInfo;
-       }
+        }
 
        get sessionBtnId(): number | undefined {
            return this.selectedSessionInfoId;
@@ -135,28 +138,40 @@
             }
         }
 
-        public changedSessionInfoId(selectedSessionInfoId: number) {
-             this.updateSessionInfoType( {selectedSessionInfoId} );
-       }
+        public changedSessionInfoId(selectedSessionInfo: any) {
+            this.updateSessionInfoType({selectedSessionInfo});
+        }
+
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
+                if (this.reloadActivityDetails !== false) {
+                    this.getActivity({activity: this.activityId}).then((res: any) => {
+                        if (res.status === 500) {
+                            this.showErrorPane = true;
+                            this.errorPaneAction({message: undefined});
+                        } else if (res.status === 404) {
+                            this.showErrorPane = true;
+                            this.errorPaneAction({message: this.$locale.activities.activityNotFound});
+                        } else {
+                            this.showErrorPane = false; // Important for hide error pane and show the activity section
+                        }
+                        this.isPinned = res.data && res.data.details && res.data.details.isPinned;
+                    }).catch((err: any) => {
+                        this.showErrorPane = true;
+                        this.errorPaneAction({message: this.$locale.general.somethingWentWrong});
+                    });
+                } else {
+                    const activityState = JSON.parse(JSON.stringify(this.activityState));
 
-                this.getActivity({activity: this.activityId}).then((res: any) => {
-                    if (res.status === 500) {
-                        this.showErrorPane = true;
-                        this.errorPaneAction({message: undefined});
-                    } else if (res.status === 404) {
-                        this.showErrorPane = true;
-                        this.errorPaneAction({message: this.$locale.activities.activityNotFound});
-                    } else {
-                        this.showErrorPane = false; // Important for hide error pane and show the activity section
+                    if (activityState && activityState.details) {
+                        this.updateActivity({activity: undefined});
+                        this.updateActivity({activity: activityState});
+                        this.sessionSelectedItem = activityState.details.selectedSessionInfoDesc;
+                        this.show();
+                        this.changeReloadActivityDetails({status: true}); // Need to reload form api the activities
                     }
-                    this.isPinned = res.data && res.data.details && res.data.details.isPinned;
-                }).catch((err: any) => {
-                    this.showErrorPane = true;
-                    this.errorPaneAction({message: this.$locale.general.somethingWentWrong});
-                });
+                }
             } else {
                 this.showErrorPane = true;
                 this.errorPaneAction({message: this.$locale.activities.noActivityChosen});

@@ -13,4 +13,7 @@ export const actions: ActionTree<IRootState, IRootState> = {
     errorPaneAction({commit} , item: GeneralError) {
         commit('updateErrorPane' , item);
     },
+    changeReloadActivityDetails({commit} , item: any) {
+        commit('updateReloadActivityDetails' , item);
+    },
 };

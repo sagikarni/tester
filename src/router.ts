@@ -51,7 +51,7 @@ export default new Router({
                     component: SlideShowView,
                 },
                 {
-                    path: '/premium-collection',
+                    path: '/premium-collection/:activityId',
                     component: PremiumCollection,
                 },
             ],

@@ -17,7 +17,7 @@
     import Loading from '@/modules/common/components/loading.vue';
     import ErrorModal from '@/modules/common/components/errorModal.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
-    import { State } from 'vuex-class';
+    import { State, Action } from 'vuex-class';
 
     @Component({
         components: {
@@ -27,6 +27,8 @@
     })
     export default class App extends Vue {
         @State(state => state.generalGerror) public generalGerror?: any;
+        @Action('changeReloadActivityDetails') public changeReloadActivityDetails?: any;
+
         public orientationUtil?: any;
 
         constructor() {
@@ -36,14 +38,20 @@
 
         @Watch('generalGerror')
         public onPropertyChanged(value: any, oldValue: any) {
-           const el: any = this.$refs.errorModal;
-           el.showError(value);
-         }
+            const el: any = this.$refs.errorModal;
+            el.showError(value);
+        }
+
         @Watch('$route')
         public onPropertyChanged2(value: any, oldValue: any) {
+            if (oldValue && oldValue.path === '/premium-collection') {
+                this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist
+            }
             const el: any = this.$refs.loading;
             el.show();
-            setTimeout(() => { el.close(); }, 1000);
+            setTimeout(() => {
+                el.close();
+            }, 1000);
         }
 
     }
