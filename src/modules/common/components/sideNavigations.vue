@@ -9,15 +9,16 @@
         <swiper-slide>
             <div class="swiper-slide">Slide 3</div>
         </swiper-slide>
-        <div class="swiper-button-prev swiper-button-white" slot="button-prev">
-           </div>
-        <div class="swiper-button-next swiper-button-white" slot="button-next">
-          </div>
+        <swiper-slide @click.native="redirectBack">
+            <div class="swiper-slide"><h2>Click To Exit</h2></div>
+        </swiper-slide>
+        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
     </swiper>
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Component } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
 
@@ -32,7 +33,7 @@
             this.swiperOption = {
                 slidesPerView: 1,
                 spaceBetween: 30,
-                loop: true,
+                loop: false,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -57,6 +58,10 @@
         public created() {
             this.hidden();
         }
+
+        public redirectBack() {
+                this.$router.go(-1);
+        }
         public hidden(): void {
             setTimeout(() => {
                 (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0 });
@@ -64,9 +69,6 @@
         }
         public hiddenAfterClick(): void {
             (TimelineMax as any).to('.swiper-button-white', 0.5, {opacity : 0 });
-        }
-        public closeModal() {
-            return true;
         }
 
     }

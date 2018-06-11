@@ -31,7 +31,13 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
         });
     },
     updateSessionInfoType({ state, commit, rootState , dispatch }, prm: any): any {
-        commit('updateSelectedSessionInfoId' , {selectedSessionInfoId: prm.selectedSessionInfoId});
+        if (prm.selectedSessionInfo) {
+            commit('updateSelectedSessionInfoId' , {selectedSessionInfoId: prm.selectedSessionInfo.id});
+            commit('updateSelectedSessionInfoDesc' , {selectedSessionInfoDesc: prm.selectedSessionInfo.description});
+        }
+    },
+    updateActivity({ state, commit, rootState , dispatch }, prm: any): any {
+        commit('updateActivities' , {activity: prm.activity});
     },
     executeActivity({ state, commit, rootState , dispatch }, prm: any): any {
         ActivitiesManager.ExecuteActivity(state);

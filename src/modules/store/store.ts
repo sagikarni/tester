@@ -13,6 +13,7 @@ export default new Vuex.Store<IRootState>({
         systemLoading:  undefined,
         generalGerror:  undefined,
         errorPane:  undefined,
+        reloadActivityDetails:  undefined,
     },
     modules: {
         search,

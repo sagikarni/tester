@@ -4,6 +4,7 @@ export interface IRootState {
     systemLoading?: ISystemLoading | undefined | null;
     generalGerror: GeneralError | undefined;
     errorPane: GeneralError | undefined;
+    reloadActivityDetails: undefined;
 }
 
 export interface ISystemLoading {

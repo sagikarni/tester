@@ -13,4 +13,7 @@ export const mutations: MutationTree<IRootState> = {
     updateErrorPane(state, payload: GeneralError) {
         state.errorPane = payload;
     },
+    updateReloadActivityDetails(state, payload: any) {
+        state.reloadActivityDetails = payload.status;
+    },
 };

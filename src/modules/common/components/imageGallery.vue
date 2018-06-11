@@ -101,6 +101,10 @@
                 this.selectedImgId = item.id;
             }
         }
+
+        public created() {
+            this.chooseGalleryThumbnails(this.imageGalleryInfo, this.filterId);
+        }
     }
 </script>
 <style scoped>

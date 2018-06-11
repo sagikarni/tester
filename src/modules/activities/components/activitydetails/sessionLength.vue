@@ -1,7 +1,7 @@
 <template>
 
     <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0 ">
-        <v-btn large color="primary" to="/premium-collection" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+        <v-btn large color="primary" :to="`/premium-collection/${activityId}`" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
 
         <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
             <v-expansion-panel-content>
@@ -10,7 +10,7 @@
                     <v-card-text>
                         <v-container fluid>
                             <v-radio-group v-model="sessionLength" mandatory row>
-                                <v-radio class="ex-session-radio" v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" @change="sessionInfoIdChanged(infoItem.id)"
+                                <v-radio class="ex-session-radio" v-for="infoItem in sessionLengthInfo" :key="infoItem.id" flat :value="infoItem.description" @change="sessionInfoIdChanged(infoItem)"
                                          :label="`${infoItem.description} Session  ${infoItem.slidesCount}  ${$locale.general.slidesText}`">
                                 </v-radio>
                             </v-radio-group>
@@ -27,7 +27,7 @@
 
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {SessionsInfo } from '../../store/types';
 
@@ -37,14 +37,27 @@
         public sessionLength: string = 'Long';
 
         @Prop() public sessionLengthInfo?: SessionsInfo[];
+        @Prop() public sessionSelectedItem?: string;
+        @Prop() public activityId?: string;
 
         constructor() {
             super();
         }
 
-        public sessionInfoIdChanged(sessionInfoId: number) {
-              this.$emit('sessionInfoIdChanged', sessionInfoId);
-         }
+        @Watch('sessionSelectedItem')
+        public onPropertyChanged(value: any, oldValue: any) {
+            this.sessionLength = value;
+        }
+
+        public sessionInfoIdChanged(sessionInfo: any) {
+              this.$emit('sessionInfoIdChanged', sessionInfo);
+        }
+
+        public created() {
+            if (this.sessionSelectedItem) {
+                this.sessionLength = this.sessionSelectedItem;
+            }
+        }
     }
 </script>
 
