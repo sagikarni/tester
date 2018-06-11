@@ -45,6 +45,9 @@
                     touchMove: () => {
                         this.hiddenAfterClick();
                     },
+                    touchStart: () => {
+                        this.hiddenAfterClick();
+                    },
                     click: () => {
                         this.hiddenAfterClick();
                     },
@@ -80,25 +83,27 @@
         justify-content: center;
         align-items: center;
     }
-    .swiper-button-prev{
+
+    .swiper-button-white{
         height: 100%;
-        top: 0;
-        left: 0;
+        top: 48px;
         width: 100px;
         opacity: 0.5;
         margin-top: 0;
-        background-color: rgba(33, 33, 33, .86);
+        background-color: rgba(204,204, 255, .2);
         background-size: 60px;
     }
+    .swiper-button-prev{
+        left: 0;
+    }
     .swiper-button-next{
-        height: 100%;
-        top: 0;
         right: 0;
-        width: 100px;
-        opacity: 0.5;
-        margin-top: 0;
-        background-color: rgba(33, 33, 33, .86);
-        background-size: 60px;
+    }
+    @media only screen and (max-width: 960px) {
+        .swiper-button-white{
+            width: 50px;
+            background-size: 30px;
+        }
     }
 
 </style>
