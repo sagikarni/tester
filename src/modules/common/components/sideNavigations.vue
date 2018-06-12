@@ -64,11 +64,14 @@
         }
         public hidden(): void {
             setTimeout(() => {
-                (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0 });
+                (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0.1 });
             } , 3000);
         }
+
         public hiddenAfterClick(): void {
-            (TimelineMax as any).to('.swiper-button-white', 0.5, {opacity : 0 });
+            const el: any = this.$parent.$children;
+            el[1].hiddenAfterClick();
+            (TimelineMax as any).to('.swiper-button-white', 0.2, {opacity: 0.1});
         }
 
     }
@@ -94,12 +97,23 @@
         margin-top: 0;
         background-color: rgba(204,204, 255, .2);
         background-size: 60px;
+        background-position-y: calc(50% - 48px);
     }
     .swiper-button-prev{
         left: 0;
+        transition: all 0.5s ease;
+        &:hover {
+            cursor: pointer;
+            opacity: .86!important;
+        }
     }
     .swiper-button-next{
         right: 0;
+        transition: all 0.5s ease;
+        &:hover {
+            cursor: pointer;
+            opacity: .86!important;
+        }
     }
     @media only screen and (max-width: 960px) {
         .swiper-button-white{

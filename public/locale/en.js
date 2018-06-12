@@ -26,6 +26,9 @@ var dictionary = {
         notIncluded: {
             text: 'Not included in the',
             session: 'session',
+        },
+        activityCollection: {
+            warningText: 'Please rotate your device'
         }
     },
     general:{
