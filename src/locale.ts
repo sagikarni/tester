@@ -28,6 +28,9 @@ export interface Ilocale {
             text: string,
             session: string,
         },
+        activityCollection: {
+            warningText: string,
+        },
     };
     general: {
         slidesText: string,

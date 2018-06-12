@@ -1,4 +1,4 @@
 export enum DeviceOrientation {
-    Landscape = 0,
-    Portrait = 1,
+    Landscape = 1,
+    Portrait = 2,
 }

@@ -1,6 +1,6 @@
 <template>
     <v-toolbar flat dense app fixed clipped-left class="top_pane" @click="showPane">
-        <v-btn absolute right outline color="white" class="close_activity mr-0-xs" @click="$router.go(-1)">Close</v-btn>
+        <v-btn v-if="buttonDisabled" absolute right outline color="white" class="close_activity mr-0-xs" @click="$router.go(-1)">Close</v-btn>
     </v-toolbar>
 </template>
 
@@ -11,17 +11,34 @@
 
     @Component
     export default class SlideShowMenuPane extends BaseComponent {
+        public buttonDisabled?: boolean = true;
+
         public created() {
             this.hidden();
         }
+
         public hidden(): void {
             setTimeout(() => {
-                (TimelineMax as any).to('.top_pane', 1, {opacity : 0 });
-            } , 3000);
+                (TimelineMax as any).to('.top_pane', 1, {opacity: 0.07});
+                setTimeout(() => {
+                    this.buttonDisabled = false;
+                }, 1100);
+            }, 3000);
         }
+
         public showPane(): void {
-            (TimelineMax as any).to('.top_pane', 0.5, {opacity : .86 });
+            (TimelineMax as any).to('.top_pane', 0.5, {opacity: .86});
+            setTimeout(() => {
+                this.buttonDisabled = true;
+            }, 550);
             this.hidden();
+        }
+
+        public hiddenAfterClick(): void {
+            (TimelineMax as any).to('.top_pane', 0.2, {opacity: 0.07});
+            setTimeout(() => {
+                this.buttonDisabled = false;
+            }, 110);
         }
     }
 </script>
