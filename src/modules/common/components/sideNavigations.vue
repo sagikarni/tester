@@ -7,7 +7,6 @@
                     <p> {{mediaCount}} {{$locale.general.slidesText}}</p>
                 </div>
             </swiper-slide>
-
             <swiper-slide>
                 <div class="swiper-slide">Slide 1</div>
             </swiper-slide>
