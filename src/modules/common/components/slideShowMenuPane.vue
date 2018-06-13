@@ -1,6 +1,6 @@
 <template>
     <v-toolbar flat dense app fixed clipped-left class="top_pane" @click="showPane">
-        <v-btn v-if="isCloseBtnHidden" absolute right outline color="white" class="close_activity mr-0-xs" @click="$router.go(-1)">Close</v-btn>
+        <v-btn v-if="isCloseBtnVisible" absolute right outline color="white" class="close_activity mr-0-xs" @click="$router.go(-1)">Close</v-btn>
     </v-toolbar>
 </template>
 <script lang="ts">
@@ -10,7 +10,7 @@
 
     @Component
     export default class SlideShowMenuPane extends BaseComponent {
-        public isCloseBtnHidden?: boolean = true;
+        public isCloseBtnVisible?: boolean = true;
 
         public created() {
              setTimeout(() => {
@@ -19,18 +19,18 @@
         }
 
        public showPane(): void {
-            (TimelineMax as any).to('.top_pane', 0.5, {opacity: .86} , () => {
-                  this.isCloseBtnHidden = true;
-            });
+            (TimelineMax as any).to('.top_pane', 0.2, {opacity: .86 , onComplete: () => {
+                this.isCloseBtnVisible = true;
+            }});
         }
         public hidPane(): void {
             this.hidePaneInternal(0.2);
         }
 
         private hidePaneInternal(animationTime: number): void {
-             (TimelineMax as any).to('.top_pane', animationTime, {opacity: 0.07}, () => {
-                  this.isCloseBtnHidden = false;
-            });
+             (TimelineMax as any).to('.top_pane', animationTime, {opacity: 0.07, onComplete: () => {
+                this.isCloseBtnVisible = false;
+            }});
         }
     }
 </script>
