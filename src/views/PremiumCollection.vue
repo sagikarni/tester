@@ -3,9 +3,9 @@
         <dialog-open-slide :dialog="dialog"></dialog-open-slide>
         <section v-show="!dialog">
             <v-flex>
-                <slide-show-menu-pane></slide-show-menu-pane>
+                <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
     </div>
 </template>
@@ -65,6 +65,10 @@
 
         get activityContent(): string {
             return this.activityDetailsContent;
+        }
+
+        public hideTopPane(): void {
+            (this.$refs.topPane as any).hidPane();
         }
 
         public created() {
