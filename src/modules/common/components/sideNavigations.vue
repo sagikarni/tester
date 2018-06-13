@@ -17,6 +17,7 @@
             <swiper-slide>
                 <div class="swiper-slide">Slide 3</div>
             </swiper-slide>
+
             <swiper-slide @click.native="redirectBack">
                 <div class="swiper-slide"><h2>Click To Exit</h2></div>
             </swiper-slide>
@@ -49,6 +50,7 @@
     export default class SideNavigantions extends BaseComponent {
         @Prop() public activityName?: string;
         @Prop() public mediaCount?: number;
+        @Prop() public activityContent?: any;
 
         public swiperOption: any;
         public dialogSlideShow: boolean = false;

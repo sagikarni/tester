@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaCount="mediaCountInfo" :activityName="activityNameInfo"></side-navigations>
+            <side-navigations :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
     </div>
 </template>
@@ -17,7 +17,9 @@
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
     import DialogOpenSlide from '@/modules/common/components/dialogOpenSlide.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
-    import { State } from 'vuex-class';
+    import { State, Action } from 'vuex-class';
+
+    const namespace: string = 'activities';
 
     @Component({
         components: {
@@ -29,6 +31,8 @@
     export default class PremiumCollection extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
         @State(state => state.activities.activity && state.activities.activity.details) public activityDetailsState?: any;
+        @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
+        @Action('getActivity', {namespace}) public getActivity?: any;
 
         public orientationUtil?: any;
         public dialog: boolean = false;
@@ -52,22 +56,30 @@
         }
 
         get mediaCountInfo(): number {
-            return this.activityDetailsState.mediaCount;
+            return this.activityDetailsState && this.activityDetailsState.mediaCount;
         }
 
         get activityNameInfo(): string {
-            return this.activityDetailsState.title;
+            return this.activityDetailsState && this.activityDetailsState.title;
+        }
+
+        get activityContent(): string {
+            return this.activityDetailsContent;
         }
 
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
-            }
-            if (!this.activityDetailsState) {
-                this.$router.push(`/activity-details/${this.activityId}`);
-            }
-            if (this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
-                this.dialog = true;
+                this.getActivity({activity: this.activityId}).then((res: any) => {
+                    if (res.status !== 200) {
+                        this.$router.push(`/activity-details/${this.activityId}`);
+                    }
+                    if (this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
+                        this.dialog = true;
+                    }
+                }).catch((err: any) => {
+                    this.$router.push(`/activity-details/${this.activityId}`);
+                });
             }
         }
     }
