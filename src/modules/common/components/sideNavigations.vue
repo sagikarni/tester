@@ -1,5 +1,13 @@
 <template>
     <swiper :options="swiperOption" ref="swiper">
+
+        <swiper-slide>
+            <div class="swiper-slide firstActivity">
+                <h2>{{activityName}}</h2>
+                <p> {{mediaCount}} {{$locale.general.slidesText}}</p>
+            </div>
+        </swiper-slide>
+
         <swiper-slide>
             <div class="swiper-slide">Slide 1</div>
         </swiper-slide>
@@ -18,12 +26,14 @@
 </template>
 
 <script lang="ts">
-    import { Component } from 'vue-property-decorator';
+    import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
 
     @Component
     export default class SideNavigantions extends BaseComponent {
+        @Prop() public activityName?: string;
+        @Prop() public mediaCount?: number;
 
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
@@ -106,6 +116,9 @@
             cursor: pointer;
             opacity: .86!important;
         }
+        &:focus{
+            opacity: 0.1!important;
+        }
     }
     .swiper-button-next{
         right: 0;
@@ -113,6 +126,16 @@
         &:hover {
             cursor: pointer;
             opacity: .86!important;
+        }
+        &:focus{
+            opacity: 0.1!important;
+        }
+    }
+    .firstActivity{
+        flex-direction: column;
+        h2{
+            font-size: 24px;
+            margin-bottom: 10px;
         }
     }
     @media only screen and (max-width: 960px) {

@@ -1,7 +1,6 @@
 <template>
 
     <div v-if="sessionLengthInfo && sessionLengthInfo.length > 0 ">
-        <v-btn large color="primary" :to="`/premium-collection/${activityId}`" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
 
         <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
             <v-expansion-panel-content>
@@ -38,7 +37,6 @@
 
         @Prop() public sessionLengthInfo?: SessionsInfo[];
         @Prop() public sessionSelectedItem?: string;
-        @Prop() public activityId?: string;
 
         constructor() {
             super();

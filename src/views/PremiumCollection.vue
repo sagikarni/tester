@@ -1,11 +1,11 @@
 <template>
     <div>
         <dialog-open-slide :dialog="dialog"></dialog-open-slide>
-        <section>
+        <section v-show="!dialog">
             <v-flex>
                 <slide-show-menu-pane></slide-show-menu-pane>
             </v-flex>
-            <side-navigations></side-navigations>
+            <side-navigations :mediaCount="mediaCountInfo" :activityName="activityNameInfo"></side-navigations>
         </section>
     </div>
 </template>
@@ -28,7 +28,7 @@
     })
     export default class PremiumCollection extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
-        @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.orientation)) public orientation?: number;
+        @State(state => state.activities.activity && state.activities.activity.details) public activityDetailsState?: any;
 
         public orientationUtil?: any;
         public dialog: boolean = false;
@@ -39,7 +39,7 @@
         }
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
-            if (value !== this.orientation) {
+            if (value !== this.activityDetailsState.orientation) {
                 this.$toast.warning(this.$locale.activities.activityCollection.warningText, '', this.$notificationSystem.options.warning);
             } else {
                 this.dialog = false;
@@ -49,8 +49,17 @@
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
         }
+
+        get mediaCountInfo(): number {
+            return this.activityDetailsState.mediaCount;
+        }
+
+        get activityNameInfo(): string {
+            return this.activityDetailsState.title;
+        }
+
         public created() {
-            if (this.activityOrientation !== this.orientation) {
+            if (this.activityOrientation !== this.activityDetailsState.orientation) {
                 this.dialog = true;
             }
         }

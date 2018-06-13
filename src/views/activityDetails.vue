@@ -13,7 +13,8 @@
             </v-layout>
             <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
             <div class="ex-session-info mt-3 pt-3">
-                <session-length :activityId="activityId" @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo" :sessionSelectedItem="sessionSelectedItem"></session-length>
+                <v-btn large color="primary" :to="`/premium-collection/${activityId}`" class="lets_start">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+                <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo" :sessionSelectedItem="sessionSelectedItem"></session-length>
             </div>
             <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-1']">{{ $locale.activities.galleryText }}</h3>
             <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId" :sessionBtnDescription="sessionBtnDescription"></image-gallery>
