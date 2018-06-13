@@ -13,7 +13,8 @@
             </v-layout>
             <activity-main-details :activityMainDetailsInfo="activityMainDetailsInfo"></activity-main-details>
             <div class="ex-session-info mt-3 pt-3">
-                <session-length :activityId="activityId" @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo" :sessionSelectedItem="sessionSelectedItem"></session-length>
+                <v-btn large color="primary" class="lets_start" @click="startActivityClick">{{ $locale.activities.sessionsInfo.startText }}</v-btn>
+                <session-length @sessionInfoIdChanged="changedSessionInfoId" :sessionLengthInfo="sessionsInfo" :sessionSelectedItem="sessionSelectedItem"></session-length>
             </div>
             <h3 :class="[$isRTL ? 'ex-rtl' : '', 'mt-1']">{{ $locale.activities.galleryText }}</h3>
             <image-gallery :imageGalleryInfo="imageGalleryInfo" :filterId="sessionBtnId" :sessionBtnDescription="sessionBtnDescription"></image-gallery>
@@ -68,6 +69,7 @@
         @Action('updateSessionInfoType', {namespace}) public updateSessionInfoType: any;
         @Action('errorPaneAction') public errorPaneAction?: any;
         @Action('changeReloadActivityDetails') public changeReloadActivityDetails?: any;
+        @Action('executeActivity', {namespace}) public executeActivity?: any;
 
         constructor() {
             super();
@@ -203,6 +205,12 @@
                 }).catch((err: any) => {
                     this.$toast.error(err.toString(), '', this.$notificationSystem.options.error);
                 });
+        }
+
+        public startActivityClick() {
+           this.executeActivity().then((res: any) => {
+               this.$router.push(res.url + this.activityId);
+           });
         }
     }
 </script>

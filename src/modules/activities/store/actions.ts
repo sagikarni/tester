@@ -40,6 +40,6 @@ export const actions: ActionTree<IActivitiesState, IRootState> = {
         commit('updateActivities' , {activity: prm.activity});
     },
     executeActivity({ state, commit, rootState , dispatch }, prm: any): any {
-        ActivitiesManager.ExecuteActivity(state);
+        return ActivitiesManager.ExecuteActivity(state);
     },
 };

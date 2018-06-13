@@ -1,11 +1,20 @@
+import { ActivityType } from '@/modules/activities/store/types';
+
 export class ActivitiesManager {
     public static ExecuteActivity(state: any) {
-        // swich case based on the 'activityType' (access the store's: state.Activity)
-
-        // switch () {
-        //     case :
-                // route to PremiumCollection.vue (need to be created in the "Views" folder)
-                // dont forget to add PremiumCollection.vue to the router.ts (hosted in FullScreenView.vue)
-        // }
+        // switch case based on the 'activityType' (access the store's: state.Activity)
+        const activityType = state.activity && state.activity.details && state.activity.details.activityType;
+        const res = {
+            url: '',
+        };
+        switch (activityType) {
+            case ActivityType.PremiumCollction:
+                res.url = '/premium-collection/';
+                break;
+            case ActivityType.TBD2:
+                res.url = '/questions/'; // Example need to change
+                break;
+        }
+        return res;
     }
 }

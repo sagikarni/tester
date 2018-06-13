@@ -12,7 +12,7 @@ export enum MediaType {
     Video = 2,
 }
 export enum ActivityType {
-    TBD1 = 1,
+    PremiumCollction = 1,
     TBD2 = 2,
 }
 export enum Category {
@@ -45,7 +45,7 @@ export interface IActivitiesState {
             description: string,
             coverPhoto: string,
             category: Category, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
-            activityType: 2, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+            activityType: ActivityType, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
             mediaType: MediaType, // 0 = photos , 1 = videos - should be defined as enum in the store types file
             orientation: Orientation,
             mediaCount: number, // number of videos or photos in this activity
