@@ -101,7 +101,7 @@
 
         public hiddenAfterClick(): void {
             const el: any = this.$parent.$children;
-            el[1].hiddenAfterClick();
+            el[1].hidPane();
             (TimelineMax as any).to('.swiper-button-white', 0.2, {opacity: 0.1});
         }
 
