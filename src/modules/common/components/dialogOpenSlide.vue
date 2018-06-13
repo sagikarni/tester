@@ -26,7 +26,7 @@
     import {GeneralError} from "@/modules/store/typeClasses";
 
     @Component
-    export default class ErrorModal extends BaseComponent {
+    export default class DialogOpenSlide extends BaseComponent {
         @Prop() public dialog?: boolean;
 
         constructor() {

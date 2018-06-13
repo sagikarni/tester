@@ -32,6 +32,7 @@
 
         public orientationUtil?: any;
         public dialog: boolean = false;
+        public activityId: string = '1';
 
         constructor() {
             super();
@@ -59,7 +60,13 @@
         }
 
         public created() {
-            if (this.activityOrientation !== this.activityDetailsState.orientation) {
+            if (this.$route.params.activityId) {
+                this.activityId = this.$route.params.activityId;
+            }
+            if (!this.activityDetailsState) {
+                this.$router.push(`/activity-details/${this.activityId}`);
+            }
+            if (this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
                 this.dialog = true;
             }
         }
