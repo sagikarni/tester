@@ -53,7 +53,7 @@
         @Prop() public mediaCount?: number;
 
         @Prop() public slides?: any[];
-        @Prop() public activityType?: ActivityType;
+        @Prop() public activityType?: number;
 
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
@@ -61,6 +61,9 @@
         public showMenu?: boolean = false;
         public x?: number = 0;
         public y?: number = 0;
+
+        public timeout: any;
+        public lastTap = 0;
 
         constructor() {
             super();
@@ -78,6 +81,9 @@
                     prevEl: '.swiper-button-prev',
                 },
                 on: {
+                    doubleTap: () => {
+                      this.checkDoubleTap();
+                    },
                     touchMove: () => {
                         this.hideAllPanes();
                     },
@@ -120,6 +126,20 @@
             this.hideSidePanes(0.2);
         }
 
+        public checkDoubleTap(): void {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - this.lastTap;
+            clearTimeout(this.timeout);
+            if (tapLength < 500 && tapLength > 0) {
+                this.$emit('showTopPane');
+            } else {
+                this.timeout = setTimeout(() => {
+                    clearTimeout(this.timeout);
+                }, 500);
+            }
+            this.lastTap = currentTime;
+        }
+
         public openMenu(e: any): void {
             this.x = e.clientX;
             this.y = e.clientY;
@@ -158,22 +178,22 @@
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            opacity: .86!important;
+            /*opacity: .86!important;*/
         }
-        &:focus{
-            opacity: 0.1!important;
-        }
+        /*&:focus{*/
+            /*opacity: 0.1!important;*/
+        /*}*/
     }
     .swiper-button-next{
         right: 0;
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            opacity: .86!important;
+            /*opacity: .86!important;*/
         }
-        &:focus{
-            opacity: 0.1!important;
-        }
+        /*&:focus{*/
+            /*opacity: 0.1!important;*/
+        /*}*/
     }
     .firstActivity{
         flex-direction: column;
