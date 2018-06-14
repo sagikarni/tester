@@ -18,6 +18,8 @@
     import ErrorModal from '@/modules/common/components/errorModal.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import { State, Action } from 'vuex-class';
+    import {bus, busConstants} from '@/modules/utils/eventBus';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component({
         components: {
@@ -25,7 +27,7 @@
             ErrorModal,
         },
     })
-    export default class App extends Vue {
+    export default class App extends BaseComponent {
         @State(state => state.generalGerror) public generalGerror?: any;
         @Action('changeReloadActivityDetails') public changeReloadActivityDetails?: any;
 
@@ -34,6 +36,12 @@
         constructor() {
             super();
             this.orientationUtil = new OrientationUtil();
+            bus.$on(busConstants.ENTER_FULL_SCREEN, () => {
+               this.enterFullScreen();
+            });
+            bus.$on(busConstants.EXIT_FULL_SCREEN, () => {
+               this.exitFullScreen();
+            });
         }
 
         @Watch('generalGerror')
@@ -53,7 +61,6 @@
                 el.close();
             }, 1000);
         }
-
     }
 </script>
 
