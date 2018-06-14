@@ -50,6 +50,8 @@ export interface Ilocale {
         homeText: string,
         somethingWentWrong: string,
         menuActivities: string,
+        rotateScreenWarning: string;
+
     };
 }
 
