@@ -44,7 +44,7 @@
 
         @Watch('$route')
         public onPropertyChanged2(value: any, oldValue: any) {
-            if (oldValue && oldValue.path === '/premium-collection') {
+            if (oldValue && oldValue.params && oldValue.params.activityId && oldValue.path === `/premium-collection/${oldValue.params.activityId}`) {
                 this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist
             }
             const el: any = this.$refs.loading;
