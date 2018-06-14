@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
     </div>
 </template>
@@ -86,6 +86,9 @@
             (this.$refs.topPane as any).hidPane();
         }
 
+        public showTopPane(): void {
+            (this.$refs.topPane as any).showPane();
+        }
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;

@@ -62,6 +62,9 @@
         public x?: number = 0;
         public y?: number = 0;
 
+        public timeout: any;
+        public lastTap = 0;
+
         constructor() {
             super();
 
@@ -78,6 +81,9 @@
                     prevEl: '.swiper-button-prev',
                 },
                 on: {
+                    doubleTap: () => {
+                      this.checkDoubleTap();
+                    },
                     touchMove: () => {
                         this.hideAllPanes();
                     },
@@ -118,6 +124,20 @@
             this.$emit('hideTopPane');
             // hide side pane
             this.hideSidePanes(0.2);
+        }
+
+        public checkDoubleTap(): void {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - this.lastTap;
+            clearTimeout(this.timeout);
+            if (tapLength < 500 && tapLength > 0) {
+                this.$emit('showTopPane');
+            } else {
+                this.timeout = setTimeout(() => {
+                    clearTimeout(this.timeout);
+                }, 500);
+            }
+            this.lastTap = currentTime;
         }
 
         public openMenu(e: any): void {
