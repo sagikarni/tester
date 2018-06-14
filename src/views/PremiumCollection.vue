@@ -5,8 +5,12 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations :mediaType="mediaType"  @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
+              <v-snackbar   v-model="showRotateNotification">
+                  {{ $locale.general.rotateScreenWarning }}
+               </v-snackbar>
+  
     </div>
 </template>
 
@@ -38,6 +42,7 @@
         public orientationUtil?: any;
         public dialog: boolean = false;
         public activityId: string = '1';
+        public showRotateNotification: boolean = false;
 
         constructor() {
             super();
@@ -46,8 +51,8 @@
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
             if (value !== this.activityDetailsState.orientation) {
-                this.$toast.warning(this.$locale.activities.activityCollection.warningText, '', this.$notificationSystem.options.warning);
-            } else {
+                this.showRotateNotification = true;
+           } else {
                 this.dialog = false;
             }
         }
@@ -70,6 +75,9 @@
             return this.orientationUtil.orientation;
         }
 
+        get mediaType() {
+            return this.activityDetailsState && this.activityDetailsState.mediaType;
+        }
         get mediaCountInfo(): number {
             return this.activityDetailsState && this.activityDetailsState.mediaCount;
         }

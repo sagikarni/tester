@@ -49,6 +49,7 @@ var dictionary = {
         homeText: 'Home',
         somethingWentWrong: 'Something Went Wrong',
         menuActivities: 'Activities',
+        rotateScreenWarning: 'Please Rotate Your Screen',
     }
 };
 

@@ -1,6 +1,6 @@
 <template>
-    <div @contextmenu.prevent="openMenu">
-        <swiper :options="swiperOption" ref="swiper">
+    <div @contextmenu.prevent="openMenu" class="avtivities-background">
+        <swiper :options="swiperOption" ref="swiper" class="avtivities-background">
             <swiper-slide>
                 <div class="swiper-slide firstActivity">
                     <h2>{{activityName}}</h2>
@@ -40,11 +40,11 @@
     import TimelineMax from 'gsap';
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
-
-    import {ActivityType} from '@/modules/activities/store/types';
+    import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
+    import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
         components: {
-            PremiumCollectionSlide,
+            PremiumCollectionPhotoBasedSlide,
             WHQuestionsSlide,
         },
     })
@@ -54,7 +54,7 @@
 
         @Prop() public slides?: any[];
         @Prop() public activityType?: number;
-
+        @Prop() public mediaType?: MediaType;
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
 
@@ -97,10 +97,12 @@
             };
         }
 
-        get dynamicComponent() {
+       get dynamicComponent() {
             switch (this.activityType) {
                 case ActivityType.PremiumCollction:
-                 return 'PremiumCollectionSlide';
+                   if (this.mediaType === MediaType.Photo) {
+                    return 'PremiumCollectionPhotoBasedSlide';
+                   }
                 case ActivityType.WHQuestions:
                  return 'WHQuestionsSlide';
             }
