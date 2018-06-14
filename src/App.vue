@@ -20,6 +20,7 @@
     import { State, Action } from 'vuex-class';
     import {bus, busConstants} from '@/modules/utils/eventBus';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import TimelineMax from 'gsap';
 
     @Component({
         components: {
@@ -52,7 +53,8 @@
 
         @Watch('$route')
         public onPropertyChanged2(value: any, oldValue: any) {
-            if (oldValue && oldValue.path === '/premium-collection') {
+            if (oldValue && oldValue.params && oldValue.params.activityId && oldValue.path === `/premium-collection/${oldValue.params.activityId}`) {
+                (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "white"});
                 this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist
             }
             const el: any = this.$refs.loading;
@@ -61,6 +63,7 @@
                 el.close();
             }, 1000);
         }
+
     }
 </script>
 

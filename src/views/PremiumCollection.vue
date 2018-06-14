@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
     </div>
 </template>
@@ -18,7 +18,7 @@
     import DialogOpenSlide from '@/modules/common/components/dialogOpenSlide.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
-
+    import TimelineMax from 'gsap';
     import { State, Action } from 'vuex-class';
 
     const namespace: string = 'activities';
@@ -51,11 +51,16 @@
                 this.dialog = false;
             }
         }
+
         get slides(): any[] {
             const slides = [];
-            for  (let i = 0; i < this.activityDetailsContent.slides.length; i++) {
-                  slides.push({id: i , layout : this.activityDetailsContent.layout , media : this.activityDetailsContent.slides[i]});
+
+            if (this.activityDetailsContent && this.activityDetailsContent.slides && this.activityDetailsContent.slides.length > 0) {
+                for (let i = 0; i < this.activityDetailsContent.slides.length; i++) {
+                    slides.push({ id: i, layout: this.activityDetailsContent.layout, media: this.activityDetailsContent.slides[i] });
+                }
             }
+
             return slides;
         }
         get activityType() {
@@ -73,12 +78,28 @@
             return this.activityDetailsState && this.activityDetailsState.title;
         }
 
-        get activityContent(): string {
+        get activityContent(): any {
             return this.activityDetailsContent;
         }
 
         public hideTopPane(): void {
             (this.$refs.topPane as any).hidPane();
+        }
+
+        public showTopPane(): void {
+            (this.$refs.topPane as any).showPane();
+        }
+        public created() {
+            if (this.$route.params.activityId) {
+                this.activityId = this.$route.params.activityId;
+                if (!this.activityDetailsState) {
+                    this.$router.push(`/activity-details/${this.activityId}`);
+                }
+                if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
+                    this.dialog = true;
+                    (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
+                }
+            }
         }
     }
 </script>
