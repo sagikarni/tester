@@ -22,10 +22,8 @@
         }
 
         public exitFullScreen() {
-             try {
-                if (this.hasFullScreenSupport()) {
-                    this.$fullscreen.exit();
-                }
+              try {
+                this.$fullscreen.exit();
             } catch {
                 // do nothing
             }
