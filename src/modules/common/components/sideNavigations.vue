@@ -84,6 +84,9 @@
                     doubleTap: () => {
                       this.checkDoubleTap();
                     },
+                        touchMove: () => {
+                        this.hideAllPanes();
+                    },
                     touchStart: () => {
                         this.hideAllPanes();
                     },
