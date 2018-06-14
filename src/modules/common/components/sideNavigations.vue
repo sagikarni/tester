@@ -7,14 +7,8 @@
                     <p> {{mediaCount}} {{$locale.general.slidesText}}</p>
                 </div>
             </swiper-slide>
-            <swiper-slide>
-                <div class="swiper-slide">Slide 1</div>
-            </swiper-slide>
-            <swiper-slide>
-                <div class="swiper-slide">Slide 2</div>
-            </swiper-slide>
-            <swiper-slide>
-                <div class="swiper-slide">Slide 3</div>
+             <swiper-slide   v-for="slide in slides" :key="slide.id">
+                  <component :is="dynamicComponent" :parameter="slide"></component>
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
@@ -44,12 +38,22 @@
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
+    import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
+    import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
 
-    @Component
+    import {ActivityType} from '@/modules/activities/store/types';
+    @Component({
+        components: {
+            PremiumCollectionSlide,
+            WHQuestionsSlide,
+        },
+    })
     export default class SideNavigantions extends BaseComponent {
         @Prop() public activityName?: string;
         @Prop() public mediaCount?: number;
-        @Prop() public activityContent?: any;
+
+        @Prop() public slides?: any[];
+        @Prop() public activityType?: ActivityType;
 
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
@@ -75,33 +79,45 @@
                 },
                 on: {
                     touchMove: () => {
-                        this.hiddenAfterClick();
+                        this.hideAllPanes();
                     },
                     touchStart: () => {
-                        this.hiddenAfterClick();
+                        this.hideAllPanes();
                     },
                     click: () => {
-                        this.hiddenAfterClick();
+                        this.hideAllPanes();
                     },
                 },
             };
         }
+
+        get dynamicComponent() {
+            switch (this.activityType) {
+                case ActivityType.PremiumCollction:
+                 return 'PremiumCollectionSlide';
+                case ActivityType.WHQuestions:
+                 return 'WHQuestionsSlide';
+            }
+        }
+
         public created() {
-            this.hidden();
+            this.hideSidePanes(1);
         }
 
         public redirectBack() {
                 this.$router.go(-1);
         }
-        public hidden(): void {
+        public hideSidePanes(animationLength: number): void {
             setTimeout(() => {
                 (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0.1 });
             } , 3000);
         }
 
-        public hiddenAfterClick(): void {
+        public hideAllPanes(): void {
+            // hide top pane
             this.$emit('hideTopPane');
-            (TimelineMax as any).to('.swiper-button-white', 0.2, {opacity: 0.1});
+            // hide side pane
+            this.hideSidePanes(0.2);
         }
 
         public openMenu(e: any): void {
