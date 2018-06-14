@@ -8,7 +8,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
-        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         selectedSessionInfoId: 3,
@@ -89,14 +89,32 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         layout: PremiumCollectionLayout.SingleMedia,
         slides: [
             {
-                photos: ['/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                    '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
-                    '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/2.jpg'],
             },
-
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/5.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/6.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/8.jpg'],
+            },
+            {
+                photos: ['/media/restricted/collections/photos/collection-1/content/9.jpg'],
+            },
         ],
     },
 });
