@@ -84,9 +84,6 @@
                     doubleTap: () => {
                       this.checkDoubleTap();
                     },
-                    touchMove: () => {
-                        this.hideAllPanes();
-                    },
                     touchStart: () => {
                         this.hideAllPanes();
                     },
@@ -109,16 +106,16 @@
         }
 
         public created() {
-            this.hideSidePanes(1);
+             setTimeout(() => {
+                this.hideSidePanes(1);
+              } , 3000);
         }
 
         public redirectBack() {
                 this.$router.go(-1);
         }
         public hideSidePanes(animationLength: number): void {
-            setTimeout(() => {
-                (TimelineMax as any).to('.swiper-button-white', 1, {opacity : 0.1 });
-            } , 3000);
+                (TimelineMax as any).to('.swiper-button-white', 0.1 , {opacity : 0.1 });
         }
 
         public hideAllPanes(): void {

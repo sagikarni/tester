@@ -10,7 +10,6 @@
               <v-snackbar   v-model="showRotateNotification">
                   {{ $locale.general.rotateScreenWarning }}
                </v-snackbar>
-  
     </div>
 </template>
 
