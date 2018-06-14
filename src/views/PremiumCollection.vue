@@ -74,16 +74,12 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
-                this.getActivity({activity: this.activityId}).then((res: any) => {
-                    if (res.status !== 200) {
-                        this.$router.push(`/activity-details/${this.activityId}`);
-                    }
-                    if (this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
-                        this.dialog = true;
-                    }
-                }).catch((err: any) => {
+                if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
-                });
+                }
+                if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
+                    this.dialog = true;
+                }
             }
         }
     }

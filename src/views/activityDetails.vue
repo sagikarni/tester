@@ -147,7 +147,17 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
-                if (this.reloadActivityDetails !== false) {
+                if (this.reloadActivityDetails === false && this.activityState) {
+                    const activityState = JSON.parse(JSON.stringify(this.activityState));
+
+                    if (activityState && activityState.details) {
+                        this.updateActivity({activity: undefined});
+                        this.updateActivity({activity: activityState});
+                        this.sessionSelectedItem = activityState.details.selectedSessionInfoDesc;
+                        this.show();
+                        this.changeReloadActivityDetails({status: true}); // Need to reload form api the activities
+                    }
+                } else {
                     this.getActivity({activity: this.activityId}).then((res: any) => {
                         if (res.status === 500) {
                             this.showErrorPane = true;
@@ -163,16 +173,6 @@
                         this.showErrorPane = true;
                         this.errorPaneAction({message: this.$locale.general.somethingWentWrong});
                     });
-                } else {
-                    const activityState = JSON.parse(JSON.stringify(this.activityState));
-
-                    if (activityState && activityState.details) {
-                        this.updateActivity({activity: undefined});
-                        this.updateActivity({activity: activityState});
-                        this.sessionSelectedItem = activityState.details.selectedSessionInfoDesc;
-                        this.show();
-                        this.changeReloadActivityDetails({status: true}); // Need to reload form api the activities
-                    }
                 }
             } else {
                 this.showErrorPane = true;
