@@ -18,6 +18,7 @@
     import ErrorModal from '@/modules/common/components/errorModal.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import { State, Action } from 'vuex-class';
+    import TimelineMax from 'gsap';
 
     @Component({
         components: {
@@ -45,6 +46,7 @@
         @Watch('$route')
         public onPropertyChanged2(value: any, oldValue: any) {
             if (oldValue && oldValue.params && oldValue.params.activityId && oldValue.path === `/premium-collection/${oldValue.params.activityId}`) {
+                (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "white"});
                 this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist
             }
             const el: any = this.$refs.loading;

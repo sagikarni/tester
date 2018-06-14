@@ -18,7 +18,7 @@
     import DialogOpenSlide from '@/modules/common/components/dialogOpenSlide.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
-
+    import TimelineMax from 'gsap';
     import { State, Action } from 'vuex-class';
 
     const namespace: string = 'activities';
@@ -94,6 +94,7 @@
                 }
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
                     this.dialog = true;
+                    (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
                 }
             }
         }

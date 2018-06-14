@@ -19,7 +19,7 @@
         }
 
        public showPane(): void {
-            (TimelineMax as any).to('.top_pane', 0.2, {opacity: .86 , onComplete: () => {
+            (TimelineMax as any).to('.top_pane', 0.1, {opacity: .86 , onComplete: () => {
                 this.isCloseBtnVisible = true;
             }});
         }

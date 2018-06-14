@@ -22,8 +22,6 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {Action} from 'vuex-class';
-    import {GeneralError} from "@/modules/store/typeClasses";
 
     @Component
     export default class DialogOpenSlide extends BaseComponent {
