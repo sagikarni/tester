@@ -13,7 +13,8 @@ export enum MediaType {
 }
 export enum ActivityType {
     PremiumCollction = 1,
-    TBD2 = 2,
+    WHQuestions = 2,
+    TBD2 = 3,
 }
 export enum Category {
     Communication = 1,
