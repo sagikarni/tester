@@ -158,22 +158,22 @@
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            opacity: .86!important;
+            /*opacity: .86!important;*/
         }
-        &:focus{
-            opacity: 0.1!important;
-        }
+        /*&:focus{*/
+            /*opacity: 0.1!important;*/
+        /*}*/
     }
     .swiper-button-next{
         right: 0;
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            opacity: .86!important;
+            /*opacity: .86!important;*/
         }
-        &:focus{
-            opacity: 0.1!important;
-        }
+        /*&:focus{*/
+            /*opacity: 0.1!important;*/
+        /*}*/
     }
     .firstActivity{
         flex-direction: column;

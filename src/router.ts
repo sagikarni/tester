@@ -8,7 +8,7 @@ import SlideShowView from './views/SlideShowView.vue';
 import Search from './views/Search.vue';
 import ActivityDetails from './views/activityDetails.vue';
 import PremiumCollection from './views/PremiumCollection.vue';
-
+import {bus, busConstants} from './modules/utils/eventBus';
 Vue.use(Router);
 
 export default new Router({
@@ -18,6 +18,10 @@ export default new Router({
       path: '/',
       name: 'NormalView',
       component: NormalView,
+      beforeEnter: (to, from, next) => {
+        bus.$emit(busConstants.EXIT_FULL_SCREEN);
+        next();
+      },
       children: [
           {
               path: '',
@@ -45,6 +49,10 @@ export default new Router({
             path: '/full',
             name: 'FullScreenView',
             component: FullScreenView,
+            beforeEnter: (to, from, next) => {
+                bus.$emit(busConstants.ENTER_FULL_SCREEN);
+                next();
+            },
             children: [
                 {
                     path: '/slideshow',

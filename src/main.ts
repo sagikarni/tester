@@ -13,6 +13,7 @@ import 'swiper/dist/css/swiper.min.css';
 import 'izitoast/dist/css/iziToast.min.css';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import fullscreen from 'vue-fullscreen';
 
 
 Vue.config.productionTip = false;
@@ -28,7 +29,7 @@ Vue.use(Vuetify, {
         error: '#b0bec5',
     },
 });
-
+Vue.use(fullscreen);
 Vue.use(VueIziToast);
 Vue.use(VueAwesomeSwiper);
 
