@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
     </div>
 </template>
@@ -17,6 +17,8 @@
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
     import DialogOpenSlide from '@/modules/common/components/dialogOpenSlide.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
+    import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
+
     import { State, Action } from 'vuex-class';
 
     const namespace: string = 'activities';
@@ -26,13 +28,12 @@
             SlideShowMenuPane,
             SideNavigations,
             DialogOpenSlide,
-        },
+         },
     })
     export default class PremiumCollection extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
         @State(state => state.activities.activity && state.activities.activity.details) public activityDetailsState?: any;
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
-        @Action('getActivity', {namespace}) public getActivity?: any;
 
         public orientationUtil?: any;
         public dialog: boolean = false;
@@ -51,6 +52,20 @@
             }
         }
 
+        get slides(): any[] {
+            const slides = [];
+
+            if (this.activityDetailsContent && this.activityDetailsContent.slides && this.activityDetailsContent.slides.length > 0) {
+                for (let i = 0; i < this.activityDetailsContent.slides.length; i++) {
+                    slides.push({ id: i, layout: this.activityDetailsContent.layout, media: this.activityDetailsContent.slides[i] });
+                }
+            }
+
+            return slides;
+        }
+        get activityType() {
+            return ActivityType.PremiumCollction;
+        }
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
         }
@@ -63,7 +78,7 @@
             return this.activityDetailsState && this.activityDetailsState.title;
         }
 
-        get activityContent(): string {
+        get activityContent(): any {
             return this.activityDetailsContent;
         }
 
