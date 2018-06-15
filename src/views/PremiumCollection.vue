@@ -1,15 +1,18 @@
 <template>
     <div>
-        <dialog-open-slide :dialog="dialog"></dialog-open-slide>
+        <dialog-open-slide :dialog="orientationStatus && isBeginningSlide"></dialog-open-slide>
         <section v-show="!dialog">
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide"
+                              :activityType="activityType" :slides="slides" @hideTopPane="hideTopPane"
+                              :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
+                              :activityContent="activityContent"></side-navigations>
         </section>
-              <v-snackbar   v-model="showRotateNotification">
-                  {{ $locale.general.rotateScreenWarning }}
-               </v-snackbar>
+        <v-snackbar v-model="showRotateNotification">
+            {{ $locale.general.rotateScreenWarning }}
+        </v-snackbar>
     </div>
 </template>
 
@@ -22,9 +25,8 @@
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
-    import { State, Action } from 'vuex-class';
+    import { State } from 'vuex-class';
 
-    const namespace: string = 'activities';
 
     @Component({
         components: {
@@ -43,20 +45,25 @@
         public activityId: string = '1';
         public showRotateNotification: boolean = false;
         public isBeginningSlide: boolean = true;
+        public orientationStatus: boolean = false;
 
         constructor() {
             super();
             this.orientationUtil = new OrientationUtil();
         }
+
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
             if (value !== this.activityDetailsState.orientation) {
-                if (this.isBeginningSlide) {
-                    this.dialog = true;
-                } else {
+                this.orientationStatus = true;
+                if (!this.isBeginningSlide) {
                     this.showRotateNotification = true;
+                } else {
+                    this.showRotateNotification = false;
+                    this.dialog = true;
                 }
             } else {
+                this.orientationStatus = false;
                 this.dialog = false;
                 this.showRotateNotification = false;
             }
@@ -102,7 +109,12 @@
         public showTopPane(): void {
             (this.$refs.topPane as any).showPane();
         }
+
         public isFirstSlide(isBeginning: boolean): void {
+            if (isBeginning && this.orientationStatus) {
+                this.showRotateNotification = false;
+                this.dialog = true;
+            }
             this.isBeginningSlide = isBeginning;
         }
         public created() {
@@ -113,6 +125,7 @@
                     this.$router.push(`/activity-details/${this.activityId}`);
                 }
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
+                    this.orientationStatus = true;
                     this.dialog = true;
                 }
             }
