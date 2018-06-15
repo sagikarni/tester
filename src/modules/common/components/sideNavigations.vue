@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
@@ -54,7 +54,7 @@
 
         @Prop() public slides?: any[];
         @Prop() public activityType?: number;
-        @Prop() public mediaType?: MediaType;
+        @Prop() public mediaType?: number;
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
 
@@ -64,6 +64,8 @@
 
         public timeout: any;
         public lastTap = 0;
+
+        public isBeginning: boolean = true;
 
         constructor() {
             super();
@@ -82,9 +84,9 @@
                 },
                 on: {
                     doubleTap: () => {
-                      this.checkDoubleTap();
+                        this.checkDoubleTap();
                     },
-                        touchMove: () => {
+                    touchMove: () => {
                         this.hideAllPanes();
                     },
                     touchStart: () => {
@@ -92,6 +94,11 @@
                     },
                     click: () => {
                         this.hideAllPanes();
+                    },
+                    slideChange: () => {
+                        const el: any = this.$refs.swiper;
+                        this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
+                        this.slideChanged(this.isBeginning);
                     },
                 },
             };
@@ -104,7 +111,7 @@
                     return 'PremiumCollectionPhotoBasedSlide';
                    }
                 case ActivityType.WHQuestions:
-                 return 'WHQuestionsSlide';
+                    return 'WHQuestionsSlide';
             }
         }
 
@@ -112,6 +119,10 @@
              setTimeout(() => {
                 this.hideSidePanes(1);
               } , 3000);
+        }
+
+        public slideChanged(isBeginning: boolean) {
+            this.$emit('isFirstSlide', isBeginning);
         }
 
         public redirectBack() {

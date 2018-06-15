@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaType="mediaType"  @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
         </section>
               <v-snackbar   v-model="showRotateNotification">
                   {{ $locale.general.rotateScreenWarning }}
@@ -42,6 +42,7 @@
         public dialog: boolean = false;
         public activityId: string = '1';
         public showRotateNotification: boolean = false;
+        public isBeginningSlide: boolean = true;
 
         constructor() {
             super();
@@ -50,9 +51,14 @@
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
             if (value !== this.activityDetailsState.orientation) {
-                this.showRotateNotification = true;
-           } else {
+                if (this.isBeginningSlide) {
+                    this.dialog = true;
+                } else {
+                    this.showRotateNotification = true;
+                }
+            } else {
                 this.dialog = false;
+                this.showRotateNotification = false;
             }
         }
 
@@ -96,15 +102,18 @@
         public showTopPane(): void {
             (this.$refs.topPane as any).showPane();
         }
+        public isFirstSlide(isBeginning: boolean): void {
+            this.isBeginningSlide = isBeginning;
+        }
         public created() {
             if (this.$route.params.activityId) {
+                (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
                 this.activityId = this.$route.params.activityId;
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
                 }
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
                     this.dialog = true;
-                    (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
                 }
             }
         }
