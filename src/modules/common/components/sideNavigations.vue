@@ -7,8 +7,8 @@
                     <p> {{mediaCount}} {{$locale.general.slidesText}}</p>
                 </div>
             </swiper-slide>
-             <swiper-slide   v-for="slide in slides" :key="slide.id">
-                  <component :is="dynamicComponent" :parameter="slide"></component>
+             <swiper-slide v-for="slide in slides" :key="slide.id">
+                  <component class="imgColor" :is="dynamicComponent" :parameter="slide"></component>
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
