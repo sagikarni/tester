@@ -51,7 +51,7 @@ export interface Ilocale {
         somethingWentWrong: string,
         menuActivities: string,
         rotateScreenWarning: string;
-
+        rotateScreenPopup: string;
     };
 }
 

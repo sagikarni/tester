@@ -1,14 +1,14 @@
 <template>
     <v-layout row justify-center>
-        <v-btn v-show="dialog" color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
-            <v-icon>close </v-icon>
+        <v-btn v-show="orientation" color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
+            <v-icon>close</v-icon>
         </v-btn>
 
-        <v-dialog v-model="dialog" persistent  >
+        <v-dialog v-model="orientation" persistent  >
             <v-card>
                 <v-card-title class="headline">
                     <div class="card_title" color="white">
-                       Rotate your device  to start the activity
+                       {{ $locale.general.rotateScreenPopup }}
                     </div>
                     <div class="card_test">
                         <v-icon color="white">screen_rotation</v-icon>
@@ -24,8 +24,8 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component
-    export default class DialogOpenSlide extends BaseComponent {
-        @Prop() public dialog?: boolean;
+    export default class RotateScreenAlert extends BaseComponent {
+        @Prop() public orientation?: boolean;
 
         constructor() {
             super();

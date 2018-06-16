@@ -50,6 +50,7 @@ var dictionary = {
         somethingWentWrong: 'Something Went Wrong',
         menuActivities: 'Activities',
         rotateScreenWarning: 'Please Rotate Your Screen',
+        rotateScreenPopup: "Rotate your device  to start the activity",
     }
 };
 
