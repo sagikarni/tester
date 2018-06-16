@@ -1,15 +1,18 @@
 <template>
     <div>
-        <dialog-open-slide :dialog="dialog"></dialog-open-slide>
-        <section v-show="!dialog">
+        <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide"></rotate-screen-alert>
+        <section v-show="!orientationStatus">
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaType="mediaType"  @showTopPane="showTopPane" :activityType="activityType" :slides="slides"  @hideTopPane="hideTopPane" :mediaCount="mediaCountInfo" :activityName="activityNameInfo" :activityContent="activityContent"></side-navigations>
+            <side-navigations :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide"
+                              :activityType="activityType" :slides="slides" @hideTopPane="hideTopPane"
+                              :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
+                              :activityContent="activityContent"></side-navigations>
         </section>
-              <v-snackbar   v-model="showRotateNotification">
-                  {{ $locale.general.rotateScreenWarning }}
-               </v-snackbar>
+        <v-snackbar v-model="showRotateNotification">
+            {{ $locale.general.rotateScreenWarning }}
+        </v-snackbar>
     </div>
 </template>
 
@@ -18,19 +21,18 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
-    import DialogOpenSlide from '@/modules/common/components/dialogOpenSlide.vue';
+    import RotateScreenAlert from '@/modules/common/components/rotateScreenAlert.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
-    import { State, Action } from 'vuex-class';
+    import { State } from 'vuex-class';
 
-    const namespace: string = 'activities';
 
     @Component({
         components: {
             SlideShowMenuPane,
             SideNavigations,
-            DialogOpenSlide,
+            RotateScreenAlert,
          },
     })
     export default class PremiumCollection extends BaseComponent {
@@ -39,20 +41,31 @@
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
 
         public orientationUtil?: any;
-        public dialog: boolean = false;
+        public orientationStatus: boolean = false;
         public activityId: string = '1';
         public showRotateNotification: boolean = false;
+        public isBeginningSlide: boolean = true;
+        public hasCorrectOrientation: boolean = false;
 
         constructor() {
             super();
             this.orientationUtil = new OrientationUtil();
         }
+
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
             if (value !== this.activityDetailsState.orientation) {
-                this.showRotateNotification = true;
-           } else {
-                this.dialog = false;
+                this.hasCorrectOrientation = true;
+                if (!this.isBeginningSlide) {
+                    this.showRotateNotification = true;
+                } else {
+                    this.showRotateNotification = false;
+                    this.orientationStatus = true;
+                }
+            } else {
+                this.hasCorrectOrientation = false;
+                this.orientationStatus = false;
+                this.showRotateNotification = false;
             }
         }
 
@@ -96,15 +109,24 @@
         public showTopPane(): void {
             (this.$refs.topPane as any).showPane();
         }
+
+        public isFirstSlide(isBeginning: boolean): void {
+            if (isBeginning && this.hasCorrectOrientation) {
+                this.showRotateNotification = false;
+                this.orientationStatus = true;
+            }
+            this.isBeginningSlide = isBeginning;
+        }
         public created() {
             if (this.$route.params.activityId) {
+                (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
                 this.activityId = this.$route.params.activityId;
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
                 }
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
-                    this.dialog = true;
-                    (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
+                    this.hasCorrectOrientation = true;
+                    this.orientationStatus = true;
                 }
             }
         }
