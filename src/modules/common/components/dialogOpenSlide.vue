@@ -75,6 +75,7 @@
     .card_test i{
         font-size: 30px;
     }
-
-
+    .theme--light .card{
+        background: transparent!important;
+    }
 </style>

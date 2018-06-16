@@ -39,9 +39,9 @@
     .close_activity {
         margin-right: 100px !important;
     }
-    .top_pane{
+  .top_pane{
         opacity: 0.5;
-        background-color: rgba(204,204, 255, .2);
+        background-color: rgba(204,204, 255, .2)!important;
     }
     @media only screen and (max-width: 960px) {
         .close_activity.mr-0-xs {
