@@ -50,11 +50,11 @@ export default new Router({
             name: 'FullScreenView',
             component: FullScreenView,
             beforeEnter: (to, from, next) => {
-                next();
+                bus.$emit(busConstants.ENTER_FULL_SCREEN);
                 // delay full screen in 200 milisec
                 // this solves a layout bug caused by openeing full screen while rendering the new page at thhe same time
                 setTimeout(() => {
-                    bus.$emit(busConstants.ENTER_FULL_SCREEN);
+                    next();
                 }, 200);
             },
             children: [

@@ -203,7 +203,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSHorizontal,
+        layout: PremiumCollectionLayout.TwoMediasHorizontal,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
@@ -305,7 +305,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSVertical,
+        layout: PremiumCollectionLayout.TwoMediasVertical,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
@@ -407,7 +407,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSVertical,
+        layout: PremiumCollectionLayout.FourMedias,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg', '/media/restricted/collections/photos/collection-1/content/3.jpg', '/media/restricted/collections/photos/collection-1/content/4.jpg'],
