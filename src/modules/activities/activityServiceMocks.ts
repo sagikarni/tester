@@ -203,7 +203,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSHorizontal,
+        layout: PremiumCollectionLayout.TwoMediasHorizontal,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
@@ -305,7 +305,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSVertical,
+        layout: PremiumCollectionLayout.TwoMediasVertical,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
@@ -407,7 +407,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         ],
     },
     content: {
-        layout: PremiumCollectionLayout.TwoMediaSVertical,
+        layout: PremiumCollectionLayout.FourMedias,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg', '/media/restricted/collections/photos/collection-1/content/3.jpg', '/media/restricted/collections/photos/collection-1/content/4.jpg'],
@@ -418,7 +418,64 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         ],
     },
 });
-
+mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, {
+    details: {
+        title: 'Card Deck Name',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 4, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        images: [
+            {
+                id: 1,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
+                title: 'some title 1',
+             },
+            {
+                id: 2,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
+                title: 'some title 2',
+            },
+            {
+                id: 3,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/3.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/3.jpg',
+                title: 'some title 3',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 4,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/4.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/4.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                videos: ['/media/restricted/collections/videos/collection-2/content/1.mp4'],
+            },
+            {
+                videos: ['/media/restricted/collections/videos/collection-2/content/2.mp4'],
+            },
+            {
+                videos: ['/media/restricted/collections/videos/collection-2/content/3.mp4'],
+            },
+            {
+                videos: ['/media/restricted/collections/videos/collection-2/content/4.mp4'],
+            },
+        ],
+    },
+});
 mock.onGet('/general/getActivity', { params: { activityId: '100' } }).reply(500, {});
 mock.onGet('/general/getActivity', { params: { activityId: '101' } }).reply(404, {});
 

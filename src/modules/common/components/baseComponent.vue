@@ -11,7 +11,7 @@
         public $fullscreen: any;
         public $toast: any;
         public $notificationSystem: any;
-
+        public explicitExitFromFullScreen: boolean = false;
         constructor() {
             super();
             this.setNotificationSystemSettings();
@@ -23,6 +23,7 @@
 
         public exitFullScreen() {
               try {
+                this.explicitExitFromFullScreen = true;
                 this.$fullscreen.exit();
             } catch {
                 // do nothing
@@ -31,8 +32,15 @@
 
         public enterFullScreen() {
             try {
+                this.explicitExitFromFullScreen = false;
                 if (this.hasFullScreenSupport()) {
-                    this.$fullscreen.enter();
+                    this.$fullscreen.enter(document.body, {
+                        callback: (isFullScreen: boolean) => {
+                            if (!isFullScreen && !this.explicitExitFromFullScreen) {
+                                this.$router.go(-1);
+                            }
+                        },
+                    });
                 }
             } catch {
                 // do nothing

@@ -22,8 +22,8 @@ export enum Category {
 }
 export enum PremiumCollectionLayout {
      SingleMedia = 1,
-     TwoMediaSHorizontal = 2,
-     TwoMediaSVertical = 3,
+     TwoMediasHorizontal = 2,
+     TwoMediasVertical = 3,
      FourMedias = 4,
 }
 export class ActivityMainDetailsInfo {
