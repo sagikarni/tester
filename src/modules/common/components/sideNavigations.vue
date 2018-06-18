@@ -115,11 +115,6 @@
             }
         }
 
-        public created() {
-             setTimeout(() => {
-                this.hideSidePanes(1);
-              } , 3000);
-        }
 
         public slideChanged(isBeginning: boolean) {
             this.$emit('isFirstSlide', isBeginning);
@@ -129,7 +124,7 @@
                 this.$router.go(-1);
         }
         public hideSidePanes(animationLength: number): void {
-                (TimelineMax as any).to('.swiper-button-white', 0.1 , {opacity : 0.1 });
+                (TimelineMax as any).to('.swiper-button-white', animationLength , {opacity : 0.1 });
         }
 
         public hideAllPanes(): void {

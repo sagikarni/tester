@@ -5,7 +5,7 @@
             <v-flex>
                 <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
-            <side-navigations :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide"
+            <side-navigations ref="slideNavigations" :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide"
                               :activityType="activityType" :slides="slides" @hideTopPane="hideTopPane"
                               :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
                               :activityContent="activityContent"></side-navigations>
@@ -46,6 +46,7 @@
         public showRotateNotification: boolean = false;
         public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
+        public pageLoad: boolean = false;
 
         constructor() {
             super();
@@ -66,6 +67,13 @@
                 this.hasCorrectOrientation = false;
                 this.orientationStatus = false;
                 this.showRotateNotification = false;
+                if (this.pageLoad) {
+                    setTimeout(() => {
+                        (this.$refs.topPane as any).hidePaneInternal(1);
+                        (this.$refs.slideNavigations as any).hideSidePanes(1);
+                    }, 3000);
+                    this.pageLoad = false;
+                }
             }
         }
 
@@ -127,6 +135,12 @@
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
                     this.hasCorrectOrientation = true;
                     this.orientationStatus = true;
+                    this.pageLoad = true;
+                } else {
+                    setTimeout(() => {
+                        (this.$refs.topPane as any).hidePaneInternal(1);
+                        (this.$refs.slideNavigations as any).hideSidePanes(1);
+                    } , 3000);
                 }
             }
         }
