@@ -6,6 +6,40 @@
                 </div>
  </div>
 
+    <div v-else-if="isTwoVerticalPhotoes" class="full-height table">
+        <div class="row">
+            <div class="cell">
+                <img class="object-fit_contain twoCell" :src="parameter.media.photos[0]">
+            </div>
+        </div>
+        <div class="row">
+            <div class=" cell">
+                <img class="object-fit_contain twoCell" :src="parameter.media.photos[1]">
+            </div>
+
+        </div>
+    </div>
+
+
+    <div v-else-if="isFourPhotoesSlide" class="full-height table">
+
+        <div class="row">
+            <div class="cell">
+                <img class="object-fit_contain fourCell" :src="parameter.media.photos[0]">
+
+                <img class="object-fit_contain fourCell" :src="parameter.media.photos[1]">
+            </div>
+        </div>
+        <div class="row">
+            <div class=" cell">
+                <img class="object-fit_contain fourCell" :src="parameter.media.photos[2]">
+                <img class="object-fit_contain fourCell" :src="parameter.media.photos[3]">
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 </template>
@@ -21,6 +55,12 @@
 
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
+        get isTwoVerticalPhotoes(): boolean {
+            return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.TwoMediasVertical;
+        }
+        get isFourPhotoesSlide(): boolean {
+            return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.FourMedias;
         }
 
     }
@@ -51,6 +91,20 @@
         margin: 0 auto;
         height:100%;
         text-align: center;
+    }
+    .row{
+        display:table-row;
+        width:auto;
+    }
+    .fourCell{
+        background-color: white;
+        width: calc(50% - 40px);
+        margin: 0 5px
+    }
+    .twoCell{
+        background-color: white;
+        width: calc(100% - 40px);
+        margin: 0 5px
     }
 
 </style>
