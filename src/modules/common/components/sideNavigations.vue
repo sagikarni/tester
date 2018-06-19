@@ -41,10 +41,13 @@
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
+    import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
+
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
         components: {
             PremiumCollectionPhotoBasedSlide,
+            PremiumCollectionVideoBasedSlide,
             WHQuestionsSlide,
         },
     })
@@ -104,12 +107,15 @@
             };
         }
 
-       get dynamicComponent() {
+        get dynamicComponent() {
             switch (this.activityType) {
                 case ActivityType.PremiumCollction:
-                   if (this.mediaType === MediaType.Photo) {
-                    return 'PremiumCollectionPhotoBasedSlide';
-                   }
+                    if (this.mediaType === MediaType.Photo) {
+                        return 'PremiumCollectionPhotoBasedSlide';
+                    } else if (this.mediaType === MediaType.Video) {
+                        return 'PremiumCollectionVideoBasedSlide';
+                    }
+
                 case ActivityType.WHQuestions:
                     return 'WHQuestionsSlide';
             }

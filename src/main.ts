@@ -14,6 +14,8 @@ import 'izitoast/dist/css/iziToast.min.css';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import fullscreen from 'vue-fullscreen';
+import VideoPlayer from 'vue-video-player';
+import 'video.js/dist/video-js.css';
 
 
 Vue.config.productionTip = false;
@@ -32,6 +34,7 @@ Vue.use(Vuetify, {
 Vue.use(fullscreen);
 Vue.use(VueIziToast);
 Vue.use(VueAwesomeSwiper);
+Vue.use(VideoPlayer);
 
 
 new Vue({

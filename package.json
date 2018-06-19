@@ -30,6 +30,7 @@
     "vue-loading-overlay": "^2.0.4",
     "vue-material-design-icons": "^1.4.0",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2",
     "vuetify": "^1.0.16",
     "vuex": "^3.0.1",
     "vuex-class": "^0.3.0"

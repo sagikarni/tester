@@ -34,7 +34,7 @@
             try {
                 this.explicitExitFromFullScreen = false;
                 if (this.hasFullScreenSupport()) {
-                    this.$fullscreen.enter(document.body, {
+                    this.$fullscreen.enter(document.getElementById("app"), {
                         callback: (isFullScreen: boolean) => {
                             if (!isFullScreen && !this.explicitExitFromFullScreen) {
                                 this.$router.go(-1);

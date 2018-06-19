@@ -6,3 +6,4 @@ declare module 'vue-izitoast';
 declare module 'vue-awesome-swiper';
 declare module 'current-device';
 declare module 'vue-fullscreen';
+declare module 'vue-video-player';
