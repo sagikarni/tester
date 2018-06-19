@@ -12,11 +12,6 @@
     export default class SlideShowMenuPane extends BaseComponent {
         public isCloseBtnVisible?: boolean = true;
 
-        public created() {
-             setTimeout(() => {
-              this.hidePaneInternal(1);
-            }, 3000);
-        }
 
        public showPane(): void {
             (TimelineMax as any).to('.top_pane', 0.1, {opacity: .86 , onComplete: () => {

@@ -1,6 +1,11 @@
 <template>
-
-
+        <div v-if="isSingleVideoSlide" class="full-height table">
+            <video-player class="vjs-custom-skin vjs-big-play-centered"
+                          ref="videoPlayer"
+                          :options="playerOptions"
+                          :playsinline="true">
+            </video-player>
+        </div>
 </template>
 
 <script lang="ts">
@@ -11,12 +16,42 @@
     @Component
     export default class PremiumCollectionVideoBasedSlide extends BaseComponent {
         @Prop() public parameter?: any;
+        public playerOptions: any;
+        constructor() {
+            super();
+            this.playerOptions = {
+                autoplay: false,
+                muted: true,
+                language: 'en',
+                playbackRates: [0.7, 1.0, 1.5, 2.0],
+                sources: [{
+                    type: "video/mp4",
+                    src: this.parameter.media.videos[0],
+                }],
+            };
+        }
 
+        get player(): any {
+            return (this.$refs.videoPlayer as any).player;
+        }
+
+        get isSingleVideoSlide(): boolean {
+            return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
 
     }
 </script>
 
 <style scoped lang="scss">
-   
+    .full-height{
+        background:#F8F8F8;
+    }
+    .table{
+        display:table;
+        height:100%;
+        width:100%;
+        position:relative;
+        background: transparent;
+    }
 
 </style>
