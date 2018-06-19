@@ -1,9 +1,8 @@
 <template>
         <div v-if="isSingleVideoSlide" class="full-height table">
-            <video-player class="vjs-custom-skin"
+            <video-player class="vjs-custom-skin vjs-big-play-centered"
                           ref="videoPlayer"
                           :options="playerOptions"
-                          @play="onPlayerPlay($event)"
                           :playsinline="true">
             </video-player>
         </div>
