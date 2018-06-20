@@ -428,19 +428,28 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
+        selectedSessionInfoDesc: 'Long',
         isPinned: false,
+        sessionsInfo : [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
         images: [
             {
                 id: 1,
                 thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
                 imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
              },
             {
                 id: 2,
                 thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
                 imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
                 title: 'some title 2',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 3,

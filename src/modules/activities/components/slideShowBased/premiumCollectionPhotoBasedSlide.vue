@@ -62,6 +62,9 @@
         get isFourPhotoesSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.FourMedias;
         }
+        public pauseAction(): void {
+            // do nothing
+        }
 
     }
 </script>
@@ -98,13 +101,14 @@
     }
     .fourCell{
         background-color: white;
-        width: calc(50% - 40px);
-        margin: 0 5px
+        width: calc(50% - 60px);
+        padding: 5px 5px 0px 5px;
+        box-sizing: border-box;
     }
     .twoCell{
         background-color: white;
         width: calc(100% - 40px);
-        margin: 0 5px
+        margin: 5px 5px
     }
 
 </style>

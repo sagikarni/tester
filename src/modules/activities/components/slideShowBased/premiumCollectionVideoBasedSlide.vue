@@ -2,6 +2,7 @@
         <div v-if="isSingleVideoSlide" class="full-height table">
             <video-player class="vjs-custom-skin vjs-big-play-centered"
                           ref="videoPlayer"
+                          @play="onPlayerPlay($event)"
                           :options="playerOptions"
                           :playsinline="true">
             </video-player>
@@ -17,6 +18,7 @@
     export default class PremiumCollectionVideoBasedSlide extends BaseComponent {
         @Prop() public parameter?: any;
         public playerOptions: any;
+        public pause: boolean = false;
         constructor() {
             super();
             this.playerOptions = {
@@ -37,6 +39,17 @@
 
         get isSingleVideoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
+
+        public onPlayerPlay(player: any) {
+            this.pause = true;
+        }
+
+        public pauseAction(): void {
+            if (!this.player.paused() && !this.pause) {
+                this.player.pause();
+            }
+            this.pause = false;
         }
 
     }

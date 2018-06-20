@@ -8,7 +8,7 @@
                 </div>
             </swiper-slide>
              <swiper-slide v-for="slide in slides" :key="slide.id">
-                  <component class="imgColor" :is="dynamicComponent" :parameter="slide"></component>
+                  <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :parameter="slide"></component>
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
@@ -96,10 +96,15 @@
                         this.hideAllPanes();
                     },
                     click: () => {
+                        const el: any = this.$refs.swiper;
+                        const realIndex = el &&  el.swiper && el.swiper.realIndex;
+                        this.pressButton(realIndex);
                         this.hideAllPanes();
                     },
                     slideChange: () => {
                         const el: any = this.$refs.swiper;
+                        const realIndex = el &&  el.swiper && el.swiper.realIndex;
+                        this.pressButton(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         this.slideChanged(this.isBeginning);
                     },
@@ -160,6 +165,13 @@
             this.$nextTick(() => {
                 this.showMenu = true;
             });
+        }
+
+        public pressButton(realIndex: number): void {
+            const el: any = this.$refs.slideComponent;
+            if (el[realIndex - 1]) {
+                el[realIndex - 1].pauseAction();
+            }
         }
 
     }
