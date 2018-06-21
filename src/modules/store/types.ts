@@ -5,7 +5,7 @@ export interface IRootState {
     generalGerror: GeneralError | undefined;
     errorPane: GeneralError | undefined;
     reloadActivityDetails: undefined;
-    qualityStatus: undefined;
+    isHDMedia: undefined;
 }
 
 export interface ISystemLoading {

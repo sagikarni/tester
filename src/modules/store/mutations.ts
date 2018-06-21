@@ -17,6 +17,6 @@ export const mutations: MutationTree<IRootState> = {
         state.reloadActivityDetails = payload.status;
     },
     updateQualityStatus(state, payload: any) {
-        state.qualityStatus = payload.qualityStatus;
+        state.isHDMedia = payload.isHDMedia;
     },
 };
