@@ -89,7 +89,7 @@
             return slides;
         }
         get activityType() {
-            return ActivityType.PremiumCollction;
+            return this.activityDetailsState && this.activityDetailsState.activityType;
         }
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
