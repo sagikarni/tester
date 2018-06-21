@@ -15,6 +15,7 @@ export enum ActivityType {
     PremiumCollction = 1,
     WHQuestions = 2,
     TBD2 = 3,
+    Meaning = 4,
 }
 export enum Category {
     Communication = 1,

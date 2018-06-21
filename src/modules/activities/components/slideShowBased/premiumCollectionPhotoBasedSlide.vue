@@ -65,6 +65,9 @@
         public pauseAction(): void {
             // do nothing
         }
+        public stopAction(): void {
+            // do nothing
+        }
 
     }
 </script>
