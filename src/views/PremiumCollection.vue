@@ -89,7 +89,7 @@
             return slides;
         }
         get activityType() {
-            return ActivityType.PremiumCollction;
+            return this.activityDetailsState && this.activityDetailsState.activityType;
         }
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
@@ -138,9 +138,11 @@
                     this.pageLoad = true;
                 } else {
                     setTimeout(() => {
-                        (this.$refs.topPane as any).hidePaneInternal(1);
-                        (this.$refs.slideNavigations as any).hideSidePanes(1);
-                    } , 3000);
+                        if ((this.$refs.topPane as any) && (this.$refs.slideNavigations as any)) {
+                            (this.$refs.topPane as any).hidePaneInternal(1);
+                            (this.$refs.slideNavigations as any).hideSidePanes(1);
+                        }
+                    }, 3000);
                 }
             }
         }

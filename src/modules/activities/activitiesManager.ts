@@ -11,6 +11,9 @@ export class ActivitiesManager {
             case ActivityType.PremiumCollction:
                 res.url = '/premium-collection/';
                 break;
+            case ActivityType.Meaning:
+                res.url = '/premium-collection/';
+                break;
             case ActivityType.TBD2:
                 res.url = '/questions/'; // Example need to change
                 break;

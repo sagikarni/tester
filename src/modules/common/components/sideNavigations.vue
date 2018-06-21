@@ -39,6 +39,7 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
+    import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
@@ -48,6 +49,7 @@
         components: {
             PremiumCollectionPhotoBasedSlide,
             PremiumCollectionVideoBasedSlide,
+            MeaningPhotoBasedSlide,
             WHQuestionsSlide,
         },
     })
@@ -104,7 +106,7 @@
                     slideChange: () => {
                         const el: any = this.$refs.swiper;
                         const realIndex = el &&  el.swiper && el.swiper.realIndex;
-                        this.pressButton(realIndex);
+                        this.stopVideo(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         this.slideChanged(this.isBeginning);
                     },
@@ -120,7 +122,10 @@
                     } else if (this.mediaType === MediaType.Video) {
                         return 'PremiumCollectionVideoBasedSlide';
                     }
-
+                case ActivityType.Meaning:
+                    if (this.mediaType === MediaType.Photo) {
+                        return 'MeaningPhotoBasedSlide';
+                    }
                 case ActivityType.WHQuestions:
                     return 'WHQuestionsSlide';
             }
@@ -171,6 +176,13 @@
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
                 el[realIndex - 1].pauseAction();
+            }
+        }
+
+        public stopVideo(realIndex: number): void {
+            const el: any = this.$refs.slideComponent;
+            if (el[realIndex - 1]) {
+                el[realIndex - 1].stopAction();
             }
         }
 

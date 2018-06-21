@@ -85,7 +85,7 @@ h1,h2,h3,h4,h5,h6{
 .imgColor img{
   background-color: #000000!important;
 }
-.vjs-custom-skin{
+.vjs-custom-box{
   height:100%;
   width:100%;
   div{
@@ -98,6 +98,14 @@ h1,h2,h3,h4,h5,h6{
   .vjs-paused.vjs-has-started .vjs-big-play-button {
     display: block;
   }
+  .vjs-loading-spinner{
+    width: 35px;
+    height: 35px;
+    border: 3px solid rgba(43, 51, 63, 0);
+  }
+
+
+
 }
 .close_rotation_issue .btn__content{
   padding: 0;

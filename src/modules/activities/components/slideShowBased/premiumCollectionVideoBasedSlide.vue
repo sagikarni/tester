@@ -1,6 +1,6 @@
 <template>
         <div v-if="isSingleVideoSlide" class="full-height table">
-            <video-player class="vjs-custom-skin vjs-big-play-centered"
+            <video-player class="vjs-custom-box vjs-big-play-centered"
                           ref="videoPlayer"
                           @play="onPlayerPlay($event)"
                           :options="playerOptions"
@@ -28,7 +28,7 @@
                 playbackRates: [0.7, 1.0, 1.5, 2.0],
                 sources: [{
                     type: "video/mp4",
-                    src: this.parameter.media.videos[0],
+                    src: this.videoSrc(),
                 }],
             };
         }
@@ -50,6 +50,18 @@
                 this.player.pause();
             }
             this.pause = false;
+        }
+
+        public stopAction(): void {
+            if (!this.player.paused()) {
+                this.player.pause();
+            }
+            this.player.currentTime(0);
+            this.pause = false;
+        }
+
+        public videoSrc(): string {
+            return this.selectVideoMedia(this.parameter.media.videos[0]);
         }
 
     }

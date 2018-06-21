@@ -16,4 +16,7 @@ export const actions: ActionTree<IRootState, IRootState> = {
     changeReloadActivityDetails({commit} , item: any) {
         commit('updateReloadActivityDetails' , item);
     },
+    changeQualityStatus({commit} , item: any) {
+        commit('updateQualityStatus' , item);
+    },
 };
