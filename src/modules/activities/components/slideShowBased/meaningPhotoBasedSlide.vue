@@ -2,11 +2,14 @@
     <div>
         <div v-if="isSinglePhotoSlide" class="full-height table">
             <div class="cell">
-                <img style="width: 100%; background-color: white"  class="object-fit_contain" :src="parameter.media.photos[0]">
-                <div v-if="phrase" class="phrases" @click="randomWord"> <span>{{phraseWord}}</span>
-                    <i class="material-icons refresh_icon">
-                    cached
-                </i></div>
+                <div class="cell-content">
+                    <img style="width: 100%; background-color: white" class="object-fit_contain"
+                         :src="selectPhotoMedia(parameter.media.photos[0])">
+                    <div v-if="phrase" class="phrases" @click="randomWord">
+                        <span>{{phraseWord}}</span>
+                        <i class="material-icons refresh_icon"> cached </i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -68,15 +71,21 @@
         position:relative;
         background: transparent;
     }
+
     .cell {
         display: table-cell;
         vertical-align: middle;
         width: 100%;
         margin: 0 auto;
-        height:100%;
+        height: 100%;
         text-align: center;
+        .cell-content {
+            position: relative;
+            max-height: 100vh !important;
+        }
     }
-    .phrases{
+
+    .phrases {
         position: absolute;
         padding: 11px 35px;
         color: white;
@@ -86,11 +95,13 @@
         box-sizing: border-box;
         font-size: 18px;
         background-color: black;
-        i{
-          float: right;
+        span {
+            min-width: 150px;
+        }
+        i {
+            float: right;
             margin-left: 10px;
             line-height: 1.1;
-            min-width: 150px;
         }
     }
 

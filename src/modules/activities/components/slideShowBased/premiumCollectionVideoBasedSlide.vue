@@ -28,7 +28,7 @@
                 playbackRates: [0.7, 1.0, 1.5, 2.0],
                 sources: [{
                     type: "video/mp4",
-                    src: this.parameter.media.videos[0],
+                    src: this.videoSrc(),
                 }],
             };
         }
@@ -58,6 +58,10 @@
             }
             this.player.currentTime(0);
             this.pause = false;
+        }
+
+        public videoSrc(): string {
+            return this.selectVideoMedia(this.parameter.media.videos[0]);
         }
 
     }

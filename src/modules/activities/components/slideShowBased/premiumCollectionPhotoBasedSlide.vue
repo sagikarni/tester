@@ -2,19 +2,19 @@
 <div>
  <div v-if="isSinglePhotoSlide" class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="parameter.media.photos[0]">
+                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="selectPhotoMedia(parameter.media.photos[0])">
                 </div>
  </div>
 
     <div v-else-if="isTwoVerticalPhotoes" class="full-height table">
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain twoCell" :src="parameter.media.photos[0]">
+                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[0])">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain twoCell" :src="parameter.media.photos[1]">
+                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[1])">
             </div>
 
         </div>
@@ -25,15 +25,15 @@
 
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain fourCell" :src="parameter.media.photos[0]">
+                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[0])">
 
-                <img class="object-fit_contain fourCell" :src="parameter.media.photos[1]">
+                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[1])">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain fourCell" :src="parameter.media.photos[2]">
-                <img class="object-fit_contain fourCell" :src="parameter.media.photos[3]">
+                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[2])">
+                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[3])">
             </div>
 
         </div>

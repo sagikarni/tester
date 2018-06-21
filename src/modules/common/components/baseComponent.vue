@@ -4,6 +4,7 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import { State } from 'vuex-class';
 
     @Component
     export default class BaseComponent extends Vue {
@@ -12,9 +13,26 @@
         public $toast: any;
         public $notificationSystem: any;
         public explicitExitFromFullScreen: boolean = false;
+        @State(state => state.qualityStatus) public qualityStatus?: boolean;
         constructor() {
             super();
             this.setNotificationSystemSettings();
+        }
+
+        public selectPhotoMedia(url: string): string {
+            if (this.qualityStatus && url) {
+                return url.replace(/.jpg$/gi, "_hd.jpg");
+            } else {
+                return url;
+            }
+        }
+
+        public selectVideoMedia(url: string): string {
+            if (this.qualityStatus && url) {
+                return url.replace(/.mp4$/gi, "_hd.mp4");
+            } else {
+                return url;
+            }
         }
 
         public hasFullScreenSupport(): boolean {

@@ -16,4 +16,7 @@ export const mutations: MutationTree<IRootState> = {
     updateReloadActivityDetails(state, payload: any) {
         state.reloadActivityDetails = payload.status;
     },
+    updateQualityStatus(state, payload: any) {
+        state.qualityStatus = payload.qualityStatus;
+    },
 };
