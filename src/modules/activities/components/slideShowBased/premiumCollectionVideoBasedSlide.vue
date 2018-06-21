@@ -52,6 +52,14 @@
             this.pause = false;
         }
 
+        public stopAction(): void {
+            if (!this.player.paused()) {
+                this.player.pause();
+            }
+            this.player.currentTime(0);
+            this.pause = false;
+        }
+
     }
 </script>
 
