@@ -3,7 +3,7 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
+                    <img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
                 </div>
             </div>
         </swiper-slide>

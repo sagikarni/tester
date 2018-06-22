@@ -20,6 +20,7 @@
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import TimelineMax from 'gsap';
 
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
@@ -69,7 +70,7 @@
         display:table;
         width:100%;
         position:relative;
-        background: transparent;
+        background: transparent!important;
     }
 
     .cell {

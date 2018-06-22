@@ -72,7 +72,7 @@
         height:100%;
         width:100%;
         position:relative;
-        background: transparent;
+        background: transparent!important;
     }
 
 </style>
