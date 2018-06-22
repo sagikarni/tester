@@ -6,8 +6,10 @@
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
                          :src="selectPhotoMedia(parameter.media.photos[0])">
                     <div v-if="phrase" class="phrases" @click="randomWord">
-                        <span>{{phraseWord}}</span>
-                        <i class="material-icons refresh_icon"> cached </i>
+                        <span class="spanFade">{{phraseWord}}</span>
+                        <span class="refresh_icon">
+                            <i class="material-icons"> cached </i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -20,6 +22,7 @@
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import TimelineMax from 'gsap';
 
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
@@ -40,7 +43,28 @@
                 this.phrase = true;
                 const arrayLen = this.parameter.media.phrases.length;
                 const randNum = Math.floor(Math.random() * arrayLen);
-                this.phraseWord = this.parameter.media.phrases[randNum];
+                if (this.phraseWord === '') {
+                    this.phraseWord = this.parameter.media.phrases[randNum];
+                } else {
+                    (TimelineMax as any).to('i', 0, {transform: "rotate(180deg)", autoAlpha: 0.5 });
+                    (TimelineMax as any).to('.spanFade', 0.5,
+                        {
+                            css: {"margin-right": "-" + 200 + "px", "alpha": "0"},
+                            ease: Linear.easeNone,
+                            onComplete: () => {
+                                (TimelineMax as any).to('i', 0, {transform: "rotate(0deg)", autoAlpha: 1 });
+                                (TimelineMax as any).to('.spanFade', 0, {
+                                    css: {"margin-left": "-" + 400 + "px"},
+                                });
+                                this.phraseWord = this.parameter.media.phrases[randNum];
+                                (TimelineMax as any).to('.spanFade', 0.5, {
+                                    css: {"margin-left": "-" + 200 + "px", "alpha": "1"}, ease: Linear.easeNone,
+                                });
+                            },
+                        });
+                    (TimelineMax as any).to('.spanFade', 0, {css: {"margin-left": "0", "margin-right": "0"}});
+                }
+
             }
         }
         public pauseAction(): void {
@@ -69,7 +93,7 @@
         display:table;
         width:100%;
         position:relative;
-        background: transparent;
+        background: transparent!important;
     }
 
     .cell {
@@ -87,21 +111,35 @@
 
     .phrases {
         position: absolute;
-        padding: 11px 35px;
+        padding: 7px 55px  35px 35px;
         color: white;
         bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
         box-sizing: border-box;
         font-size: 18px;
-        background-color: black;
+        background: rgba(0, 0, 0, 0.6);
+        width: 260px;
+        height: 50px;
         span {
+            font-size: 24px;
             min-width: 150px;
         }
+        .refresh_icon{
+            position: absolute;
+            right: 0;
+            width: 40px;
+            min-width: 55px;
+            height: 100%;
+            top: 0;
+            display: block;
+            background: #000000;
+        }
         i {
+            font-size: 32px;
             float: right;
-            margin-left: 10px;
-            line-height: 1.1;
+            margin: 0 10px;
+            margin: 8px 10px;
+            transition: all 0.5s;
         }
     }
 

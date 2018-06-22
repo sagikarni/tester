@@ -13,7 +13,7 @@
         public $toast: any;
         public $notificationSystem: any;
         public explicitExitFromFullScreen: boolean = false;
-        @State(state => state.qualityStatus) public isHDMedia?: boolean;
+        @State(state => state.isHDMedia) public isHDMedia?: boolean;
         constructor() {
             super();
             this.setNotificationSystemSettings();

@@ -14,7 +14,7 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-toolbar>
-                <v-dialog v-model="dialogSlideShow"  min-width="80%">
+                <v-dialog v-model="dialogSlideShow"  max-width="85%">
                     <v-card>
                         <slide-show @click.native="dialogSlideShow = false" :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
@@ -113,6 +113,9 @@
         box-shadow: none;
         background: none;
     }
+    .swiper-container {
+        height: 75vh;
+    }
     .theme--light card{
         background-color: transparent;
         color: rgba(0,0,0,.87);
@@ -131,7 +134,7 @@
         z-index: 1000;
     }
     .close_button div{
-        background: none;
+        background: none!important;
     }
     .img_cover{
         position: relative;
