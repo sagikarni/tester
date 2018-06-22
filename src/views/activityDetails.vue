@@ -71,9 +71,6 @@
         @Action('changeReloadActivityDetails') public changeReloadActivityDetails?: any;
         @Action('executeActivity', {namespace}) public executeActivity?: any;
 
-        constructor() {
-            super();
-        }
 
         @Watch('activityMainDetailsInfo')
         public onPropertyChanged(value: ActivityMainDetailsInfo, oldValue: ActivityMainDetailsInfo) {

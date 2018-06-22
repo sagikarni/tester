@@ -110,6 +110,9 @@
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         this.slideChanged(this.isBeginning);
                     },
+                    beforeDestroy: () => {
+                        (TimelineMax as any).to('div.avtivities-background', 0 , {opacity : 0 });
+                    },
                 },
             };
         }
