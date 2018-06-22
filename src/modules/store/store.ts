@@ -14,7 +14,7 @@ export default new Vuex.Store<IRootState>({
         generalGerror:  undefined,
         errorPane:  undefined,
         reloadActivityDetails:  undefined,
-        qualityStatus:  undefined,
+        isHDMedia:  undefined,
     },
     modules: {
         search,

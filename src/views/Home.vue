@@ -10,7 +10,7 @@
               <v-btn @click="$router.push('activity-details/10')">Premium - Video</v-btn>
                <v-btn @click="$router.push('activity-details/11')">Meaning - Photo</v-btn>
                <v-btn @click="$router.push('activity-details/100')">Premium - Server Error</v-btn>
-               <v-btn @click="$router.push('activity-details/100')">Premium - Not Found</v-btn>
+               <v-btn @click="$router.push('activity-details/101')">Premium - Not Found</v-btn>
 
 
        </v-flex>
@@ -24,13 +24,13 @@ import { Action } from 'vuex-class';
 
 @Component
 export default class Home extends Vue {
-    @Action('changeQualityStatus') public changeQualityStatus?: any;
+    @Action('changeMediaQuality') public changeMediaQuality?: any;
 
     public quality?: boolean = false;
 
     @Watch('quality')
     public onPropertyChanged(value: boolean, oldValue: boolean) {
-        this.changeQualityStatus({qualityStatus: value});
+        this.changeMediaQuality({isHDMedia: value});
     }
 }
 </script>

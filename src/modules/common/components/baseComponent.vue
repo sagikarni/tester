@@ -13,14 +13,14 @@
         public $toast: any;
         public $notificationSystem: any;
         public explicitExitFromFullScreen: boolean = false;
-        @State(state => state.qualityStatus) public qualityStatus?: boolean;
+        @State(state => state.qualityStatus) public isHDMedia?: boolean;
         constructor() {
             super();
             this.setNotificationSystemSettings();
         }
 
         public selectPhotoMedia(url: string): string {
-            if (this.qualityStatus && url) {
+            if (this.isHDMedia && url) {
                 return url.replace(/.jpg$/gi, "_hd.jpg");
             } else {
                 return url;
@@ -28,7 +28,7 @@
         }
 
         public selectVideoMedia(url: string): string {
-            if (this.qualityStatus && url) {
+            if (this.isHDMedia && url) {
                 return url.replace(/.mp4$/gi, "_hd.mp4");
             } else {
                 return url;
