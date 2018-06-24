@@ -36,6 +36,7 @@
     import { SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
     import { ImageInfo, GeneralError } from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
+    import NoSleep from 'nosleep.js';
 
     const namespace: string = 'activities';
 
@@ -58,6 +59,7 @@
         public showErrorPane: boolean = false;
         public loading?: boolean = false;
         public sessionSelectedItem?: string = 'Long';
+        public noDeviceSleep: any;
 
         @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
         @State(state => state.errorPane) public errorPane?: any;
@@ -205,6 +207,8 @@
         }
 
         public startActivityClick() {
+           this.noDeviceSleep = new NoSleep();
+           this.noDeviceSleep.enable();
            this.executeActivity().then((res: any) => {
                this.$router.push(res.url + this.activityId);
            });
