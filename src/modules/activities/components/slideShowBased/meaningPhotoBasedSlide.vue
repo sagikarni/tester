@@ -6,9 +6,9 @@
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
                          :src="selectPhotoMedia(parameter.media.photos[0])">
                     <div v-if="phrase" class="phrases" @click="randomWord">
-                        <span class="spanFade">{{phraseWord}}</span>
+                        <span class="spanFade" id="meaningSpanFade">{{phraseWord}}</span>
                         <span class="refresh_icon">
-                            <i class="material-icons"> cached </i>
+                            <i class="material-icons" id="meaningRefresh"> cached </i>
                         </span>
                     </div>
                 </div>
@@ -29,43 +29,54 @@
         @Prop() public parameter?: any;
         public phraseWord: string = '';
         public phrase: boolean = false;
+        public transitionEnded = true;
 
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
+        public isValid(): boolean {
+            return this.parameter && this.parameter.media && this.parameter.media.phrases && this.parameter.media.phrases.length > 0;
+        }
+        public getNextRandomPhrase(): string {
+          const arrayLen = this.parameter.media.phrases.length;
+          const randNum = Math.floor(Math.random() * arrayLen);
+          return this.parameter.media.phrases[randNum];
+        }
 
         public created() {
-            this.randomWord();
+            if (this.isValid()) {
+                  this.phraseWord = this.getNextRandomPhrase();
+                  this.phrase = true;
+            }
         }
 
         public randomWord() {
-            if (this.parameter && this.parameter.media && this.parameter.media.phrases && this.parameter.media.phrases.length > 0) {
-                this.phrase = true;
-                const arrayLen = this.parameter.media.phrases.length;
-                const randNum = Math.floor(Math.random() * arrayLen);
-                if (this.phraseWord === '') {
-                    this.phraseWord = this.parameter.media.phrases[randNum];
-                } else {
-                    (TimelineMax as any).to('i', 0, {transform: "rotate(180deg)", autoAlpha: 0.5 });
-                    (TimelineMax as any).to('.spanFade', 0.5,
-                        {
-                            css: {"margin-right": "-" + 200 + "px", "alpha": "0"},
-                            ease: Linear.easeNone,
-                            onComplete: () => {
-                                (TimelineMax as any).to('i', 0, {transform: "rotate(0deg)", autoAlpha: 1 });
-                                (TimelineMax as any).to('.spanFade', 0, {
-                                    css: {"margin-left": "-" + 400 + "px"},
-                                });
-                                this.phraseWord = this.parameter.media.phrases[randNum];
-                                (TimelineMax as any).to('.spanFade', 0.5, {
-                                    css: {"margin-left": "-" + 200 + "px", "alpha": "1"}, ease: Linear.easeNone,
-                                });
-                            },
-                        });
-                    (TimelineMax as any).to('.spanFade', 0, {css: {"margin-left": "0", "margin-right": "0"}});
-                }
-
+            if (!this.transitionEnded) {
+              return;
             }
+            const elemrefresh = document.getElementById("meaningRefresh");
+            const elemFadingWord = document.getElementById("meaningSpanFade");
+
+            this.transitionEnded = false;
+            (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(180deg)", autoAlpha: 0.5 });
+            (TimelineMax as any).to(elemFadingWord, 0.5,
+            {
+                  css: {"margin-right": "-200px", "alpha": "0"},
+                  ease: Power1.easeOut,
+                  onComplete: () => {
+                         (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(0deg)", autoAlpha: 1 });
+                         (TimelineMax as any).set(elemFadingWord, {
+                         css: {"margin-left": "-400px"},
+                        });
+                         this.phraseWord = this.getNextRandomPhrase();
+                         (TimelineMax as any).to(elemFadingWord, 0.5, {
+                         css: {"margin-left": "-200px", "alpha": "1"}, ease: Power1.easeOut, onComplete: () => {
+                             this.transitionEnded = true;
+                          },
+                         });
+                        },
+                      });
+            (TimelineMax as any).to(elemFadingWord, 0, {css: {"margin-left": "0", "margin-right": "0"}});
         }
         public pauseAction(): void {
             // do nothing
@@ -110,6 +121,7 @@
     }
 
     .phrases {
+        cursor: pointer;
         position: absolute;
         padding: 7px 55px  35px 35px;
         color: white;
