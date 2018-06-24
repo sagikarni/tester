@@ -26,7 +26,6 @@
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import { State } from 'vuex-class';
-    import NoSleep from 'nosleep.js';
 
 
     @Component({
@@ -48,7 +47,6 @@
         public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
         public pageLoad: boolean = false;
-        public noDeviceSleep: any;
 
         constructor() {
             super();
@@ -129,9 +127,6 @@
         }
         public created() {
             if (this.$route.params.activityId) {
-                this.noDeviceSleep = new NoSleep();
-
-                this.noDeviceSleep.enable();
                 (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
                 this.activityId = this.$route.params.activityId;
                 if (!this.activityDetailsState) {
