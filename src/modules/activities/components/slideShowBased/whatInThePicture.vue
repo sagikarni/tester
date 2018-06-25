@@ -1,0 +1,319 @@
+<template>
+    <div>
+        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
+            <div class="cell">
+                <div class="cell-content">
+                    <img style="width: 100%; background-color: white" class="object-fit_contain"
+                         :src="selectPhotoMedia(parameter.media.photos[0])">
+                    <div class="witp-questions" @click="openModalQuestions">
+                        <span>{{switchQuestions}}</span>
+                    </div>
+                </div>
+            </div>
+            <v-layout row justify-center>
+                <v-dialog v-model="dialog" persistent class="Witp-modal">
+                    <v-btn color="white" class="close_what_in_picture" flat @click.native="dialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <div class="dialog_wrappers">
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[0]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[1]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dialog_wrappers">
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[2]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[3]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs-center mt-3">
+                        <v-btn outline color="white" flat @click.native="dialog = false">Close</v-btn>
+                    </div>
+
+                    <v-card>
+                        <v-card-actions>
+                            <!--<v-spacer></v-spacer>-->
+
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-layout>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+    import { Component, Prop } from 'vue-property-decorator';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import TimelineMax from 'gsap';
+    import TweenLite from 'gsap';
+
+    @Component
+    export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
+        @Prop() public parameter?: any;
+        public switchQuestions: string = '';
+        public dialog: boolean = false;
+
+        get isSinglePhotoSlide(): boolean {
+            return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
+        public isValid(): boolean {
+            return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
+        }
+
+
+        public created() {
+            if (this.isValid()) {
+                this.switchQuestions = this.$locale.activities.switchQuestions;
+                (TimelineMax as any).set("body", {className: "+=Witp-globalClass"});
+            }
+        }
+
+
+        public openModalQuestions() {
+            this.dialog = true;
+            (TimelineMax as any).set(".cardWrapper", {perspective: 800});
+            (TimelineMax as any).set(".card", {transformStyle: "preserve-3d"});
+            (TimelineMax as any).set(".back", {rotationY: -180});
+            (TimelineMax as any).set([".back", ".front"], {backfaceVisibility: "hidden"});
+        }
+
+        public openQuestionCard(event: any) {
+            if (event.currentTarget.classList.contains('openCard')) {
+                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+            } else {
+                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                (TweenLite as any).to((event.currentTarget), 1.2, {
+                    className: "+=openCard",
+                    rotationY: 180,
+                    ease: Back.easeOut,
+                });
+            }
+            (TimelineMax as any).set(".openCard .front .iQuestion", {display: 'none'});
+            (TimelineMax as any).set(".openCard .front .iDone", {display: 'block'});
+        }
+
+        public revertWitpModal(): void {
+            (TimelineMax as any).set(".front .iDone", {display: 'none'});
+            (TimelineMax as any).set(".front .iQuestion", {display: 'block'});
+            (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+            this.dialog = false;
+        }
+        public pauseAction(): void {
+            // do nothing
+        }
+        public stopAction(): void {
+            // do nothing
+        }
+
+    }
+</script>
+
+<style scoped lang="scss">
+    .object-fit_contain { object-fit: contain }
+    .full-height{
+        height:100%;
+        background:#F8F8F8;
+    }
+
+    .table{
+        display:table;
+        width:100%;
+        position:relative;
+        background: transparent!important;
+    }
+
+    .cell {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        margin: 0 auto;
+        height: 100%;
+        text-align: center;
+        .cell-content {
+            position: relative;
+            max-height: 100vh !important;
+        }
+    }
+
+    .witp-questions {
+        cursor: pointer;
+        position: absolute;
+        padding: 7px 55px  35px 35px;
+        color: white;
+        bottom: 50px;
+        left: 0;
+        box-sizing: border-box;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.6);
+        width: 360px;
+        height: 50px;
+        span {
+            font-size: 24px;
+            min-width: 150px;
+        }
+    }
+
+    .cardWrapper{
+        width:450px;
+        height:270px;
+        float:left;
+        margin:0 20px 20px 0;
+        cursor:pointer;
+        -webkit-font-smoothing:antialiased;
+    }
+    .card_back_in{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .cardFace.back{
+        display: table;
+    }
+
+    .cardFace{
+        position:absolute;
+        width:450px;
+        height:270px;
+        overflow:hidden;
+        border: 1px solid white;
+        border-radius:4px;
+        padding: 0 20px;
+    }
+
+    .front i{
+        background-color:#000000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -12px 0 0 -12px;
+        color: white;
+    }
+
+    .back{
+        background-color:#000;
+        color: white;
+    }
+
+    .cardFace.back h1{
+        border-color:#91e600;
+    }
+
+    .moreInfo{
+        padding:10px;
+        color:white;
+        line-height:24px;
+    }
+    .dialog{
+        height: 100%;
+        max-height: 100%;
+
+    }
+
+    .dialog_wrappers{
+        justify-content: center;
+        display: flex;
+    }
+    .close_what_in_picture{
+        z-index: 100000;
+        right: 15px;
+        top: 45px;
+        position: absolute;
+        min-width: auto;
+        height: auto;
+        padding: 2px;
+        border-radius: 50%;
+        width: 28px;
+    }
+    .close_what_in_picturebtn .btn__content .icon {
+        color: inherit;
+    }
+    .card_back_in p{
+        font-size: 22px;
+    }
+
+    @media screen and (max-width: 1264px) {
+
+
+    }
+    @media screen and (max-width: 960px) {
+        .cardWrapper, .cardFace {
+            width: 200px;
+            height: 120px;
+        }
+        .close_button_what_in_picture{
+            margin-top: 0;
+        }
+        .card_back_in p{
+            font-size: 18px;
+        }
+        .cardWrapper {
+            margin: 0 10px 10px 0;
+        }
+        .close_what_in_picture{
+            right: 5px;
+            top: 5px;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .dialog_wrappers {
+            flex-direction: column;
+            padding: 0 30px;
+        }
+        .cardWrapper, .cardFace {
+            width: 100%;
+            margin:0 10px 10px 0;
+        }
+        .close_what_in_picture{
+            right: 8px;
+        }
+
+    }
+</style>

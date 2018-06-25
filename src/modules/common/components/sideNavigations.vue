@@ -43,6 +43,7 @@
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
+    import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
 
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
@@ -50,6 +51,7 @@
             PremiumCollectionPhotoBasedSlide,
             PremiumCollectionVideoBasedSlide,
             MeaningPhotoBasedSlide,
+            WhatInThePicture,
             WHQuestionsSlide,
         },
     })
@@ -107,6 +109,7 @@
                         const el: any = this.$refs.swiper;
                         const realIndex = el &&  el.swiper && el.swiper.realIndex;
                         this.stopVideo(realIndex);
+                        this.revertWitpModal(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         this.slideChanged(this.isBeginning);
                     },
@@ -128,6 +131,10 @@
                 case ActivityType.Meaning:
                     if (this.mediaType === MediaType.Photo) {
                         return 'MeaningPhotoBasedSlide';
+                    }
+                case ActivityType.WhatInThePicture:
+                    if (this.mediaType === MediaType.Photo) {
+                        return 'WhatInThePicture';
                     }
                 case ActivityType.WHQuestions:
                     return 'WHQuestionsSlide';
@@ -186,6 +193,13 @@
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
                 el[realIndex - 1].stopAction();
+            }
+        }
+
+        public revertWitpModal(realIndex: number): void {
+            const el: any = this.$refs.slideComponent;
+            if (el[realIndex - 1]) {
+                el[realIndex - 1].revertWitpModal();
             }
         }
 

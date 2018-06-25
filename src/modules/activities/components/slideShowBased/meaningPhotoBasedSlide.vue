@@ -84,6 +84,9 @@
         public stopAction(): void {
             // do nothing
         }
+        public revertWitpModal(): void {
+            // do nothing
+        }
 
     }
 </script>

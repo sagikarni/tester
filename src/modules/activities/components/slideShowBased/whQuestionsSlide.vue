@@ -15,6 +15,9 @@
         public slideClicked() {
              alert(this.parameter.name);
         }
+        public revertWitpModal(): void {
+            // do nothing
+        }
     }
 </script>
 

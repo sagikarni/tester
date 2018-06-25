@@ -29,7 +29,8 @@ var dictionary = {
         },
         activityCollection: {
             warningText: 'Please rotate your device'
-        }
+        },
+        switchQuestions: 'Switch To Questions',
     },
     general:{
         social:{

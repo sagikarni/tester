@@ -16,6 +16,7 @@ export enum ActivityType {
     WHQuestions = 2,
     TBD2 = 3,
     Meaning = 4,
+    WhatInThePicture = 5,
 }
 export enum Category {
     Communication = 1,
