@@ -1,43 +1,81 @@
 <template>
     <div>
-        <div v-if="isSinglePhotoSlide" class="full-height table">
+        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
             <div class="cell">
                 <div class="cell-content">
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
                          :src="selectPhotoMedia(parameter.media.photos[0])">
-                    <div v-if="phrase" class="phrases" @click="randomWord">
-                        <span class="spanFade" id="meaningSpanFade">{{phraseWord}}</span>
+                    <div class="witp-questions" @click="openModalQuestions">
+                        <span>{{switchQuestions}}</span>
                     </div>
                 </div>
             </div>
             <v-layout row justify-center>
-                <v-dialog v-model="dialog" persistent>
-                    <div class="cardWrapper">
-                    <div class="card" @click="ttt($event)">
-                        <div class="cardFace front"><h1>front</h1></div>
-                        <div class="cardFace back"><h1>{{this.parameter.media.questions[0]}}</h1></div>
-                    </div>
-                </div>
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <div class="cardFace front"><h1>front</h1></div>
-                            <div class="cardFace back"><h1>{{this.parameter.media.questions[1]}}</h1></div>
+                <v-dialog v-model="dialog" persistent class="Witp-modal">
+                    <v-btn color="white" class="close_what_in_picture" flat @click.native="dialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <div class="dialog_wrappers">
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[0]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[1]}}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <div class="cardFace front"><h1>front</h1></div>
-                            <div class="cardFace back"><h1>{{this.parameter.media.questions[2]}}</h1></div>
+                    <div class="dialog_wrappers">
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[2]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardWrapper">
+                            <div class="card" @click="openQuestionCard($event)">
+                                <div class="cardFace front">
+                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iDone">done</v-icon>
+                                </div>
+                                <div class="cardFace back">
+                                    <div class="card_back_in">
+                                        <p>{{this.parameter.media.questions[3]}}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <div class="cardFace front"><h1>front</h1></div>
-                            <div class="cardFace back"><h1>{{this.parameter.media.questions[3]}}</h1></div>
-                        </div>
+
+                    <div class="text-xs-center mt-3">
+                        <v-btn outline color="white" flat @click.native="dialog = false">Close</v-btn>
                     </div>
-                    <v-btn color="darken-1" flat @click.native="dialog = false"><v-icon>close</v-icon></v-btn>
-                    <v-btn color="darken-1" flat @click.native="dialog = false">Close</v-btn>
+
                     <v-card>
                         <v-card-actions>
                             <!--<v-spacer></v-spacer>-->
@@ -48,7 +86,6 @@
             </v-layout>
         </div>
     </div>
-
 </template>
 
 <script lang="ts">
@@ -56,13 +93,12 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
+    import TweenLite from 'gsap';
 
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
         @Prop() public parameter?: any;
-        public phraseWord: string = '';
-        public phrase: boolean = false;
-        public transitionEnded = true;
+        public switchQuestions: string = '';
         public dialog: boolean = false;
 
         get isSinglePhotoSlide(): boolean {
@@ -71,43 +107,44 @@
         public isValid(): boolean {
             return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
         }
-        public getNextRandomPhrase(): string {
-            const arrayLen = this.parameter.media.questions.length;
-            const randNum = Math.floor(Math.random() * arrayLen);
-            return this.parameter.media.questions[randNum];
-        }
+
 
         public created() {
             if (this.isValid()) {
-                this.phraseWord = this.$locale.activities.switchQuestions;
-                this.phrase = true;
+                this.switchQuestions = this.$locale.activities.switchQuestions;
+                (TimelineMax as any).set("body", {className: "+=Witp-globalClass"});
             }
         }
 
-        public randomWord() {
+
+        public openModalQuestions() {
             this.dialog = true;
             (TimelineMax as any).set(".cardWrapper", {perspective: 800});
             (TimelineMax as any).set(".card", {transformStyle: "preserve-3d"});
             (TimelineMax as any).set(".back", {rotationY: -180});
             (TimelineMax as any).set([".back", ".front"], {backfaceVisibility: "hidden"});
-            (TimelineMax as any).staggerTo(".card", 1, {rotationY: -180, repeat: 1, yoyo: true}, 0.1);
         }
 
-        public ttt(event: any) {
-            console.log('event', event.currentTarget);
-            if (this.transitionEnded) {
-                (TimelineMax as any).to((event.currentTarget), 1.2, {rotationY: 180, ease: Back.easeOut});
-                this.transitionEnded = false;
+        public openQuestionCard(event: any) {
+            if (event.currentTarget.classList.contains('openCard')) {
+                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
             } else {
-                (TimelineMax as any).to((event.currentTarget), 1.2, {rotationY: 0, ease: Back.easeOut});
-                this.transitionEnded = true;
+                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                (TweenLite as any).to((event.currentTarget), 1.2, {
+                    className: "+=openCard",
+                    rotationY: 180,
+                    ease: Back.easeOut,
+                });
             }
-            // (event: any) => {
-            //     (TimelineMax as any).to((event.target).find(".card"), 1.2, {rotationY:180, ease:Back.easeOut});
-            // },
-            // (event: any) => {
-            //     (TimelineMax as any).to((event.target).find(".card"), 1.2, {rotationY:0, ease:Back.easeOut});
-            // }
+            (TimelineMax as any).set(".openCard .front .iQuestion", {display: 'none'});
+            (TimelineMax as any).set(".openCard .front .iDone", {display: 'block'});
+        }
+
+        public revertWitpModal(): void {
+            (TimelineMax as any).set(".front .iDone", {display: 'none'});
+            (TimelineMax as any).set(".front .iQuestion", {display: 'block'});
+            (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+            this.dialog = false;
         }
         public pauseAction(): void {
             // do nothing
@@ -125,12 +162,7 @@
         height:100%;
         background:#F8F8F8;
     }
-    .full-height.two{
-        background:#ACACAC;
-    }
-    .full-height.three{
-        background:#5E5E5E;
-    }
+
     .table{
         display:table;
         width:100%;
@@ -151,7 +183,7 @@
         }
     }
 
-    .phrases {
+    .witp-questions {
         cursor: pointer;
         position: absolute;
         padding: 7px 55px  35px 35px;
@@ -167,63 +199,47 @@
             font-size: 24px;
             min-width: 150px;
         }
-        .refresh_icon{
-            position: absolute;
-            right: 0;
-            width: 40px;
-            min-width: 55px;
-            height: 100%;
-            top: 0;
-            display: block;
-            background: #000000;
-        }
-        i {
-            font-size: 32px;
-            float: right;
-            margin: 0 10px;
-            margin: 8px 10px;
-            transition: all 0.5s;
-        }
     }
 
     .cardWrapper{
-        width:150px;
-        height:150px;
-        position:relative;
-        /*background-color:#333;*/
+        width:450px;
+        height:270px;
         float:left;
-        margin-right:10px;
+        margin:0 20px 20px 0;
         cursor:pointer;
         -webkit-font-smoothing:antialiased;
+    }
+    .card_back_in{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .cardFace.back{
+        display: table;
     }
 
     .cardFace{
         position:absolute;
-        width:150px;
-        height:150px;
+        width:450px;
+        height:270px;
         overflow:hidden;
+        border: 1px solid white;
+        border-radius:4px;
+        padding: 0 20px;
     }
 
-    .front{
-        background-color:#333;
+    .front i{
+        background-color:#000000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -12px 0 0 -12px;
+        color: white;
     }
 
     .back{
-        background-color:#333;
+        background-color:#000;
+        color: white;
     }
-
-
-
-    .cardFace h1{
-        margin:0px;
-        font-size:18px;
-        padding:10px 0px 10px 10px;
-        border-bottom:solid 6px #aaa;
-        border-top:solid 6px #aaa;
-        background-color:black;
-        color:white;
-    }
-
 
     .cardFace.back h1{
         border-color:#91e600;
@@ -234,5 +250,70 @@
         color:white;
         line-height:24px;
     }
+    .dialog{
+        height: 100%;
+        max-height: 100%;
 
+    }
+
+    .dialog_wrappers{
+        justify-content: center;
+        display: flex;
+    }
+    .close_what_in_picture{
+        z-index: 100000;
+        right: 15px;
+        top: 45px;
+        position: absolute;
+        min-width: auto;
+        height: auto;
+        padding: 2px;
+        border-radius: 50%;
+        width: 28px;
+    }
+    .close_what_in_picturebtn .btn__content .icon {
+        color: inherit;
+    }
+    .card_back_in p{
+        font-size: 22px;
+    }
+
+    @media screen and (max-width: 1264px) {
+
+
+    }
+    @media screen and (max-width: 960px) {
+        .cardWrapper, .cardFace {
+            width: 200px;
+            height: 120px;
+        }
+        .close_button_what_in_picture{
+            margin-top: 0;
+        }
+        .card_back_in p{
+            font-size: 18px;
+        }
+        .cardWrapper {
+            margin: 0 10px 10px 0;
+        }
+        .close_what_in_picture{
+            right: 5px;
+            top: 5px;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .dialog_wrappers {
+            flex-direction: column;
+            padding: 0 30px;
+        }
+        .cardWrapper, .cardFace {
+            width: 100%;
+            margin:0 10px 10px 0;
+        }
+        .close_what_in_picture{
+            right: 8px;
+        }
+
+    }
 </style>

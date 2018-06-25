@@ -59,6 +59,9 @@
                 }],
             };
         }
+        public revertWitpModal(): void {
+            // do nothing
+        }
 
     }
 </script>

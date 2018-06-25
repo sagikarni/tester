@@ -109,6 +109,7 @@
                         const el: any = this.$refs.swiper;
                         const realIndex = el &&  el.swiper && el.swiper.realIndex;
                         this.stopVideo(realIndex);
+                        this.revertWitpModal(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         this.slideChanged(this.isBeginning);
                     },
@@ -192,6 +193,13 @@
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
                 el[realIndex - 1].stopAction();
+            }
+        }
+
+        public revertWitpModal(realIndex: number): void {
+            const el: any = this.$refs.slideComponent;
+            if (el[realIndex - 1]) {
+                el[realIndex - 1].revertWitpModal();
             }
         }
 
