@@ -671,11 +671,11 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
 mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
     details: {
-        title: 'This is a Meaning activity',
+        title: 'this is What in the picture Activity',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
-        activityType: ActivityType.Meaning, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        activityType: ActivityType.WhatInThePicture, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,

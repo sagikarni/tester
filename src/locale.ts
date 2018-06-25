@@ -31,6 +31,7 @@ export interface Ilocale {
         activityCollection: {
             warningText: string,
         },
+        switchQuestions: string,
     };
     general: {
         slidesText: string,

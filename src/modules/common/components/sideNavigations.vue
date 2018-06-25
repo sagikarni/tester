@@ -43,6 +43,7 @@
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
+    import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
 
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
@@ -50,6 +51,7 @@
             PremiumCollectionPhotoBasedSlide,
             PremiumCollectionVideoBasedSlide,
             MeaningPhotoBasedSlide,
+            WhatInThePicture,
             WHQuestionsSlide,
         },
     })
@@ -128,6 +130,10 @@
                 case ActivityType.Meaning:
                     if (this.mediaType === MediaType.Photo) {
                         return 'MeaningPhotoBasedSlide';
+                    }
+                case ActivityType.WhatInThePicture:
+                    if (this.mediaType === MediaType.Photo) {
+                        return 'WhatInThePicture';
                     }
                 case ActivityType.WHQuestions:
                     return 'WHQuestionsSlide';
