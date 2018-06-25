@@ -110,16 +110,16 @@
 <style scoped>
     .dialog card{
         min-height: 90vh;
-        box-shadow: none;
-        background: none;
+        box-shadow: none!important;
+        background: none!important;
     }
     .swiper-container {
         height: 75vh;
     }
     .theme--light card{
-        background-color: transparent;
+        background-color: transparent!important;
         color: rgba(0,0,0,.87);
-        box-shadow: none;
+        box-shadow: none!important;
     }
     .swiper-slide img{
         width: 100%;
@@ -129,8 +129,8 @@
         top: 0;
         right: 8px;
         width: 50px;
-        background: none;
-        box-shadow: none;
+        background: none!important;
+        box-shadow: none!important;
         z-index: 1000;
     }
     .close_button div{

@@ -76,7 +76,7 @@
         display:table;
         width:100%;
         position:relative;
-        background: transparent;
+        background: transparent!important;
     }
     .cell {
         display: table-cell;
