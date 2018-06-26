@@ -17,6 +17,9 @@ export class ActivitiesManager {
             case ActivityType.WhatInThePicture:
                 res.url = '/premium-collection/';
                 break;
+            case ActivityType.Categorization:
+                res.url = '/categorization-activity/';
+                break;
             case ActivityType.TBD2:
                 res.url = '/questions/'; // Example need to change
                 break;

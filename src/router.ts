@@ -8,6 +8,7 @@ import SlideShowView from './views/SlideShowView.vue';
 import Search from './views/Search.vue';
 import ActivityDetails from './views/activityDetails.vue';
 import PremiumCollection from './views/PremiumCollection.vue';
+import CategorizationActivity from './views/CategorizationActivity.vue';
 import {bus, busConstants} from './modules/utils/eventBus';
 Vue.use(Router);
 
@@ -65,6 +66,10 @@ export default new Router({
                 {
                     path: '/premium-collection/:activityId',
                     component: PremiumCollection,
+                },
+                {
+                    path: '/categorization-activity/:activityId',
+                    component: CategorizationActivity,
                 },
             ],
 
