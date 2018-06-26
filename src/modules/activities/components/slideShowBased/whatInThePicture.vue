@@ -12,10 +12,13 @@
             </div>
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent class="Witp-modal">
+                    <v-btn color="white" class="back_what_in_picture" flat @click.native="dialog = false">
+                        <v-icon>fas fa-chevron-left</v-icon> Back
+                    </v-btn>
                     <v-btn color="white" class="close_what_in_picture" flat @click.native="dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <div class="dialog_wrappers">
+                    <div class="dialog_wrappers first_dialog_wrappers">
                         <div class="cardWrapper">
                             <div class="card" @click="openQuestionCard($event)">
                                 <div class="cardFace front">
@@ -71,17 +74,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="text-xs-center mt-3">
-                        <v-btn outline color="white" flat @click.native="dialog = false">Close</v-btn>
-                    </div>
-
-                    <v-card>
-                        <v-card-actions>
-                            <!--<v-spacer></v-spacer>-->
-
-                        </v-card-actions>
-                    </v-card>
                 </v-dialog>
             </v-layout>
         </div>
@@ -93,7 +85,6 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
-    import TweenLite from 'gsap';
 
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
@@ -127,10 +118,10 @@
 
         public openQuestionCard(event: any) {
             if (event.currentTarget.classList.contains('openCard')) {
-                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                (TimelineMax as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
             } else {
-                (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
-                (TweenLite as any).to((event.currentTarget), 1.2, {
+                (TimelineMax as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                (TimelineMax as any).to((event.currentTarget), 1.2, {
                     className: "+=openCard",
                     rotationY: 180,
                     ease: Back.easeOut,
@@ -143,7 +134,7 @@
         public revertWitpModal(): void {
             (TimelineMax as any).set(".front .iDone", {display: 'none'});
             (TimelineMax as any).set(".front .iQuestion", {display: 'block'});
-            (TweenLite as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+            (TimelineMax as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
             this.dialog = false;
         }
         public pauseAction(): void {
@@ -260,10 +251,16 @@
         justify-content: center;
         display: flex;
     }
+    .back_what_in_picture{
+        left: 0;
+        top: 0;
+        position: absolute;
+    }
+
     .close_what_in_picture{
         z-index: 100000;
-        right: 15px;
-        top: 45px;
+        right: 0px;
+        top: 0;
         position: absolute;
         min-width: auto;
         height: auto;
@@ -277,15 +274,20 @@
     .card_back_in p{
         font-size: 22px;
     }
+    .first_dialog_wrappers{
+        padding-top: 15px;
+    }
 
     @media screen and (max-width: 1264px) {
-
+        .close_what_in_picture {
+            right: 10px;
+        }
 
     }
     @media screen and (max-width: 960px) {
         .cardWrapper, .cardFace {
-            width: 200px;
-            height: 120px;
+            width: 230px;
+            height: 130px;
         }
         .close_button_what_in_picture{
             margin-top: 0;
@@ -294,11 +296,11 @@
             font-size: 18px;
         }
         .cardWrapper {
-            margin: 0 10px 10px 0;
+            margin: 5px;
         }
         .close_what_in_picture{
             right: 5px;
-            top: 5px;
+            top: 2px;
         }
     }
 

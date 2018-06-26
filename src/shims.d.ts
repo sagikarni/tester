@@ -8,3 +8,4 @@ declare module 'current-device';
 declare module 'vue-fullscreen';
 declare module 'vue-video-player';
 declare module 'nosleep.js';
+declare module 'gsap/Draggable.js';

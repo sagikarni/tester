@@ -17,7 +17,7 @@ export enum ActivityType {
     TBD2 = 3,
     Meaning = 4,
     WhatInThePicture = 5,
-    Categorization = 5,
+    Categorization = 6,
 }
 export enum Category {
     Communication = 1,

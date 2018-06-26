@@ -136,7 +136,20 @@
   display: table-cell;
   vertical-align: middle;
 }
+.Witp-globalClass .back_what_in_picture .btn__content{
+  padding: 0;
+  justify-content: left;
+  text-transform: none;
 
+}
+.Witp-globalClass .back_what_in_picture .btn__content i{
+  margin-right: 12px;
+  font-size: 20px;
+
+}
+.Witp-globalClass .back_what_in_picture .btn__content:before{
+  display: none;
+}
 @media screen and (max-width: 600px) {
   .object-fit_contain{
     width: 100%;
@@ -150,4 +163,5 @@
     display: block;
     margin: 45px 0 0 0;
   }
+
 }
