@@ -2,7 +2,7 @@
     <div>
         <div class="full-height table">
             <div class="cell">
-                <img style="height: 100%; width: 100%; background-color: white" class="object-fit_contain" :data-id="parameter.media.categoryId" :src="parameter.media.photo">
+                <img style="width: 100%; background-color: white" class="object-fit_contain" :data-id="parameter.media.categoryId" :src="parameter.media.photo">
             </div>
         </div>
     </div>

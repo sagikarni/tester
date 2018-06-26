@@ -22,7 +22,7 @@
             Categorization,
         },
     })
-    export default class CategorizationActivity extends BaseComponent {
+    export default class CategorizationView extends BaseComponent {
 
         @Prop() public slides?: any[];
         @Prop() public activityType?: number;
@@ -65,7 +65,8 @@
 <style scoped lang="scss">
 
     .swiper-container {
-        height: 40vh;
+        height: 30vh;
+        width: 30vh;
     }
     .object-fit_contain { object-fit: contain }
     .full-height{

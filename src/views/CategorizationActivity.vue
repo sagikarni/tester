@@ -6,15 +6,24 @@
             <!--&lt;!&ndash;<slide-show-menu-pane ref="topPane"></slide-show-menu-pane>&ndash;&gt;-->
             <!--</v-flex>-->
 
-            <categorization-activity
-                    :mediaType="mediaType"
-                    :activityType="activityType"
-                    :slides="slides">
-            </categorization-activity>
+            <!--<categorization-view-->
+                    <!--:mediaType="mediaType"-->
+                    <!--:activityType="activityType"-->
+                    <!--:slides="slides">-->
+            <!--</categorization-view>-->
 
+            <v-carousel>
+                <v-carousel-item v-for="(item,i) in slides" :src="item.media.photo" :key="i"></v-carousel-item>
+            </v-carousel>
 
-            <!--<div id="dropArea">Drop Area</div>-->
-            <!--<div id="dropArea1">Drop Area</div>-->
+            <div id="container">
+                <div id="box1" class="box">box1</div>
+                <div id="box2" class="box">box2</div>
+                <div id="box3" class="box">box3</div>
+            </div>
+
+            <div id="dropArea">Drop Area</div>
+            <div id="dropArea1">Drop Area</div>
 
 
         </section>
@@ -26,25 +35,24 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
-    import CategorizationActivity from '@/modules/common/components/categorizationActivity.vue';
+    import CategorizationView from '@/modules/common/components/categorizationView.vue';
 
     import RotateScreenAlert from '@/modules/common/components/rotateScreenAlert.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import {State} from 'vuex-class';
-    // import Draggable from 'gsap/Draggable.js';
-
+    import Draggable from 'gsap/Draggable.js';
 
     @Component({
         components: {
             SlideShowMenuPane,
             SideNavigations,
             RotateScreenAlert,
-            CategorizationActivity,
+            CategorizationView,
         },
     })
-    export default class PremiumCollection extends BaseComponent {
+    export default class CategorizationActivity extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
         @State(state => state.activities.activity && state.activities.activity.details) public activityDetailsState?: any;
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
@@ -126,57 +134,107 @@
                     this.pageLoad = true;
                 }
 
-                // this.$nextTick(() => {
-                //     const droppables: any = this.$el.querySelectorAll(".swiper-slide");
-                //     const dropArea: any = this.$el.querySelector("#dropArea");
-                //     const dropArea1: any = this.$el.querySelector("#dropArea1");
-                //     const overlapThreshold: string = "99%";
-                //
-                //     const a = Draggable.create(droppables, {
-                //         bounds: window,
-                //         onDrag: function(e: any) {
-                //             if (this.hitTest(dropArea, overlapThreshold)) {
-                //                 (TimelineMax as any).set(this.target, {className: "+=highlight"});
-                //             } else if(this.hitTest(dropArea1, overlapThreshold)){
-                //                 (TimelineMax as any).set(this.target, {className: "+=highlight"});
-                //             } else {
-                //                 (TimelineMax as any).set(this.target, {className: "-=highlight"});
-                //             }
-                //         },
-                //         onDragEnd: function(e: any) {
-                //             if (!this.target.classList.contains('highlight')) {
-                //                 (TimelineMax as any).to(this.target, 0.2, {
-                //                     x: 0, y: 0,
-                //                 });
-                //             }
-                //         },
-                //     });
-                // })
+                this.$nextTick(() => {
+                    // const droppables: any = this.$el.querySelectorAll(".swiper-slide");
+                    const droppables: any = this.$el.querySelectorAll(".box");
+                    // const droppables: any = this.$el.querySelectorAll(".jumbotron");
+                    const dropArea: any = this.$el.querySelector("#dropArea");
+                    const dropArea1: any = this.$el.querySelector("#dropArea1");
+                    const overlapThreshold: string = "99%";
+
+                    Draggable.create(droppables, {
+                        bounds: "#app",
+                        onDrag: function(e: any) {
+                            if (this.hitTest(dropArea, overlapThreshold)) {
+                                (TimelineMax as any).set(this.target, {className: "+=highlight"});
+                            } else if (this.hitTest(dropArea1, overlapThreshold)) {
+                                (TimelineMax as any).set(this.target, {className: "+=highlight"});
+                            } else {
+                                (TimelineMax as any).set(this.target, {className: "-=highlight"});
+                            }
+                        },
+                        onDragEnd: function(e: any) {
+                            if (!this.target.classList.contains('highlight')) {
+                                (TimelineMax as any).to(this.target, 0.2, {
+                                    x: 0, y: 0,
+                                });
+                            }
+                        },
+                    });
+                });
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-
+    h1 {
+        font-size:40px;
+        font-weight: 300;
+        color:white;
+        margin: 0;
+    }
+    #container {
+        position:relative;
+    }
+    .box {
+        position:absolute;
+        width: 200px;
+        height: 80px;
+        text-align: center;
+        line-height: 80px;
+        font-size: 20px;
+        color: white;
+        border-radius:10px;
+        border: 2px solid black;
+    }
+    #box1 {
+        background-color: red;
+        top:0px;
+    }
+    #box2 {
+        background-color: blue;
+        top:88px;
+    }
+    #box3 {
+        background-color:green;
+        top:176px;
+    }
+    a {
+        color: white;
+    }
+    .highlight {
+        border: 4px solid yellow;
+        width: 196px;
+        height: 76px;
+        line-height: 76px;
+    }
+    code {
+        color: white;
+        font-size:1.2em;
+    }
+    p {
+        width:600px;
+        margin-top: 8px;
+    }
     #dropArea {
-        width: 400px;
-        height: 600px;
+        width: 340px;
+        height: 260px;
         background: #ccc;
         position: absolute;
-        left: 600px;
-        top: 800px;
+        left: 10px;
+        top: 900px;
         color: black;
         padding: 20px;
     }
 
     #dropArea1 {
-        width: 400px;
-        height: 600px;
+        width: 340px;
+        height: 260px;
         background: #ccc;
         position: absolute;
-        top: 800px;
-        left: 100px;
+        top: 900px;
+        left: 511px;
         color: black;
         padding: 20px;
     }
