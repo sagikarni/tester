@@ -1,100 +1,66 @@
 <template>
-    <swiper :options="swiperOption" ref="swiper" class="avtivities-background">
+    <main>
+        <div class="bounds"></div>
+        <div id="pool" class="zone">
+            <h3>Pool</h3>
+            <div class="tile" v-for="slide in slides" :key="slide.id">
+                <img style="width: 40%; background-color: white" class="object-fit_contain" :data-id="slide.media.categoryId" :src="slide.media.photo">
+            </div>
+        </div>
 
-        <swiper-slide v-for="slide in slides" :key="slide.id">
-            <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :parameter="slide"></component>
-        </swiper-slide>
 
-        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-    </swiper>
+        <div id="drop" class="zone">
+            <h3>Drop Zone</h3>
+        </div>
+        <div id="drop1" class="zone">
+            <h3>Drop Zone</h3>
+        </div>
+    </main>
 </template>
 
 <script lang="ts">
     import { Component, Prop, Watch } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
-    import Categorization from '@/modules/activities/components/otherActivities/categorization.vue';
-
+    import Draggable from 'gsap/Draggable.js';
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
-    @Component({
-        components: {
-            Categorization,
-        },
-    })
+
+    @Component
     export default class CategorizationView extends BaseComponent {
 
         @Prop() public slides?: any[];
         @Prop() public activityType?: number;
         @Prop() public mediaType?: number;
-        public swiperOption: any;
-        public dialogSlideShow: boolean = false;
-
-        public showMenu?: boolean = false;
-
-        public isBeginning: boolean = true;
 
         constructor() {
             super();
-
-            this.swiperOption = {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: false,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            };
-        }
-
-        get dynamicComponent() {
-            switch (this.activityType) {
-                case ActivityType.Categorization:
-                    return 'Categorization';
-            }
         }
 
     }
 </script>
 
 <style scoped lang="scss">
-
-    .swiper-container {
-        height: 30vh;
-        width: 30vh;
+    .zone {
+        /*position: relative;*/
+        background-color: #fafafa;
+        /*min-width: 100px;*/
+        /*height: 100%;*/
+        border: 1px solid #aaa;
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*justify-content: center;*/
+        /*align-items: center;*/
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     }
-    .object-fit_contain { object-fit: contain }
-    .full-height{
-        height:100%;
-        background:#F8F8F8;
+    #drop{
+        min-height: 200px;
+        width: 45%!important;
+        float: left;
     }
-    .full-height.two{
-        background:#ACACAC;
-    }
-    .full-height.three{
-        background:#5E5E5E;
-    }
-    .table{
-        display:table;
-        width:100%;
-        position:relative;
-        background: transparent!important;
-    }
-    .cell {
-        display: table-cell;
-        vertical-align: middle;
-        width: 100%;
-        margin: 0 auto;
-        height:100%;
-        text-align: center;
-    }
-    .dialog:not(.dialog--fullscreen) {
-        max-width: 95%;
+    #drop1{
+        float: right;
+        min-height: 200px;
+        width: 45%!important;
     }
 </style>
 
