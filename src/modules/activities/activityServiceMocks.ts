@@ -994,11 +994,11 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
         categories: [
             {
                 categorId: 1,
-                categoryNmae: 'Hot',
+                categoryName: 'Hot',
             },
             {
                 categorId: 2,
-                categoryNmae: 'Cold',
+                categoryName: 'Cold',
             },
         ],
         Media: [
