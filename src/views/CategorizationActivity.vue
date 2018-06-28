@@ -9,6 +9,7 @@
             <categorization-view
                     :mediaType="mediaType"
                     :activityType="activityType"
+                    :categoryTypes="categoryTypes"
                     :slides="slides">
             </categorization-view>
 
@@ -82,6 +83,17 @@
                 }
             }
             return slides;
+        }
+
+        get categoryTypes(): any[] {
+            const category = [];
+
+            if (this.activityDetailsContent && this.activityDetailsContent.categories && this.activityDetailsContent.categories.length > 0) {
+                for (let i = 0; i < this.activityDetailsContent.categories.length; i++) {
+                    category.push({id: i, category: this.activityDetailsContent.categories[i]});
+                }
+            }
+            return category;
         }
 
         get activityType() {
