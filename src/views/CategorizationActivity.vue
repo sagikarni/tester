@@ -1,7 +1,7 @@
 <template>
     <div>
-        <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide"></rotate-screen-alert>
-        <section v-show="!orientationStatus">
+        <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide && isMobileDevice"></rotate-screen-alert>
+        <section  v-show="!isMobileDevice">
             <v-flex>
             <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
@@ -48,10 +48,13 @@
         public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
         public pageLoad: boolean = false;
+        public isMobileDevice: boolean;
+
 
         constructor() {
             super();
             this.orientationUtil = new OrientationUtil();
+            this.isMobileDevice = this.orientationUtil && this.orientationUtil.isMobile;
         }
 
         @Watch('activityOrientation')

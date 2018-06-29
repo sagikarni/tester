@@ -5,6 +5,7 @@ export default class OrientationUtil {
 
     private device?: any;
     private orientation?: number;
+    private isMobile?: boolean;
 
     constructor() {
         this.device = device.noConflict();
@@ -14,11 +15,20 @@ export default class OrientationUtil {
             this.checkOrientation(cb);
         });
         this.checkOrientation(this.device.orientation);
+        this.isMobile = this.isMobileDevice();
     }
 
     public getOrientation() {
         this.checkOrientation(this.device.orientation);
         return this.orientation;
+    }
+
+    public isMobileDevice() {
+        if (this.device && this.device.type !== 'desktop') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private checkOrientation(orientation: string) {
