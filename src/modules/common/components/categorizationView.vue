@@ -1,11 +1,12 @@
 <template>
     <main>
         <div class="bounds"></div>
-        <div id="pool" class="zone">
-            <div v-for="slide in slides" :key="slide.id" class="tile image_wrapper"
-                 :data-id="slide.media.categoryId" :style="`background-image: url( ${slide.media.photo}  )`">
+        <div class="pool_wrapper">
+            <div id="pool" class="zone">
+                <div v-for="slide in slides" :key="slide.id" class="tile image_wrapper"
+                     :data-id="slide.media.categoryId" :style="`background-image: url( ${slide.media.photo}  )`">
+                </div>
             </div>
-
         </div>
 
         <div class="wrap-els" style="width: 100%; padding: 25px 0 "></div>
@@ -38,6 +39,7 @@
         public drop: any;
         public drop1: any;
         public height: number = 0;
+        public width: number = 0;
         public margin: number = 50;
         public gutter: number = 15;
 
@@ -66,6 +68,7 @@
             tile.data("index", index);
 
             if (tile.hasClass("dragging")) {
+                this.checkCategory(tile);
                 return;
             }
             tile.addClass("moving");
@@ -78,6 +81,9 @@
                 y: this.margin + (index - secontColIndex) * this.gutter + ((index - secontColIndex) * tileHeight),
                 touchAction: 'none',
                 userSelect: 'none',
+                pointerEvents: 'auto',
+                width: 130,
+                height: 90,
                 onComplete: () => {
                     tile.removeClass("moving");
                 },
@@ -92,18 +98,19 @@
                 return;
             }
             tile.addClass("moving");
-            const yAxis = index === 0 ? this.margin + this.gutter + this.height * 0.15 : this.margin;
+            const yAxis = index === 0 ? this.margin + this.gutter : this.margin - this.gutter - this.height * index;
 
             (TimelineMax as any).to(tile, 0.25, {
                 x: 25,
                 y: yAxis,
-                height: index === 0 ? 266 : 266 * 0.15,
-                width: 400,
-                display: index < 2 ? "block" : "none",
+                width: this.width,
                 borderColor: 'none',
-                touchAction: index === 0 ? 'none' : 'auto',
-                userSelect: index === 0 ? 'none' : 'auto',
+                display: 'block',
+                pointerEvents: index !== 0 ? 'none' : 'auto',
                 onComplete: () => {
+                    (TimelineMax as any).to(tile, 0, {
+                        height: index === 1 ?  this.height * 0.1 : this.height,
+                    });
                     tile.removeClass("moving");
                 },
             });
@@ -156,7 +163,6 @@
         public checkCategory(tile: any) {
 
             // If different catigory border is red
-
             if (Draggable.hitTest(tile, this.drop)) {
                 if (this.drop.data("id") === tile.data("id")) {
                     (TimelineMax as any).set(tile, {
@@ -177,10 +183,6 @@
                         border: "2px solid red",
                     });
                 }
-            } else {
-                (TimelineMax as any).set(tile, {
-                    border: "1px solid yellow",
-                });
             }
 
         }
@@ -210,7 +212,8 @@
                 this.drop = $("#drop");
                 this.drop1 = $("#drop1");
 
-                this.height = this.tiles.outerHeight();
+                this.height = 266;
+                this.width = 400;
                 const elem = this;
 
                 (TimelineMax as any).set('#drop', {height: window.innerHeight - 460});
@@ -223,16 +226,17 @@
                     tile = $(tile);
                     tile.data({index: i, zone: this.pool});
 
-                    const yAxis = i === 0 ? this.margin + this.gutter + this.height * 0.15 : this.margin;
+                    const yAxis = i === 0 ? this.margin + this.gutter : this.margin - this.gutter - this.height * i;
                     (TimelineMax as any).set(tile, {
-                        x: this.margin,
+                        x: 25,
                         y: yAxis,
-                        touchAction: i === 0 ? 'none' : 'auto',
-                        userSelect: i === 0 ? 'none' : 'auto',
-                        display: i < 2 ? "block" : "none",
+                        height: i === 1 ?  this.height * 0.1 : this.height,
+                        width: this.width,
+                        display: i > 1 ? 'none' : 'bolck',
+                        pointerEvents: i !== 0 ? 'none' : 'auto',
                     });
                 });
-               const drag =  Draggable.create( this.tiles, {
+               Draggable.create( this.tiles, {
                     bounds: "#app",
                     onDrag: function(event: any) {
                         const tile = $(this.target);
@@ -271,18 +275,6 @@
                              elem.reorderTiles(false);
                         }
 
-                        if (Draggable.hitTest(tile, elem.drop) || Draggable.hitTest(tile, elem.drop1)) {
-                            (TimelineMax as any).set(tile, {
-                                height: 90,
-                                width: 130,
-                            });
-                        }
-                        if (Draggable.hitTest(tile, elem.pool)) {
-                            (TimelineMax as any).set(tile, {
-                                height: 266,
-                                width: 400,
-                            });
-                        }
                     },
                     onDragEnd: function() {
                         const tile = $(this.target);
@@ -367,17 +359,19 @@
     #pool {
         /*overflow-x: scroll;*/
         flex: 1 1 auto;
-        display: block;
+        display: inline-block;
+        width: 450px;
         height: 400px;
+        border: none;
+        box-shadow: none;
+        background-color: white;
         /*margin-bottom: 50px;*/
         .image_wrapper {
-            width: 400px;
-            height: 266px;
-            margin-left: -255px;
-            left: 50%;
             background-size: cover;
             &:nth-child(2) {
-                height: 10%;
+                /*height: 10%!important;*/
+                top:unset;
+                bottom: 112px;
             }
         }
     }
@@ -410,6 +404,11 @@
         z-index: 9999999;
         pointer-events: none;
     }
-
+    .pool_wrapper{
+        width: 100%;
+        display: block;
+        text-align: center;
+        background-color: white;
+    }
 
 </style>
