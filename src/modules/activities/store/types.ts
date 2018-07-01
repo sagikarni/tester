@@ -18,6 +18,7 @@ export enum ActivityType {
     Meaning = 4,
     WhatInThePicture = 5,
     Categorization = 6,
+    Puzzle = 7,
 }
 export enum Category {
     Communication = 1,
