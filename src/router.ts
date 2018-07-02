@@ -9,6 +9,7 @@ import Search from './views/Search.vue';
 import ActivityDetails from './views/activityDetails.vue';
 import PremiumCollection from './views/PremiumCollection.vue';
 import CategorizationActivity from './views/CategorizationActivity.vue';
+import PuzzleActivity from './views/PuzzleActivity.vue';
 import {bus, busConstants} from './modules/utils/eventBus';
 Vue.use(Router);
 
@@ -70,6 +71,10 @@ export default new Router({
                 {
                     path: '/categorization-activity/:activityId',
                     component: CategorizationActivity,
+                },
+                {
+                    path: '/puzzle-activity/:activityId',
+                    component: PuzzleActivity,
                 },
             ],
 

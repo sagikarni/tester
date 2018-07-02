@@ -20,6 +20,9 @@ export class ActivitiesManager {
             case ActivityType.Categorization:
                 res.url = '/categorization-activity/';
                 break;
+            case ActivityType.Puzzle:
+                res.url = '/puzzle-activity/';
+                break;
             case ActivityType.TBD2:
                 res.url = '/questions/'; // Example need to change
                 break;

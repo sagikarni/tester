@@ -53,7 +53,9 @@
 
         @Watch('$route')
         public onPropertyChanged2(value: any, oldValue: any) {
-            if (oldValue && oldValue.params && oldValue.params.activityId && (oldValue.path === `/premium-collection/${oldValue.params.activityId}` || oldValue.path === `/categorization-activity/${oldValue.params.activityId}`) ) {
+            if (oldValue && oldValue.params && oldValue.params.activityId
+                && (oldValue.path === `/premium-collection/${oldValue.params.activityId}`
+                    || oldValue.path === `/categorization-activity/${oldValue.params.activityId}` || oldValue.path === `/puzzle-activity/${oldValue.params.activityId}`)) {
                 (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "white"});
                 this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist
             }
