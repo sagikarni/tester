@@ -77,13 +77,9 @@
             const secontColIndex = index > 3 ? 4 : 0;
 
             (TimelineMax as any).to(tile, 0.25, {
-                x: index > 3 ? 25 + tileWidth + this.gutter : 25,
-                y: this.margin + (index - secontColIndex) * this.gutter + ((index - secontColIndex) * tileHeight),
-                touchAction: 'none',
-                userSelect: 'none',
+                x: 25 - (tileWidth - tileWidth * 0.67),
+                y: (this.margin + index * this.gutter + (index * tileHeight *  0.33)) - 100,
                 pointerEvents: 'auto',
-                width: 130,
-                height: 90,
                 onComplete: () => {
                     tile.removeClass("moving");
                 },
@@ -103,14 +99,10 @@
             (TimelineMax as any).to(tile, 0.25, {
                 x: 25,
                 y: yAxis,
-                width: this.width,
+                scale: 1,
                 borderColor: 'none',
-                display: 'block',
                 pointerEvents: index !== 0 ? 'none' : 'auto',
                 onComplete: () => {
-                    (TimelineMax as any).to(tile, 0, {
-                        height: index === 1 ?  this.height * 0.1 : this.height,
-                    });
                     tile.removeClass("moving");
                 },
             });
@@ -154,8 +146,8 @@
         public getZone(tile: any) {
             // Returns the zone the tile is in
             const zone = Draggable.hitTest(tile, this.pool)
-                ? this.pool : Draggable.hitTest(tile, this.drop)
-                    ? this.drop : Draggable.hitTest(tile, this.drop1)
+                        ? this.pool : Draggable.hitTest(tile, this.drop)
+                        ? this.drop : Draggable.hitTest(tile, this.drop1)
                         ? this.drop1 : null;
             return zone;
         }
@@ -204,6 +196,20 @@
             });
         }
 
+        public afterDrop(tile: any) {
+            if (Draggable.hitTest(tile, this.pool)) {
+                (TimelineMax as any).to(tile, 0.3, {
+                    opacity: 1,
+                    scale: 1,
+                });
+            } else {
+                (TimelineMax as any).to(tile, 0.3, {
+                    opacity: 1,
+                    scale: 0.33,
+                });
+            }
+        }
+
         public created() {
 
             this.$nextTick(() => {
@@ -212,8 +218,6 @@
                 this.drop = $("#drop");
                 this.drop1 = $("#drop1");
 
-                this.height = 266;
-                this.width = 400;
                 const elem = this;
 
                 (TimelineMax as any).set('#drop', {height: window.innerHeight - 460});
@@ -230,9 +234,6 @@
                     (TimelineMax as any).set(tile, {
                         x: 25,
                         y: yAxis,
-                        height: i === 1 ?  this.height * 0.1 : this.height,
-                        width: this.width,
-                        display: i > 1 ? 'none' : 'bolck',
                         pointerEvents: i !== 0 ? 'none' : 'auto',
                     });
                 });
@@ -242,34 +243,34 @@
                         const tile = $(this.target);
                         const zone = elem.getZone(tile);
                         // Tile is not in the zone it started from
-                        if (zone && zone !== tile.data("zone")) {
-
-                            // Stop the draggable so the position doesn't
-                            // get messed up when appeneding tile to new zone
-                            this.endDrag(event);
-                            elem.changeZone(tile, zone);
-
-                            // Change tile's data for zone
-                            tile.data("zone", zone);
-
-                            // Find position of tile and zone
-                            const rect1 = tile[0].getBoundingClientRect();
-                            const rect2 = zone[0].getBoundingClientRect();
-
-                            zone.append(tile);
-
-                            // Update tile with new coords
-                            (TimelineMax as any).set(tile, {
-                                x: rect1.left - rect2.left,
-                                y: rect1.top - rect2.top,
-                            });
-                            this.startDrag(event);
-                        }
+                        // if (zone && zone !== tile.data("zone")) {
+                        //     // Stop the draggable so the position doesn't
+                        //     // get messed up when appeneding tile to new zone
+                        //     // this.endDrag(event);
+                        //     elem.changeZone(tile, zone);
+                        //
+                        //     // Change tile's data for zone
+                        //     tile.data("zone", zone);
+                        //
+                        //     // Find position of tile and zone
+                        //     const rect1 = tile[0].getBoundingClientRect();
+                        //     const rect2 = zone[0].getBoundingClientRect();
+                        //
+                        //     zone.append(tile);
+                        //
+                        //     // Update tile with new coords
+                        //     (TimelineMax as any).set(tile, {
+                        //         x: rect1.left - rect2.left,
+                        //         y: rect1.top - rect2.top,
+                        //     });
+                        //     // this.startDrag(event);
+                        // }
 
                         // Reorder tiles. True parameter tells it to ignore
                         // tiles that are being dragged
                         if (!zone) {
                             elem.reorderTiles(true);
+                            (TimelineMax as any).to(tile, 0.3, {opacity: 0.75, scale: 0.7});
                         }
                         if (elem.hitTest(tile)) {
                              elem.reorderTiles(false);
@@ -292,13 +293,15 @@
                     onDragStart: function() {
                         $(this.target).addClass("dragging");
                     },
-                    onPress: function() {
-                        (TimelineMax as any).to(this.target, 0.3, {opacity: 0.75, scale: 0.9});
-                    },
+                   onPress: function () {
+                       if (Draggable.hitTest(this.target, elem.pool)) {
+                           (TimelineMax as any).to(this.target, 0.3, {opacity: 0.75, scale: 0.7});
+                       }
+                   },
                     onRelease: function() {
                         elem.hitTest(this.target);
                         elem.reorderTiles(false);
-                        (TimelineMax as any).to(this.target, 0.3, {opacity: 1, scale: 1});
+                        elem.afterDrop(this.target);
                     },
                 });
 
@@ -367,11 +370,12 @@
         background-color: white;
         /*margin-bottom: 50px;*/
         .image_wrapper {
-            background-size: cover;
+            /*width: 400px;*/
+            /*height: 266px;*/
             &:nth-child(2) {
                 /*height: 10%!important;*/
-                top:unset;
-                bottom: 112px;
+                /*top:unset;*/
+                /*bottom: 112px;*/
             }
         }
     }
@@ -386,10 +390,11 @@
     }
 
     .tile {
+        background-size: cover;
         position: absolute;
         text-align: center;
-        width: 130px;
-        height: 90px;
+        width: 400px;
+        height: 266px;
         top: 0;
         left: 0;
         border: 1px solid rgba(0, 0, 0, 0.1);
