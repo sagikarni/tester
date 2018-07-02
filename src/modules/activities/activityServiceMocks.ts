@@ -1006,38 +1006,38 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
                 photo: "/media/restricted/collections/photos/collection-1/content/1.jpg",
                 categoryId: 1,
             },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/2.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/3.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/4.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/5.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/6.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/7.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/8.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/collections/photos/collection-1/content/9.jpg",
-                categoryId: 1,
-            },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/2.jpg",
+            //     categoryId: 1,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/3.jpg",
+            //     categoryId: 2,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/4.jpg",
+            //     categoryId: 1,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/5.jpg",
+            //     categoryId: 2,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/6.jpg",
+            //     categoryId: 2,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/7.jpg",
+            //     categoryId: 2,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/8.jpg",
+            //     categoryId: 1,
+            // },
+            // {
+            //     photo: "/media/restricted/collections/photos/collection-1/content/9.jpg",
+            //     categoryId: 1,
+            // },
         ],
     },
 });
