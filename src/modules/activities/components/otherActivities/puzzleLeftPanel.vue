@@ -1,22 +1,35 @@
 <template>
     <div class="sllider-wrapper">
-                <div  v-for="image in images" :key="image.id">
-                    <div :class="['cell', image.id === 0 ? 'active' : '']">
-                        <img :src="image.media.photo">
-                    </div>
-                </div>
+        <div v-for="image in images" :key="image.id">
+            <div :class="['cell', image.id === 0 ? 'active' : '']" @click="changePuzzle($event)" :data-count="image.media.partsCount" :data-url="image.media.photo">
+                <img :src="image.media.photo">
+            </div>
+        </div>
     </div>
-
 </template>
 
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import $ from 'jquery';
+    import TimelineMax from 'gsap';
 
 
     @Component
     export default class PuzzleLeftPanel extends BaseComponent {
         @Prop() public images?: object[];
+
+        public changePuzzle(event: any) {
+            if( !event.currentTarget.classList.contains('active') ){
+                (TimelineMax as any).set($('.active'), {
+                    className: "-=active",
+                    onComplete: () => {
+                        (TimelineMax as any).set(event.target, {className: "+=active"});
+                        this.$emit('getPuzzleData', { 'url': $(event.target).data('url'), 'count': $(event.target).data('count')});
+                    },
+                });
+            }
+        }
     }
 </script>
 
@@ -26,7 +39,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     .cell {
-        width: 410px;
+        width: 90%;
         height: 200px;
         margin: 15px;
         border: 1px solid #4c6cff;

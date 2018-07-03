@@ -40,8 +40,8 @@
         public drop1: any;
         public height: number = 0;
         public width: number = 0;
-        public margin: number = 50;
-        public gutter: number = 15;
+        public margin: number = 30;
+        public gutter: number = 10;
 
         constructor() {
             super();
@@ -77,8 +77,8 @@
             const secontColIndex = index > 3 ? 4 : 0;
 
             (TimelineMax as any).to(tile, 0.25, {
-                x: 25 - (tileWidth - tileWidth * 0.67),
-                y: (this.margin + index * this.gutter + (index * tileHeight *  0.33)) - 100,
+                x: index > 3 ? 25 - (tileWidth - tileWidth * 0.67) + tileWidth * 0.33 + this.gutter : 25 - (tileWidth - tileWidth * 0.67),
+                y: (this.margin + (index - secontColIndex) * this.gutter + ((index - secontColIndex) * tileHeight *  0.33)) - 100,
                 pointerEvents: 'auto',
                 onComplete: () => {
                     tile.removeClass("moving");
@@ -94,13 +94,14 @@
                 return;
             }
             tile.addClass("moving");
-            const yAxis = index === 0 ? this.margin + this.gutter : this.margin - this.gutter - this.height * index;
+            const yAxis = index === 0 ? this.margin + this.gutter + 15 : this.margin - this.gutter - this.height * index;
 
             (TimelineMax as any).to(tile, 0.25, {
                 x: 25,
                 y: yAxis,
                 scale: 1,
                 borderColor: 'none',
+                zIndex: 1000 - (1.5 * index),
                 pointerEvents: index !== 0 ? 'none' : 'auto',
                 onComplete: () => {
                     tile.removeClass("moving");
@@ -220,8 +221,8 @@
 
                 const elem = this;
 
-                (TimelineMax as any).set('#drop', {height: window.innerHeight - 460});
-                (TimelineMax as any).set('#drop1', {height: window.innerHeight - 460});
+                (TimelineMax as any).set('#drop', {height: window.innerHeight - 510});
+                (TimelineMax as any).set('#drop1', {height: window.innerHeight - 510});
 
 
                 this.tiles.each((i: number, tile: any) => {
@@ -230,10 +231,11 @@
                     tile = $(tile);
                     tile.data({index: i, zone: this.pool});
 
-                    const yAxis = i === 0 ? this.margin + this.gutter : this.margin - this.gutter - this.height * i;
+                    const yAxis = i === 0 ? this.margin + this.gutter + 15 : this.margin - this.gutter - this.height * i;
                     (TimelineMax as any).set(tile, {
                         x: 25,
                         y: yAxis,
+                        zIndex: 1000 - (1.5 * i),
                         pointerEvents: i !== 0 ? 'none' : 'auto',
                     });
                 });
