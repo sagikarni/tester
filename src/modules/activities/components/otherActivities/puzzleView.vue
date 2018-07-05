@@ -1,49 +1,72 @@
 <template>
     <div class="puzzel-wrapper">
-    <section class="container">
+        <section class="container">
 
-        <div class="list-item" v-for="count in imageCount" :key="count">
-            <div class="item-content"
-                 :style="`background-image: url( ${getImagePath(urlPath)}${count}.jpeg  )`">
-                <span class="order">{{count}}</span>
-            </div>
-        </div>
 
-    </section>
-</div>
+            <transition-group name="list-complete" v-for="image in images" v-show="image.id === 0"
+                              :key="image.id"
+                              :data-id="image.id"
+                              :class="[!puzzleShuffle ? 'list-complete' : '', image.id === 0 ? 'active' : '']" tag="section">
+                <div
+                        v-for="item in image.puzzleMadia"
+                        :key="item.id"
+                        :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"
+                        :style="!puzzleShuffle ? `flex: 1 1 ${100/Math.sqrt(imageCount)}%` : ``">
+                    <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']"
+                         :style="`background-image: url( ${item.puzzlePath}  )`">
+                        <span class="order">{{item.id}}</span>
+                    </div>
+                </div>
+            </transition-group>
+
+        </section>
+    </div>
 
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Watch } from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-
+    import TimelineMax from 'gsap';
+    import $ from 'jquery';
     @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images?: object[];
+        @Prop() public puzzleImagesPath?: object[];
         @Prop() public imageCount?: number;
+        @Prop() public puzzleId?: number;
         @Prop() public urlPath?: string;
+        public puzzleShuffle?: boolean = false;
 
-        public getImagePath(url: string): string{
-            return  url.replace(/photo.jpg$/gi, "parts/");
+        constructor() {
+            super();
         }
+
         public created() {
-            this.puzzleRender();
+            setTimeout(() => {
+                this.shuffle(0);
+                setTimeout(() => {
+                    this.puzzleShuffle = true;
+                    this.puzzleRender();
+                }, 2000)
+            }, 3000)
         }
+
         public puzzleRender() {
-            this.$nextTick( () => {
+            this.$nextTick(() => {
                 // List version
 // https://codepen.io/osublake/pen/jrqjdy/
-                var rowSize   = 150;
-                var colSize   = 250;
-                var totalRows = Math.sqrt(this.imageCount);
-                var totalCols = Math.sqrt(this.imageCount);
+                const rowSize = 150;
+                const colSize = 250;
+                const totalRows = Math.sqrt(this.imageCount);
+                const totalCols = Math.sqrt(this.imageCount);
 
-                var cells = [];
+                const cells = [];
 
+                // (TimelineMax as any).to(document.querySelector(".list-item"), 0.5, { top: 0, left: 0 });
 // Map cell locations to array
-                for (var row = 0; row < totalRows; row++) {
-                    for (var col = 0; col < totalCols; col++) {
+                for (let row = 0; row < totalRows; row++) {
+                    for (let col = 0; col < totalCols; col++) {
                         cells.push({
                             row: row,
                             col: col,
@@ -53,12 +76,12 @@
                     }
                 }
 
-                var container = document.querySelector(".container");
-                var listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
-                var sortables = listItems.map(Sortable); // Array of sortables
-                var total     = sortables.length;
+                const container = document.querySelector(".container");
+                const listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
+                const sortables = listItems.map(Sortable); // Array of sortables
+                const total = sortables.length;
 
-                TweenLite.to(container, 0.5, { autoAlpha: 1 });
+                (TimelineMax as any).to(container, 0.5, {autoAlpha: 1});
 
                 function changeIndex(item, to, sameRow, sameCol) {
 
@@ -85,42 +108,42 @@
 
                 function Sortable(element, index) {
 
-                    var content = element.querySelector(".item-content");
-                    var order   = element.querySelector(".order");
+                    const content = element.querySelector(".item-content");
+                    const order = element.querySelector(".order");
 
-                    var animation = TweenLite.to(content, 0.3, {
+                    const animation = (TimelineMax as any).to(content, 0.3, {
                         boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
                         force3D: true,
                         scale: 1.1,
                         paused: true
                     });
 
-                    var dragger = new Draggable(element, {
+                    const dragger = new Draggable(element, {
                         onDragStart: downAction,
                         onRelease: upAction,
                         onDrag: dragAction,
                         cursor: "inherit"
                     });
 
-                    var position = element._gsTransform;
+                    const position = element._gsTransform;
 
                     // Public properties and methods
-                    var sortable = {
-                        cell:     cells[index],
-                        dragger:  dragger,
-                        element:  element,
-                        index:    index,
+                    const sortable = {
+                        cell: cells[index],
+                        dragger: dragger,
+                        element: element,
+                        index: index,
                         setIndex: setIndex
                     };
 
-                    TweenLite.set(element, {
+                    (TimelineMax as any).set(element, {
                         x: sortable.cell.x,
                         y: sortable.cell.y,
                     });
 
                     function setIndex(index) {
 
-                        var cell  = cells[index];
+                        var cell = cells[index];
                         var dirty = position.x !== cell.x || position.y !== cell.y;
 
                         sortable.cell = cell;
@@ -162,7 +185,7 @@
                     }
 
                     function layout() {
-                        TweenLite.to(element, 0.3, {
+                        (TimelineMax as any).to(element, 0.3, {
                             x: sortable.cell.x,
                             y: sortable.cell.y
                         });
@@ -180,56 +203,104 @@
                 function clamp(value, a, b) {
                     return value < a ? a : (value > b ? b : value);
                 }
-            } )
+            })
         }
 
         @Watch('urlPath')
         public onPropertyChanged(value: string, oldValue: string) {
-            this.puzzleRender();
+            (TimelineMax as any).set($('.active'), {
+                className: "-=active",
+                className: "+=already",
+                display: 'none',
+                onComplete: () => {
+                    // (TimelineMax as any).set(event.target, {className: "+=active"});
+                },
+            });
+            // this.puzzleRender();
         }
-     }
-</script>
 
-<style scoped lang="scss">
-.puzzel-wrapper {
-    padding: 15px 30px;
-    height: 100%;
-
-.container {
-    position: relative;
-    /*top: 50%;*/
-    /*left: 50%;*/
-    width: 80%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    /*transform: translate(-50%, -50%);*/
-    cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png),move;
-    cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png) 16 16,move;
-    .list-item {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 140px;
-        width: 240px;
-        .item-content {
-            background-size: cover;
-            height: 100%;
-            border: 0 solid rgba(123, 123, 123, 0.498039);
-            border-radius: 4px;
-            color: rgb(153, 153, 153);
-            line-height: 140px;
-            /*padding-left: 32px;*/
-            font-size: 24px;
-            font-weight: 400;
-            background-color: rgb(255, 255, 255);
-            box-shadow: rgba(0,0,0,0.2) 0 1px 2px 0;
-            .order {
-                display: none;
+        public shuffle(index: number) {
+            if (this.images[index] && this.images[index]['puzzleMadia']) {
+                this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
             }
         }
     }
-}
-}
+</script>
+
+<style scoped lang="scss">
+    .list-complete {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .list-complete-item {
+        transition: transform 1s;
+        /*flex: 1 1 33%;*/
+        height: 200px;
+        padding: 10px;
+        /*   display: inline-block;
+          margin-right: 10px; */
+    }
+
+    .list-complete-img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+    }
+
+    .list-complete-enter, .list-complete-leave-to
+        /* .list-complete-leave-active for <2.1.8 */
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .list-complete-leave-active {
+        position: absolute;
+    }
+
+    .puzzel-wrapper {
+        padding: 15px 30px;
+        height: 100%;
+
+        .container {
+            position: relative;
+            /*top: 50%;*/
+            /*left: 50%;*/
+            width: 80%;
+            height: 100%;
+            opacity: 1;
+            /*visibility: hidden;*/
+            /*transform: translate(-50%, -50%);*/
+            cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png), move;
+            cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png) 16 16, move;
+            .list-item {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 140px;
+                width: 240px;
+                .item-content {
+                    background-size: cover;
+                    height: 100%;
+                    border: 0 solid rgba(123, 123, 123, 0.498039);
+                    border-radius: 4px;
+                    color: rgb(153, 153, 153);
+                    line-height: 140px;
+                    /*padding-left: 32px;*/
+                    font-size: 24px;
+                    font-weight: 400;
+                    background-color: rgb(255, 255, 255);
+                    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0;
+                    .order {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
 </style>
 

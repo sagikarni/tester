@@ -13,7 +13,7 @@
                             :images="slides"></puzzle-left-panel>
                 </v-flex>
                 <v-flex xs9>
-                    <puzzle-view :urlPath="puzzlePath" :imageCount="puzzleImageCount" :images="slides"></puzzle-view>
+                    <puzzle-view :puzzleId="puzzleId" :puzzleImagesPath="puzzleImagesPath"  :urlPath="puzzlePath" :imageCount="puzzleImageCount" :images="slides"></puzzle-view>
                 </v-flex>
             </v-layout>
 
@@ -65,6 +65,7 @@
         public pageLoad: boolean = false;
         public puzzlePath: string = '';
         public puzzleImageCount: number = 0;
+        public puzzleId: number = 0;
 
         constructor() {
             super();
@@ -100,14 +101,25 @@
 
             if (this.activityDetailsContent && this.activityDetailsContent.Media && this.activityDetailsContent.Media.length > 0) {
                 for (let i = 0; i < this.activityDetailsContent.Media.length; i++) {
-                    if(i === 0){
+                    if (i === 0) {
                         this.puzzlePath = this.activityDetailsContent.Media[i]['photo'];
                         this.puzzleImageCount = this.activityDetailsContent.Media[i]['partsCount'];
                     }
-                    slides.push({id: i, media: this.activityDetailsContent.Media[i]});
+
+                    const puzzleMadia = [];
+                    for(let j = 0; j < this.activityDetailsContent.Media[i]['partsCount']; j++){
+                        puzzleMadia.push({ id: j, puzzlePath:  this.activityDetailsContent.Media[i]['photo'].replace(/photo.jpg$/gi, "parts/") + (j + 1) + ".jpeg"})
+                    }
+                    slides.push({id: i, media: this.activityDetailsContent.Media[i], puzzleMadia: puzzleMadia});
                 }
             }
+            console.log('slides',  slides);
             return slides;
+        }
+
+
+        get puzzleImagesPath(): any {
+            return this.getPuzzleImagesPath();
         }
         get activityType() {
             return this.activityDetailsState && this.activityDetailsState.activityType;
@@ -150,6 +162,19 @@
         public changePuzzleImage(puzzleData: any) {
             this.puzzleImageCount = puzzleData && puzzleData.count;
             this.puzzlePath = puzzleData && puzzleData.url;
+            this.puzzleId = puzzleData && puzzleData.id;
+        }
+
+        public getPuzzleImagesPath(): any {
+            const puzzlePath = [];
+            for (let i = 0; i < this.puzzleImageCount; i++) {
+                puzzlePath.push({
+                    id: i + 1,
+                    path: this.puzzlePath.replace(/photo.jpg$/gi, "parts/") + (i + 1) + ".jpeg",
+                });
+            }
+
+            return puzzlePath;
         }
         public created() {
             if (this.$route.params.activityId) {
