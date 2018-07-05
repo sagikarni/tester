@@ -113,7 +113,6 @@
                     slides.push({id: i, media: this.activityDetailsContent.Media[i], puzzleMadia: puzzleMadia});
                 }
             }
-            console.log('slides',  slides);
             return slides;
         }
 

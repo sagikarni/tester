@@ -28,12 +28,14 @@
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
+    import Draggable from 'gsap/Draggable.js';
+
     import $ from 'jquery';
     @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images?: object[];
         @Prop() public puzzleImagesPath?: object[];
-        @Prop() public imageCount?: number;
+        @Prop() public imageCount: number = 1;
         @Prop() public puzzleId?: number;
         @Prop() public urlPath?: string;
         public puzzleShuffle?: boolean = false;
@@ -61,7 +63,7 @@
                 const totalRows = Math.sqrt(this.imageCount);
                 const totalCols = Math.sqrt(this.imageCount);
 
-                const cells = [];
+                const cells: any[] = [];
 
                 // (TimelineMax as any).to(document.querySelector(".list-item"), 0.5, { top: 0, left: 0 });
 // Map cell locations to array
@@ -83,7 +85,7 @@
 
                 (TimelineMax as any).to(container, 0.5, {autoAlpha: 1});
 
-                function changeIndex(item, to, sameRow, sameCol) {
+                function changeIndex(item: any, to: any, sameRow: any, sameCol: any) {
 
                     // Check if adjacent to new position
                     if ((sameRow && !sameCol) || (!sameRow && sameCol)) {
@@ -100,13 +102,13 @@
                     }
 
                     // Simple, but not optimized way to change element's position in DOM. Not always necessary.
-                    sortables.forEach(sortable => container.appendChild(sortable.element));
+                    sortables.forEach(sortable => container ?  container.appendChild(sortable.element) : true);
 
                     // Set index for each sortable
                     sortables.forEach((sortable, index) => sortable.setIndex(index));
                 }
 
-                function Sortable(element, index) {
+                function Sortable(element: any, index: number) {
 
                     const content = element.querySelector(".item-content");
                     const order = element.querySelector(".order");
@@ -141,7 +143,7 @@
                         y: sortable.cell.y,
                     });
 
-                    function setIndex(index) {
+                    function setIndex(index: number) {
 
                         var cell = cells[index];
                         var dirty = position.x !== cell.x || position.y !== cell.y;
@@ -154,12 +156,12 @@
                         if (!dragger.isDragging && dirty) layout();
                     }
 
-                    function downAction() {
+                    function downAction(this: any) {
                         animation.play();
                         this.update();
                     }
 
-                    function dragAction() {
+                    function dragAction(this: any) {
 
                         var col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
                         var row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
@@ -195,12 +197,12 @@
                 }
 
 // Changes an elements's position in array
-                function arrayMove(array, from, to) {
+                function arrayMove(array: any, from: any, to: any) {
                     array.splice(to, 0, array.splice(from, 1)[0]);
                 }
 
 // Clamps a value to a min/max
-                function clamp(value, a, b) {
+                function clamp(value: any, a: any, b: any) {
                     return value < a ? a : (value > b ? b : value);
                 }
             })
@@ -208,21 +210,21 @@
 
         @Watch('urlPath')
         public onPropertyChanged(value: string, oldValue: string) {
-            (TimelineMax as any).set($('.active'), {
-                className: "-=active",
-                className: "+=already",
-                display: 'none',
-                onComplete: () => {
-                    // (TimelineMax as any).set(event.target, {className: "+=active"});
-                },
-            });
-            // this.puzzleRender();
+            // (TimelineMax as any).set($('.active'), {
+            //     className: "-=active",
+            //     className: "+=already",
+            //     display: 'none',
+            //     onComplete: () => {
+            //         (TimelineMax as any).set(event.target, {className: "+=active"});
+            //     },
+            // });
+            this.puzzleRender();
         }
 
         public shuffle(index: number) {
-            if (this.images[index] && this.images[index]['puzzleMadia']) {
-                this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
-            }
+            // if (this.images[index] && this.images[index]['puzzleMadia']) {
+            //     this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
+            // }
         }
     }
 </script>

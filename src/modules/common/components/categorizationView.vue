@@ -1,22 +1,38 @@
 <template>
     <main>
-        <div class="bounds"></div>
-        <div class="pool_wrapper">
-            <div id="pool" class="zone">
-                <div v-for="slide in slides" :key="slide.id" class="tile image_wrapper"
-                     :data-id="slide.media.categoryId" :style="`background-image: url( ${slide.media.photo}  )`">
+        <section id="top-bar" drop-zone="main" data-sorted="true">
+            <div id="clone-container" class="clone-container">
+                <div id="scroll-box">
+                    <div id="tile-container" class="letter-container">
+
+                        <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
+                            <div class="tile" :data-id="slide.media.categoryId" :style="`background-image: url( ${slide.media.photo}  )`"></div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <div class="left-right-panel">
+            <section class="content-puzzel-left left-pane">
+                <div class="category-title">{{dropName}}</div>
+                <div id="center-panel" drop-zone="center" :data-id="dropDataId">
 
-        <div class="wrap-els" style="width: 100%; padding: 25px 0 "></div>
-        <div id="drop" class="zone" :data-id="dropDataId">
-            <h3>{{dropName}}</h3>
-        </div>
-        <div id="drop1" class="zone" :data-id="dropDataId1">
-            <h3>{{dropName1}}</h3>
+                    <div class="clone-container">
+                        <div class="letter-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-pane" id="bottom-panel" drop-zone="bottom" data-sorted="true" :data-id="dropDataId1">
+                <div class="category-title">{{dropName1}}</div>
+                <div class="clone-container">
+                    <div class="letter-container"></div>
+                </div>
+            </section>
         </div>
     </main>
+
 </template>
 
 <script lang="ts">
@@ -63,252 +79,225 @@
             return this.categoryTypes && this.categoryTypes[0] && this.categoryTypes[0]['category'] && this.categoryTypes[1]['category']['categorId'];
         }
 
-        public moveTile(index: number, tile: any, tween: any) {
-            tile = $(tile);
-            tile.data("index", index);
-
-            if (tile.hasClass("dragging")) {
-                this.checkCategory(tile);
-                return;
-            }
-            tile.addClass("moving");
-            const tileHeight = tile.outerHeight();
-            const tileWidth = tile.outerWidth();
-            const secontColIndex = index > 3 ? 4 : 0;
-
-            (TimelineMax as any).to(tile, 0.25, {
-                x: index > 3 ? 25 - (tileWidth - tileWidth * 0.67) + tileWidth * 0.33 + this.gutter : 25 - (tileWidth - tileWidth * 0.67),
-                y: (this.margin + (index - secontColIndex) * this.gutter + ((index - secontColIndex) * tileHeight *  0.33)) - 100,
-                pointerEvents: 'auto',
-                onComplete: () => {
-                    tile.removeClass("moving");
-                },
-            });
-        }
-
-        public moveTilePool(index: number, tile: any, tween: any) {
-            tile = $(tile);
-            tile.data("index", index);
-
-            if (tile.hasClass("dragging")) {
-                return;
-            }
-            tile.addClass("moving");
-            const yAxis = index === 0 ? this.margin + this.gutter + 15 : this.margin - this.gutter - this.height * index;
-
-            (TimelineMax as any).to(tile, 0.25, {
-                x: 25,
-                y: yAxis,
-                scale: 1,
-                borderColor: 'none',
-                zIndex: 1000 - (1.5 * index),
-                pointerEvents: index !== 0 ? 'none' : 'auto',
-                onComplete: () => {
-                    tile.removeClass("moving");
-                },
-            });
-        }
-
-        public changePosition(tile1: any, tile2: any) {
-            tile1 = $(tile1);
-            tile2 = $(tile2);
-
-            // Changes tiles position on the DOM which is used to
-            // index and find the position to move to
-            tile1.data("index") > tile2.data("index")
-                ? tile1.insertBefore(tile2)
-                : tile1.insertAfter(tile2);
-        }
-
-        public reorderTiles(dragging: boolean) {
-            const query = dragging ? ".tile:not(.dragging)" : ".tile";
-            this.pool.children(query).each(this.moveTilePool);
-            this.drop.children(query).each(this.moveTile);
-            this.drop1.children(query).each(this.moveTile);
-        }
-
-        public hitTest(tile: any) {
-            let target;
-
-            // Hit test tiles that aren't moving or being dragged
-            $(".tile:not(.dragging, .moving)").each( (i: number, element: any) => {
-                if (Draggable.hitTest(tile, element)) {
-                    target = element;
-                    return false;
-                }
-            });
-
-            if (target) {
-                this.changePosition(tile, target);
-            }
-            return target;
-        }
-
-        public getZone(tile: any) {
-            // Returns the zone the tile is in
-            const zone = Draggable.hitTest(tile, this.pool)
-                        ? this.pool : Draggable.hitTest(tile, this.drop)
-                        ? this.drop : Draggable.hitTest(tile, this.drop1)
-                        ? this.drop1 : null;
-            return zone;
-        }
-
-        public checkCategory(tile: any) {
-
-            // If different catigory border is red
-            if (Draggable.hitTest(tile, this.drop)) {
-                if (this.drop.data("id") === tile.data("id")) {
-                    (TimelineMax as any).set(tile, {
-                        border: "2px solid green",
-                    });
-                } else {
-                    (TimelineMax as any).set(tile, {
-                        border: "2px solid red",
-                    });
-                }
-            } else if (Draggable.hitTest(tile, this.drop1)) {
-                if (this.drop1.data("id") === tile.data("id")) {
-                    (TimelineMax as any).set(tile, {
-                        border: "2px solid green",
-                    });
-                } else {
-                    (TimelineMax as any).set(tile, {
-                        border: "2px solid red",
-                    });
-                }
-            }
-
-        }
-
-        public changeZone(tile: any, zone: any) {
-            // Change tile's data for zone
-            tile.data("zone", zone);
-
-            // Find position of tile and zone
-            const rect1 = tile[0].getBoundingClientRect();
-            const rect2 = zone[0].getBoundingClientRect();
-
-            zone.append(tile);
-
-            // Update tile with new coords
-            (TimelineMax as any).set(tile, {
-                x: rect1.left - rect2.left,
-                y: rect1.top - rect2.top,
-            });
-        }
-
-        public afterDrop(tile: any) {
-            if (Draggable.hitTest(tile, this.pool)) {
-                (TimelineMax as any).to(tile, 0.3, {
-                    opacity: 1,
-                    scale: 1,
-                });
-            } else {
-                (TimelineMax as any).to(tile, 0.3, {
-                    opacity: 1,
-                    scale: 0.33,
-                });
-            }
-        }
 
         public created() {
-
-            this.$nextTick(() => {
-                this.tiles = $(".tile");
-                this.pool = $("#pool");
-                this.drop = $("#drop");
-                this.drop1 = $("#drop1");
-
-                const elem = this;
-
-                (TimelineMax as any).set('#drop', {height: window.innerHeight - 510});
-                (TimelineMax as any).set('#drop1', {height: window.innerHeight - 510});
+          this.draggAndDrop();
+       }
 
 
-                this.tiles.each((i: number, tile: any) => {
+       public draggAndDrop(){
+           this.$nextTick( () => {
+               const threshold = "60%";
+               const dropZones: any = {main: ''};
+               const letters: any[]   = [];
 
-                    // Setup tiles with some data
-                    tile = $(tile);
-                    tile.data({index: i, zone: this.pool});
+               const bottomPanel = $('#bottom-panel');
+               const centerPanel = $('#center-panel');
+               const topBar      = $('#top-bar');
 
-                    const yAxis = i === 0 ? this.margin + this.gutter + 15 : this.margin - this.gutter - this.height * i;
-                    (TimelineMax as any).set(tile, {
-                        x: 25,
-                        y: yAxis,
-                        zIndex: 1000 - (1.5 * i),
-                        pointerEvents: i !== 0 ? 'none' : 'auto',
-                    });
-                });
-               Draggable.create( this.tiles, {
-                    bounds: "#app",
-                    onDrag: function(event: any) {
-                        const tile = $(this.target);
-                        const zone = elem.getZone(tile);
-                        // Tile is not in the zone it started from
-                        // if (zone && zone !== tile.data("zone")) {
-                        //     // Stop the draggable so the position doesn't
-                        //     // get messed up when appeneding tile to new zone
-                        //     // this.endDrag(event);
-                        //     elem.changeZone(tile, zone);
-                        //
-                        //     // Change tile's data for zone
-                        //     tile.data("zone", zone);
-                        //
-                        //     // Find position of tile and zone
-                        //     const rect1 = tile[0].getBoundingClientRect();
-                        //     const rect2 = zone[0].getBoundingClientRect();
-                        //
-                        //     zone.append(tile);
-                        //
-                        //     // Update tile with new coords
-                        //     (TimelineMax as any).set(tile, {
-                        //         x: rect1.left - rect2.left,
-                        //         y: rect1.top - rect2.top,
-                        //     });
-                        //     // this.startDrag(event);
-                        // }
+               (TimelineMax as any).set(bottomPanel, {height: window.innerHeight - 540});
+               (TimelineMax as any).set(centerPanel, {height: window.innerHeight - 560});
 
-                        // Reorder tiles. True parameter tells it to ignore
-                        // tiles that are being dragged
-                        if (!zone) {
-                            elem.reorderTiles(true);
-                            (TimelineMax as any).to(tile, 0.3, {opacity: 0.75, scale: 0.7});
-                        }
-                        if (elem.hitTest(tile)) {
-                             elem.reorderTiles(false);
-                        }
+               $("[drop-zone]").each(function(this: void) {
 
-                    },
-                    onDragEnd: function() {
-                        const tile = $(this.target);
-                        const zone = elem.getZone(tile);
+                   const self: any = this;
+                   const zone: any = $(self);
+                   const name = zone.attr("drop-zone");
 
-                        if (zone && zone !== tile.data("zone")) {
-                            elem.changeZone(tile, zone);
-                        }
+                   dropZones[name] = {
+                       element : zone,
+                       name    : name,
+                       sorted  : zone.data("sorted"),
+                       clones  : zone.find(".clone-container"),
+                       letters : zone.find(".letter-container")
+                   };
+               });
 
-                        $(this.target).removeClass("dragging");
-                        elem.hitTest(this.target);
-                        elem.reorderTiles(false);
-                        elem.checkCategory(tile);
-                    },
-                    onDragStart: function() {
-                        $(this.target).addClass("dragging");
-                    },
-                   onPress: function () {
-                       if (Draggable.hitTest(this.target, elem.pool)) {
-                           (TimelineMax as any).to(this.target, 0.3, {opacity: 0.75, scale: 0.7});
+               $(".tile").each(function( this: any, index: number) {
+
+                   const element: any = $(this);
+                   const wrapper = element.parent();
+                   const offset  = element.position();
+                   const zone    = dropZones.main;
+                   const scope = {
+                       clone   : element.clone().attr("clone", "").prependTo(zone.clones),
+                       element : element,
+                       wrapper : wrapper,
+                       width   : wrapper.outerWidth(),
+                       height  : wrapper.outerHeight(),
+                       moved   : false,
+                       index   : index,
+                       zone    : zone,
+                       draggable: '',
+                       get x() { return getPosition(wrapper, this.zone.clones, offset).x; },
+                       get y() { return getPosition(wrapper, this.zone.clones, offset).y; },
+                       get cloneX() { return getPosition(this.clone, this.zone.clones, null).x; },
+                       get cloneY() { return getPosition(this.clone, this.zone.clones, null).y; },
+                       get previous() { return getPrevious(this, this.zone); }
+                   };
+
+                   scope.draggable = createDraggable(scope);
+
+                   // reversed order
+                   letters.unshift(scope);
+
+                   element.on("mousedown touchstart", scope, startDraggable);
+               });
+
+
+
+               // GET PREVIOUS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+               function getPrevious(letter: any, zone: any) {
+
+                   if (!zone.sorted) {
+                       return { target: zone.letters, insert: "appendTo"};
+                   }
+
+                   const values = letters.filter((value) => {
+                       return value.zone === letter.zone && value.index < letter.index;
+                   });
+
+                   return {
+                       target: values[0] ? values[0].wrapper : zone.letters,
+                       insert: values[0] ? "insertAfter" : "prependTo"
+                   };
+               }
+
+
+               // START DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+               function startDraggable(event: any) {
+
+                   const letter = event.data;
+
+                   // Maak element onzichtbaar
+                   // Maak kloon zichtbaar en verplaats deze naar de coordinaten van het element
+                   (TimelineMax as any).set(letter.element, { autoAlpha: 0 });
+                   (TimelineMax as any).set(letter.clone, { x: letter.x, y: letter.y, autoAlpha: 1 });
+
+                   letter.draggable.startDrag(event.originalEvent);
+               }
+
+
+// CREATE DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+               function createDraggable(letter: any) {
+
+                   const clone   = letter.clone;
+                   const wrapper = letter.wrapper;
+
+                   letter.draggable = new Draggable(clone, {
+                       onPress   : setActive,
+                       onDrag    : collapseSpace,
+                       onRelease : dropTile
+                   });
+
+                   return letter.draggable;
+                   ///////
+
+                   function setActive() {
+                       (TimelineMax as any).to(clone, 0.15, { scale: Draggable.hitTest(clone, bottomPanel) || Draggable.hitTest(clone, centerPanel) ? 1 : 0.65, autoAlpha: 0.75 });
+                   }
+
+                   function collapseSpace(this: void) {
+                       var self: any = this;
+                       if (!letter.moved) {
+                           if (!self.hitTest(wrapper)) {
+                               letter.moved = true;
+                               (TimelineMax as any).to(wrapper, 0.3, { width: 0, height: 0 });
+                           }
                        }
-                   },
-                    onRelease: function() {
-                        elem.hitTest(this.target);
-                        elem.reorderTiles(false);
-                        elem.afterDrop(this.target);
-                    },
-                });
+                   }
 
-            });
-        }
+                   function dropTile(this: void) {
+
+                       var name = undefined;
+                       const self: any = this;
+
+                       $.each(dropZones, function(key: number, zone: any) {
+
+                           if (self.hitTest(zone.element, threshold) && letter.zone !== zone) {
+
+                               name = "tile " + zone.name;
+                               letter.zone = zone;
+
+                               // Get the previous element and the insert method
+                               const previous = letter.previous;
+                               wrapper[previous.insert](previous.target);
+
+                               // Position the clone inside its new container
+                               (TimelineMax as any).set(clone, { x: letter.cloneX, y: letter.cloneY });
+                               zone.clones.prepend(clone);
+                           }
+                       });
+
+                       moveBack(letter, name);
+                   }
+               }
+
+// MOVE BACK ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+               function moveBack(letter: any, className: string | undefined) {
+
+                   const clone   = letter.clone;
+                   const element = letter.element;
+                   const wrapper = letter.wrapper;
+
+                   (TimelineMax as any).to(wrapper, 0.2, { width: letter.width, height: letter.height });
+
+                   const scale = Draggable.hitTest(element, bottomPanel) || Draggable.hitTest(element, centerPanel) ? 1 : 1;
+
+                   (TimelineMax as any).to(clone, 0.3, { scale: scale, autoAlpha: 1, x: letter.x, y: letter.y, onComplete: done, delay: 0.02 });
+
+                   if (className){
+                       (TimelineMax as any).to([element, clone], 0.3, { className: className });
+                   }
+
+                   function done() {
+                       letter.moved = false;
+                       (TimelineMax as any).set(clone, { autoAlpha: 0 });
+                       (TimelineMax as any).set(element, { autoAlpha: 1 });
+                   }
+                   checkCategoryNew(letter);
+               }
+
+// GET POSITION :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+               function getPosition(target1: any, target2: any, offset: any) {
+
+                   const position1 = target1.offset();
+                   const position2 = target2.offset();
+
+                   offset = offset || { left: 0, top: 0 };
+
+                   return {
+                       x: position1.left - position2.left + offset.left,
+                       y: position1.top  - position2.top  + offset.top,
+                   };
+               }
+
+               function checkCategoryNew(letter: any) {
+                   // If different catigory border is red
+                   if (Draggable.hitTest(letter.element, bottomPanel)) {
+                       if (bottomPanel.data("id") === letter.element.data("id")) {
+                           (TimelineMax as any).set([letter.element, letter.clone], {
+                               border: "2px solid green",
+                           });
+                       } else {
+                           (TimelineMax as any).set([letter.element, letter.clone], {
+                               border: "2px solid red",
+                           });
+                       }
+                   } else if (Draggable.hitTest(letter.element, centerPanel)) {
+                       if (centerPanel.data("id") === letter.element.data("id")) {
+                           (TimelineMax as any).set([letter.element, letter.clone], {
+                               border: "2px solid green",
+                           });
+                       } else {
+                           (TimelineMax as any).set([letter.element, letter.clone], {
+                               border: "2px solid red",
+                           });
+                       }
+                   }
+               }
+           } );
+       }
 
     }
 </script>
@@ -316,106 +305,171 @@
 
 <style scoped lang="scss">
 
-    body {
-        overflow: hidden;
-        background-color: #eee;
-    }
+body {
+    background-color: #eee;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
 
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    .bounds {
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: 10px;
-        width: calc(100% - 20px);
-        height: calc(100% - 20px);
-    }
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    margin-top: 60px;
+}
+.left-right-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    .right-pane {
+        min-height: 500px;
+        max-width: 305px;
+        min-width: 305px;
+        position: relative;
 
-    main {
-        height: 100vh;
+    }
+    .left-pane{
+        max-width: 305px;
+        min-width: 305px;
+        min-height: 500px;
+        background: white;
         padding: 10px;
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-content: flex-start;
-        align-items: flex-start;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .zone {
-        position: relative;
-        background-color: #fafafa;
-        min-width: 300px;
-        height: 100%;
-        border: 1px solid #aaa;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
-    }
-
-    #pool {
-        /*overflow-x: scroll;*/
-        flex: 1 1 auto;
-        display: inline-block;
-        width: 450px;
-        height: 400px;
-        border: none;
-        box-shadow: none;
-        background-color: white;
-        /*margin-bottom: 50px;*/
-        .image_wrapper {
-            /*width: 400px;*/
-            /*height: 266px;*/
-            &:nth-child(2) {
-                /*height: 10%!important;*/
-                /*top:unset;*/
-                /*bottom: 112px;*/
-            }
-        }
-    }
-
-    #drop {
-        max-width: 330px;
-        min-width: 330px;
-    }
-
-    #drop1 {
-        @extend #drop;
-    }
-
-    .tile {
-        background-size: cover;
-        position: absolute;
-        text-align: center;
-        width: 400px;
-        height: 266px;
-        top: 0;
-        left: 0;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-        background-size: cover;
-    }
-
-    h3 {
-        color: #ffffff;
-        top:-40px;
-        position: relative;
-        z-index: 9999999;
-        pointer-events: none;
-    }
-    .pool_wrapper{
-        width: 100%;
         display: block;
-        text-align: center;
-        background-color: white;
+        margin: 10px;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
     }
+    .category-title {
+        position: absolute;
+        background: black;
+        color: #fff;
+        font-size: 22px;
+        left: 50%;
+        top: -40px;
+        transform: translateX(-50%);
+    }
+    .clone-container {
+        padding-top: 10px;
+    }
+}
+#clone-container {
+    width: 410px;
+    margin: 0 auto;
+}
+#top-bar {
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+    min-height: 119px;
+    .tile-wrapper {
+        width: 410px!important;
+        height: 256px!important;
+    }
+}
+
+#center-panel {
+    background: white;
+    width: 100%;
+    height: 100%;
+    .tile-wrapper {
+        width: 140px!important;
+        height: 100px!important;
+    }
+
+}
+
+.content-puzzel-left {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+#bottom-panel {
+    background: white;
+    padding: 10px;
+    display: block;
+    min-height: 180px;
+    margin: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+    .tile-wrapper {
+        width: 140px!important;
+        height: 100px!important;
+    }
+}
+
+#scroll-box {
+    min-height: 300px;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#scroll-box .letter-container {
+    display: inline-flex;
+    flex-wrap: nowrap;
+}
+
+.letter-container {
+    display: block;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile-wrapper {
+    width: 410px;
+    height: 256px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    .tile.main {
+        border: none!important;
+    }
+}
+
+.tile {
+    background-size: cover;
+    color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    position: relative;
+    width: 400px;
+    height: 266px;
+    cursor: move;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.tile[clone] {
+    background-size: cover;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.tile.bottom {
+    width: 130px!important;
+    height: 90px!important;
+    background-size: cover!important;
+    background: cornflowerblue;
+}
+
+.tile.center {
+    width: 130px!important;
+    height: 90px!important;
+    background-size: cover;
+    background-color: seagreen;
+}
 
 </style>
