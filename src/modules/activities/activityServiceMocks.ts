@@ -1006,38 +1006,38 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
                 photo: "/media/restricted/collections/photos/collection-1/content/1.jpg",
                 categoryId: 1,
             },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/2.jpg",
-            //     categoryId: 1,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/3.jpg",
-            //     categoryId: 2,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/4.jpg",
-            //     categoryId: 1,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/5.jpg",
-            //     categoryId: 2,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/6.jpg",
-            //     categoryId: 2,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/7.jpg",
-            //     categoryId: 2,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/8.jpg",
-            //     categoryId: 1,
-            // },
-            // {
-            //     photo: "/media/restricted/collections/photos/collection-1/content/9.jpg",
-            //     categoryId: 1,
-            // },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/2.jpg",
+                categoryId: 1,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/3.jpg",
+                categoryId: 2,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/4.jpg",
+                categoryId: 1,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/5.jpg",
+                categoryId: 2,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/6.jpg",
+                categoryId: 2,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/7.jpg",
+                categoryId: 2,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/8.jpg",
+                categoryId: 1,
+            },
+            {
+                photo: "/media/restricted/collections/photos/collection-1/content/9.jpg",
+                categoryId: 1,
+            },
         ],
     },
 });
@@ -1053,6 +1053,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 3, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
         isPinned: false,
         images: [
             {
@@ -1060,6 +1061,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
                 thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/1.jpg',
                 imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-1/photo.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1068,6 +1070,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
                 thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/2.jpg',
                 imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-2/photo.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
 
             },
 
@@ -1077,6 +1080,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
                 thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/3.jpg',
                 imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-3/photo.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
 
             },
 

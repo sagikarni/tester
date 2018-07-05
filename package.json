@@ -30,6 +30,7 @@
     "vue-i18n": "^7.6.0",
     "vue-izitoast": "^1.1.0",
     "vue-loading-overlay": "^2.0.4",
+    "vue-lodash": "^2.0.0",
     "vue-material-design-icons": "^1.4.0",
     "vue-router": "^3.0.1",
     "vue-video-player": "^5.0.2",

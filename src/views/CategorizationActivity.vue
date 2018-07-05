@@ -1,7 +1,7 @@
 <template>
     <div>
-        <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide && isMobileDevice"></rotate-screen-alert>
-        <section  v-show="!isMobileDevice">
+        <!--<rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide && isMobileDevice"></rotate-screen-alert>-->
+        <section>
             <v-flex>
             <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>

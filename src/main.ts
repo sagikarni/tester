@@ -17,6 +17,10 @@ import fullscreen from 'vue-fullscreen';
 import VideoPlayer from 'vue-video-player';
 import 'video.js/dist/video-js.css';
 import 'vue-video-player/src/custom-theme.css';
+import VueLodash from 'vue-lodash';
+
+const options = { name: 'lodash' };
+
 
 
 Vue.config.productionTip = false;
@@ -36,6 +40,7 @@ Vue.use(fullscreen);
 Vue.use(VueIziToast);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VideoPlayer);
+Vue.use(VueLodash, options);
 
 
 new Vue({
