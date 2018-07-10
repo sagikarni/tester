@@ -1,8 +1,6 @@
 <template>
     <div class="puzzel-wrapper">
         <section class="container">
-
-
             <transition-group name="list-complete" v-for="image in images" v-show="image.id === 0"
                               :key="image.id"
                               :data-id="image.id"
@@ -18,7 +16,6 @@
                     </div>
                 </div>
             </transition-group>
-
         </section>
     </div>
 
@@ -50,8 +47,8 @@
                 setTimeout(() => {
                     this.puzzleShuffle = true;
                     this.puzzleRender();
-                }, 2000)
-            }, 3000)
+                }, 2000);
+            }, 3000);
         }
 
         public puzzleRender() {
@@ -70,10 +67,10 @@
                 for (let row = 0; row < totalRows; row++) {
                     for (let col = 0; col < totalCols; col++) {
                         cells.push({
-                            row: row,
-                            col: col,
+                            row,
+                            col,
                             x: col * colSize,
-                            y: row * rowSize
+                            y: row * rowSize,
                         });
                     }
                 }
@@ -91,7 +88,7 @@
                     if ((sameRow && !sameCol) || (!sameRow && sameCol)) {
 
                         // Swap positions in array
-                        var temp = sortables[to];
+                        const temp = sortables[to];
                         sortables[to] = item;
                         sortables[item.index] = temp;
 
@@ -117,14 +114,14 @@
                         boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
                         force3D: true,
                         scale: 1.1,
-                        paused: true
+                        paused: true,
                     });
 
                     const dragger = new Draggable(element, {
                         onDragStart: downAction,
                         onRelease: upAction,
                         onDrag: dragAction,
-                        cursor: "inherit"
+                        cursor: "inherit",
                     });
 
                     const position = element._gsTransform;
@@ -132,10 +129,10 @@
                     // Public properties and methods
                     const sortable = {
                         cell: cells[index],
-                        dragger: dragger,
-                        element: element,
-                        index: index,
-                        setIndex: setIndex
+                        dragger,
+                        element,
+                        index,
+                        setIndex,
                     };
 
                     (TimelineMax as any).set(element, {
@@ -145,15 +142,17 @@
 
                     function setIndex(index: number) {
 
-                        var cell = cells[index];
-                        var dirty = position.x !== cell.x || position.y !== cell.y;
+                        const cell = cells[index];
+                        const dirty = position.x !== cell.x || position.y !== cell.y;
 
                         sortable.cell = cell;
                         sortable.index = index;
                         order.textContent = index + 1;
 
                         // Don't layout if you're dragging
-                        if (!dragger.isDragging && dirty) layout();
+                        if (!dragger.isDragging && dirty) {
+                            layout();
+                        }
                     }
 
                     function downAction(this: any) {
@@ -163,18 +162,18 @@
 
                     function dragAction(this: any) {
 
-                        var col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
-                        var row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
+                        const col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
+                        const row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
 
-                        var cell = sortable.cell;
-                        var sameCol = col === cell.col;
-                        var sameRow = row === cell.row;
+                        const cell = sortable.cell;
+                        const sameCol = col === cell.col;
+                        const sameRow = row === cell.row;
 
                         // Check if position has changed
                         if (!sameRow || !sameCol) {
 
                             // Calculate the new index
-                            var index = totalCols * row + col;
+                            const index = totalCols * row + col;
 
                             // Update the model
                             changeIndex(sortable, index, sameRow, sameCol);
@@ -189,7 +188,7 @@
                     function layout() {
                         (TimelineMax as any).to(element, 0.3, {
                             x: sortable.cell.x,
-                            y: sortable.cell.y
+                            y: sortable.cell.y,
                         });
                     }
 
@@ -205,7 +204,7 @@
                 function clamp(value: any, a: any, b: any) {
                     return value < a ? a : (value > b ? b : value);
                 }
-            })
+            });
         }
 
         @Watch('urlPath')
