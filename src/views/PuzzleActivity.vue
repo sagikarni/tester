@@ -107,10 +107,10 @@
                     }
 
                     const puzzleMadia = [];
-                    for(let j = 0; j < this.activityDetailsContent.Media[i]['partsCount']; j++){
-                        puzzleMadia.push({ id: j, puzzlePath:  this.activityDetailsContent.Media[i]['photo'].replace(/photo.jpg$/gi, "parts/") + (j + 1) + ".jpeg"})
+                    for (let j = 0; j < this.activityDetailsContent.Media[i]['partsCount']; j++) {
+                        puzzleMadia.push({ id: j + 1, puzzlePath:  this.activityDetailsContent.Media[i]['photo'].replace(/photo.jpg$/gi, "parts/") + (j + 1) + ".jpeg"});
                     }
-                    slides.push({id: i, media: this.activityDetailsContent.Media[i], puzzleMadia: puzzleMadia});
+                    slides.push({id: i, media: this.activityDetailsContent.Media[i], puzzleMadia});
                 }
             }
             return slides;

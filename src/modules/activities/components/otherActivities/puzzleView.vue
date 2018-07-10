@@ -1,23 +1,42 @@
 <template>
     <div class="puzzel-wrapper">
         <section class="container">
+            <!--<transition-group name="list-complete" v-for="image in images" v-show="image.id === 0"-->
+                              <!--:key="image.id"-->
+                              <!--:data-id="image.id"-->
+                              <!--:class="[!puzzleShuffle ? 'list-complete' : '', image.id === 0 ? 'active' : '']" tag="section">-->
+                <!--<div-->
+                        <!--v-for="item,index in image.puzzleMadia"-->
+                        <!--:key="item.id"-->
+                        <!--:data-id="item.id"-->
+                        <!--:class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"-->
+                        <!--:style="!puzzleShuffle ? `flex: 1 1 ${100/Math.sqrt(imageCount)}%` : ``">-->
+                    <!--<div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">-->
 
 
-            <transition-group name="list-complete" v-for="image in images" v-show="image.id === 0"
+                        <!--<img :src="`${item.puzzlePath}`" alt="" />-->
+                        <!--<span class="order">{{item.id}}</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</transition-group>-->
+
+
+            <transition-group name="list-complete" v-for="image in images" v-if="image.id === 0"
                               :key="image.id"
-                              :data-id="image.id"
-                              :class="[!puzzleShuffle ? 'list-complete' : '', image.id === 0 ? 'active' : '']" tag="section">
+                              :class="[!puzzleShuffle ? 'list-complete' : '']"      tag="section">
                 <div
-                        v-for="item in image.puzzleMadia"
+                        v-for="item,index in image.puzzleMadia"
                         :key="item.id"
-                        :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"
-                        :style="!puzzleShuffle ? `flex: 1 1 ${100/Math.sqrt(imageCount)}%` : ``">
-                    <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']"
-                         :style="`background-image: url( ${item.puzzlePath}  )`">
-                        <span class="order">{{item.id}}</span>
+                        :data-id="item.id"
+                        :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]">
+                    <div  :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
+                        <img :src="`${getImagePath(urlPath)}${item.id}.jpeg`" alt="" />
+                        <span class="order">{{index}}</span>
                     </div>
                 </div>
             </transition-group>
+
+
 
         </section>
     </div>
@@ -29,37 +48,46 @@
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
     import Draggable from 'gsap/Draggable.js';
-
     import $ from 'jquery';
+
     @Component
     export default class PuzzleView extends BaseComponent {
-        @Prop() public images?: object[];
-        @Prop() public puzzleImagesPath?: object[];
-        @Prop() public imageCount: number = 1;
-        @Prop() public puzzleId?: number;
+        @Prop() public images: any[];
+        @Prop() public imageCount: number;
         @Prop() public urlPath?: string;
         public puzzleShuffle?: boolean = false;
+        public width?: number = 0;
 
         constructor() {
             super();
         }
+        get filteredItems() {
+            return this.images[0] && this.images[0]['puzzleMadia'];
+        }
 
+        public getImagePath(url: string): string {
+            return  url.replace(/photo.jpg$/gi, "parts/");
+        }
         public created() {
             setTimeout(() => {
                 this.shuffle(0);
-                setTimeout(() => {
-                    this.puzzleShuffle = true;
-                    this.puzzleRender();
-                }, 2000)
-            }, 3000)
+                (TimelineMax as any).to(".container", 0.8, {
+                    autoAlpha: 0, onComplete: () => {
+                        this.puzzleShuffle = true;
+                        this.puzzleRender();
+                        (TimelineMax as any).to(".container", 0.8, {autoAlpha: 1});
+                    },
+                });
+            }, 3000);
         }
 
         public puzzleRender() {
-            this.$nextTick(() => {
+            this.$nextTick( () => {
+
                 // List version
 // https://codepen.io/osublake/pen/jrqjdy/
-                const rowSize = 150;
-                const colSize = 250;
+                const rowSize   = 170;
+                const colSize   = 250;
                 const totalRows = Math.sqrt(this.imageCount);
                 const totalCols = Math.sqrt(this.imageCount);
 
@@ -70,10 +98,10 @@
                 for (let row = 0; row < totalRows; row++) {
                     for (let col = 0; col < totalCols; col++) {
                         cells.push({
-                            row: row,
-                            col: col,
+                            row,
+                            col,
                             x: col * colSize,
-                            y: row * rowSize
+                            y: row * rowSize,
                         });
                     }
                 }
@@ -91,7 +119,7 @@
                     if ((sameRow && !sameCol) || (!sameRow && sameCol)) {
 
                         // Swap positions in array
-                        var temp = sortables[to];
+                        const temp = sortables[to];
                         sortables[to] = item;
                         sortables[item.index] = temp;
 
@@ -108,7 +136,7 @@
                     sortables.forEach((sortable, index) => sortable.setIndex(index));
                 }
 
-                function Sortable(element: any, index: number) {
+                function Sortable(element: any, index: any) {
 
                     const content = element.querySelector(".item-content");
                     const order = element.querySelector(".order");
@@ -117,14 +145,14 @@
                         boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
                         force3D: true,
                         scale: 1.1,
-                        paused: true
+                        paused: true,
                     });
 
                     const dragger = new Draggable(element, {
                         onDragStart: downAction,
                         onRelease: upAction,
                         onDrag: dragAction,
-                        cursor: "inherit"
+                        cursor: "inherit",
                     });
 
                     const position = element._gsTransform;
@@ -132,10 +160,10 @@
                     // Public properties and methods
                     const sortable = {
                         cell: cells[index],
-                        dragger: dragger,
-                        element: element,
-                        index: index,
-                        setIndex: setIndex
+                        dragger,
+                        element,
+                        index,
+                        setIndex,
                     };
 
                     (TimelineMax as any).set(element, {
@@ -143,17 +171,19 @@
                         y: sortable.cell.y,
                     });
 
-                    function setIndex(index: number) {
+                    function setIndex(index: any) {
 
-                        var cell = cells[index];
-                        var dirty = position.x !== cell.x || position.y !== cell.y;
+                        const cell = cells[index];
+                        const dirty = position.x !== cell.x || position.y !== cell.y;
 
                         sortable.cell = cell;
                         sortable.index = index;
                         order.textContent = index + 1;
 
                         // Don't layout if you're dragging
-                        if (!dragger.isDragging && dirty) layout();
+                        if (!dragger.isDragging && dirty) {
+                            layout();
+                        }
                     }
 
                     function downAction(this: any) {
@@ -163,18 +193,18 @@
 
                     function dragAction(this: any) {
 
-                        var col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
-                        var row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
+                        const col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
+                        const row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
 
-                        var cell = sortable.cell;
-                        var sameCol = col === cell.col;
-                        var sameRow = row === cell.row;
+                        const cell = sortable.cell;
+                        const sameCol = col === cell.col;
+                        const sameRow = row === cell.row;
 
                         // Check if position has changed
                         if (!sameRow || !sameCol) {
 
                             // Calculate the new index
-                            var index = totalCols * row + col;
+                            const index = totalCols * row + col;
 
                             // Update the model
                             changeIndex(sortable, index, sameRow, sameCol);
@@ -189,7 +219,7 @@
                     function layout() {
                         (TimelineMax as any).to(element, 0.3, {
                             x: sortable.cell.x,
-                            y: sortable.cell.y
+                            y: sortable.cell.y,
                         });
                     }
 
@@ -205,29 +235,24 @@
                 function clamp(value: any, a: any, b: any) {
                     return value < a ? a : (value > b ? b : value);
                 }
-            })
+            } );
         }
 
         @Watch('urlPath')
         public onPropertyChanged(value: string, oldValue: string) {
-            // (TimelineMax as any).set($('.active'), {
-            //     className: "-=active",
-            //     className: "+=already",
-            //     display: 'none',
-            //     onComplete: () => {
-            //         (TimelineMax as any).set(event.target, {className: "+=active"});
-            //     },
-            // });
             this.puzzleRender();
         }
 
         public shuffle(index: number) {
-            // if (this.images[index] && this.images[index]['puzzleMadia']) {
-            //     this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
-            // }
+            if (this.images[index] && this.images[index]['puzzleMadia']) {
+                this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
+            }
         }
+
     }
 </script>
+
+
 
 <style scoped lang="scss">
     .list-complete {
@@ -235,74 +260,62 @@
         width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
+        .list-complete-item {
+            transition: transform 1s;
+            width: 250px;
+            height: 100%;
+            .list-complete-img {
+                padding: 5px;
+                img {
+                    object-fit: cover;
+                    height: 100%;
+                    width: 100%;
+                    vertical-align: top;
+                    max-width: 100%;
+                }
+            }
+        }
     }
-
-    .list-complete-item {
-        transition: transform 1s;
-        /*flex: 1 1 33%;*/
-        height: 200px;
-        padding: 10px;
-        /*   display: inline-block;
-          margin-right: 10px; */
-    }
-
-    .list-complete-img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        background-size: cover;
-    }
-
-    .list-complete-enter, .list-complete-leave-to
-        /* .list-complete-leave-active for <2.1.8 */
-    {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    .list-complete-leave-active {
-        position: absolute;
-    }
-
     .puzzel-wrapper {
         padding: 15px 30px;
         height: 100%;
-
         .container {
             position: relative;
-            /*top: 50%;*/
-            /*left: 50%;*/
             width: 80%;
             height: 100%;
             opacity: 1;
-            /*visibility: hidden;*/
-            /*transform: translate(-50%, -50%);*/
-            cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png), move;
-            cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png) 16 16, move;
+            cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png) 16 16,move;
+            @media (max-width: 1200px) {
+                width: 100%;
+            }
             .list-item {
                 position: absolute;
-                top: 0;
-                left: 0;
-                height: 140px;
-                width: 240px;
+                top: unset!important;
+                left: unset!important;
+                width:250px;
+                border-radius: 4px;
+                height: 170px;
+                &.two {
+                    width: 50%;
+                    height: 50%;
+                }
                 .item-content {
-                    background-size: cover;
+                    padding: 5px;
+                    width: 100%;
                     height: 100%;
-                    border: 0 solid rgba(123, 123, 123, 0.498039);
-                    border-radius: 4px;
-                    color: rgb(153, 153, 153);
-                    line-height: 140px;
-                    /*padding-left: 32px;*/
-                    font-size: 24px;
-                    font-weight: 400;
-                    background-color: rgb(255, 255, 255);
-                    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0;
-                    .order {
-                        display: none;
+                    &.puzzle-correct {
+                        padding: 0;
+                    }
+                    img {
+                        object-fit: cover;
+                        height: 100%;
+                        width: 100%;
                     }
                 }
             }
         }
     }
+    .order {
+        display: none;
+    }
 </style>
-
