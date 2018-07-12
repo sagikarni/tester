@@ -5,7 +5,6 @@
                               v-for="image in images"
                               :key="image.id"
                               :class="[!puzzleShuffle ? 'list-complete' : '']"
-                              v-if="image.id === indexId"
                               tag="section">
                 <div v-for="item,index in filteredItems"
                      :key="item.id"
@@ -38,42 +37,97 @@
         public puzzleShuffle?: boolean = false;
         public width?: number = 0;
         public puzzleImage: any;
-        public count: number;
+        public count: number = 0;
         public indexId: number = 0;
         public itemWidth: number = 0;
         public itemHeight: number = 0;
+        public puzzleIsComplate: boolean = false;
 
         constructor() {
             super();
-            this.puzzleImage = this.images[this.indexId] && this.images[this.indexId]['puzzleMadia'];
+            this.puzzleImage = [];
         }
         get filteredItems() {
             return this.puzzleImage;
         }
 
-        public getImagePath(url: string): string {
-            return  url.replace(/photo.jpg$/gi, "parts/");
-        }
-
         public changeImageData(index: number) {
-            this.count = this.images[index] && this.images[index]['media']['partsCount'];
+            this.count       = this.images[index] && this.images[index]['media']['partsCount'];
             this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
         }
 
-        public ttt (index: number) {
-            let stack = [];
-            $('.list-item').each( (index, item ) => {
-                stack.push({id: index, item: $(item).data('id')});
-            } );
-            localStorage.setItem(`puzzleIndex-${this.indexId}`,  JSON.stringify(stack) );
-            //
+        public puzzleComplete(status: boolean) {
+            this.$nextTick(() => {
+                let complete = true;
+                this.puzzleIsComplate = false;
+                const puzzleData = localStorage.getItem(`puzzleIndex-${this.indexId}`) &&
+                    JSON.parse(localStorage.getItem(`puzzleIndex-${this.indexId}`));
 
-                if(localStorage.getItem(`puzzleIndex-${index}`)){
-                    console.log( 'puzzleIndex', JSON.parse(localStorage.getItem(`puzzleIndex-${index}`))  );
+
+                if (puzzleData && puzzleData.length > 0) {
+                    for (let i = 0; i < puzzleData.length - 1; i++) {
+                        if ( puzzleData[i].item > puzzleData[i + 1].item) {
+                            complete = false;
+                        }
+                    }
+
+                    if (complete) {
+                        this.puzzleIsComplate = true;
+                        (TimelineMax as any).to($('.item-content'), 0.7, {
+                            className: '+=puzzle-correct stopDragg',
+                            onComplete: () => {
+                                (TimelineMax as any).set($('.list-item'), {className: '+=stopDragg'});
+                            }
+                        });
+                    }
                 }
 
-                $(`[data-paretid = ${this.indexId}]`).remove();
-                this.indexId = index;
+            });
+        }
+
+        public savePuzzleIndex() {
+            this.$nextTick(() => {
+                let stack = [];
+                $('.list-item').each((index, item) => {
+                    stack.push({id: index, item: $(item).data('id')});
+                });
+                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                this.puzzleComplete(false);
+            });
+        }
+
+        public changePuzzleImage(index: number) {
+
+            this.puzzleComplete(true);
+
+
+            this.indexId = index;
+            const puzzleData = localStorage.getItem(`puzzleIndex-${index}`) &&
+                JSON.parse(localStorage.getItem(`puzzleIndex-${index}`));
+
+            if (puzzleData && puzzleData.length > 0) {
+                const data = this.images[index] && this.images[index]['puzzleMadia'];
+                const newData = puzzleData.map((item) => {
+                    return data[item.item - 1];
+                });
+
+                (TimelineMax as any).to(".container", 0.8, {
+                    autoAlpha: 0, onComplete: () => {
+                        this.puzzleShuffle = false;
+                        this.count = this.images[index] && this.images[index]['media']['partsCount'];
+                        this.puzzleImage = newData;
+                        (TimelineMax as any).to(".container", 0.8, {autoAlpha: 1});
+                    },
+                });
+
+                setTimeout(() => {
+                    this.itemWidth = $(".list-complete-item").width();
+                    this.itemHeight = $(".list-complete-item").height();
+                    this.puzzleShuffle = true;
+                    this.puzzleRender();
+                }, 2500);
+
+            } else {
 
                 (TimelineMax as any).to(".container", 0.8, {
                     autoAlpha: 0, onComplete: () => {
@@ -83,32 +137,37 @@
                     },
                 });
 
-                setTimeout(()=> {
+                setTimeout(() => {
                     this.itemWidth = $(".list-complete-item").width();
                     this.itemHeight = $(".list-complete-item").height();
-                    this.shuffle();
-                    setTimeout(()=> {
+                    this.repeatShuffle();
+                    setTimeout(() => {
                         this.puzzleShuffle = true;
                         this.puzzleRender();
-                    }, 2000);
-                }, 2000);
+                        this.savePuzzleIndex();
+                    }, 2500);
+                }, 3000);
+            }
 
         }
 
-
         public created() {
             this.changeImageData(this.indexId);
+            localStorage.clear();
             setTimeout(() => {
                 this.itemWidth = $(".list-complete-item").width();
                 this.itemHeight = $(".list-complete-item").height();
-                this.shuffle();
-                (TimelineMax as any).to(".container", 0.8, {
-                    autoAlpha: 1, onComplete: () => {
-                        this.puzzleShuffle = true;
-                        this.puzzleRender();
-                        (TimelineMax as any).to(".container", 0.8, {autoAlpha: 1});
-                    },
-                });
+                this.repeatShuffle();
+                setTimeout( () => {
+                    (TimelineMax as any).to(".container", 0.8, {
+                        autoAlpha: 1, onComplete: () => {
+                            this.puzzleShuffle = true;
+                            this.puzzleRender();
+                            (TimelineMax as any).to(".container", 0.8, {autoAlpha: 1});
+                            this.savePuzzleIndex();
+                        },
+                    });
+                }, 1500 )
             }, 3000);
         }
 
@@ -121,6 +180,7 @@
                 const colSize   = this.itemWidth ;
                 const totalRows = Math.sqrt(this.count);
                 const totalCols = Math.sqrt(this.count);
+                const selfThis = this;
 
                 const cells: any[] = [];
 
@@ -184,6 +244,7 @@
                         onRelease: upAction,
                         onDrag: dragAction,
                         cursor: "inherit",
+
                     });
 
                     const position = element._gsTransform;
@@ -245,6 +306,7 @@
                     function upAction() {
                         animation.reverse();
                         layout();
+                        selfThis.savePuzzleIndex();
                     }
 
                     function layout() {
@@ -274,6 +336,12 @@
             // this.puzzleRender();
         }
 
+        public  repeatShuffle() {
+            this.shuffle();
+            setTimeout( () => {
+                this.shuffle();
+            }, 1200 );
+        }
         public shuffle() {
             this.puzzleImage = _.shuffle(this.puzzleImage);
         }
@@ -344,6 +412,9 @@
             }
         }
 
+    }
+    .stopDragg{
+        pointer-events: none;
     }
     .order {
         display: none;
