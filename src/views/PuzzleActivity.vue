@@ -151,7 +151,7 @@
 
         public changePuzzleImage(puzzleData: any) {
             const puzzleId = puzzleData && puzzleData.id;
-            (this.$refs.puzzleView as any).ttt(puzzleId);
+            (this.$refs.puzzleView as any).changePuzzleImage(puzzleId);
         }
 
         public created() {
