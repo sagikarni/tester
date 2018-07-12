@@ -1,46 +1,28 @@
 <template>
     <div class="puzzel-wrapper">
-        <section class="container">
-            <!--<transition-group name="list-complete" v-for="image in images" v-show="image.id === 0"-->
-                              <!--:key="image.id"-->
-                              <!--:data-id="image.id"-->
-                              <!--:class="[!puzzleShuffle ? 'list-complete' : '', image.id === 0 ? 'active' : '']" tag="section">-->
-                <!--<div-->
-                        <!--v-for="item,index in image.puzzleMadia"-->
-                        <!--:key="item.id"-->
-                        <!--:data-id="item.id"-->
-                        <!--:class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"-->
-                        <!--:style="!puzzleShuffle ? `flex: 1 1 ${100/Math.sqrt(imageCount)}%` : ``">-->
-                    <!--<div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">-->
-
-
-                        <!--<img :src="`${item.puzzlePath}`" alt="" />-->
-                        <!--<span class="order">{{item.id}}</span>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</transition-group>-->
-
-
-            <transition-group name="list-complete" v-for="image in images" v-if="image.id === 0"
+        <section class="container" >
+            <transition-group name="list-complete"
+                              v-for="image in images"
                               :key="image.id"
-                              :class="[!puzzleShuffle ? 'list-complete' : '']"      tag="section">
-                <div
-                        v-for="item,index in image.puzzleMadia"
-                        :key="item.id"
-                        :data-id="item.id"
-                        :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]">
-                    <div  :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
-                        <img :src="`${getImagePath(urlPath)}${item.id}.jpeg`" alt="" />
+                              :class="[!puzzleShuffle ? 'list-complete' : '']"
+                              v-if="image.id === indexId"
+                              tag="section">
+                <div v-for="item,index in filteredItems"
+                     :key="item.id"
+                     :data-id="item.id"
+                     :data-paretId="image.id"
+                     v-if="image.id === indexId"
+                     :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"
+                     :style="!puzzleShuffle ? `width: ${100/Math.sqrt(count)}%; height: ${100/Math.sqrt(count)}%` : `width: ${itemWidth}px; height: ${itemHeight}px`">
+                    <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
+                        <img :src="item.puzzlePath" alt=""/>
                         <span class="order">{{index}}</span>
                     </div>
                 </div>
+
             </transition-group>
-
-
-
         </section>
     </div>
-
 </template>
 
 <script lang="ts">
@@ -53,26 +35,75 @@
     @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images: any[];
-        @Prop() public imageCount: number;
-        @Prop() public urlPath?: string;
         public puzzleShuffle?: boolean = false;
         public width?: number = 0;
+        public puzzleImage: any;
+        public count: number;
+        public indexId: number = 0;
+        public itemWidth: number = 0;
+        public itemHeight: number = 0;
 
         constructor() {
             super();
+            this.puzzleImage = this.images[this.indexId] && this.images[this.indexId]['puzzleMadia'];
         }
         get filteredItems() {
-            return this.images[0] && this.images[0]['puzzleMadia'];
+            return this.puzzleImage;
         }
 
         public getImagePath(url: string): string {
             return  url.replace(/photo.jpg$/gi, "parts/");
         }
-        public created() {
-            setTimeout(() => {
-                this.shuffle(0);
+
+        public changeImageData(index: number) {
+            this.count = this.images[index] && this.images[index]['media']['partsCount'];
+            this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
+        }
+
+        public ttt (index: number) {
+            let stack = [];
+            $('.list-item').each( (index, item ) => {
+                stack.push({id: index, item: $(item).data('id')});
+            } );
+            localStorage.setItem(`puzzleIndex-${this.indexId}`,  JSON.stringify(stack) );
+            //
+
+                if(localStorage.getItem(`puzzleIndex-${index}`)){
+                    console.log( 'puzzleIndex', JSON.parse(localStorage.getItem(`puzzleIndex-${index}`))  );
+                }
+
+                $(`[data-paretid = ${this.indexId}]`).remove();
+                this.indexId = index;
+
                 (TimelineMax as any).to(".container", 0.8, {
                     autoAlpha: 0, onComplete: () => {
+                        this.puzzleShuffle = false;
+                        this.changeImageData(index);
+                        (TimelineMax as any).to(".container", 1.8, {autoAlpha: 1});
+                    },
+                });
+
+                setTimeout(()=> {
+                    this.itemWidth = $(".list-complete-item").width();
+                    this.itemHeight = $(".list-complete-item").height();
+                    this.shuffle();
+                    setTimeout(()=> {
+                        this.puzzleShuffle = true;
+                        this.puzzleRender();
+                    }, 2000);
+                }, 2000);
+
+        }
+
+
+        public created() {
+            this.changeImageData(this.indexId);
+            setTimeout(() => {
+                this.itemWidth = $(".list-complete-item").width();
+                this.itemHeight = $(".list-complete-item").height();
+                this.shuffle();
+                (TimelineMax as any).to(".container", 0.8, {
+                    autoAlpha: 1, onComplete: () => {
                         this.puzzleShuffle = true;
                         this.puzzleRender();
                         (TimelineMax as any).to(".container", 0.8, {autoAlpha: 1});
@@ -86,10 +117,10 @@
 
                 // List version
 // https://codepen.io/osublake/pen/jrqjdy/
-                const rowSize   = 170;
-                const colSize   = 250;
-                const totalRows = Math.sqrt(this.imageCount);
-                const totalCols = Math.sqrt(this.imageCount);
+                const rowSize   = this.itemHeight;
+                const colSize   = this.itemWidth ;
+                const totalRows = Math.sqrt(this.count);
+                const totalCols = Math.sqrt(this.count);
 
                 const cells: any[] = [];
 
@@ -240,13 +271,11 @@
 
         @Watch('urlPath')
         public onPropertyChanged(value: string, oldValue: string) {
-            this.puzzleRender();
+            // this.puzzleRender();
         }
 
-        public shuffle(index: number) {
-            if (this.images[index] && this.images[index]['puzzleMadia']) {
-                this.images[index]['puzzleMadia'] = _.shuffle(this.images[index]['puzzleMadia']);
-            }
+        public shuffle() {
+            this.puzzleImage = _.shuffle(this.puzzleImage);
         }
 
     }
@@ -314,6 +343,7 @@
                 }
             }
         }
+
     }
     .order {
         display: none;
