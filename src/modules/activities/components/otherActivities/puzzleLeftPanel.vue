@@ -40,7 +40,7 @@
 
 <style scoped lang="scss">
     .sllider-wrapper {
-        height: 70vh;
+        height: 80vh;
         overflow-y: scroll;
         overflow-x: hidden;
         .cell {

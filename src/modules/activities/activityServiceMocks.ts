@@ -1083,6 +1083,24 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
                 filterInfo: [1, 2, 3],
 
             },
+            {
+
+                id: 4,
+                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/4.jpg',
+                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-4/photo.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+
+            },
+            {
+
+                id: 5,
+                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/5.jpg',
+                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-5/photo.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+
+            },
 
         ],
     },
@@ -1099,6 +1117,14 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
                 photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-3/photo.jpg",
                 partsCount: 16,
+            },
+            {
+                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-4/photo.jpg",
+                partsCount: 9,
+            },
+            {
+                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-5/photo.jpg",
+                partsCount: 9,
             },
         ],
     },
