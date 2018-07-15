@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class=" stopEvents ? 'stopPointerEvents' : ''">
         <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide"></rotate-screen-alert>
         <section v-show="!orientationStatus">
             <v-flex>
@@ -15,6 +15,7 @@
                 <v-flex xs9>
                     <puzzle-view
                             ref="puzzleView"
+                            @stopEvents="stopPointEvents"
                             :images="slides">
                     </puzzle-view>
                 </v-flex>
@@ -66,6 +67,7 @@
         public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
         public pageLoad: boolean = false;
+        public stopEvents: boolean = false;
 
         constructor() {
             super();
@@ -154,6 +156,11 @@
             (this.$refs.puzzleView as any).changePuzzleImage(puzzleId);
         }
 
+
+        public stopPointEvents(pointEvent: boolean) {
+             this.stopEvents = pointEvent;
+        }
+
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
@@ -175,6 +182,10 @@
 <style scoped lang="scss">
     .puzzle-content {
         margin-top: 60px;
+    }
+
+    .stopPointerEvents{
+        pointer-events: none;
     }
 
 </style>
