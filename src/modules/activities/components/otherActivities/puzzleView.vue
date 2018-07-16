@@ -31,7 +31,7 @@
     import Draggable from 'gsap/Draggable.js';
     import $ from 'jquery';
 
-     @Component
+    @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images: any[];
         public puzzleShuffle?: boolean = false;
