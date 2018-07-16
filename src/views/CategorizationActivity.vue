@@ -6,12 +6,12 @@
             <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
             </v-flex>
 
-            <categorization-view
+            <categorization
                     :mediaType="mediaType"
                     :activityType="activityType"
                     :categoryTypes="categoryTypes"
                     :slides="slides">
-            </categorization-view>
+            </categorization>
 
         </section>
     </div>
@@ -21,7 +21,7 @@
     import {Component, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
-    import CategorizationView from '@/modules/common/components/categorizationView.vue';
+    import Categorization from '@/modules/activities/components/otherActivities/categorization.vue';
 
     import RotateScreenAlert from '@/modules/common/components/rotateScreenAlert.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
@@ -33,7 +33,7 @@
         components: {
             SlideShowMenuPane,
             RotateScreenAlert,
-            CategorizationView,
+            Categorization,
         },
     })
     export default class CategorizationActivity extends BaseComponent {

@@ -4,7 +4,9 @@
 .ex-rtl{
   direction: rtl;
 }
-
+html{
+  overflow-y: auto;
+}
 .ex-mt-auto{
   margin-top: auto;
 }
