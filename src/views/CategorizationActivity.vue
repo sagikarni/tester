@@ -1,12 +1,14 @@
 <template>
     <div>
-        <!--<rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide && isMobileDevice"></rotate-screen-alert>-->
-        <section>
-            <v-flex>
-            <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
-            </v-flex>
+        <activity-disabled-notification :orientation="isSizeXS"></activity-disabled-notification>
+        <rotate-screen-alert :orientation="!isSizeXS && hasCorrectOrientation && isMobileDevice"></rotate-screen-alert>
+        <section  v-show="!isSizeXS && !hasCorrectOrientation">
+            <!--<v-flex>-->
+            <!--<slide-show-menu-pane class="mtop-5" ref="topPane"></slide-show-menu-pane>-->
+            <!--</v-flex>-->
 
             <categorization
+                    v-if="firstPageLoad"
                     :mediaType="mediaType"
                     :activityType="activityType"
                     :categoryTypes="categoryTypes"
@@ -24,6 +26,8 @@
     import Categorization from '@/modules/activities/components/otherActivities/categorization.vue';
 
     import RotateScreenAlert from '@/modules/common/components/rotateScreenAlert.vue';
+    import ActivityDisabledNotification from '@/modules/common/components/activityDisabledNotification.vue';
+
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
@@ -34,6 +38,7 @@
             SlideShowMenuPane,
             RotateScreenAlert,
             Categorization,
+            ActivityDisabledNotification,
         },
     })
     export default class CategorizationActivity extends BaseComponent {
@@ -42,14 +47,11 @@
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
 
         public orientationUtil?: any;
-        public orientationStatus: boolean = false;
         public activityId: string = '1';
-        public showRotateNotification: boolean = false;
-        public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
-        public pageLoad: boolean = false;
         public isMobileDevice: boolean;
-
+        public isSizeXS: boolean = false;
+        public firstPageLoad: boolean = true;
 
         constructor() {
             super();
@@ -59,21 +61,11 @@
 
         @Watch('activityOrientation')
         public onPropertyChanged(value: any, oldValue: any) {
-            if (value !== this.activityDetailsState.orientation) {
-                this.hasCorrectOrientation = true;
-                if (!this.isBeginningSlide) {
-                    this.showRotateNotification = true;
-                } else {
-                    this.showRotateNotification = false;
-                    this.orientationStatus = true;
-                }
-            } else {
+            if (value === this.activityDetailsState.orientation && this.isMobileDevice) {
                 this.hasCorrectOrientation = false;
-                this.orientationStatus = false;
-                this.showRotateNotification = false;
-                if (this.pageLoad) {
-                    this.pageLoad = false;
-                }
+                this.firstPageLoad = true;
+            } else {
+                this.hasCorrectOrientation = true;
             }
         }
 
@@ -111,12 +103,10 @@
             return this.activityDetailsState && this.activityDetailsState.mediaType;
         }
 
-        public isFirstSlide(isBeginning: boolean): void {
-            if (isBeginning && this.hasCorrectOrientation) {
-                this.showRotateNotification = false;
-                this.orientationStatus = true;
+        public checkSizeXS() {
+            if (this.$vuetify.breakpoint.xsOnly || (this.$vuetify.breakpoint.height < 600 && this.hasCorrectOrientation === true)) {
+                this.isSizeXS = true;
             }
-            this.isBeginningSlide = isBeginning;
         }
 
         public created() {
@@ -126,16 +116,18 @@
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
                 }
-                if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation) {
+                if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation && this.isMobileDevice) {
                     this.hasCorrectOrientation = true;
-                    this.orientationStatus = true;
-                    this.pageLoad = true;
+                    this.firstPageLoad = false;
                 }
+                this.checkSizeXS();
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-
+    .mtop-5{
+        margin-top: 5px!important;
+    }
 </style>

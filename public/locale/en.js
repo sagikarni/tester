@@ -43,6 +43,7 @@ var dictionary = {
                 twitterText: 'Twitter',
             },
         },
+        close: 'Close',
         slidesText: 'Slides',
         sessionLengthText: 'Session Length',
         oopsTitleText: 'OOPS...',
@@ -52,6 +53,7 @@ var dictionary = {
         menuActivities: 'Activities',
         rotateScreenWarning: 'Please Rotate Your Screen',
         rotateScreenPopup: "Rotate your device  to start the activity",
+        smallScreenPopup: "This activity can not be activated in small screens",
     }
 };
 

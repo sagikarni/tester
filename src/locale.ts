@@ -46,6 +46,7 @@ export interface Ilocale {
                  twitterText: string,
              },
          },
+        close: string,
         oopsTitleText: string,
         tryAgainText: string,
         homeText: string,
@@ -53,6 +54,7 @@ export interface Ilocale {
         menuActivities: string,
         rotateScreenWarning: string;
         rotateScreenPopup: string;
+        smallScreenPopup: string;
     };
 }
 
