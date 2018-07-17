@@ -13,9 +13,17 @@
                <v-btn @click="$router.push('activity-details/100')">Premium - Server Error</v-btn>
                <v-btn @click="$router.push('activity-details/101')">Premium - Not Found</v-btn>
 
+  <div style="height:400px;width:800px;background-color:green">
+              <img style="height: 100%; background-color: white"  src="/media/restricted/collections/photos/collection-1/thumbnails/1.jpg">
+  </div>
+  
+  <div style="height:800px;width:500px;background-color:yellow">
+              <img style="width: 50%; background-color: white"  src="/media/restricted/collections/photos/collection-1/thumbnails/1.jpg">
+  </div>
+
 
        </v-flex>
-
+  
     </div>
 </template>
 
@@ -35,3 +43,25 @@ export default class Home extends Vue {
     }
 }
 </script>
+<style scoped lang="scss">
+
+ .object-fit_contain { object-fit: contain }
+    .full-height{
+        height:100%;
+        background:#F8F8F8;
+    }
+   
+    .table{
+        display:table;
+        width:100%;
+ 
+        background: transparent!important;
+    }
+    .cell {
+        display: table-cell;
+        vertical-align: top;
+        width: 100%;
+        margin: 0 auto;
+         text-align: center;
+    }
+    </style>

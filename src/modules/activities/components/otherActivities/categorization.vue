@@ -1,7 +1,7 @@
 <template>
 
     <main>
-        <section id="top-bar">
+        <section id="top-bar" >
             <div id="clone-container">
                 <div id="scroll-box">
                     <div id="tile-container">
@@ -13,14 +13,14 @@
                 </div>
             </div>
         </section>
-        <section class="content"></section>
-        <div class="left-right-panel">
-            <div class="left-pane">
+        <section class="content" ></section>
+        <div  class="left-right-panel">
+            <div class="droppane-container">
                 <h3>{{dropName}}</h3>
                 <div id="drop-panel" :data-id="dropDataId">
                 </div>
             </div>
-            <div class="right-pane">
+            <div class="droppane-container">
                 <h3>{{dropName1}}</h3>
                 <div id="drop-panel2" :data-id="dropDataId1">
                 </div>
@@ -86,13 +86,7 @@
                     width = window.innerWidth * 0.4 - 20;
                 }
 
-                const dropPanelHeight = (window.innerHeight - window.innerHeight * 0.33) - 60;
-
-                (TimelineMax as any).set(dropPanel, {height: dropPanelHeight});
-                (TimelineMax as any).set(dropPanel2, {height: dropPanelHeight});
-
-                (TimelineMax as any).set(dropPanel, {width});
-                (TimelineMax as any).set(dropPanel2, {width});
+ 
 
                 const wrapperTopHeight = scrollBox.height();
                 const wrapperTopWidth = wrapperTopHeight * 1.5;
@@ -107,11 +101,11 @@
                 const elementHeight = wrapperHeight - 10;
 
 
-                (TimelineMax as any).set($("#scroll-box"), {width: wrapperTopWidth, height: wrapperTopHeight});
+               (TimelineMax as any).set($("#scroll-box"), {width: wrapperTopWidth});
                 (TimelineMax as any).set($(".tile-wrapper"), {width: wrapperTopWidth, height: wrapperTopHeight});
 
                 (TimelineMax as any).set($(".tile-wrapper .tile"), {width: elementTopWidth, height: elementTopHeight});
-                (TimelineMax as any).set($(".tile-wrapper .clone"), {width: elementTopWidth, height: elementTopHeight});
+             (TimelineMax as any).set($(".tile-wrapper .clone"), {width: elementTopWidth, height: elementTopHeight});
 
 
 
@@ -317,19 +311,9 @@
 
 
 <style scoped lang="scss">
-    body {
-        background-color: #eee;
-        height: 100vh;
-        margin: 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
+ 
     main {
+       height: 100vh;
         position: absolute;
         top: 0;
         right: 0;
@@ -338,35 +322,49 @@
         display: flex;
         flex-direction: column;
         user-select: none;
+        overflow: hidden;
         /*margin-top: 48px;*/
+    }
+ 
+    .clone-container {
+        height:100%;
     }
 
     #top-bar {
-        margin: 5px 5px 0 5px;
-        padding: 10px;
-        background-color: white;
+        background-color: black;
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
         min-height: 300px;
         max-height: 600px;
         height: 33vh;
     }
 
+   .droppane-container{
+        width:40%;
+        max-width: 600px;
+    }
+
+    $right-left-panels-text-height: 34;
+    $right-left-panels-text-vertical-margins: 8.5;
+    $right-left-panels-calculated-height: $right-left-panels-text-height + $right-left-panels-text-vertical-margins + $right-left-panels-text-vertical-margins + px;
+
     .left-right-panel {
+        height: 100%;
         display: flex;
         justify-content: space-between;
         h3 {
-            margin: 8.5px 10px;
+            height : $right-left-panels-text-height  + px;
+            margin: $right-left-panels-text-vertical-margins + px 10px;
             text-align: center;
             color: #fff;
             font-size: 22px;
 
         }
         #drop-panel, #drop-panel2 {
-            min-height: 500px;
+            height: calc(100% -  #{$right-left-panels-calculated-height} );
+            width: 100%;
             max-width: 600px;
             /*min-width: 275px;*/
             background: white;
-            padding: 10px;
             margin: 0 5px;
             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
         }
