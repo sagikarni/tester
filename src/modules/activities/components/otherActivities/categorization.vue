@@ -78,23 +78,30 @@
                 const dropPanel2 = $("#drop-panel2");
                 const tiles = $(".tile");
                 const threshold = "50%";
+                let width = 0;
 
-                const width = window.innerWidth * 0.3;
+                if (this.$vuetify.breakpoint.width < 720) {
+                    width = 295;
+                } else {
+                    width = window.innerWidth * 0.4 - 20;
+                }
 
-                (TimelineMax as any).set(dropPanel, {height: (window.innerHeight * 0.7) - 200});
-                (TimelineMax as any).set(dropPanel2, {height: (window.innerHeight * 0.7) - 200});
+                const dropPanelHeight = (window.innerHeight - window.innerHeight * 0.33) - 60;
+
+                (TimelineMax as any).set(dropPanel, {height: dropPanelHeight});
+                (TimelineMax as any).set(dropPanel2, {height: dropPanelHeight});
 
                 (TimelineMax as any).set(dropPanel, {width});
                 (TimelineMax as any).set(dropPanel2, {width});
 
                 const wrapperTopHeight = scrollBox.height();
-                const wrapperTopWidth = wrapperTopHeight * 1.49;
+                const wrapperTopWidth = wrapperTopHeight * 1.5;
 
                 const elementTopHeight = wrapperTopHeight - 10;
                 const elementTopWidth = wrapperTopWidth - 10;
 
-                const wrapperWidth = (width - 25) * 0.49;
-                const wrapperHeight = wrapperWidth * 0.7;
+                const wrapperWidth = (width - 24) * 0.5;
+                const wrapperHeight = wrapperWidth * 0.66;
 
                 const elementWidth = wrapperWidth - 10;
                 const elementHeight = wrapperHeight - 10;
@@ -172,12 +179,25 @@
                     }
 
                     function collapseSpace(this: any) {
+                        if (this.hitTest(dropPanel, threshold)) {
+                            (TimelineMax as any).set(dropPanel, {className: "+=highlight"});
+                        } else {
+                            (TimelineMax as any).set(dropPanel, {className: "-=highlight"});
+                        }
+
+                        if (this.hitTest(dropPanel2, threshold)) {
+                            (TimelineMax as any).set(dropPanel2, {className: "+=highlight"});
+                        } else {
+                            (TimelineMax as any).set(dropPanel2, {className: "-=highlight"});
+                        }
+
                         if (!tile.moved) {
                             if (!this.hitTest(wrapper)) {
                                 tile.moved = true;
                                 (TimelineMax as any).to(wrapper, 0.3, {width: 0});
                             }
                         }
+
                     }
 
                     function dropTile(this: any) {
@@ -194,20 +214,8 @@
                             className = "+=dropped";
                         }
 
-                        if (!dropPanel.is(':empty')) {
-                            (TimelineMax as any).set(dropPanel, {className: "+=highlight"});
-                        } else {
-                            (TimelineMax as any).set(dropPanel, {className: "-=highlight"});
-                        }
-
-                        if (!dropPanel2.is(':empty')) {
-                            (TimelineMax as any).set(dropPanel2, {className: "+=highlight"});
-                        } else {
-                            (TimelineMax as any).set(dropPanel2, {className: "-=highlight"});
-                        }
-
                         moveBack(tile, className);
-
+                        (TimelineMax as any).set([dropPanel, dropPanel2], {className: "-=highlight"});
                     }
                 }
 
@@ -330,22 +338,24 @@
         display: flex;
         flex-direction: column;
         user-select: none;
-        margin-top: 60px;
+        /*margin-top: 48px;*/
     }
 
     #top-bar {
-        margin: 10px;
+        margin: 5px 5px 0 5px;
         padding: 10px;
         background-color: white;
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
         min-height: 300px;
+        max-height: 600px;
+        height: 33vh;
     }
 
     .left-right-panel {
         display: flex;
         justify-content: space-between;
         h3 {
-            margin: 10px;
+            margin: 8.5px 10px;
             text-align: center;
             color: #fff;
             font-size: 22px;
@@ -353,10 +363,11 @@
         }
         #drop-panel, #drop-panel2 {
             min-height: 500px;
-            width: 300px;
+            max-width: 600px;
+            /*min-width: 275px;*/
             background: white;
             padding: 10px;
-            margin: 10px;
+            margin: 0 5px;
             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
         }
 
@@ -370,7 +381,7 @@
         white-space: nowrap;
         overflow: hidden;
         min-height: 276px;
-        height: 30vh;
+        height: 31vh;
         margin: 0 auto;
     }
 
@@ -416,9 +427,12 @@
         border: solid 2px red;
     }
 
-    .highlight {
-        border: 2px solid yellow;
-        background-color: #262626;
+    .highlight{
+        background: #cecece !important;
+        -webkit-box-shadow: inset 0px 0px 17px 0px rgba(0,0,0,0.44)!important;
+        -moz-box-shadow: inset 0px 0px 17px 0px rgba(0,0,0,0.44)!important;
+        box-shadow: inset 0px 0px 17px 0px rgba(0,0,0,0.44)!important;
+        transition: background-color 0.5s ease;
     }
 
 </style>
