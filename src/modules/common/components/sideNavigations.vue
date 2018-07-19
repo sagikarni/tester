@@ -17,6 +17,7 @@
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
         </swiper>
+        <button-sheet-details></button-sheet-details>
         <v-menu
                 v-model="showMenu"
                 :position-x="x"
@@ -41,9 +42,11 @@
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
+    import ZoomSlide from '@/modules/activities/components/slideShowBased/zoomSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
     import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
+    import ButtonSheetDetails from '@/modules/activities/components/activitydetails/buttonSheetDetails.vue';
 
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
@@ -53,6 +56,8 @@
             MeaningPhotoBasedSlide,
             WhatInThePicture,
             WHQuestionsSlide,
+            ZoomSlide,
+            ButtonSheetDetails,
         },
     })
     export default class SideNavigantions extends BaseComponent {
@@ -127,6 +132,8 @@
                         return 'PremiumCollectionPhotoBasedSlide';
                     } else if (this.mediaType === MediaType.Video) {
                         return 'PremiumCollectionVideoBasedSlide';
+                    } else if (this.mediaType === MediaType.ZoomSlide) {
+                        return 'ZoomSlide';
                     }
                 case ActivityType.Meaning:
                     if (this.mediaType === MediaType.Photo) {

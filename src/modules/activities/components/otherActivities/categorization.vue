@@ -1,13 +1,15 @@
 <template>
 
     <main>
+        <v-btn color="white" class="category-back_button" flat @click.native="$router.go(-1)">
+            <v-icon>close</v-icon>
+        </v-btn>
         <section id="top-bar" >
             <div id="clone-container">
                 <div id="scroll-box">
                     <div id="tile-container">
                         <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
-                            <div class="tile" :data-id="slide.media.categoryId"
-                                 :style="`background-image: url( ${slide.media.photo}  )`"></div>
+                            <img  class="tile" :src="slide.media.photo" alt="" :data-id="slide.media.categoryId">
                         </div>
                     </div>
                 </div>
@@ -74,40 +76,42 @@
             this.$nextTick(() => {
                 const container = $("#clone-container");
                 const scrollBox = $("#scroll-box");
+                const droppaneContainer: any = document.querySelector('.droppane-container');
                 const dropPanel = $("#drop-panel");
                 const dropPanel2 = $("#drop-panel2");
                 const tiles = $(".tile");
                 const threshold = "50%";
-                let width = 0;
+                const wrapperOffset = 5;
+                const breakpointSize = this.$vuetify.breakpoint.lgAndUp ? 0.33 : 0.5;
 
-                if (this.$vuetify.breakpoint.width < 720) {
-                    width = 295;
-                } else {
-                    width = window.innerWidth * 0.4 - 20;
-                }
+                // Set Dragge Zone images sizes
 
- 
+                // Get dropezone width
+                const width = droppaneContainer ?  droppaneContainer.offsetWidth - 1 : 0;
+                // Set element width 50% or 33%
+                const wrapperWidth = Math.floor(width * breakpointSize);
+                // Set element height relevance of width ratio ( width/height 1.5)
+                const wrapperHeight = Math.floor(wrapperWidth * 0.66);
+
+                const elementWidth = wrapperWidth - wrapperOffset;
+                const elementHeight = wrapperHeight - wrapperOffset;
+
+                // Set Top Pane images sizes
 
                 const wrapperTopHeight = scrollBox.height();
+                // Set element width relevance of height ratio ( width/height 1.5)
                 const wrapperTopWidth = wrapperTopHeight * 1.5;
 
-                const elementTopHeight = wrapperTopHeight - 10;
-                const elementTopWidth = wrapperTopWidth - 10;
+                const elementTopHeight = wrapperTopHeight - wrapperOffset;
+                const elementTopWidth = wrapperTopWidth - wrapperOffset;
 
-                const wrapperWidth = (width - 24) * 0.5;
-                const wrapperHeight = wrapperWidth * 0.66;
-
-                const elementWidth = wrapperWidth - 10;
-                const elementHeight = wrapperHeight - 10;
-
-
-               (TimelineMax as any).set($("#scroll-box"), {width: wrapperTopWidth});
+                (TimelineMax as any).set($("#scroll-box"), {width: wrapperTopWidth});
                 (TimelineMax as any).set($(".tile-wrapper"), {width: wrapperTopWidth, height: wrapperTopHeight});
 
                 (TimelineMax as any).set($(".tile-wrapper .tile"), {width: elementTopWidth, height: elementTopHeight});
-             (TimelineMax as any).set($(".tile-wrapper .clone"), {width: elementTopWidth, height: elementTopHeight});
+                (TimelineMax as any).set($(".tile-wrapper .clone"), {width: elementTopWidth, height: elementTopHeight});
 
-
+                ///////////////////////////////////////////////////////////////
 
                 tiles.each(function(this: any) {
 
@@ -162,11 +166,7 @@
 
                     function setActive() {
                         if (Draggable.hitTest(clone, scrollBox)) {
-                            (TimelineMax as any).set(clone, {
-                                width: elementTopWidth, height: elementTopHeight, onComplete: () => {
-                                    (TimelineMax as any).to(clone, 0.15, {scale: 0.6, autoAlpha: 0.75});
-                                },
-                            });
+                            (TimelineMax as any).to(clone, 0.15, {scale: 0.6, autoAlpha: 0.75});
                         } else {
                             (TimelineMax as any).to(clone, 0.15, {scale: 1.2, autoAlpha: 0.75});
                         }
@@ -311,7 +311,7 @@
 
 
 <style scoped lang="scss">
- 
+
     main {
        height: 100vh;
         position: absolute;
@@ -325,7 +325,7 @@
         overflow: hidden;
         /*margin-top: 48px;*/
     }
- 
+
     .clone-container {
         height:100%;
     }
@@ -340,6 +340,7 @@
 
    .droppane-container{
         width:40%;
+       min-width: 290px;
         max-width: 600px;
     }
 
@@ -348,9 +349,10 @@
     $right-left-panels-calculated-height: $right-left-panels-text-height + $right-left-panels-text-vertical-margins + $right-left-panels-text-vertical-margins + px;
 
     .left-right-panel {
-        height: 100%;
+        height: calc(100% - 33%) ;
         display: flex;
         justify-content: space-between;
+        padding: 0 5px 5px 5px;
         h3 {
             height : $right-left-panels-text-height  + px;
             margin: $right-left-panels-text-vertical-margins + px 10px;
@@ -363,9 +365,8 @@
             height: calc(100% -  #{$right-left-panels-calculated-height} );
             width: 100%;
             max-width: 600px;
-            /*min-width: 275px;*/
+            min-width: 290px;
             background: white;
-            margin: 0 5px;
             box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
         }
 
@@ -431,6 +432,17 @@
         -moz-box-shadow: inset 0px 0px 17px 0px rgba(0,0,0,0.44)!important;
         box-shadow: inset 0px 0px 17px 0px rgba(0,0,0,0.44)!important;
         transition: background-color 0.5s ease;
+    }
+
+    .category-back_button{
+        z-index: 100000;
+        right: 10px;
+        top: 10px;
+        position: absolute;
+        min-width: auto;
+        height: auto;
+        padding: 2px;
+        border-radius: 50%;
     }
 
 </style>
