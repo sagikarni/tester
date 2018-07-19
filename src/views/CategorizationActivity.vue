@@ -110,9 +110,9 @@
         }
 
         public created() {
-            if (this.$route.params.activityId) {
+            if ((this.$route.params as any).activityId) {
                 (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "#000000"});
-                this.activityId = this.$route.params.activityId;
+                this.activityId = (this.$route.params as any).activityId;
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
                 }

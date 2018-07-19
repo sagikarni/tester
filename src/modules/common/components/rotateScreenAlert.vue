@@ -40,6 +40,10 @@
         right: 10px;
         top: 10px;
         position: absolute;
+        min-width: auto;
+        height: auto;
+        padding: 2px;
+        border-radius: 50%;
     }
     .rotation_icon{
         width: 15px;
@@ -49,12 +53,7 @@
         -webkit-background-size: contain;
         background-size: contain;
     }
-    .close_rotation_issue{
-        min-width: auto;
-        height: auto;
-        padding: 2px;
-        border-radius: 50%;
-    }
+
     .card__title{
         display: block;
     }
