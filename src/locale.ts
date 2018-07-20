@@ -32,6 +32,10 @@ export interface Ilocale {
             warningText: string,
         },
         switchQuestions: string,
+        moveShapes: string,
+        addShape: string,
+        enlargeShape: string,
+        revealPhoto: string,
     };
     general: {
         slidesText: string,

@@ -31,6 +31,10 @@ var dictionary = {
             warningText: 'Please rotate your device'
         },
         switchQuestions: 'Switch To Questions',
+        moveShapes: 'Move Shapes',
+        addShape: 'Add Shape',
+        enlargeShape: 'Enlarge Shape',
+        revealPhoto: 'Reveal photo',
     },
     general:{
         social:{

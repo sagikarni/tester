@@ -1,15 +1,8 @@
 <template>
     <v-app id="inspire">
         <div>
-            <v-icon>lightbulb-on-outline</v-icon>
-            <v-bottom-sheet inset>
-                <v-btn
-                        slot="activator"
-                        color="red"
-                        dark
-                >
-                <i class="lightbulb-on-outline"></i>
-                </v-btn>
+            <v-bottom-sheet>
+                <v-btn slot="activator" class="button-lamp"></v-btn>
                 <v-card tile>
                     <v-progress-linear
                             :value="50"
@@ -17,33 +10,16 @@
                             height="3"
                     ></v-progress-linear>
 
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>The Walker</v-list-tile-title>
-                                <v-list-tile-sub-title>Fitz & The Trantrums</v-list-tile-sub-title>
-                            </v-list-tile-content>
-
-                            <v-spacer></v-spacer>
-
-                            <v-list-tile-action>
-                                <v-btn icon>
-                                    <v-icon>fast_rewind</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-
-                            <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
-                                <v-btn icon>
-                                    <v-icon>pause</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-
-                            <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
-                                <v-btn icon>
-                                    <v-icon>fast_forward</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
+                    <v-list class="grey">
+                        <div class="text-xs-center">
+                            <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
+                            <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
+                            <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
+                            <v-btn> Reveal photo{{$locale.activities.revealPhoto}}</v-btn>
+                            <v-btn flat>
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                        </div>
                     </v-list>
                 </v-card>
             </v-bottom-sheet>
@@ -57,6 +33,17 @@
 
     @Component
     export default class ButtonSheetDetails extends BaseComponent {
+        public moveShapes() {
+            this.$emit('moveShapes', true);
+        }
+
+        public addShape() {
+            this.$emit('addShape', true);
+        }
+
+        public enlargeShape() {
+            this.$emit('enlargeShape', true);
+        }
 
     }
 </script>
@@ -64,9 +51,21 @@
 <style scoped lang="scss">
     #inspire{
         height: 0!important;
+        position: fixed;
+        bottom: 70px;
+        z-index: 10000000;
         .application--wrap{
             min-height: 0;
         }
-    }
+        .button-lamp{
+            background-image: url("../../../../../public/img/icons/lamp_icon.png");
+            background-size: cover;
+            background-color: transparent!important;
+            box-shadow: none!important;
+            height: 50px;
+            width: 50px!important;
+            min-width: auto;
+        }
 
+    }
 </style>

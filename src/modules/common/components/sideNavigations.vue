@@ -17,7 +17,7 @@
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
         </swiper>
-        <button-sheet-details></button-sheet-details>
+        <button-sheet-details v-if="isZoomActivity" @addShape="addShape" @enlargeShape="enlargeShape"   @moveShapes="moveShapes"></button-sheet-details>
         <v-menu
                 v-model="showMenu"
                 :position-x="x"
@@ -78,6 +78,7 @@
         public lastTap = 0;
 
         public isBeginning: boolean = true;
+        public isZoomActivity: boolean = false;
 
         constructor() {
             super();
@@ -133,6 +134,7 @@
                     } else if (this.mediaType === MediaType.Video) {
                         return 'PremiumCollectionVideoBasedSlide';
                     } else if (this.mediaType === MediaType.ZoomSlide) {
+                        this.isZoomActivity = true;
                         return 'ZoomSlide';
                     }
                 case ActivityType.Meaning:
@@ -208,6 +210,24 @@
             if (el[realIndex - 1]) {
                 el[realIndex - 1].revertWitpModal();
             }
+        }
+
+        public moveShapes() {
+            const el: any = this.$refs.swiper;
+            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            (this.$refs.slideComponent as any)[realIndex - 1].randomCordinate();
+        }
+
+        public addShape() {
+            const el: any = this.$refs.swiper;
+            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            (this.$refs.slideComponent as any)[realIndex - 1].addShape();
+        }
+
+        public enlargeShape() {
+            const el: any = this.$refs.swiper;
+            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            (this.$refs.slideComponent as any)[realIndex - 1].enlargeShape();
         }
 
     }
