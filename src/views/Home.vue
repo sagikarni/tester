@@ -10,16 +10,14 @@
               <v-btn @click="$router.push('activity-details/10')">Premium - Video</v-btn>
                <v-btn @click="$router.push('activity-details/11')">Meaning - Photo</v-btn>
                <v-btn @click="$router.push('activity-details/12')">What in The Picture</v-btn>
+
+             <v-btn @click="$router.push('activity-details/13')">Categorization</v-btn>
+              <v-btn @click="$router.push('activity-details/14')">Puzzle</v-btn>
+               <v-btn @click="$router.push('activity-details/15')">Zoom</v-btn>
+               <v-btn @click="$router.push('activity-details/16')">Memory</v-btn>
+
                <v-btn @click="$router.push('activity-details/100')">Premium - Server Error</v-btn>
                <v-btn @click="$router.push('activity-details/101')">Premium - Not Found</v-btn>
-
-  <div style="height:400px;width:800px;background-color:green">
-              <img style="height: 100%; background-color: white"  src="/media/restricted/collections/photos/collection-1/thumbnails/1.jpg">
-  </div>
-  
-  <div style="height:800px;width:500px;background-color:yellow">
-              <img style="width: 50%; background-color: white"  src="/media/restricted/collections/photos/collection-1/thumbnails/1.jpg">
-  </div>
 
 
        </v-flex>

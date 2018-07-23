@@ -1,7 +1,7 @@
 <template>
     <v-app id="inspire">
         <div>
-            <v-bottom-sheet inset v-model="butttonSheet">
+            <v-bottom-sheet inset hide-overlay v-model="butttonSheet"> 
                 <v-btn slot="activator" v-show="!butttonSheet" class="button-lamp"></v-btn>
                 <v-card tile>
                     <v-list class="grey">
