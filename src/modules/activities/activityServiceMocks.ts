@@ -1,5 +1,5 @@
 import {mock} from '@/httpClient';
-import {MediaType, Orientation, PremiumCollectionLayout, ActivityType} from './store/types';
+import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType} from './store/types';
 
 mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
@@ -1208,6 +1208,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
     },
     content: {
         layout: PremiumCollectionLayout.SingleMedia,
+        shape: ShapeType.Circle,
         slides: [
             {
                 photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],

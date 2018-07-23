@@ -112,3 +112,21 @@ h1,h2,h3,h4,h5,h6{
 .close_rotation_issue .btn__content{
   padding: 0;
 }
+
+// Zoom Activity
+
+.ex-zoom-activity {
+  @keyframes shapeTransition {
+    from {
+      transform: scale(0.2);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .shape {
+    animation-duration: 1s;
+    animation-name: shapeTransition;
+  }
+}
+

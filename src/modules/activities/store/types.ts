@@ -25,6 +25,10 @@ export enum Category {
     Communication = 1,
     Cognitive = 2,
 }
+export enum ShapeType {
+    Circle = 1,
+    Rect = 2,
+}
 export enum PremiumCollectionLayout {
      SingleMedia = 1,
      TwoMediasHorizontal = 2,

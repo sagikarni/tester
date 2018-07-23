@@ -1,28 +1,35 @@
 <template>
-    <div class="ex-wrapper">
-        <div v-for="item in peepholeArray" :key="item.id" class="ex-peephole"  :style="{top: `${item.top}px`, left: `${item.left}px`, backgroundImage: `url(${selectPhotoMedia(parameter.media.photos[0])})`, backgroundPosition: `${-item.top}px ${-item.left}px` }"></div>
-        <!--<div class="ex-peephole" style="right: 200px; top: 400px" :style="{ backgroundImage: 'url(' + selectPhotoMedia(parameter.media.photos[0]) + ')' }"></div>-->
-        <!--<div class="ex-peephole" style="left: 800px; top: 500px" :style="{ backgroundImage: 'url(' + selectPhotoMedia(parameter.media.photos[0]) + ')' }"></div>-->
-        <!--<img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="selectPhotoMedia(parameter.media.photos[0])">-->
+    <div class="ex-wrapper ex-zoom-activity">
+        <svg style="background: black" fill="black" class = "button" expanded = "true" height = "100%" width = "100%">
+            <defs>
+                <clipPath :id="`theClipPath_${index}`">
+                </clipPath>
+            </defs>
+            <g :clip-path="`url(#theClipPath_${index})`">
+                <rect width="100%" height="100%" style="fill:rgb(255,255,255)" />
+                <image preserveAspectRatio="xMinYMin slice" class="kid clipPathReveal"  style='stroke-width: 0px; background-color: blue;'
+                       :href="selectPhotoMedia(parameter.media.photos[0])"
+                       x="0" y="0" width="100%" height="100%" />
+            </g>
+        </svg>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {ShapeType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
     @Component
     export default class ZoomSlide extends BaseComponent {
         @Prop() public parameter?: any;
-        public peepholeData: any[] = [{ id: 1, top: 0, left: 0 }];
+        @Prop() public slideIndex?: number;
 
-        get peepholeArray() {
-            return this.peepholeData;
-        }
-        public divTop: number = 0;
-        public divLeft: number = 0;
+        public data: any[] = [];
+        public size: number = 1;
+        public isCircle: boolean = true ;
+        public largeEvent: boolean = true ;
 
         public pauseAction(): void {
             // do nothing
@@ -34,29 +41,110 @@
             // do nothing
         }
 
-        public created() {
-            this.randomCordinate();
+        get index(): number {
+            return this.slideIndex ? this.slideIndex : 0;
         }
 
-        public addShape() {
-            const length = this.peepholeData.length;
-            this.peepholeData.push(
-                {
-                    id: length + 1,
-                    top: Math.round(Math.random() * window.innerHeight) - 70,
-                    left: Math.round(Math.random() * window.innerWidth) - 70,
-                });
+        public randomIntFromInterval(min: number, max: number) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
         }
 
-        public randomCordinate() {
-            this.peepholeData.map( (item: any) => {
-                item.left = Math.round(Math.random() * window.innerWidth) - 70;
-                item.top = Math.round(Math.random() * window.innerHeight) - 70;
-            } );
+        public reveal() {
+            const svgns = "http://www.w3.org/2000/svg";
+            const clipPath = document.getElementById(`theClipPath_${this.index}`);
+            const rect = document.createElementNS(svgns, 'rect');
+
+            rect.setAttribute('width', '100%');
+            rect.setAttribute('height', '100%');
+            rect.setAttribute('class', 'rect');
+            if (clipPath) {
+                clipPath.appendChild(rect);
+            }
         }
 
-        public enlargeShape() {
-            (TimelineMax as any).to('.ex-peephole', 0.3, {scale: 1.5});
+        public addData() {
+            let min = 0;
+            let max = 100;
+            if (this.data.length < 2) { // make sure to place the first 2 point not in the sides
+                min = 20;
+                max = 80;
+            }
+            const x = this.randomIntFromInterval(min, max);
+            const y = this.randomIntFromInterval(min, max);
+            const newObj = {x, y};
+            this.data.push(newObj);
+            this.draw(newObj);
+        }
+
+        public clear() {
+            const clipPath = document.getElementById(`theClipPath_${this.index}`);
+            while (clipPath && clipPath.firstChild) {
+                clipPath.removeChild(clipPath.firstChild);
+            }
+        }
+
+        public rePosition() {
+            this.clear();
+            for (const data of this.data) {
+                data.x = this.randomIntFromInterval(0, 100);
+                data.y = this.randomIntFromInterval(0, 100);
+                this.draw(data);
+            }
+        }
+
+        public enlarge() {
+            if (this.data && this.data.length > 0 && this.largeEvent) {
+                // add new shapes , in the same position
+                this.largeEvent = false;
+                this.size += 1;
+                for (const data of this.data) {
+                    this.draw(data);
+                }
+                this.largeEvent = true;
+            }
+        }
+
+        public draw(obj: any) {
+            if (this.isCircle) {
+                this.drawCircle(obj);
+            } else {
+                this.drawRect(obj);
+            }
+        }
+
+        public drawCircle(obj: any) {
+            const x = obj.x;
+            const y = obj.y;
+            const svgns = "http://www.w3.org/2000/svg";
+            const clipPath = document.getElementById(`theClipPath_${this.index}`);
+
+            const circle = document.createElementNS(svgns, 'circle');
+            circle.setAttribute('cx', x + '%');
+            circle.setAttribute('cy', y + '%');
+            circle.setAttribute('r', (50 * this.size) + 'px');
+            circle.setAttribute('style', 'transform-origin: ' + x + '% ' + y + '%');
+            circle.setAttribute('class', 'shape');
+            if (clipPath) {
+                clipPath.appendChild(circle);
+            }
+        }
+
+        public drawRect(obj: any) {
+            const x = obj.x;
+            const y = obj.y;
+
+            const svgns = "http://www.w3.org/2000/svg";
+            const clipPath = document.getElementById(`theClipPath_${this.index}`);
+            const circle = document.createElementNS(svgns, 'rect');
+            circle.setAttribute('x', '0px');
+            circle.setAttribute('y', y + '%');
+            circle.setAttribute('height', (15 * this.size) + 'px');
+            circle.setAttribute('width', '100%');
+            circle.setAttribute('style', 'transform-origin: ' + x + '%' + y + '%');
+            circle.setAttribute('class', 'shape');
+            if (clipPath) {
+                clipPath.appendChild(circle);
+            }
         }
 
     }
@@ -77,7 +165,7 @@
     .ex-wrapper{
         position: relative;
         height: 100vh;
-        width: 100vh;
+        width: 100vw;
         .ex-peephole{
             position: absolute;
             width: 70px;
@@ -101,5 +189,31 @@
         text-align: center;
     }
 
+    @keyframes shapeTransition {
+        from {
+            transform: scale(0.2);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+    .shape {
+        animation-duration: 1s;
+        animation-name: shapeTransition;
 
+    }
+
+    @keyframes fullImageTransition {
+        from {
+            transform: scale(0.2);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+    .rect {
+        animation-duration: 2s;
+        animation-name: fullImageTransition;
+        transform-origin: 0px 0px;
+    }
 </style>
