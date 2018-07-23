@@ -1,23 +1,20 @@
 <template>
     <v-app id="inspire">
         <div>
-            <v-bottom-sheet>
-                <v-btn slot="activator" class="button-lamp"></v-btn>
+            <v-bottom-sheet inset v-model="butttonSheet">
+                <v-btn slot="activator" v-show="!butttonSheet" class="button-lamp"></v-btn>
                 <v-card tile>
-                    <v-progress-linear
-                            :value="50"
-                            class="my-0"
-                            height="3"
-                    ></v-progress-linear>
-
                     <v-list class="grey">
                         <div class="text-xs-center">
                             <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
                             <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
                             <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
-                            <v-btn> Reveal photo{{$locale.activities.revealPhoto}}</v-btn>
-                            <v-btn flat>
-                                <v-icon>close</v-icon>
+                            <v-btn @click="revealPhoto"> {{$locale.activities.revealPhoto}}</v-btn>
+                            <v-btn
+                                    @click="butttonSheet = false"
+                                    flat color="white"
+                                    class="close-lamp-button">
+                                <v-icon class="pa-0">close</v-icon>
                             </v-btn>
                         </div>
                     </v-list>
@@ -33,6 +30,7 @@
 
     @Component
     export default class ButtonSheetDetails extends BaseComponent {
+        public butttonSheet: boolean = false;
         public moveShapes() {
             this.$emit('moveShapes', true);
         }
@@ -43,6 +41,10 @@
 
         public enlargeShape() {
             this.$emit('enlargeShape', true);
+        }
+
+        public revealPhoto() {
+            this.$emit('revealPhoto', true);
         }
 
     }
@@ -64,6 +66,12 @@
             box-shadow: none!important;
             height: 50px;
             width: 50px!important;
+            min-width: auto;
+        }
+
+        .close-lamp-button{
+            float: right;
+            width: auto;
             min-width: auto;
         }
 

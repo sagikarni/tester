@@ -8,7 +8,7 @@
                 </div>
             </swiper-slide>
              <swiper-slide v-for="slide in slides" :key="slide.id">
-                  <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :parameter="slide"></component>
+                  <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :slideIndex="slide.id" :parameter="slide"></component>
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
@@ -17,7 +17,14 @@
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
         </swiper>
-        <button-sheet-details v-if="isZoomActivity" @addShape="addShape" @enlargeShape="enlargeShape"   @moveShapes="moveShapes"></button-sheet-details>
+        <button-sheet-details
+                v-if="isZoomActivity && zoomSlide"
+                @revealPhoto="revealPhoto"
+                @addShape="addShape"
+                @enlargeShape="enlargeShape"
+                @moveShapes="moveShapes">
+
+        </button-sheet-details>
         <v-menu
                 v-model="showMenu"
                 :position-x="x"
@@ -69,6 +76,7 @@
         @Prop() public mediaType?: number;
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
+        public zoomSlide: boolean = false;
 
         public showMenu?: boolean = false;
         public x?: number = 0;
@@ -117,6 +125,8 @@
                         this.stopVideo(realIndex);
                         this.revertWitpModal(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
+                        const slideStatus = !(el.swiper && (el.swiper.isBeginning || el.swiper.isEnd));
+                        this.checkZoomSlide(slideStatus);
                         this.slideChanged(this.isBeginning);
                     },
                     beforeDestroy: () => {
@@ -212,24 +222,36 @@
             }
         }
 
+        public checkZoomSlide(slideStatus: boolean) {
+            this.zoomSlide = false;
+            setTimeout(() => {
+                this.zoomSlide = slideStatus;
+            }, 1000);
+        }
+
         public moveShapes() {
             const el: any = this.$refs.swiper;
             const realIndex = el &&  el.swiper && el.swiper.realIndex;
-            (this.$refs.slideComponent as any)[realIndex - 1].randomCordinate();
+            (this.$refs.slideComponent as any)[realIndex - 1].rePosition();
         }
 
         public addShape() {
             const el: any = this.$refs.swiper;
             const realIndex = el &&  el.swiper && el.swiper.realIndex;
-            (this.$refs.slideComponent as any)[realIndex - 1].addShape();
+            (this.$refs.slideComponent as any)[realIndex - 1].addData();
         }
 
         public enlargeShape() {
             const el: any = this.$refs.swiper;
             const realIndex = el &&  el.swiper && el.swiper.realIndex;
-            (this.$refs.slideComponent as any)[realIndex - 1].enlargeShape();
+            (this.$refs.slideComponent as any)[realIndex - 1].enlarge();
         }
 
+        public revealPhoto() {
+            const el: any = this.$refs.swiper;
+            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            (this.$refs.slideComponent as any)[realIndex - 1].reveal();
+        }
     }
 </script>
 
