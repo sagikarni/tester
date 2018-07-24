@@ -7,8 +7,9 @@
                     <p> {{mediaCount}} {{$locale.general.slidesText}}</p>
                 </div>
             </swiper-slide>
-             <swiper-slide v-for="slide in slides" :key="slide.id">
-                  <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :slideIndex="slide.id" :parameter="slide"></component>
+            <swiper-slide v-for="slide in slides" :key="slide.id">
+                <component ref="slideComponent" class="imgColor" :is="dynamicComponent" :slideIndex="slide.id"
+                           :parameter="slide"></component>
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
@@ -17,14 +18,13 @@
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
         </swiper>
-        <button-sheet-details
+        <zoom-toolbar
                 v-if="isZoomActivity && zoomSlide"
                 @revealPhoto="revealPhoto"
                 @addShape="addShape"
                 @enlargeShape="enlargeShape"
                 @moveShapes="moveShapes">
-
-        </button-sheet-details>
+        </zoom-toolbar>
         <v-menu
                 v-model="showMenu"
                 :position-x="x"
@@ -53,7 +53,7 @@
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
     import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
-    import ButtonSheetDetails from '@/modules/activities/components/activitydetails/buttonSheetDetails.vue';
+    import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
 
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
     @Component({
@@ -64,27 +64,24 @@
             WhatInThePicture,
             WHQuestionsSlide,
             ZoomSlide,
-            ButtonSheetDetails,
+            ZoomToolbar,
         },
     })
     export default class SideNavigantions extends BaseComponent {
         @Prop() public activityName?: string;
         @Prop() public mediaCount?: number;
-
         @Prop() public slides?: any[];
         @Prop() public activityType?: number;
         @Prop() public mediaType?: number;
+
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
         public zoomSlide: boolean = false;
-
         public showMenu?: boolean = false;
         public x?: number = 0;
         public y?: number = 0;
-
         public timeout: any;
         public lastTap = 0;
-
         public isBeginning: boolean = true;
         public isZoomActivity: boolean = false;
 
@@ -115,22 +112,22 @@
                     },
                     click: () => {
                         const el: any = this.$refs.swiper;
-                        const realIndex = el &&  el.swiper && el.swiper.realIndex;
+                        const realIndex = el && el.swiper && el.swiper.realIndex;
                         this.pressButton(realIndex);
                         this.hideAllPanes();
                     },
                     slideChange: () => {
                         const el: any = this.$refs.swiper;
-                        const realIndex = el &&  el.swiper && el.swiper.realIndex;
+                        const realIndex = el && el.swiper && el.swiper.realIndex;
                         this.stopVideo(realIndex);
                         this.revertWitpModal(realIndex);
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         const slideStatus = !(el.swiper && (el.swiper.isBeginning || el.swiper.isEnd));
-                        this.checkZoomSlide(slideStatus);
+                        this.checkZoomSlide(slideStatus, realIndex);
                         this.slideChanged(this.isBeginning);
                     },
                     beforeDestroy: () => {
-                        (TimelineMax as any).to('div.avtivities-background', 0 , {opacity : 0 });
+                        (TimelineMax as any).to('div.avtivities-background', 0, {opacity: 0});
                     },
                 },
             };
@@ -143,9 +140,6 @@
                         return 'PremiumCollectionPhotoBasedSlide';
                     } else if (this.mediaType === MediaType.Video) {
                         return 'PremiumCollectionVideoBasedSlide';
-                    } else if (this.mediaType === MediaType.ZoomSlide) {
-                        this.isZoomActivity = true;
-                        return 'ZoomSlide';
                     }
                 case ActivityType.Meaning:
                     if (this.mediaType === MediaType.Photo) {
@@ -155,11 +149,15 @@
                     if (this.mediaType === MediaType.Photo) {
                         return 'WhatInThePicture';
                     }
+                case ActivityType.Zoom:
+                    if (this.mediaType === MediaType.Photo) {
+                        this.isZoomActivity = true;
+                        return 'ZoomSlide';
+                    }
                 case ActivityType.WHQuestions:
                     return 'WHQuestionsSlide';
             }
         }
-
 
         public slideChanged(isBeginning: boolean) {
             this.$emit('isFirstSlide', isBeginning);
@@ -168,6 +166,7 @@
         public redirectBack() {
                 this.$router.go(-1);
         }
+
         public hideSidePanes(animationLength: number): void {
                 (TimelineMax as any).to('.swiper-button-white', animationLength , {opacity : 0.1 });
         }
@@ -201,6 +200,10 @@
             });
         }
 
+
+
+
+
         public pressButton(realIndex: number): void {
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
@@ -222,11 +225,17 @@
             }
         }
 
-        public checkZoomSlide(slideStatus: boolean) {
+        public checkZoomSlide(slideStatus: boolean, index: number): void {
             this.zoomSlide = false;
             setTimeout(() => {
                 this.zoomSlide = slideStatus;
-            }, 1000);
+            }, 1500);
+            if (slideStatus) {
+                const el: any = this.$refs.slideComponent;
+                if (el[index - 1]) {
+                    el[index - 1].showFirstShape();
+                }
+            }
         }
 
         public moveShapes() {

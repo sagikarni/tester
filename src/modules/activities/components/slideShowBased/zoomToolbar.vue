@@ -1,17 +1,17 @@
 <template>
-    <v-app id="inspire">
+    <v-app id="inspire" v-if="closeSheet">
         <div>
-            <v-bottom-sheet inset hide-overlay v-model="butttonSheet"> 
-                <v-btn slot="activator" v-show="!butttonSheet" class="button-lamp"></v-btn>
+            <v-bottom-sheet inset max-width="750px" hide-overlay v-model="buttonSheet">
+                <v-btn slot="activator" v-show="!buttonSheet" class="button-lamp"></v-btn>
                 <v-card tile>
-                    <v-list class="grey">
+                    <v-list class="grey_transparent">
                         <div class="text-xs-center">
                             <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
                             <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
                             <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
                             <v-btn @click="revealPhoto"> {{$locale.activities.revealPhoto}}</v-btn>
                             <v-btn
-                                    @click="butttonSheet = false"
+                                    @click="buttonSheet = false"
                                     flat color="white"
                                     class="close-lamp-button">
                                 <v-icon class="pa-0">close</v-icon>
@@ -30,7 +30,9 @@
 
     @Component
     export default class ButtonSheetDetails extends BaseComponent {
-        public butttonSheet: boolean = false;
+        public buttonSheet: boolean = false;
+        public closeSheet: boolean = true;
+
         public moveShapes() {
             this.$emit('moveShapes', true);
         }
@@ -45,6 +47,7 @@
 
         public revealPhoto() {
             this.$emit('revealPhoto', true);
+            this.closeSheet = false;
         }
 
     }
@@ -58,6 +61,9 @@
         z-index: 10000000;
         .application--wrap{
             min-height: 0;
+        }
+        .grey_transparent{
+            background-color: rgba(158, 158, 158, 0.3);
         }
         .button-lamp{
             background-image: url("../../../../../public/img/icons/lamp_icon.png");

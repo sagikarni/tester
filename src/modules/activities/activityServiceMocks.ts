@@ -1128,8 +1128,8 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
-        activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
-        mediaType: MediaType.ZoomSlide, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        activityType: ActivityType.Zoom, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         selectedSessionInfoId: 3,

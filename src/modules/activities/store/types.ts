@@ -20,7 +20,8 @@ export enum ActivityType {
     WhatInThePicture = 5,
     Categorization = 6,
     Puzzle = 7,
-    Memory = 7,
+    Zoom = 8,
+    Memory = 9,
 }
 export enum Category {
     Communication = 1,
@@ -30,7 +31,7 @@ export enum ShapeType {
     Circle = 1,
     Rect = 2,
 }
- 
+
 export enum PremiumCollectionLayout {
      SingleMedia = 1,
      TwoMediasHorizontal = 2,
