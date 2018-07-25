@@ -10,6 +10,7 @@ import ActivityDetails from './views/activityDetails.vue';
 import PremiumCollection from './views/PremiumCollection.vue';
 import CategorizationActivity from './views/CategorizationActivity.vue';
 import PuzzleActivity from './views/PuzzleActivity.vue';
+import MemoryView from './views/memoryView.vue';
 import {bus, busConstants} from './modules/utils/eventBus';
 Vue.use(Router);
 
@@ -75,6 +76,10 @@ export default new Router({
                 {
                     path: '/puzzle-activity/:activityId',
                     component: PuzzleActivity,
+                },
+                {
+                    path: '/memory-activity/:activityId',
+                    component: MemoryView,
                 },
             ],
 

@@ -32,6 +32,12 @@ export enum ShapeType {
     Rect = 2,
 }
 
+export enum MamoryLayout {
+    FourRowsFourColumns = 1,
+    ThreeRowsFourColumns = 2,
+    SixRowsFourColumns = 3,
+}
+
 export enum PremiumCollectionLayout {
      SingleMedia = 1,
      TwoMediasHorizontal = 2,

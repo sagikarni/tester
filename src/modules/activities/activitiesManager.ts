@@ -26,6 +26,9 @@ export class ActivitiesManager {
             case ActivityType.Puzzle:
                 res.url = '/puzzle-activity/';
                 break;
+            case ActivityType.Memory:
+                res.url = '/memory-activity/';
+                break;
             case ActivityType.TBD2:
                 res.url = '/questions/'; // Example need to change
                 break;

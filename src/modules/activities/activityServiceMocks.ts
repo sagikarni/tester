@@ -1,5 +1,5 @@
 import {mock} from '@/httpClient';
-import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType} from './store/types';
+import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType, MamoryLayout} from './store/types';
 
 mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
@@ -1250,67 +1250,85 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         activityType: ActivityType.Memory, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
+        selectedSessionInfoDesc: 'Long',
         isPinned: false,
+        sessionsInfo : [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         images: [
             {
                 id: 1,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 2,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
                 title: 'some title 2',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
                 title: 'some title 3',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
                 title: 'some title 4',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 5,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
                 title: 'some title 5',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 6,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
                 title: 'some title 6',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 7,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
                 title: 'some title 7',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 8,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
                 title: 'some title 8',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 9,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
                 title: 'some title 9',
+                filterInfo: [1, 2, 3],
             },
             {
                 id: 10,
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
                 title: 'some title 9',
+                filterInfo: [1, 2, 3],
             },
         ],
     },
@@ -1318,6 +1336,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         aspectRatio: 1.5,
         columnCount: 4,
         rowsCount: 4,
+        memoryLayout: MamoryLayout.FourRowsFourColumns,
         photos: [
             '/media/restricted/collections/photos/collection-1/content/1.jpg',
             '/media/restricted/collections/photos/collection-1/content/2.jpg',
