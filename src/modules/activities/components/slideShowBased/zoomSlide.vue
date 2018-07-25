@@ -17,19 +17,20 @@
 
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
+    import { State } from 'vuex-class';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {ShapeType} from '@/modules/activities/store/types';
-    import TimelineMax from 'gsap';
 
     @Component
     export default class ZoomSlide extends BaseComponent {
         @Prop() public parameter?: any;
         @Prop() public slideIndex?: number;
+        @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
 
         public data: any[] = [];
         public size: number = 1;
-        public isCircle: boolean = true ;
         public largeEvent: boolean = true ;
+        public showShape: boolean = true ;
 
         public pauseAction(): void {
             // do nothing
@@ -43,6 +44,10 @@
 
         get index(): number {
             return this.slideIndex ? this.slideIndex : 0;
+        }
+
+        get isCircle(): boolean {
+            return (this.activityDetailsContent.shape as ShapeType) === ShapeType.Circle;
         }
 
         public randomIntFromInterval(min: number, max: number) {
@@ -147,6 +152,14 @@
             }
         }
 
+        public showFirstShape() {
+            if (this.showShape) {
+                setTimeout(() => {
+                    this.addData();
+                }, 500);
+                this.showShape = false;
+            }
+        }
     }
 </script>
 

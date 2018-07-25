@@ -143,6 +143,9 @@
         public stopAction(): void {
             // do nothing
         }
+        public showFirstShape() {
+            // do nothing
+        }
 
     }
 </script>

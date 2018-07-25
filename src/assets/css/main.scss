@@ -127,6 +127,21 @@ h1,h2,h3,h4,h5,h6{
   .shape {
     animation-duration: 1s;
     animation-name: shapeTransition;
+
+  }
+
+  @keyframes fullImageTransition {
+    from {
+      transform: scale(0.2);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .rect {
+    animation-duration: 2s;
+    animation-name: fullImageTransition;
+    transform-origin: 0px 0px;
   }
 }
 

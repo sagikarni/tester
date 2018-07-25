@@ -17,11 +17,17 @@ export class ActivitiesManager {
             case ActivityType.WhatInThePicture:
                 res.url = '/premium-collection/';
                 break;
+            case ActivityType.Zoom:
+                res.url = '/premium-collection/';
+                break;
             case ActivityType.Categorization:
                 res.url = '/categorization-activity/';
                 break;
             case ActivityType.Puzzle:
                 res.url = '/puzzle-activity/';
+                break;
+            case ActivityType.Memory:
+                res.url = '/memory-activity/';
                 break;
             case ActivityType.TBD2:
                 res.url = '/questions/'; // Example need to change

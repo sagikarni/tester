@@ -18,6 +18,9 @@
         public revertWitpModal(): void {
             // do nothing
         }
+        public showFirstShape() {
+            // do nothing
+        }
     }
 </script>
 
