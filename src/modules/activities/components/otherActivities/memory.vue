@@ -1,16 +1,16 @@
 <template>
-
-    <div id="memoryContainer">
+<div id="memoryRoot">
+    <div ref="memoryContainer" id="memoryContainer">
         <v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
             <v-icon>close</v-icon>
         </v-btn>
-        <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="deck">
+       <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
             <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
-                 class="cardWrapper">
+                 class="cardWrapper"  :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                 <div class="card show" :data-id="card.imgID" :data-card="card.id" @click="openQuestionCard($event)">
-                    <div class="cardFace front">
+                    <div class="cardFace front" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                     </div>
-                    <div class="cardFace back">
+                    <div class="cardFace back" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                         <div class="card_back_in">
                             <img class="cardShuffle" :src="card.src" alt="">
                         </div>
@@ -18,9 +18,11 @@
                 </div>
             </div>
         </transition-group>
+
         <div v-show="showExit" class="memory_exit" color="white" flat @click.native="$router.go(-1)">
             <h2>Click to exit</h2>
         </div>
+    </div>
     </div>
 </template>
 
@@ -47,18 +49,50 @@
         public timeout: any;
         public showExit: boolean = false;
 
+        public cardHeight: number = 0;
+        public cardWidth: number = 0;;
+
+
         get imgCards() {
             return this.cards;
         }
 
-        public created() {
+        public mounted() {
 
-            const containerHeight = this.$vuetify.breakpoint.height;
-            const containerWidth = this.$vuetify.breakpoint.width;
 
-            this.displayInitialDeck();
+                const root =   document.getElementById("app") as any;
+                let availableHeight =  root.offsetHeight;
+                let availableWidth =  root.offsetWidth;
+                const memoryContainer: any = this.$refs.memoryContainer;
+                console.log("availableHeight " + availableHeight)
+                console.log("availableWidth " + availableWidth)
+
+                // this implementation of setting height or width is good when rowsCount ==  columnCount
+                // if they are not eual , we will need to change the code accordinally.
+                const cardMargins = 11;
+                const extraMargins = 1;
+                const leftMargin = 10;
+                const rightMargin = 10;
+                availableHeight = availableHeight - leftMargin;
+                availableWidth = availableWidth - rightMargin;
+
+                if (availableWidth / availableHeight > this.aspectRatio) {
+                    console.log("availableWidth " + availableWidth);
+                      console.log("availableHeight " + availableHeight);
+  console.log("availableWidth / availableHeight " + availableWidth / availableHeight);
+                    // height is small in this case in porportion to the width
+                    this.cardHeight = (availableHeight / this.rowsCount) - cardMargins - extraMargins ;
+                    memoryContainer.style.width = (availableHeight * this.aspectRatio) + (cardMargins * this.columnCount)  + "px" ;             
+                    this.cardWidth = this.cardHeight * this.aspectRatio ;
+
+                } else {
+                    this.cardWidth = (availableWidth / this.columnCount) - cardMargins - extraMargins ;
+                    memoryContainer.style.height = (availableWidth / this.aspectRatio) + (cardMargins * this.rowsCount)  + "px" ;             
+                    this.cardHeight = this.cardWidth / this.aspectRatio ;
+                }
+          
             this.$nextTick(() => {
-
+               this.displayInitialDeck();
                 this.openModalQuestions();
 
                 (TimelineMax as any).set(('.card'), {
@@ -78,22 +112,7 @@
                         }, 1500);
                     },
                 });
-                // this implementation of setting height or width is good when rowsCount ==  columnCount
-                // if they are not eual , we will need to change the code accordinally.
-                let cardHeight = -1;
-                let cardWidth = -1;
-                if (containerWidth / containerHeight > this.aspectRatio) {
-                    cardHeight = containerHeight / this.rowsCount;
-                    cardWidth = cardHeight * this.aspectRatio;
-                } else {
-                    cardWidth = (containerWidth / this.columnCount) - 30;
-                    cardHeight = cardWidth / this.aspectRatio;
-                }
-
-                (TimelineMax as any).set(['.cardWrapper', '.cardFace'], {width: cardWidth, height: cardHeight});
-
-                // if imageHeight !=-1 set the images height (do not set width - it will autonmatically will be set)
-                // if imageWidth !=-1 set the images width (do not set width - it will autonmatically will be set)
+               
 
             });
 
@@ -225,10 +244,17 @@
 </script>
 
 <style scoped lang="scss">
+    #memoryRoot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
     #memoryContainer {
         text-align: center;
         width: 100%;
         height: 100%;
+        line-height: 0px !important;
 
         .title-section {
             font-family: Roboto Slab, sans-serif;
@@ -268,8 +294,8 @@
             right: 10px;
         }
 
-        .deck {
-            margin-top: 50px;
+        .memoryInnerContainer {
+            margin: 10px 0px 0px 10px ;
             height: 100%;
         }
 
@@ -369,37 +395,17 @@
         }
     }
 
-    .witp-questions {
-        cursor: pointer;
-        position: absolute;
-        padding: 7px 55px 35px 35px;
-        color: white;
-        bottom: 50px;
-        left: 0;
-        box-sizing: border-box;
-        font-size: 18px;
-        background: rgba(0, 0, 0, 0.6);
-        width: 360px;
-        height: 50px;
-        span {
-            font-size: 24px;
-            min-width: 150px;
-        }
-    }
+
 
     .cardWrapper {
-        width: 398px;
-        height: 264px;
         display: inline-block;
-        margin: 0 10px 10px 10px;
+        margin: 0 10px 10px 0;
         border-radius: 20px !important;
         -webkit-font-smoothing: antialiased;
     }
 
     .cardFace {
         position: absolute;
-        width: 398px;
-        height: 264px;
         overflow: hidden;
         border-radius: 20px !important;
         background-color: #595959;
