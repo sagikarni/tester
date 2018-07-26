@@ -145,3 +145,12 @@ h1,h2,h3,h4,h5,h6{
   }
 }
 
+
+// Memory Activity
+
+#memoryContainer .close_rotation_issue{
+  position: absolute !important;
+  min-width: 36px; left: 5px; top: 5px;
+  background: #595959!important;
+  border-radius: 50%;
+}
