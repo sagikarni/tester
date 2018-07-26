@@ -5,24 +5,23 @@
             <v-icon>close</v-icon>
         </v-btn>
         <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="deck">
-            <div v-for="card in test" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id" class="cardWrapper">
+            <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
+                 class="cardWrapper">
                 <div class="card show" :data-id="card.imgID" :data-card="card.id" @click="openQuestionCard($event)">
                     <div class="cardFace front">
                     </div>
                     <div class="cardFace back">
                         <div class="card_back_in">
-                            <img style="width: 400px"
-                                 class="cardShuffle" :src="card.src" alt="">
+                            <img class="cardShuffle" :src="card.src" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </transition-group>
-        <v-btn v-show="showExit" color="white" flat @click.native="$router.go(-1)">
-            Click to exit
-        </v-btn>
+        <div v-show="showExit" class="memory_exit" color="white" flat @click.native="$router.go(-1)">
+            <h2>Click to exit</h2>
+        </div>
     </div>
-
 </template>
 
 
@@ -35,10 +34,10 @@
     @Component
     export default class Memory extends BaseComponent {
         @Prop() public images: any[];
-        @Prop() public columnCount: number = 1;
-        @Prop() public rowsCount: number = 1;
-        @Prop() public aspectRatio: number = 1;
-        @Prop() public memoryLayout: number = 1;
+        @Prop() public columnCount: number;
+        @Prop() public rowsCount: number;
+        @Prop() public aspectRatio: number;
+        @Prop() public memoryLayout: number;
 
         public cards: any[] = [];
         public shuffleCount: number = 0;
@@ -48,13 +47,18 @@
         public timeout: any;
         public showExit: boolean = false;
 
-        get test() {
+        get imgCards() {
             return this.cards;
         }
 
         public created() {
+
+            const containerHeight = this.$vuetify.breakpoint.height;
+            const containerWidth = this.$vuetify.breakpoint.width;
+
             this.displayInitialDeck();
             this.$nextTick(() => {
+
                 this.openModalQuestions();
 
                 (TimelineMax as any).set(('.card'), {
@@ -74,47 +78,49 @@
                         }, 1500);
                     },
                 });
-
-                const memoryContainer = this.$el as any;
-                const containerHeight = memoryContainer.offsetHeight;
-                const containerWidth = memoryContainer.offsetWidth;
-                let imageWidth = -1;
-                let imageHeight = -1;  // this implementation of setting height or width is good when rowsCount ==  columnCount
+                // this implementation of setting height or width is good when rowsCount ==  columnCount
                 // if they are not eual , we will need to change the code accordinally.
+                let cardHeight = -1;
+                let cardWidth = -1;
                 if (containerWidth / containerHeight > this.aspectRatio) {
-                    imageHeight = 100 / this.rowsCount;
+                    cardHeight = containerHeight / this.rowsCount;
+                    cardWidth = cardHeight * this.aspectRatio;
                 } else {
-                    imageWidth = 100 / this.columnCount;
+                    cardWidth = (containerWidth / this.columnCount) - 30;
+                    cardHeight = cardWidth / this.aspectRatio;
                 }
+
+                (TimelineMax as any).set(['.cardWrapper', '.cardFace'], {width: cardWidth, height: cardHeight});
 
                 // if imageHeight !=-1 set the images height (do not set width - it will autonmatically will be set)
                 // if imageWidth !=-1 set the images width (do not set width - it will autonmatically will be set)
+
             });
 
         }
 
         public displayInitialDeck() {
-            let id = 1;
-            this.cards = [];
+                let id = 1;
+                this.cards = [];
 
-            if (this.images && this.images.length > 0) {
-                this.images.sort();
-                for (let s = 0; s < this.images.length; s++) {
-                    for (let j = 0; j < 2; j++) {
-                        const card = {
-                            id,
-                            imgID: s,
-                            src: this.images[s],
-                        };
-                        this.cards.push(card);
-                        id++;
+                if (this.images && this.images.length > 0) {
+                    this.images.sort();
+                    for (let s = 0; s < this.images.length; s++) {
+                        for (let j = 0; j < 2; j++) {
+                            const card = {
+                                id,
+                                imgID: s,
+                                src: this.images[s],
+                            };
+                            this.cards.push(card);
+                            id++;
+                        }
                     }
                 }
-            }
 
-            this.shuffledDeck = false;
-            this.shuffleCount = 0;
-            return this.cards;
+                this.shuffledDeck = false;
+                this.shuffleCount = 0;
+                return this.cards;
         }
 
         public shuffleDeck() {
@@ -175,7 +181,7 @@
             clearTimeout(this.timeout);
 
             if (elemeWrap && elemeWrap.length === 2) {
-                if (elemeWrap[0].getAttribute('data-id') !== elemeWrap[1].getAttribute('data-id')) {
+                if (elemeWrap[0].getAttribute('data-id') === elemeWrap[1].getAttribute('data-id')) {
                     const tileId1 = elemeWrap[0].getAttribute('data-card');
                     const tileId2 = elemeWrap[1].getAttribute('data-card');
 
@@ -187,7 +193,8 @@
                         const position2 = tileWrapper2.getBoundingClientRect();
                         const xCord = position1.left - position2.left;
                         const yCord = position1.top - position2.top;
-                        (TimelineMax as any).to(tileWrapper2, 1.2, { x: xCord, y: yCord,
+                        (TimelineMax as any).to(tileWrapper2, 1.2, {
+                            x: xCord, y: yCord,
                             onComplete: () => {
                                 (TimelineMax as any).to([elemeWrap[0], elemeWrap[1]], 0.5,
                                     {
@@ -220,6 +227,8 @@
 <style scoped lang="scss">
     #memoryContainer {
         text-align: center;
+        width: 100%;
+        height: 100%;
 
         .title-section {
             font-family: Roboto Slab, sans-serif;
@@ -260,7 +269,7 @@
         }
 
         .deck {
-            margin-top: 20px;
+            margin-top: 50px;
             height: 100%;
         }
 
@@ -382,9 +391,18 @@
         width: 398px;
         height: 264px;
         display: inline-block;
-        margin: 0 20px 15px 0;
+        margin: 0 10px 10px 10px;
         border-radius: 20px !important;
         -webkit-font-smoothing: antialiased;
+    }
+
+    .cardFace {
+        position: absolute;
+        width: 398px;
+        height: 264px;
+        overflow: hidden;
+        border-radius: 20px !important;
+        background-color: #595959;
     }
 
     .card {
@@ -398,15 +416,6 @@
 
     .cardFace.back {
         display: table;
-    }
-
-    .cardFace {
-        position: absolute;
-        width: 398px;
-        height: 264px;
-        overflow: hidden;
-        border-radius: 20px !important;
-        background-color: #595959;
     }
 
     .front i {
@@ -472,5 +481,20 @@
 
     .first_dialog_wrappers {
         padding-top: 15px;
+    }
+
+    .memory_exit {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        cursor: pointer;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        h2 {
+            color: #ffffff;
+        }
+
     }
 </style>
