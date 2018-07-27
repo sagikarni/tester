@@ -1,28 +1,28 @@
 <template>
-<div id="memoryRoot">
-    <div ref="memoryContainer" id="memoryContainer">
-        <v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
-            <v-icon>close</v-icon>
-        </v-btn>
-       <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
-            <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
-                 class="cardWrapper"  :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                <div class="card show" :data-id="card.imgID" :data-card="card.id" @click="openQuestionCard($event)">
-                    <div class="cardFace front" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                    </div>
-                    <div class="cardFace back" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                        <div class="card_back_in">
-                            <img class="cardShuffle" :src="card.src" alt="">
+    <div id="memoryRoot">
+        <div ref="memoryContainer" id="memoryContainer">
+            <v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
+                <v-icon>close</v-icon>
+            </v-btn>
+            <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
+                <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
+                     class="cardWrapper" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
+                    <div class="card show" :data-id="card.imgID" :data-card="card.id" @click="openQuestionCard($event)">
+                        <div class="cardFace front" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
+                        </div>
+                        <div class="cardFace back" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
+                            <div class="card_back_in">
+                                <img class="cardShuffle" :src="card.src" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </transition-group>
+            </transition-group>
 
-        <div v-show="showExit" class="memory_exit" color="white" flat @click.native="$router.go(-1)">
-            <h2>Click to exit</h2>
+            <div v-show="showExit" class="memory_exit" color="white" flat @click="$router.go(-1)">
+                <h2>Click to exit</h2>
+            </div>
         </div>
-    </div>
     </div>
 </template>
 
@@ -35,11 +35,11 @@
 
     @Component
     export default class Memory extends BaseComponent {
-        @Prop() public images: any[];
-        @Prop() public columnCount: number;
-        @Prop() public rowsCount: number;
-        @Prop() public aspectRatio: number;
-        @Prop() public memoryLayout: number;
+        @Prop() public images?: any[];
+        @Prop() public columnCount?: number;
+        @Prop() public rowsCount?: number;
+        @Prop() public aspectRatio?: number;
+        @Prop() public memoryLayout?: number;
 
         public cards: any[] = [];
         public shuffleCount: number = 0;
@@ -50,8 +50,7 @@
         public showExit: boolean = false;
 
         public cardHeight: number = 0;
-        public cardWidth: number = 0;;
-
+        public cardWidth: number = 0;
 
         get imgCards() {
             return this.cards;
@@ -59,13 +58,12 @@
 
         public mounted() {
 
-
-                const root =   document.getElementById("app") as any;
-                let availableHeight =  root.offsetHeight;
-                let availableWidth =  root.offsetWidth;
+            if (this.columnCount && this.rowsCount && this.aspectRatio) {
+                const root = document.getElementById("app") as any;
+                let availableHeight = root.offsetHeight;
+                let availableWidth = root.offsetWidth;
                 const memoryContainer: any = this.$refs.memoryContainer;
-                console.log("availableHeight " + availableHeight)
-                console.log("availableWidth " + availableWidth)
+
 
                 // this implementation of setting height or width is good when rowsCount ==  columnCount
                 // if they are not eual , we will need to change the code accordinally.
@@ -73,73 +71,73 @@
                 const extraMargins = 1;
                 const leftMargin = 10;
                 const rightMargin = 10;
+                const reduceHeight = 0.95;
                 availableHeight = availableHeight - leftMargin;
                 availableWidth = availableWidth - rightMargin;
 
                 if (availableWidth / availableHeight > this.aspectRatio) {
-                    console.log("availableWidth " + availableWidth);
-                      console.log("availableHeight " + availableHeight);
-  console.log("availableWidth / availableHeight " + availableWidth / availableHeight);
                     // height is small in this case in porportion to the width
-                    this.cardHeight = (availableHeight / this.rowsCount) - cardMargins - extraMargins ;
-                    memoryContainer.style.width = (availableHeight * this.aspectRatio) + (cardMargins * this.columnCount)  + "px" ;             
-                    this.cardWidth = this.cardHeight * this.aspectRatio ;
+                    this.cardHeight = ((availableHeight / this.rowsCount) - cardMargins - extraMargins) * reduceHeight;
+                    memoryContainer.style.width = (availableHeight * this.aspectRatio) + (cardMargins * this.columnCount) + "px";
+                    this.cardWidth = this.cardHeight * this.aspectRatio;
 
                 } else {
-                    this.cardWidth = (availableWidth / this.columnCount) - cardMargins - extraMargins ;
-                    memoryContainer.style.height = (availableWidth / this.aspectRatio) + (cardMargins * this.rowsCount)  + "px" ;             
-                    this.cardHeight = this.cardWidth / this.aspectRatio ;
+                    this.cardWidth = (availableWidth / this.columnCount) - cardMargins - extraMargins;
+                    memoryContainer.style.height = (availableWidth / this.aspectRatio) + (cardMargins * this.rowsCount) + "px";
+                    this.cardHeight = this.cardWidth / this.aspectRatio;
                 }
-          
-            this.$nextTick(() => {
-               this.displayInitialDeck();
-                this.openModalQuestions();
+                this.displayInitialDeck();
 
-                (TimelineMax as any).set(('.card'), {
-                    className: "+=openCard",
-                    rotationY: 180,
-                    ease: Back.easeOut,
-                    onComplete: () => {
-                        setTimeout(() => {
-                            (TimelineMax as any).to(('.openCard'), 1.2,
-                                {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
-                            setTimeout(() => {
-                                this.shuffleDeck();
+                this.$nextTick(() => {
+                    this.openModalQuestions();
+
+                    (TimelineMax as any).set('#memoryRoot .card',
+                        {
+                            className: "+=openCard", rotationY: 180, ease: Back.easeOut,
+                            onComplete: () => {
                                 setTimeout(() => {
-                                    this.shuffleDeck();
-                                }, 3000);
-                            }, 2500);
-                        }, 1500);
-                    },
+                                    (TimelineMax as any).staggerTo(('.openCard'), 1.5,
+                                        {className: "-=openCard", rotationY: 0, ease: Back.easeOut}, 0.1);
+                                    setTimeout(() => {
+                                        this.shuffleDeck();
+                                        setTimeout(() => {
+                                            this.shuffleDeck();
+                                        }, 2000);
+                                    }, 3000);
+                                }, 2000);
+                            },
+                        });
                 });
-               
+            }
 
-            });
+
+
+
 
         }
 
         public displayInitialDeck() {
-                let id = 1;
-                this.cards = [];
+            let id = 1;
+            this.cards = [];
 
-                if (this.images && this.images.length > 0) {
-                    this.images.sort();
-                    for (let s = 0; s < this.images.length; s++) {
-                        for (let j = 0; j < 2; j++) {
-                            const card = {
-                                id,
-                                imgID: s,
-                                src: this.images[s],
-                            };
-                            this.cards.push(card);
-                            id++;
-                        }
+            if (this.images && this.images.length > 0) {
+                this.images.sort();
+                for (let s = 0; s < this.images.length; s++) {
+                    for (let j = 0; j < 2; j++) {
+                        const card = {
+                            id,
+                            imgID: s,
+                            src: this.images[s],
+                        };
+                        this.cards.push(card);
+                        id++;
                     }
                 }
+            }
 
-                this.shuffledDeck = false;
-                this.shuffleCount = 0;
-                return this.cards;
+            this.shuffledDeck = false;
+            this.shuffleCount = 0;
+            return this.cards;
         }
 
         public shuffleDeck() {
@@ -161,7 +159,7 @@
 
         public openModalQuestions() {
             (TimelineMax as any).set(".cardWrapper", {perspective: 800});
-            (TimelineMax as any).set(".card", {transformStyle: "preserve-3d"});
+            (TimelineMax as any).set("#memoryRoot .card", {transformStyle: "preserve-3d"});
             (TimelineMax as any).set(".back", {rotationY: -180});
             (TimelineMax as any).set([".back", ".front"], {backfaceVisibility: "hidden"});
         }
@@ -169,34 +167,25 @@
         public openQuestionCard(event: any) {
             const tiles: any = this.$el.querySelectorAll('.openCard');
 
-            if (!tiles || (tiles && tiles.length < 2)) {
-                (TimelineMax as any).to((event.currentTarget), 1.2, {
-                    className: "+=openCard",
-                    rotationY: 180,
-                    ease: Back.easeOut,
-                    onComplete: () => {
-                        this.win();
-                    },
-                });
-            } else if (event.currentTarget.classList.contains('openCard') && tiles.length === 2) {
+            if (!(!tiles || (tiles && tiles.length < 2))) {
                 (TimelineMax as any).to(('.openCard'), 1.2,
                     {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
-            } else {
-                (TimelineMax as any).to(('.openCard'), 1.2,
-                    {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
-                (TimelineMax as any).to((event.currentTarget), 1.2, {
-                    className: "+=openCard",
-                    rotationY: 180,
-                    ease: Back.easeOut,
-                    onComplete: () => {
-                        this.win();
-                    },
-                });
+            }
+
+            if (!(event.currentTarget.classList.contains('openCard') && tiles.length === 2)) {
+                (TimelineMax as any).set((event.currentTarget), { className: "+=openCard" });
+                const elemeWrap = this.$el.querySelectorAll('.openCard');
+                (TimelineMax as any).to((event.currentTarget), 1.2,
+                    {
+                        rotationY: 180, ease: Back.easeOut,
+                        onComplete: () => {
+                            this.win(elemeWrap);
+                        },
+                    });
             }
         }
 
-        public win() {
-            const elemeWrap = this.$el.querySelectorAll('.openCard');
+        public win(elemeWrap: any) {
             clearTimeout(this.timeout);
 
             if (elemeWrap && elemeWrap.length === 2) {
@@ -212,13 +201,14 @@
                         const position2 = tileWrapper2.getBoundingClientRect();
                         const xCord = position1.left - position2.left;
                         const yCord = position1.top - position2.top;
+
                         (TimelineMax as any).to(tileWrapper2, 1.2, {
-                            x: xCord, y: yCord,
+                            x: xCord, y: yCord, zIndex: '99999',
                             onComplete: () => {
                                 (TimelineMax as any).to([elemeWrap[0], elemeWrap[1]], 0.5,
                                     {
                                         autoAlpha: 0,
-                                        className: "-=show",
+                                        className: "",
                                         cursor: 'auto',
                                         onComplete: () => {
                                             const showElem = this.$el.querySelectorAll('.show');
@@ -245,9 +235,9 @@
 
 <style scoped lang="scss">
     #memoryRoot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #memoryContainer {
@@ -295,7 +285,7 @@
         }
 
         .memoryInnerContainer {
-            margin: 10px 0px 0px 10px ;
+            margin: 10px 0px 0px 10px;
             height: 100%;
         }
 
@@ -395,8 +385,6 @@
         }
     }
 
-
-
     .cardWrapper {
         display: inline-block;
         margin: 0 10px 10px 0;
@@ -490,6 +478,7 @@
     }
 
     .memory_exit {
+        z-index: 100000;
         display: flex;
         width: 100%;
         height: 100%;

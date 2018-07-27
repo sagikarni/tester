@@ -30,10 +30,11 @@
     import TimelineMax from 'gsap';
     import Draggable from 'gsap/Draggable.js';
     import $ from 'jquery';
+    import _ from "lodash";
 
     @Component
     export default class PuzzleView extends BaseComponent {
-        @Prop() public images: any[];
+        @Prop() public images?: any[];
         public puzzleShuffle?: boolean = false;
         public width?: number = 0;
         public puzzleImage: any;
@@ -76,8 +77,10 @@
         }
 
         public changeImageData(index: number) {
-            this.count = this.images[index] && this.images[index]['media']['partsCount'];
-            this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
+            if (this.images && this.images[index]) {
+                this.count = this.images[index] && this.images[index]['media']['partsCount'];
+                this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
+            }
         }
 
         public puzzleComplete(status: boolean) {
@@ -127,7 +130,7 @@
             this.$nextTick(() => {
                 this.puzzleShuffle = false;
                 this.count = 1;
-                const puzzlePath = this.images[index] && this.images[index]['media']['photo'];
+                const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                 this.puzzleImage = [{id: 1, puzzlePath}];
                 (TimelineMax as any).to($(".container"), 0.1, {
                     autoAlpha: 0, onComplete: () => {
@@ -164,7 +167,7 @@
                                 autoAlpha: 0, onComplete: () => {
                                     this.puzzleShuffle = false;
                                     this.count = 1;
-                                    const puzzlePath = this.images[index] && this.images[index]['media']['photo'];
+                                    const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                                     this.puzzleImage = [{id: 1, puzzlePath}];
                                     this.$nextTick(() => {
                                         (TimelineMax as any).set($(".list-complete-item"), {className: '+=stopDragg'});
@@ -176,14 +179,14 @@
                             this.puzzleIsComplate = false;
                         } else {
 
-                            const data = this.images[index] && this.images[index]['puzzleMadia'];
+                            const data = this.images && this.images[index] && this.images[index]['puzzleMadia'];
                             const newData = puzzleData.map((item: any) => {
                                 return data[item.item - 1];
                             });
                             (TimelineMax as any).to($(".container"), 0.15, {
                                 autoAlpha: 0, onComplete: () => {
                                     this.puzzleShuffle = false;
-                                    this.count = this.images[index] && this.images[index]['media']['partsCount'];
+                                    this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
                                     this.puzzleImage = newData;
                                     (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
                                     setTimeout(() => {

@@ -1,14 +1,15 @@
 <template>
     <div>
-        <!--<activity-disabled-notification :orientation="isSizeXS"></activity-disabled-notification>-->
-        <rotate-screen-alert :orientation="hasCorrectOrientation && isMobileDevice"></rotate-screen-alert>
-        <section>
+        <activity-disabled-notification :orientation="isSizeXS"></activity-disabled-notification>
+        <rotate-screen-alert :orientation="!isSizeXS && hasCorrectOrientation && isMobileDevice"></rotate-screen-alert>
+        <section  v-show="!isSizeXS && !hasCorrectOrientation">
             <memory
-                    :images="slides"
-                    :memoryLayout="memoryLayout"
-                    :columnCount="columnCount"
-                    :rowsCount="rowsCount"
-                    :aspectRatio="aspectRatio">
+                v-if="firstPageLoad"
+                :images="slides"
+                :memoryLayout="memoryLayout"
+                :columnCount="columnCount"
+                :rowsCount="rowsCount"
+                :aspectRatio="aspectRatio">
             </memory>
         </section>
     </div>
@@ -75,8 +76,19 @@
             return this.orientationUtil.orientation;
         }
 
+        @Watch('activityOrientation')
+        public onPropertyChanged(value: any, oldValue: any) {
+            if (value === this.activityDetailsState.orientation && this.isMobileDevice) {
+                this.hasCorrectOrientation = false;
+                this.firstPageLoad = true;
+            } else {
+                this.hasCorrectOrientation = true;
+            }
+        }
+
         public checkSizeXS() {
             if (this.$vuetify.breakpoint.xsOnly || (this.$vuetify.breakpoint.height < 600 && this.hasCorrectOrientation === true)) {
+
                 this.isSizeXS = true;
             }
         }
