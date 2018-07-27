@@ -58,6 +58,8 @@ var dictionary = {
         rotateScreenWarning: 'Please Rotate Your Screen',
         rotateScreenPopup: "Rotate your device  to start the activity",
         smallScreenPopup: "This activity can not be activated in small screens",
+        clickExit: "Click to exit",
+        exitActivity: "Exit Activity",
     }
 };
 

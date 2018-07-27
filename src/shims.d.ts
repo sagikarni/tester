@@ -11,3 +11,4 @@ declare module 'nosleep.js';
 declare module 'gsap/Draggable.js';
 declare module "jquery";
 declare module "vue-lodash";
+declare module "lodash";

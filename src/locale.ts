@@ -59,6 +59,8 @@ export interface Ilocale {
         rotateScreenWarning: string;
         rotateScreenPopup: string;
         smallScreenPopup: string;
+        clickExit: string;
+        exitActivity: string;
     };
 }
 

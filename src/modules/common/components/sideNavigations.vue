@@ -13,7 +13,7 @@
             </swiper-slide>
 
             <swiper-slide @click.native="redirectBack">
-                <div class="swiper-slide"><h2>Click To Exit</h2></div>
+                <div class="swiper-slide"><h2>{{$locale.general.clickExit}}</h2></div>
             </swiper-slide>
             <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
@@ -35,7 +35,7 @@
         >
             <v-list>
                 <v-list-tile @click="$router.go(-1)">
-                    <v-list-tile-title>Exit Activity</v-list-tile-title>
+                    <v-list-tile-title>{{$locale.general.exitActivity}}</v-list-tile-title>
                 </v-list-tile>
             </v-list>
         </v-menu>
