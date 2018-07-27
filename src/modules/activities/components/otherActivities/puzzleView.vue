@@ -396,7 +396,7 @@
         }
 
         public shuffle() {
-            this.puzzleImage = _.shuffle(this.puzzleImage);
+            this.puzzleImage = (_ as any).shuffle(this.puzzleImage);
         }
 
     }
