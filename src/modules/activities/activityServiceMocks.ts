@@ -1351,6 +1351,167 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
 });
 
 
+mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
+    details: {
+        title: 'this is WH Questions Activity',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: ActivityType.WHQuestions, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 9, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        images: [
+            {
+                id: 1,
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                title: 'some title 1',
+             },
+
+            {
+
+                id: 2,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+
+                title: 'some title 2',
+
+
+            },
+
+            {
+
+                id: 3,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+
+                title: 'some title 3',
+
+            },
+
+            {
+
+                id: 4,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+
+                title: 'some title 4',
+
+            },
+
+            {
+
+                id: 5,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+
+                title: 'some title 5',
+
+            },
+
+            {
+
+                id: 6,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+
+                title: 'some title 6',
+
+            },
+
+            {
+
+                id: 7,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+
+                title: 'some title 7',
+
+            },
+
+            {
+
+                id: 8,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+
+                title: 'some title 7',
+
+            },
+
+            {
+
+                id: 9,
+
+                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+
+                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+
+                title: 'some title 7',
+
+            },
+
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                questions: ['This is question number 1 for photo number 1', 'This is question number 2 for photo number 1', 'This is question number 3 for photo number 1', 'This is question number 4 for photo number 1'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 2', 'This is question number 2 for photo number 2', 'This is question number 3 for photo number 2', 'This is question number 4 for photo number 2'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/2.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 3', 'This is question number 2 for photo number 3', 'This is question number 3 for photo number 3', 'This is question number 4 for photo number 3'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 4', 'This is question number 2 for photo number 4', 'This is question number 3 for photo number 4', 'This is question number 4 for photo number 4'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 5', 'This is question number 2 for photo number 5', 'This is question number 3 for photo number 5', 'This is question number 4 for photo number 5'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/5.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 6', 'This is question number 2 for photo number 6', 'This is question number 3 for photo number 6', 'This is question number 4 for photo number 6'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/6.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 7', 'This is question number 2 for photo number 7', 'This is question number 3 for photo number 7', 'This is question number 4 for photo number 7'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 8', 'This is question number 2 for photo number 8', 'This is question number 3 for photo number 8', 'This is question number 4 for photo number 8'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/8.jpg'],
+            },
+            {
+                questions: ['This is question number 1 for photo number 9', 'This is question number 2 for photo number 9', 'This is question number 3 for photo number 9', 'This is question number 4 for photo number 9'],
+                photos: ['/media/restricted/collections/photos/collection-1/content/9.jpg'],
+            },
+        ],
+    },
+});
+
 
 mock.onGet('/general/getActivity', { params: { activityId: '100' } }).reply(500, {});
 mock.onGet('/general/getActivity', { params: { activityId: '101' } }).reply(404, {});
