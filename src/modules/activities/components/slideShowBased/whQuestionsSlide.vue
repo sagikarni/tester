@@ -6,16 +6,17 @@
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
                          :src="selectPhotoMedia(parameter.media.photos[0])">
                     <div v-if="question" class="wh-question" @click="changeQuestion">
-                        <span class="spanFade meaningSpanFade">{{questionsArray[0]}}</span>
-                        <span class="refresh_icon">
+                        <div class="text_refresh_wrapper">
+                            <span class="spanFade meaningSpanFade">{{questionsArray[0]}}</span>
+                            <span class="refresh_icon">
                             <i class="material-icons meaningRefresh"> cached </i>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script lang="ts">
@@ -29,6 +30,7 @@
         @Prop() public parameter?: any;
         public question: boolean = false;
         public transitionEnded = true;
+        public buttonSheet: boolean = true;
 
         get questionsArray(): any[] {
             return this.parameter && this.parameter.media && this.parameter.media.questions;
@@ -51,29 +53,27 @@
             if (!this.transitionEnded) {
                 return;
             }
+
             const elemrefresh = document.getElementsByClassName("meaningRefresh");
             const elemFadingWord = document.getElementsByClassName("meaningSpanFade");
 
             this.transitionEnded = false;
-            (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(180deg)", autoAlpha: 0.5 });
+            (TimelineMax as any).set(elemrefresh, {transform: "rotate(180deg)", autoAlpha: 0.5 });
+
             (TimelineMax as any).to(elemFadingWord, 0.5,
                 {
-                    css: {"margin-right": "-200px", "alpha": "0"},
+                    autoAlpha: 0,
                     ease: Power1.easeOut,
                     onComplete: () => {
-                        (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(0deg)", autoAlpha: 1 });
-                        (TimelineMax as any).set(elemFadingWord, {
-                            css: {"margin-left": "-400px"},
-                        });
+                        (TimelineMax as any).set(elemrefresh, {transform: "rotate(0deg)", autoAlpha: 1 });
                         this.getNextQuestion();
                         (TimelineMax as any).to(elemFadingWord, 0.5, {
-                            css: {"margin-left": "-200px", "alpha": "1"}, ease: Power1.easeOut, onComplete: () => {
+                            autoAlpha: 1, ease: Power1.easeOut, onComplete: () => {
                                 this.transitionEnded = true;
                             },
                         });
                     },
                 });
-            (TimelineMax as any).to(elemFadingWord, 0, {css: {"margin-left": "0", "margin-right": "0"}});
         }
         public pauseAction(): void {
             // do nothing
@@ -120,28 +120,35 @@
     .wh-question {
         cursor: pointer;
         position: absolute;
-        padding: 7px 55px  35px 35px;
+        padding: 7px 55px 0 100px;
         color: white;
-        bottom: 50px;
+        bottom: 0;
         left: 0;
+        text-align: left;
         box-sizing: border-box;
         font-size: 18px;
         background: rgba(0, 0, 0, 0.6);
-        width: 260px;
-        height: 50px;
+        width: 100%;
+        .text_refresh_wrapper {
+            display: inline-block;
+            position: relative;
+            min-width: 150px;
+        }
         span {
             font-size: 24px;
             min-width: 150px;
+            display: inline-block;
+            float: left;
+            line-height: 32px;
         }
-        .refresh_icon{
+        .refresh_icon {
             position: absolute;
-            right: 0;
+            top: -7px;
+            right: -70px;
             width: 40px;
             min-width: 55px;
-            height: 100%;
-            top: 0;
-            display: block;
             background: #000000;
+            margin-right: 0;
         }
         i {
             font-size: 32px;
