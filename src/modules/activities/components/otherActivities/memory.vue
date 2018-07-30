@@ -93,27 +93,22 @@
 
                     (TimelineMax as any).set('#memoryRoot .card',
                         {
-                            className: "+=openCard", rotationY: 180, ease: Back.easeOut,
+                            className: "+=openCard", rotationY: 180, ease: Back.easeOut, pointerEvents: 'none',
                             onComplete: () => {
                                 setTimeout(() => {
                                     (TimelineMax as any).staggerTo(('.openCard'), 1.5,
                                         {className: "-=openCard", rotationY: 0, ease: Back.easeOut}, 0.1);
                                     setTimeout(() => {
-                                        this.shuffleDeck();
+                                        this.shuffleDeck(false);
                                         setTimeout(() => {
-                                            this.shuffleDeck();
-                                        }, 2000);
+                                            this.shuffleDeck(true);
+                                        }, 1500);
                                     }, 3000);
-                                }, 2000);
+                                }, 2500);
                             },
                         });
                 });
             }
-
-
-
-
-
         }
 
         public displayInitialDeck() {
@@ -121,7 +116,6 @@
             this.cards = [];
 
             if (this.images && this.images.length > 0) {
-                this.images.sort();
                 for (let s = 0; s < this.images.length; s++) {
                     for (let j = 0; j < 2; j++) {
                         const card = {
@@ -140,7 +134,7 @@
             return this.cards;
         }
 
-        public shuffleDeck() {
+        public shuffleDeck(event: boolean) {
             let counter = this.cards.length;
 
             while (counter > 0) {
@@ -155,6 +149,9 @@
 
             this.shuffledDeck = true;
             this.shuffleCount++;
+            if (event) {
+                (TimelineMax as any).to('#memoryRoot .card', 1, {pointerEvents: 'auto'});
+            }
         }
 
         public openModalQuestions() {
@@ -165,28 +162,30 @@
         }
 
         public openQuestionCard(event: any) {
+            clearTimeout(this.timeout);
+
             const tiles: any = this.$el.querySelectorAll('.openCard');
 
             if (!(!tiles || (tiles && tiles.length < 2))) {
-                (TimelineMax as any).to(('.openCard'), 1.2,
-                    {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                (TimelineMax as any).to(('.openCard'), 1.2, {
+                    className: "-=openCard",
+                    rotationY: 0,
+                    ease: Back.easeOut,
+                });
             }
 
             if (!(event.currentTarget.classList.contains('openCard') && tiles.length === 2)) {
-                (TimelineMax as any).set((event.currentTarget), { className: "+=openCard" });
+                (TimelineMax as any).set((event.currentTarget), {className: "+=openCard"});
                 const elemeWrap = this.$el.querySelectorAll('.openCard');
-                (TimelineMax as any).to((event.currentTarget), 1.2,
-                    {
-                        rotationY: 180, ease: Back.easeOut,
-                        onComplete: () => {
-                            this.win(elemeWrap);
-                        },
-                    });
+                (TimelineMax as any).to((event.currentTarget), 1.2, {rotationY: 180, ease: Back.easeOut});
+                setTimeout(() => {
+                    this.win(elemeWrap);
+                }, 200);
             }
+
         }
 
         public win(elemeWrap: any) {
-            clearTimeout(this.timeout);
 
             if (elemeWrap && elemeWrap.length === 2) {
                 if (elemeWrap[0].getAttribute('data-id') === elemeWrap[1].getAttribute('data-id')) {
@@ -202,6 +201,7 @@
                         const xCord = position1.left - position2.left;
                         const yCord = position1.top - position2.top;
 
+                        (TimelineMax as any).set( elemeWrap, { className: "" });
                         (TimelineMax as any).to(tileWrapper2, 1.2, {
                             x: xCord, y: yCord, zIndex: '99999',
                             onComplete: () => {
@@ -222,8 +222,7 @@
                     }
                 } else {
                     this.timeout = setTimeout(() => {
-                        (TimelineMax as any).to(('.openCard'), 1.2,
-                            {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+                        (TimelineMax as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut });
                         clearTimeout(this.timeout);
                     }, 2500);
                 }
@@ -483,6 +482,7 @@
         width: 100%;
         height: 100%;
         position: absolute;
+        left: 0;
         cursor: pointer;
         flex-direction: row;
         align-items: center;

@@ -1361,6 +1361,13 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
+        selectedSessionInfoDesc: 'Long',
+        sessionsInfo : [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
         isPinned: false,
         images: [
             {
@@ -1368,6 +1375,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
                 title: 'some title 1',
+                filterInfo: [1, 2, 3],
              },
 
             {
@@ -1379,7 +1387,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
 
                 title: 'some title 2',
-
+                filterInfo: [1, 2, 3],
 
             },
 
@@ -1392,7 +1400,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
 
                 title: 'some title 3',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1404,7 +1412,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
 
                 title: 'some title 4',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1416,7 +1424,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
 
                 title: 'some title 5',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1428,7 +1436,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
 
                 title: 'some title 6',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1440,7 +1448,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
 
                 title: 'some title 7',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1452,7 +1460,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
 
                 title: 'some title 7',
-
+                filterInfo: [1, 2, 3],
             },
 
             {
@@ -1464,7 +1472,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
                 imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
 
                 title: 'some title 7',
-
+                filterInfo: [1, 2, 3],
             },
 
         ],
