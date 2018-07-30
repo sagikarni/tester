@@ -6,9 +6,9 @@
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
                          :src="selectPhotoMedia(parameter.media.photos[0])">
                     <div v-if="phrase" class="phrases" @click="randomWord">
-                        <span class="spanFade" id="meaningSpanFade">{{phraseWord}}</span>
+                        <span class="spanFade meaningSpanFade">{{phraseWord}}</span>
                         <span class="refresh_icon">
-                            <i class="material-icons" id="meaningRefresh"> cached </i>
+                            <i class="material-icons meaningRefresh"> cached </i>
                         </span>
                     </div>
                 </div>
@@ -54,8 +54,8 @@
             if (!this.transitionEnded) {
               return;
             }
-            const elemrefresh = document.getElementById("meaningRefresh");
-            const elemFadingWord = document.getElementById("meaningSpanFade");
+            const elemrefresh = document.getElementsByClassName("meaningRefresh");
+            const elemFadingWord = document.getElementsByClassName("meaningSpanFade");
 
             this.transitionEnded = false;
             (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(180deg)", autoAlpha: 0.5 });

@@ -20,6 +20,9 @@ export class ActivitiesManager {
             case ActivityType.Zoom:
                 res.url = '/premium-collection/';
                 break;
+            case ActivityType.WHQuestions:
+                res.url = '/premium-collection/';
+                break;
             case ActivityType.Categorization:
                 res.url = '/categorization-activity/';
                 break;

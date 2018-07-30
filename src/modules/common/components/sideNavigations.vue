@@ -155,7 +155,10 @@
                         return 'ZoomSlide';
                     }
                 case ActivityType.WHQuestions:
-                    return 'WHQuestionsSlide';
+                    if (this.mediaType === MediaType.Photo) {
+                        return 'WHQuestionsSlide';
+                    }
+                default: break;
             }
         }
 
