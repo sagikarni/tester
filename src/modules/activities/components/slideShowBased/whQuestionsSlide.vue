@@ -7,10 +7,10 @@
                          :src="selectPhotoMedia(parameter.media.photos[0])">
                     <div v-if="question" class="wh-question" @click="changeQuestion">
                         <div class="text_refresh_wrapper">
-                            <span class="spanFade meaningSpanFade">{{questionsArray[0]}}</span>
                             <span class="refresh_icon">
-                            <i class="material-icons meaningRefresh"> cached </i>
-                        </span>
+                                <i class="material-icons meaningRefresh"> cached </i>
+                            </span>
+                            <span class="spanFade meaningSpanFade">{{questionsArray[0]}}</span>
                         </div>
                     </div>
                 </div>
@@ -120,9 +120,9 @@
     .wh-question {
         cursor: pointer;
         position: absolute;
-        padding: 7px 55px 0 100px;
+        padding: 7px 55px 1px 100px;
         color: white;
-        bottom: 0;
+        bottom: 16px;
         left: 0;
         text-align: left;
         box-sizing: border-box;
@@ -140,15 +140,17 @@
             display: inline-block;
             float: left;
             line-height: 32px;
+            padding-left: 80px;
         }
         .refresh_icon {
             position: absolute;
             top: -7px;
-            right: -70px;
+            left: 0;
             width: 40px;
             min-width: 55px;
             background: #000000;
             margin-right: 0;
+            padding-left: 0;
         }
         i {
             font-size: 32px;

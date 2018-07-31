@@ -47,10 +47,7 @@
         @Prop() public categoryTypes?: any[];
         @Prop() public activityType?: number;
         @Prop() public mediaType?: number;
-
-        constructor() {
-            super();
-        }
+        @Prop() public rigthOrentation?: boolean;
 
         get dropName(): string {
             return this.categoryTypes && this.categoryTypes[0] && this.categoryTypes[0][category] && this.categoryTypes[0][category]['categoryName'];
@@ -68,12 +65,15 @@
             return this.categoryTypes && this.categoryTypes[0] && this.categoryTypes[0][category] && this.categoryTypes[1][category]['categorId'];
         }
 
-        public created() {
-            this.draggAndDrop();
+        public mounted() {
+            if (this.rigthOrentation) {
+                setTimeout(() => {
+                    this.draggAndDrop();
+                }, 500);
+            }
         }
 
         public draggAndDrop() {
-            this.$nextTick(() => {
                 const container = $("#clone-container");
                 const scrollBox = $("#scroll-box");
                 const droppaneContainer: any = document.querySelector('.droppane-container');
@@ -82,16 +82,17 @@
                 const tiles = $(".tile");
                 const threshold = "50%";
                 const wrapperOffset = 5;
-                const breakpointSize = this.$vuetify.breakpoint.lgAndUp ? 0.33 : 0.5;
+                const breakpointSize = container && container.width() > 1280 ? 3 : 2;
+                const aspectRatio = 1.5;
 
                 // Set Dragge Zone images sizes
 
                 // Get dropezone width
                 const width = droppaneContainer ?  droppaneContainer.offsetWidth - 1 : 0;
                 // Set element width 50% or 33%
-                const wrapperWidth = Math.floor(width * breakpointSize);
+                const wrapperWidth = Math.floor(width / breakpointSize);
                 // Set element height relevance of width ratio ( width/height 1.5)
-                const wrapperHeight = Math.floor(wrapperWidth * 0.66);
+                const wrapperHeight = Math.floor(wrapperWidth / aspectRatio);
 
                 const elementWidth = wrapperWidth - wrapperOffset;
                 const elementHeight = wrapperHeight - wrapperOffset;
@@ -99,17 +100,16 @@
                 // Set Top Pane images sizes
 
                 const wrapperTopHeight = scrollBox.height();
-                // Set element width relevance of height ratio ( width/height 1.5)
-                const wrapperTopWidth = wrapperTopHeight * 1.5;
+                // Set element width relevance of height ratio ( width/height = 1.5)
+                const wrapperTopWidth = wrapperTopHeight * aspectRatio;
 
                 const elementTopHeight = wrapperTopHeight - wrapperOffset;
                 const elementTopWidth = wrapperTopWidth - wrapperOffset;
 
-                (TimelineMax as any).set($("#scroll-box"), {width: wrapperTopWidth});
-                (TimelineMax as any).set($(".tile-wrapper"), {width: wrapperTopWidth, height: wrapperTopHeight});
+                (TimelineMax as any).set("#scroll-box", {width: wrapperTopWidth});
+                (TimelineMax as any).set(".tile-wrapper", {width: wrapperTopWidth, height: wrapperTopHeight});
 
-                (TimelineMax as any).set($(".tile-wrapper .tile"), {width: elementTopWidth, height: elementTopHeight});
-                (TimelineMax as any).set($(".tile-wrapper .clone"), {width: elementTopWidth, height: elementTopHeight});
+                (TimelineMax as any).set([".tile-wrapper .tile", ".tile-wrapper .clone"], {width: elementTopWidth, height: elementTopHeight});
 
                 ///////////////////////////////////////////////////////////////
 
@@ -175,14 +175,10 @@
                     function collapseSpace(this: any) {
                         if (this.hitTest(dropPanel, threshold)) {
                             (TimelineMax as any).set(dropPanel, {className: "+=highlight"});
-                        } else {
-                            (TimelineMax as any).set(dropPanel, {className: "-=highlight"});
-                        }
-
-                        if (this.hitTest(dropPanel2, threshold)) {
+                        } else if (this.hitTest(dropPanel2, threshold)) {
                             (TimelineMax as any).set(dropPanel2, {className: "+=highlight"});
                         } else {
-                            (TimelineMax as any).set(dropPanel2, {className: "-=highlight"});
+                            (TimelineMax as any).set([dropPanel, dropPanel2], {className: "-=highlight"});
                         }
 
                         if (!tile.moved) {
@@ -303,7 +299,6 @@
                     };
                 }
 
-            });
         }
 
     }

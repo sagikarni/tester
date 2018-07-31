@@ -1,27 +1,25 @@
 <template>
-    <v-app id="inspire" v-if="closeSheet">
-        <div>
-            <v-bottom-sheet inset max-width="750px" hide-overlay v-model="buttonSheet">
-                <v-btn slot="activator" v-show="!buttonSheet" class="button-lamp"></v-btn>
-                <v-card tile>
-                    <v-list class="grey_transparent">
-                        <div class="text-xs-center">
-                            <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
-                            <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
-                            <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
-                            <v-btn @click="revealPhoto"> {{$locale.activities.revealPhoto}}</v-btn>
-                            <v-btn
-                                    @click="buttonSheet = false"
-                                    flat color="white"
-                                    class="close-lamp-button">
-                                <v-icon class="pa-0">close</v-icon>
-                            </v-btn>
-                        </div>
-                    </v-list>
-                </v-card>
-            </v-bottom-sheet>
-        </div>
-    </v-app>
+    <div id="inspire" v-if="closeSheet">
+        <v-bottom-sheet inset max-width="750px" hide-overlay v-model="buttonSheet">
+            <v-btn slot="activator" v-show="!buttonSheet" class="button-lamp"></v-btn>
+            <v-card tile>
+                <v-list class="grey_transparent">
+                    <div class="text-xs-center">
+                        <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
+                        <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
+                        <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
+                        <v-btn @click="revealPhoto"> {{$locale.activities.revealPhoto}}</v-btn>
+                        <v-btn
+                                @click="buttonSheet = false"
+                                flat color="white"
+                                class="close-lamp-button">
+                            <v-icon class="pa-0">close</v-icon>
+                        </v-btn>
+                    </div>
+                </v-list>
+            </v-card>
+        </v-bottom-sheet>
+    </div>
 </template>
 
 <script lang="ts">
