@@ -88,12 +88,11 @@
 
         public checkSizeXS() {
             if (this.$vuetify.breakpoint.xsOnly || (this.$vuetify.breakpoint.height < 600 && this.hasCorrectOrientation === true)) {
-
                 this.isSizeXS = true;
             }
         }
 
-        public created() {
+        public mounted() {
             if ((this.$route.params as any).activityId) {
                 (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "#000000"});
                 this.activityId = (this.$route.params as any).activityId;

@@ -25,15 +25,15 @@
 
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[0])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[0])">
 
-                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[1])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[1])">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[2])">
-                <img class="object-fit_contain fourCell" :src="selectPhotoMedia(parameter.media.photos[3])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[2])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[3])">
             </div>
 
         </div>
@@ -48,6 +48,9 @@
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import TimelineMax from 'gsap';
+
+    const timeLineMax = TimelineMax as any;
 
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
@@ -56,21 +59,36 @@
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
+
         get isTwoVerticalPhotoes(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.TwoMediasVertical;
         }
+
         get isFourPhotoesSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.FourMedias;
         }
+
+        public changeBrightness(event: any) {
+            if (event.target.classList.contains("brightness")) {
+                timeLineMax.set(event.target, {className: "-=brightness"});
+            } else {
+                timeLineMax.set('.swiper-slide-active .brightness', {className: "-=brightness"});
+                timeLineMax.set(event.target, {className: "+=brightness"});
+            }
+        }
+
         public pauseAction(): void {
             // do nothing
         }
+
         public stopAction(): void {
             // do nothing
         }
+
         public revertWitpModal(): void {
             // do nothing
         }
+
         public showFirstShape() {
             // do nothing
         }
@@ -113,11 +131,17 @@
         width: calc(50% - 60px);
         padding: 5px 5px 0px 5px;
         box-sizing: border-box;
+        -webkit-filter: brightness(0.50);
+        filter: brightness(0.50);
     }
     .twoCell{
         background-color: white;
         width: calc(100% - 40px);
         margin: 5px 5px
     }
+   .brightness {
+       -webkit-filter: brightness(1);
+       filter: brightness(1);
+   }
 
 </style>
