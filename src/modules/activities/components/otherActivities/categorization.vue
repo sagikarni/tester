@@ -47,10 +47,7 @@
         @Prop() public categoryTypes?: any[];
         @Prop() public activityType?: number;
         @Prop() public mediaType?: number;
-
-        constructor() {
-            super();
-        }
+        @Prop() public rigthOrentation?: boolean;
 
         get dropName(): string {
             return this.categoryTypes && this.categoryTypes[0] && this.categoryTypes[0][category] && this.categoryTypes[0][category]['categoryName'];
@@ -69,7 +66,11 @@
         }
 
         public mounted() {
-            this.draggAndDrop();
+            if (this.rigthOrentation) {
+                setTimeout(() => {
+                    this.draggAndDrop();
+                }, 500);
+            }
         }
 
         public draggAndDrop() {
@@ -81,7 +82,7 @@
                 const tiles = $(".tile");
                 const threshold = "50%";
                 const wrapperOffset = 5;
-                const breakpointSize = this.$vuetify.breakpoint.lgAndUp ? 3 : 2;
+                const breakpointSize = container && container.width() > 1280 ? 3 : 2;
                 const aspectRatio = 1.5;
 
                 // Set Dragge Zone images sizes

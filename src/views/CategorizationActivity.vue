@@ -9,6 +9,8 @@
 
             <categorization
                     v-if="firstPageLoad"
+                    ref="category"
+                    :rigthOrentation="firstPageLoad"
                     :mediaType="mediaType"
                     :activityType="activityType"
                     :categoryTypes="categoryTypes"
@@ -51,7 +53,7 @@
         public hasCorrectOrientation: boolean = false;
         public isMobileDevice: boolean;
         public isSizeXS: boolean = false;
-        public firstPageLoad: boolean = true;
+        public firstPageLoad: boolean = false;
 
         constructor() {
             super();
@@ -109,7 +111,7 @@
             }
         }
 
-        public created() {
+        public mounted() {
             if ((this.$route.params as any).activityId) {
                 (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "#000000"});
                 this.activityId = (this.$route.params as any).activityId;
@@ -118,7 +120,8 @@
                 }
                 if (this.activityDetailsState && this.activityDetailsState.orientation && this.activityOrientation !== this.activityDetailsState.orientation && this.isMobileDevice) {
                     this.hasCorrectOrientation = true;
-                    this.firstPageLoad = false;
+                } else {
+                    this.firstPageLoad = true;
                 }
                 this.checkSizeXS();
             }

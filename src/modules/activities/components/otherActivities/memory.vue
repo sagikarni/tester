@@ -58,6 +58,10 @@
         }
 
         public mounted() {
+            this.initializeMemory();
+        }
+
+        public initializeMemory() {
             if (this.columnCount && this.rowsCount && this.aspectRatio) {
                 const root = document.getElementById("app") as any;
                 let availableHeight = root.offsetHeight;
