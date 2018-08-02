@@ -1176,7 +1176,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
     details: {
         title: 'this is Puzzle Activity',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/cognitive/photos/puzzles/puzzle-1/cover.jpg',
+        coverPhoto: '/media/restricted/cognitive/puzzle/food1/iStock-155129848_super.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Puzzle, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -1187,8 +1187,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-1/photo.jpg',
+                thumbnailSrc: '/media/restricted/cognitive/puzzle/food1/thumbnails/iStock-155129848_super.jpg',
+                imgSrc: '/media/restricted/cognitive/puzzle/food1/content/puzzle-1/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
             },
@@ -1196,63 +1196,22 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 2,
-                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/2.jpg',
-                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-2/photo.jpg',
+                thumbnailSrc: '/media/restricted/cognitive/puzzle/food1/thumbnails/iStock-534053642_super.jpg',
+                imgSrc: '/media/restricted/cognitive/puzzle/food1/content/puzzle-2/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
 
             },
-
-            {
-
-                id: 3,
-                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/3.jpg',
-                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-3/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-            {
-
-                id: 4,
-                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/4.jpg',
-                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-4/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-            {
-
-                id: 5,
-                thumbnailSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/thumbnails/5.jpg',
-                imgSrc: '/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-5/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-
         ],
     },
     content: {
         Media: [
             {
-                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-1/photo.jpg",
-                partsCount: 9,
-            },
-            {
-                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-2/photo.jpg",
+                photo: "/media/restricted/cognitive/puzzle/food1/content/puzzle-1/photo.jpg",
                 partsCount: 4,
             },
             {
-                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-3/photo.jpg",
-                partsCount: 16,
-            },
-            {
-                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-4/photo.jpg",
-                partsCount: 9,
-            },
-            {
-                photo: "/media/restricted/cognitive/photos/puzzles/puzzle-1/content/puzzle-5/photo.jpg",
+                photo: "/media/restricted/cognitive/puzzle/food1/content/puzzle-2/photo.jpg",
                 partsCount: 9,
             },
         ],
