@@ -131,8 +131,8 @@
         width: calc(50% - 60px);
         padding: 5px 5px 0px 5px;
         box-sizing: border-box;
-        -webkit-filter: brightness(0.50);
-        filter: brightness(0.50);
+        -webkit-filter: brightness(0.80);
+        filter: brightness(0.80);
     }
     .twoCell{
         background-color: white;
