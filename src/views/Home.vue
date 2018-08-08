@@ -3,6 +3,8 @@
        <v-flex>
             <v-switch
             :label="`Highest Quality`" v-model="quality"></v-switch>
+           <v-switch
+                   :label="`Open Activity in Full Screen`" v-model="isFullScreen"></v-switch>
         <v-btn @click="$router.push('activity-details/1')">Premium - single photo</v-btn>
           <v-btn @click="$router.push('activity-details/2')">Premium - 2 horizontal photos</v-btn>
             <v-btn @click="$router.push('activity-details/3')">Premium - 2 vertical photo</v-btn>
@@ -32,12 +34,19 @@ import { Action } from 'vuex-class';
 @Component
 export default class Home extends Vue {
     @Action('changeMediaQuality') public changeMediaQuality?: any;
+    @Action('changeFullScreen') public changeFullScreen?: any;
 
     public quality?: boolean = false;
+    public isFullScreen?: boolean = false;
 
     @Watch('quality')
     public onPropertyChanged(value: boolean, oldValue: boolean) {
         this.changeMediaQuality({isHDMedia: value});
+    }
+
+    @Watch('isFullScreen')
+    public onPropertyChanged1(value: boolean, oldValue: boolean) {
+        this.changeFullScreen({isFullScreen: value});
     }
 }
 </script>

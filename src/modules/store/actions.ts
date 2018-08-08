@@ -19,4 +19,7 @@ export const actions: ActionTree<IRootState, IRootState> = {
     changeMediaQuality({commit} , item: any) {
         commit('updateMediaQuality' , item);
     },
+    changeFullScreen({commit} , item: any) {
+        commit('updateFullScreen' , item);
+    },
 };
