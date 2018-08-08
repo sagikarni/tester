@@ -5,6 +5,7 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import { State } from 'vuex-class';
+    import { ImageType } from '@/modules/store/typeEnums';
 
     @Component
     export default class BaseComponent extends Vue {
@@ -19,13 +20,24 @@
             this.setNotificationSystemSettings();
         }
 
-        public selectPhotoMedia(url: string): string {
+        public selectPhotoMedia(url: string , imageType: ImageType = ImageType.None): string {
             if (this.isHDMedia && url) {
                 return url.replace(/.jpg$/gi, "_hd.jpg");
             } else {
                 return url;
             }
         }
+
+
+        public getImagePath(imageName: string , basePath: string , imageType: ImageType = ImageType.None): string {
+            // 1. add _hd if this.isHDMedia = true
+            // 2. compine basePath , imageName and ImageType into a complete url
+            // if ImageType = content the url should be 'basePath/content/imageName'
+            // if ImageType = thumbnail the url should be 'basePath/thumbnails/imageName'
+            // if ImageType = none the url should be 'basePath/imageName'
+            return "";
+        }
+
 
         public selectVideoMedia(url: string): string {
             if (this.isHDMedia && url) {

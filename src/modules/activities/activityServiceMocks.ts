@@ -507,7 +507,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
     details: {
         title: 'Card Deck Name',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -550,22 +550,42 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
                 title: 'some title 4',
                 filterInfo: [3],
             },
+            {
+                id: 5,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/5.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/5.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+            {
+                id: 6,
+                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/6.jpg',
+                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/6.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
         ],
     },
     content: {
         layout: PremiumCollectionLayout.SingleMedia,
         slides: [
             {
-                videos: ['/media/restricted/collections/videos/collection-2/content/1.mp4'],
+                videos: ['https://media.istockphoto.com/videos/new-hairstyle-after-showering-video-id516408404'],
             },
             {
-                videos: ['/media/restricted/collections/videos/collection-2/content/2.mp4'],
+                videos: ['https://media.istockphoto.com/videos/cute-little-boy-having-fun-trying-to-put-on-his-tshirt-video-id466750048'],
             },
             {
-                videos: ['/media/restricted/collections/videos/collection-2/content/3.mp4'],
+                videos: ['https://media.istockphoto.com/videos/positive-little-girl-waking-up-from-her-bed-video-id834306760'],
             },
             {
-                videos: ['/media/restricted/collections/videos/collection-2/content/4.mp4'],
+                videos: ['https://media.istockphoto.com/videos/tying-shoes-video-id472867221'],
+            },
+            {
+                videos: ['https://media.istockphoto.com/videos/girl-brushing-teeth-at-bathroom-sink-video-id625539030'],
+            },
+            {
+                videos: ['https://media.istockphoto.com/videos/family-at-home-eating-breakfast-in-kitchen-together-video-id621287792'],
             },
         ],
     },
