@@ -5,18 +5,33 @@
                 <v-icon>close</v-icon>
             </v-btn>
             <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
+
                 <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
                      class="cardWrapper" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                    <div class="card show" :data-id="card.imgID" :data-card="card.id" @click="openQuestionCard($event)">
-                        <div class="cardFace front" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                        </div>
-                        <div class="cardFace back" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                            <div class="card_back_in">
-                                <img class="cardShuffle" :src="card.src" alt="">
+                    <v-touch v-on:swipe="openQuestionCard($event)">
+
+
+                        <div class="card show" :data-id="card.imgID" :data-card="card.id"
+                             style="width: 100%;height: 100%"
+                             @click="openQuestionCard($event)">
+
+                            <div class="cardFace front"
+                                 :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                             </div>
+
+                            <div class="cardFace back"
+                                 :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
+                                <div class="card_back_in">
+                                    <img class="cardShuffle" :src="card.src" alt="">
+                                </div>
+                            </div>
+
+
                         </div>
-                    </div>
+
+                    </v-touch>
                 </div>
+
             </transition-group>
 
             <div v-show="showExit" class="memory_exit" color="white" flat @click="$router.go(-1)">
@@ -42,7 +57,7 @@
         @Prop() public rowsCount?: number;
         @Prop() public aspectRatio?: number;
         @Prop() public memoryLayout?: number;
-
+        @Prop() public isMobile?: boolean;
         public cards: any[] = [];
         public shuffleCount: number = 0;
         public shuffledDeck: boolean = false;
@@ -157,6 +172,7 @@
         }
 
         public openModalQuestions() {
+
             timeLineMax.set(".cardWrapper", {perspective: 800});
             timeLineMax.set("#memoryRoot .card", {transformStyle: "preserve-3d"});
             timeLineMax.set(".back", {rotationY: -180});
@@ -164,6 +180,15 @@
         }
 
         public openQuestionCard(event: any) {
+
+            let el;
+            if (event.type === 'click') {
+                el = event.currentTarget;
+            } else if (event.type === 'swipe' && this.isMobile) {
+                el = event.target.parentNode;
+            } else {
+                return;
+            }
             clearTimeout(this.timeout);
             const tiles: any = this.$el.querySelectorAll('.openCard');
 
@@ -175,10 +200,10 @@
                 });
             }
 
-            if (!(event.currentTarget.classList.contains('openCard') && tiles.length === 2)) {
-                timeLineMax.set((event.currentTarget), {className: "+=openCard"});
+            if (!(el.classList.contains('openCard') && tiles.length === 2)) {
+                timeLineMax.set((el), {className: "+=openCard"});
                 const elemeWrap = this.$el.querySelectorAll('.openCard');
-                timeLineMax.to((event.currentTarget), 1.2, {rotationY: 180, ease: Back.easeOut});
+                timeLineMax.to((el), 1.2, {rotationY: 180, ease: Back.easeOut});
                 setTimeout(() => {
                     this.win(elemeWrap);
                 }, 200);
@@ -200,7 +225,7 @@
                         const xCord = position1.left - position2.left;
                         const yCord = position1.top - position2.top;
 
-                        timeLineMax.set( elemeWrap, { className: "" });
+                        timeLineMax.set(elemeWrap, {className: ""});
                         timeLineMax.to(tileWrapper2, 1.2, {
                             x: xCord, y: yCord, zIndex: '99999',
                             onComplete: () => {
@@ -221,7 +246,7 @@
                     }
                 } else {
                     this.timeout = setTimeout(() => {
-                        timeLineMax.to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut });
+                        timeLineMax.to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
                         clearTimeout(this.timeout);
                     }, 2500);
                 }
@@ -399,6 +424,10 @@
 
     .card {
         cursor: pointer;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 20;
     }
 
     .card_back_in {

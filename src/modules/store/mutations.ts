@@ -19,4 +19,7 @@ export const mutations: MutationTree<IRootState> = {
     updateMediaQuality(state, payload: any) {
         state.isHDMedia = payload.isHDMedia;
     },
+    updateFullScreen(state, payload: any) {
+        state.isFullScreen = payload.isFullScreen;
+    },
 };
