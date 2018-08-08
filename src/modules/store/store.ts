@@ -15,6 +15,7 @@ export default new Vuex.Store<IRootState>({
         errorPane:  undefined,
         reloadActivityDetails:  undefined,
         isHDMedia:  undefined,
+        isFullScreen:  undefined,
     },
     modules: {
         search,

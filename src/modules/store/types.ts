@@ -6,6 +6,7 @@ export interface IRootState {
     errorPane: GeneralError | undefined;
     reloadActivityDetails: undefined;
     isHDMedia: undefined;
+    isFullScreen: undefined;
 }
 
 export interface ISystemLoading {
