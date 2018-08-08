@@ -2,14 +2,15 @@
     <div>
         <activity-disabled-notification :orientation="isSizeXS"></activity-disabled-notification>
         <rotate-screen-alert :orientation="!isSizeXS && hasCorrectOrientation && isMobileDevice"></rotate-screen-alert>
-        <section  v-show="!isSizeXS && !hasCorrectOrientation">
+        <section v-show="!isSizeXS && !hasCorrectOrientation">
             <memory
-                v-if="firstPageLoad"
-                :images="slides"
-                :memoryLayout="memoryLayout"
-                :columnCount="columnCount"
-                :rowsCount="rowsCount"
-                :aspectRatio="aspectRatio">
+                    v-if="firstPageLoad"
+                    :images="slides"
+                    :isMobile="isMobileDevice"
+                    :memoryLayout="memoryLayout"
+                    :columnCount="columnCount"
+                    :rowsCount="rowsCount"
+                    :aspectRatio="aspectRatio">
             </memory>
         </section>
     </div>
@@ -72,6 +73,7 @@
         get memoryLayout() {
             return this.activityDetailsContent && this.activityDetailsContent.photos && this.activityDetailsContent.memoryLayout;
         }
+
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
         }
@@ -110,7 +112,7 @@
 </script>
 
 <style scoped lang="scss">
-    .mtop-5{
-        margin-top: 5px!important;
+    .mtop-5 {
+        margin-top: 5px !important;
     }
 </style>

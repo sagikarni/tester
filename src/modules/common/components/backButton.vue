@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-    import { Component } from 'vue-property-decorator';
+    import {Component} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
 
     @Component
