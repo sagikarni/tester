@@ -10,7 +10,6 @@ export enum Orientation {
 export enum MediaType {
     Photo = 1,
     Video = 2,
-    ZoomSlide = 3,
 }
 export enum ActivityType {
     PremiumCollction = 1,

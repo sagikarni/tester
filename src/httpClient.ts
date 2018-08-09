@@ -15,6 +15,9 @@ export class HttpClient {
     public get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> {
            return axios.get(url, config);
     }
+    public post<T = any>(url: string, data: any, config?: AxiosRequestConfig): AxiosPromise<T> {
+        return axios.post(url, data, config);
+ }
 }
 
 export const httpClient = new HttpClient();

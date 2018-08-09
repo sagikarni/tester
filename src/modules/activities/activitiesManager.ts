@@ -1,4 +1,5 @@
-import { ActivityType } from '@/modules/activities/store/types';
+import { ActivityType, MediaType } from '@/modules/activities/store/types';
+import {locale} from '@/locale';
 
 export class ActivitiesManager {
     public static ExecuteActivity(state: any) {
@@ -38,4 +39,21 @@ export class ActivitiesManager {
         }
         return res;
     }
+    public  getCommunicationActivities(): any[] {
+        return [
+           {name :  locale.activities.activityTypes.whatsInThePicture , type: ActivityType.WhatInThePicture },
+           {name :  locale.activities.activityTypes.Meaning , type: ActivityType.Meaning },
+       ];
+   }
+   public  getCognitionActivities(): any[] {
+    return [
+       {name :  locale.activities.activityTypes.Categorization , type: ActivityType.Categorization },
+   ];
+}
+public  getMediaTypes(): any[] {
+    return [
+       {name :  locale.general.photoText , type: MediaType.Photo },
+       {name :  locale.general.videoText , type: MediaType.Video },
+   ];
+}
 }

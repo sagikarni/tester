@@ -1,9 +1,7 @@
 <template>
   <div >
   
-    <a @click='startSearch'>start Search</a>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  
     
   </div>
 
@@ -12,17 +10,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import {State, Action, Getter} from 'vuex-class';
-import {ISearchState} from "../../search/store/types";
+import {ISearchState} from "@/modules/search/store/types";
 
 const namespace: string = 'search';
 
 @Component
-export default class SearchTest extends Vue {
+export default class SearchComponent extends Vue {
 
    @State(state => state.search) public searchState?: ISearchState;
    @Action('getSearchResults' , {namespace}) public getSearchResults: any;
+   @Action('getFilters' , {namespace}) public getFilters: any;
 
-   @Prop() private msg?: string;
 
 
     public startSearch() {
