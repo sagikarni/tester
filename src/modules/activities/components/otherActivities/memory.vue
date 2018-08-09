@@ -20,7 +20,7 @@
                             <div class="cardFace back"
                                  :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                                 <div class="card_back_in">
-                                    <img class="cardShuffle" :src="card.src" alt="">
+                                    <img class="cardShuffle" :src="getImagePath(card.src, getMediaTypes.Content)" alt="">
                                 </div>
                             </div>
 
@@ -41,6 +41,7 @@
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import { ImageType} from '@/modules/activities/store/types';
     import Vue from 'vue';
     import TimelineMax from 'gsap';
 
@@ -66,6 +67,9 @@
 
         get imgCards() {
             return this.cards;
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
 
         public mounted() {

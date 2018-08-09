@@ -3,7 +3,9 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain" :src="image.imgSrc" :alt="image.title" @click.stop="closeModal">
+                    <img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain"
+                         :src="getImagePath(image.imgSrc, getMediaTypes.Thumbnail)"
+                         :alt="image.title" @click.stop="closeModal">
                 </div>
             </div>
         </swiper-slide>
@@ -16,6 +18,7 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import { ImageType } from '@/modules/activities/store/types';
 
 
     @Component
@@ -51,6 +54,9 @@
                     prevEl: '.swiper-button-prev',
                 },
             };
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
         public closeModal() {
             return true;

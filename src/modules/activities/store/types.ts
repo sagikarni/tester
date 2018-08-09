@@ -44,9 +44,16 @@ export enum PremiumCollectionLayout {
      TwoMediasVertical = 3,
      FourMedias = 4,
 }
+export enum ImageType {
+    Content = 1,
+    Thumbnail = 2,
+    PreLoad = 3,
+    None = 4,
+}
 export class ActivityMainDetailsInfo {
     public dataExist: boolean = false;
     public title?: string;
+    public baseFolder?: string;
     public description?: string;
     public coverPhoto?: string;
     public category?: Category;
@@ -64,6 +71,7 @@ export interface IActivitiesState {
     activity: {
         details: {
             title: string,
+            baseFolder: string,
             description: string,
             coverPhoto: string,
             category: Category, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file

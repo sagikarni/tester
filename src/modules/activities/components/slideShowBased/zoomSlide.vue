@@ -8,7 +8,7 @@
             <g :clip-path="`url(#theClipPath_${index})`">
                 <rect width="100%" height="100%" style="fill:rgb(255,255,255)" />
                 <image preserveAspectRatio="xMinYMin slice" class="kid clipPathReveal"  style='stroke-width: 0px; background-color: blue;'
-                       :href="selectPhotoMedia(parameter.media.photos[0])"
+                       :href="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"
                        x="0" y="0" width="100%" height="100%" />
             </g>
         </svg>
@@ -19,7 +19,7 @@
     import { Component, Prop } from 'vue-property-decorator';
     import { State } from 'vuex-class';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {ShapeType} from '@/modules/activities/store/types';
+    import {ShapeType, ImageType} from '@/modules/activities/store/types';
 
     @Component
     export default class ZoomSlide extends BaseComponent {
@@ -42,6 +42,9 @@
             // do nothing
         }
 
+        get getMediaTypes(): any {
+            return ImageType;
+        }
         get index(): number {
             return this.slideIndex ? this.slideIndex : 0;
         }

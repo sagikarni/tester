@@ -3,7 +3,7 @@
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <div class="img_cover">
-                    <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                    <img :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
                 <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
                 </div>
             </v-flex>
@@ -26,7 +26,9 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import { ImageInfo, Image } from "@/modules/store/typeClasses";
+    import { ImageType } from '@/modules/activities/store/types';
     import SlideShow from '@/modules/common/components/slideShow.vue';
     import TimelineMax from 'gsap';
 
@@ -35,7 +37,7 @@
             SlideShow,
         },
     })
-    export default class ImageGallery extends Vue {
+    export default class ImageGallery extends BaseComponent {
 
         public thumbnails?: object[] = [];
         public slideImages?: object[] = [];
@@ -58,6 +60,9 @@
             if (this.sessionBtnDescription) {
                 return this.sessionBtnDescription.toLocaleLowerCase();
             }
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {

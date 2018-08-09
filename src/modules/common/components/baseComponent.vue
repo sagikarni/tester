@@ -4,6 +4,7 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import {ImageType, MediaType} from '@/modules/activities/store/types';
     import { State } from 'vuex-class';
 
     @Component
@@ -14,25 +15,42 @@
         public $notificationSystem: any;
         public explicitExitFromFullScreen: boolean = false;
         @State(state => state.isHDMedia) public isHDMedia?: boolean;
+        @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.baseFolder)) public baseFolder?: string;
+
         constructor() {
             super();
             this.setNotificationSystemSettings();
         }
 
-        public selectPhotoMedia(url: string): string {
-            if (this.isHDMedia && url) {
-                return url.replace(/.jpg$/gi, "_hd.jpg");
-            } else {
-                return url;
-            }
-        }
+        public getImagePath(mediaName: string , imageType: number = ImageType.None, mediaType: number = MediaType.Photo): string {
+            const pathName = mediaName;
 
-        public selectVideoMedia(url: string): string {
-            if (this.isHDMedia && url) {
-                return url.replace(/.mp4$/gi, "_hd.mp4");
-            } else {
-                return url;
+            if (this.isHDMedia && pathName) {
+                if (mediaType === MediaType.Photo) {
+                    pathName.replace(/.jpg$/gi, "_hd.jpg");
+                } else if (mediaType === MediaType.Video) {
+                    pathName.replace(/.mp4$/gi, "_hd.mp4");
+                }
             }
+
+            let type;
+
+            switch (imageType) {
+                case ImageType.Content:
+                    type = '/content/';
+                    break;
+                case ImageType.Thumbnail:
+                    type = '/thumbnails/';
+                    break;
+                case ImageType.PreLoad:
+                    type = '/preload/';
+                    break;
+                default:
+                    type = '/';
+                    break;
+            }
+
+            return this.baseFolder + type + pathName;
         }
 
         public hasFullScreenSupport(): boolean {

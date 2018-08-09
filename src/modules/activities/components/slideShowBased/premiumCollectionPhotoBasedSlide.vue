@@ -2,19 +2,19 @@
 <div>
  <div v-if="isSinglePhotoSlide" class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="selectPhotoMedia(parameter.media.photos[0])">
+                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
                 </div>
  </div>
 
     <div v-else-if="isTwoVerticalPhotoes" class="full-height table">
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[0])">
+                <img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[1])">
+                <img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )">
             </div>
 
         </div>
@@ -25,15 +25,15 @@
 
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[0])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
 
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[1])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[2])">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[3])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[2], getMediaTypes.Content )">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[3], getMediaTypes.Content )">
             </div>
 
         </div>
@@ -47,7 +47,7 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
     const timeLineMax = TimelineMax as any;
@@ -58,6 +58,10 @@
 
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
+
+        get getMediaTypes(): any {
+            return ImageType;
         }
 
         get isTwoVerticalPhotoes(): boolean {
