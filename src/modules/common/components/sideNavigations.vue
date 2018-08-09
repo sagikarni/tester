@@ -281,13 +281,12 @@
 
     .swiper-button-white{
         height: 100%;
-        top: 48px;
+        top: 0px;
         width: 100px;
         opacity: 0.5;
         margin-top: 0;
         background-color: rgba(204,204, 255, .2);
         background-size: 60px;
-        background-position-y: calc(50% - 48px);
     }
     .swiper-button-prev{
         left: 0;

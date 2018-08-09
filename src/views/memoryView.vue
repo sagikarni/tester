@@ -2,6 +2,9 @@
     <div>
         <activity-disabled-notification :orientation="isSizeXS"></activity-disabled-notification>
         <rotate-screen-alert :orientation="!isSizeXS && hasCorrectOrientation && isMobileDevice"></rotate-screen-alert>
+        <v-flex>
+            <close-pane></close-pane>
+        </v-flex>
         <section v-show="!isSizeXS && !hasCorrectOrientation">
             <memory
                     v-if="firstPageLoad"
@@ -27,10 +30,10 @@
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import {State} from 'vuex-class';
-
+    import ClosePane from '@/modules/common/components/closePane.vue';
     @Component({
         components: {
-            SlideShowMenuPane,
+            ClosePane,
             RotateScreenAlert,
             Memory,
             ActivityDisabledNotification,

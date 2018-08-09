@@ -3,10 +3,11 @@
         <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide"></rotate-screen-alert>
         <section v-show="!orientationStatus">
             <v-flex>
-                <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
+                <!--<slide-show-menu-pane ref="topPane"></slide-show-menu-pane>-->
+                <close-pane></close-pane>
             </v-flex>
-            <side-navigations ref="slideNavigations" :mediaType="mediaType" @showTopPane="showTopPane" @isFirstSlide="isFirstSlide"
-                              :activityType="activityType" :slides="slides" @hideTopPane="hideTopPane"
+            <side-navigations ref="slideNavigations" :mediaType="mediaType"  @isFirstSlide="isFirstSlide"
+                              :activityType="activityType" :slides="slides"
                               :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
                               :activityContent="activityContent"></side-navigations>
         </section>
@@ -23,6 +24,7 @@
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
     import RotateScreenAlert from '@/modules/common/components/rotateScreenAlert.vue';
     import OrientationUtil from '@/modules/common/utils/orientationUtil';
+    import ClosePane from '@/modules/common/components/closePane.vue';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import { State } from 'vuex-class';
@@ -33,7 +35,8 @@
             SlideShowMenuPane,
             SideNavigations,
             RotateScreenAlert,
-         },
+            ClosePane,
+        },
     })
     export default class PremiumCollection extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
@@ -69,7 +72,6 @@
                 this.showRotateNotification = false;
                 if (this.pageLoad) {
                     setTimeout(() => {
-                        (this.$refs.topPane as any).hidePaneInternal(1);
                         (this.$refs.slideNavigations as any).hideSidePanes(1);
                     }, 3000);
                     this.pageLoad = false;
@@ -110,14 +112,6 @@
             return this.activityDetailsContent;
         }
 
-        public hideTopPane(): void {
-            (this.$refs.topPane as any).hidPane();
-        }
-
-        public showTopPane(): void {
-            (this.$refs.topPane as any).showPane();
-        }
-
         public isFirstSlide(isBeginning: boolean): void {
             if (isBeginning && this.hasCorrectOrientation) {
                 this.showRotateNotification = false;
@@ -138,8 +132,7 @@
                     this.pageLoad = true;
                 } else {
                     setTimeout(() => {
-                        if ((this.$refs.topPane as any) && (this.$refs.slideNavigations as any)) {
-                            (this.$refs.topPane as any).hidePaneInternal(1);
+                        if ( (this.$refs.slideNavigations as any)) {
                             (this.$refs.slideNavigations as any).hideSidePanes(1);
                         }
                     }, 3000);
