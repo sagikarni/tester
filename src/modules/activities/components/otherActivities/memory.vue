@@ -1,9 +1,9 @@
 <template>
     <div id="memoryRoot">
         <div ref="memoryContainer" id="memoryContainer">
-            <v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
-                <v-icon>close</v-icon>
-            </v-btn>
+            <!--<v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">-->
+                <!--<v-icon>close</v-icon>-->
+            <!--</v-btn>-->
             <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
 
                 <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
@@ -20,7 +20,7 @@
                             <div class="cardFace back"
                                  :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                                 <div class="card_back_in">
-                                    <img class="cardShuffle" :src="card.src" alt="">
+                                    <img class="cardShuffle" :src="getImagePath(card.src, getMediaTypes.Content)" alt="">
                                 </div>
                             </div>
 
@@ -41,9 +41,9 @@
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import { ImageType} from '@/modules/activities/store/types';
     import Vue from 'vue';
     import TimelineMax from 'gsap';
-
     const timeLineMax = TimelineMax as any;
 
     @Component
@@ -66,6 +66,9 @@
 
         get imgCards() {
             return this.cards;
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
 
         public mounted() {

@@ -4,7 +4,7 @@
             <div class="cell">
                 <div class="cell-content">
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
-                         :src="selectPhotoMedia(parameter.media.photos[0])">
+                         :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)">
                     <div v-if="question" class="wh-question" @click="changeQuestion">
                         <div class="text_refresh_wrapper">
                             <span class="refresh_icon">
@@ -22,7 +22,8 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
+
     import TimelineMax from 'gsap';
 
     @Component
@@ -34,6 +35,9 @@
 
         get questionsArray(): any[] {
             return this.parameter && this.parameter.media && this.parameter.media.questions;
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
         public isValid(): boolean {
             return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;

@@ -3,7 +3,7 @@
         <div v-for="image in images" :key="image.id">
             <div :class="['cell', image.id === 0 ? 'active' : '']" @click="changePuzzle($event)"
                  :data-count="image.media.partsCount" :data-url="image.media.photo" :data-id="image.id">
-                <img :src="image.media.photo">
+                <img :src="getImagePath(image.media.photo, getMediaTypes.Content)">
             </div>
         </div>
     </div>
@@ -12,6 +12,7 @@
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import { ImageType} from '@/modules/activities/store/types';
     import $ from 'jquery';
     import TimelineMax from 'gsap';
 
@@ -19,6 +20,10 @@
     @Component
     export default class PuzzleLeftPanel extends BaseComponent {
         @Prop() public images?: object[];
+
+        get getMediaTypes(): any {
+            return ImageType;
+        }
 
         public changePuzzle(event: any) {
             if (!event.currentTarget.classList.contains('active')) {

@@ -3,7 +3,7 @@
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <div class="img_cover">
-                    <img :src="thumbnail.thumbnailSrc" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                    <img :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
                 <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
                 </div>
             </v-flex>
@@ -14,9 +14,10 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-toolbar>
-                <v-dialog v-model="dialogSlideShow"  max-width="85%">
+                <v-dialog v-model="dialogSlideShow" max-width="85%">
                     <v-card>
-                        <slide-show @click.native="dialogSlideShow = false" :images="slideImages" :selectedImgId="selectedImgId"></slide-show>
+                        <slide-show @click.native="dialogSlideShow = false" :images="slideImages"
+                                    :selectedImgId="selectedImgId"></slide-show>
                     </v-card>
                 </v-dialog>
             </div>
@@ -26,7 +27,9 @@
 
 <script lang="ts">
     import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import { ImageInfo, Image } from "@/modules/store/typeClasses";
+    import { ImageType } from '@/modules/activities/store/types';
     import SlideShow from '@/modules/common/components/slideShow.vue';
     import TimelineMax from 'gsap';
 
@@ -35,7 +38,7 @@
             SlideShow,
         },
     })
-    export default class ImageGallery extends Vue {
+    export default class ImageGallery extends BaseComponent {
 
         public thumbnails?: object[] = [];
         public slideImages?: object[] = [];
@@ -54,10 +57,14 @@
             }
             return addColumnProp;
         }
+
         get sessionDescription() {
             if (this.sessionBtnDescription) {
                 return this.sessionBtnDescription.toLocaleLowerCase();
             }
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
         @Watch('imageGalleryInfo')
         public onPropertyChanged(value: any, oldValue: any) {
@@ -70,28 +77,37 @@
         }
 
         public chooseGalleryThumbnails(galleryInfo: any, filterId: any) {
+            let imageItem: any;
             if (galleryInfo && galleryInfo.thumbnails) {
                 const thumbnailItems: object[] = [];
                 const slideImages: object[] = [];
                 galleryInfo.thumbnails.forEach((item: Image) => {
-                    if (item.filterInfo && filterId) {
-                        let imageItem: any;
+                    if (filterId && item.filterInfo) {
                         if (item.filterInfo.includes(filterId)) {
-                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true, id: item.id};
+                            imageItem = {
+                                thumbnailSrc: item.thumbnailSrc,
+                                title: item.title,
+                                active: true,
+                                id: item.id,
+                            };
                             slideImages.push({id: item.id, title: item.title, imgSrc: item.imgSrc});
                         } else {
                             imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: false};
                         }
-                        thumbnailItems.push(imageItem);
+                    } else {
+                        imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true, id: item.id};
+                        slideImages.push({id: item.id, title: item.title, imgSrc: item.imgSrc});
                     }
+                    thumbnailItems.push(imageItem);
+
                 });
                 this.thumbnails = thumbnailItems;
                 this.slideImages = slideImages;
 
             }
             setTimeout(() => {
-                (TimelineMax as any).to('.active-item', 1.5, {filter : '', opacity: 1});
-                (TimelineMax as any).to('.inactive-item', 1.5, {filter : 'blur(2px) grayscale(100%)', opacity: 0.3 });
+                (TimelineMax as any).to('.active-item', 1.5, {filter: '', opacity: 1});
+                (TimelineMax as any).to('.inactive-item', 1.5, {filter: 'blur(2px) grayscale(100%)', opacity: 0.3});
             }, 0);
         }
 
@@ -108,41 +124,49 @@
     }
 </script>
 <style scoped>
-    .dialog card{
+    .dialog card {
         min-height: 90vh;
-        box-shadow: none!important;
-        background: none!important;
+        box-shadow: none !important;
+        background: none !important;
     }
+
     .swiper-container {
         height: 75vh;
     }
-    .theme--light card{
-        background-color: transparent!important;
-        color: rgba(0,0,0,.87);
-        box-shadow: none!important;
+
+    .theme--light card {
+        background-color: transparent !important;
+        color: rgba(0, 0, 0, .87);
+        box-shadow: none !important;
     }
-    .swiper-slide img{
+
+    .swiper-slide img {
         width: 100%;
     }
-    .close_button{
+
+    .close_button {
         position: fixed;
         top: 0;
         right: 8px;
         width: 50px;
-        background: none!important;
-        box-shadow: none!important;
+        background: none !important;
+        box-shadow: none !important;
         z-index: 1000;
     }
-    .close_button div{
-        background: none!important;
+
+    .close_button div {
+        background: none !important;
     }
-    .img_cover{
+
+    .img_cover {
         position: relative;
     }
-    .img_cover:hover{
+
+    .img_cover:hover {
         cursor: pointer;
     }
-    .img_content{
+
+    .img_content {
         position: absolute;
         width: 100%;
         bottom: 0;
