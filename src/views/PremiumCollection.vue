@@ -6,7 +6,7 @@
                 <!--<slide-show-menu-pane ref="topPane"></slide-show-menu-pane>-->
                 <close-pane></close-pane>
             </v-flex>
-            <side-navigations ref="slideNavigations" :mediaType="mediaType"  @isFirstSlide="isFirstSlide"
+            <side-navigations ref="slideNavigations" :mediaType="mediaType" @isFirstSlide="isFirstSlide"
                               :activityType="activityType" :slides="slides"
                               :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
                               :activityContent="activityContent"></side-navigations>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch } from 'vue-property-decorator';
+    import {Component, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
@@ -27,7 +27,7 @@
     import ClosePane from '@/modules/common/components/closePane.vue';
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
-    import { State } from 'vuex-class';
+    import {State} from 'vuex-class';
 
 
     @Component({
@@ -84,15 +84,21 @@
 
             if (this.activityDetailsContent && this.activityDetailsContent.slides && this.activityDetailsContent.slides.length > 0) {
                 for (let i = 0; i < this.activityDetailsContent.slides.length; i++) {
-                    slides.push({ id: i, layout: this.activityDetailsContent.layout, media: this.activityDetailsContent.slides[i] });
+                    slides.push({
+                        id: i,
+                        layout: this.activityDetailsContent.layout,
+                        media: this.activityDetailsContent.slides[i],
+                    });
                 }
             }
 
             return slides;
         }
+
         get activityType() {
             return this.activityDetailsState && this.activityDetailsState.activityType;
         }
+
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
         }
@@ -100,6 +106,7 @@
         get mediaType() {
             return this.activityDetailsState && this.activityDetailsState.mediaType;
         }
+
         get mediaCountInfo(): number {
             return this.activityDetailsState && this.activityDetailsState.mediaCount;
         }
@@ -119,9 +126,10 @@
             }
             this.isBeginningSlide = isBeginning;
         }
+
         public created() {
             if (this.$route.params.activityId) {
-                (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
+                (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "#000000"});
                 this.activityId = this.$route.params.activityId;
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
@@ -132,7 +140,7 @@
                     this.pageLoad = true;
                 } else {
                     setTimeout(() => {
-                        if ( (this.$refs.slideNavigations as any)) {
+                        if ((this.$refs.slideNavigations as any)) {
                             (this.$refs.slideNavigations as any).hideSidePanes(1);
                         }
                     }, 3000);
