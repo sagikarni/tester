@@ -8,10 +8,8 @@
 
                 <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
                      class="cardWrapper" :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
-                    <v-touch v-on:swipe="openQuestionCard($event)">
 
-
-                        <div class="card show" :data-id="card.imgID" :data-card="card.id"
+                        <div v-touch="{left: () =>  touchSwipe(card.id), right: () =>  touchSwipe(card.id), up: () =>  touchSwipe(card.id), down: () =>  touchSwipe(card.id)}" class="card show" :data-id="card.imgID" :data-card="card.id"
                              style="width: 100%;height: 100%"
                              @click="openQuestionCard($event)">
 
@@ -26,10 +24,8 @@
                                 </div>
                             </div>
 
-
                         </div>
 
-                    </v-touch>
                 </div>
 
             </transition-group>
@@ -179,20 +175,27 @@
             timeLineMax.set([".back", ".front"], {backfaceVisibility: "hidden"});
         }
 
+
+        public touchSwipe(cardId: number) {
+            if (cardId) {
+                const el = document.querySelector(`[data-card='${cardId}']`);
+                this.openQuestionCard(el);
+            }
+        }
+
         public openQuestionCard(event: any) {
 
             let el;
             if (event.type === 'click') {
                 el = event.currentTarget;
-            } else if (event.type === 'swipe' && this.isMobile) {
-                el = event.target.parentNode;
-            } else {
-                return;
+            } else if (this.isMobile) {
+                el = event;
             }
+
             clearTimeout(this.timeout);
             const tiles: any = this.$el.querySelectorAll('.openCard');
 
-            if (!(!tiles || (tiles && tiles.length < 2))) {
+            if (el && !(!tiles || (tiles && tiles.length < 2))) {
                 timeLineMax.to(('.openCard'), 1.2, {
                     className: "-=openCard",
                     rotationY: 0,
@@ -200,7 +203,7 @@
                 });
             }
 
-            if (!(el.classList.contains('openCard') && tiles.length === 2)) {
+            if (el && !(el.classList.contains('openCard') && tiles.length === 2)) {
                 timeLineMax.set((el), {className: "+=openCard"});
                 const elemeWrap = this.$el.querySelectorAll('.openCard');
                 timeLineMax.to((el), 1.2, {rotationY: 180, ease: Back.easeOut});
