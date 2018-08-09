@@ -4,7 +4,7 @@
             <div class="cell">
                 <div class="cell-content">
                     <img style="width: 100%; background-color: white" class="object-fit_contain"
-                         :src="selectPhotoMedia(parameter.media.photos[0])">
+                         :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)">
                     <div v-if="phrase" class="phrases" @click="randomWord">
                         <span class="spanFade meaningSpanFade">{{phraseWord}}</span>
                         <span class="refresh_icon">
@@ -21,7 +21,7 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
     @Component
@@ -33,6 +33,9 @@
 
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
         public isValid(): boolean {
             return this.parameter && this.parameter.media && this.parameter.media.phrases && this.parameter.media.phrases.length > 0;

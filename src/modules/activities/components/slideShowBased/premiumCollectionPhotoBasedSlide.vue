@@ -2,52 +2,52 @@
 <div>
  <div v-if="isSinglePhotoSlide" class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="selectPhotoMedia(parameter.media.photos[0])">
+                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
                 </div>
  </div>
 
     <div v-else-if="isTwoVerticalPhotoes" class="full-height table">
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[0])">
+                <img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain twoCell" :src="selectPhotoMedia(parameter.media.photos[1])">
+                <img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )">
             </div>
 
+            </div>
         </div>
-    </div>
 
 
-    <div v-else-if="isFourPhotoesSlide" class="full-height table">
+        <div v-else-if="isFourPhotoesSlide" class="full-height table">
 
         <div class="row">
             <div class="cell">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[0])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )">
 
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[1])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )">
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[2])">
-                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="selectPhotoMedia(parameter.media.photos[3])">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[2], getMediaTypes.Content )">
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[3], getMediaTypes.Content )">
+            </div>
+
             </div>
 
         </div>
 
     </div>
-
-</div>
 
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
     const timeLineMax = TimelineMax as any;
@@ -60,6 +60,10 @@
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
 
+        get getMediaTypes(): any {
+            return ImageType;
+        }
+
         get isTwoVerticalPhotoes(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.TwoMediasVertical;
         }
@@ -69,11 +73,12 @@
         }
 
         public changeBrightness(event: any) {
-            if (event.target.classList.contains("brightness")) {
-                timeLineMax.set(event.target, {className: "-=brightness"});
+            if (event.target.classList.contains("clicked")) {
+                timeLineMax.to('.fourCell', 0.2, {filter: 'brightness(1)', className: "-=clicked"});
             } else {
-                timeLineMax.set('.swiper-slide-active .brightness', {className: "-=brightness"});
-                timeLineMax.set(event.target, {className: "+=brightness"});
+                timeLineMax.to('.fourCell', 0.2, {filter: 'brightness(0.5)', className: "-=clicked"});
+                timeLineMax.to(event.target, 0.2, {filter: 'brightness(1)', className: "+=clicked"});
+
             }
         }
 
@@ -97,51 +102,67 @@
 </script>
 
 <style scoped lang="scss">
-   .object-fit_contain { object-fit: contain }
-    .full-height{
-        height:100%;
-        background:#F8F8F8;
+    .object-fit_contain {
+        object-fit: contain
     }
-    .full-height.two{
-        background:#ACACAC;
+
+    .full-height {
+        height: 100%;
+        background: #F8F8F8;
     }
-    .full-height.three{
-        background:#5E5E5E;
+
+    .full-height.two {
+        background: #ACACAC;
     }
-    .table{
-        display:table;
-        width:100%;
-        position:relative;
-        background: transparent!important;
+
+    .full-height.three {
+        background: #5E5E5E;
     }
+
+    .table {
+        display: table;
+        width: 100%;
+        position: relative;
+        background: transparent !important;
+    }
+
     .cell {
         display: table-cell;
         vertical-align: middle;
         width: 100%;
         margin: 0 auto;
-        height:100%;
+        height: 100%;
         text-align: center;
     }
-    .row{
-        display:table-row;
-        width:auto;
+
+    .row {
+        display: table-row;
+        width: auto;
     }
-    .fourCell{
+
+    .fourCell {
         background-color: white;
         width: calc(50% - 60px);
         padding: 5px 5px 0px 5px;
         box-sizing: border-box;
+<<<<<<< HEAD
         -webkit-filter: brightness(0.80);
         filter: brightness(0.80);
+=======
+        -webkit-filter: brightness(1);
+        filter: brightness(1);
+>>>>>>> e6a91dee64328cf1ad9104e5d988f606348f61eb
     }
-    .twoCell{
+
+    .twoCell {
         background-color: white;
         width: calc(100% - 40px);
         margin: 5px 5px
     }
-   .brightness {
-       -webkit-filter: brightness(1);
-       filter: brightness(1);
-   }
+
+    /*.brightness {*/
+    /*-webkit-filter: brightness(1);*/
+    /*filter: brightness(1);*/
+    /*}*/
 
 </style>

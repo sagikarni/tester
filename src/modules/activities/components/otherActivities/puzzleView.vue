@@ -14,7 +14,7 @@
                      :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"
                      :style="!puzzleShuffle ? `width: ${100/Math.sqrt(count)}%; height: ${100/Math.sqrt(count)}%` : `width: ${itemWidth}px; height: ${itemHeight}px`">
                     <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
-                        <img :src="item.puzzlePath" alt=""/>
+                        <img :src="getImagePath(item.puzzlePath, getMediaTypes.Content)" alt=""/>
                         <span class="order">{{index}}</span>
                     </div>
                 </div>
@@ -27,6 +27,7 @@
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import { ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import Draggable from 'gsap/Draggable.js';
     import $ from 'jquery';
@@ -50,6 +51,9 @@
             this.puzzleImage = [];
         }
 
+        get getMediaTypes(): any {
+            return ImageType;
+        }
         public created() {
                 this.changeImageData(this.indexId);
                 localStorage.clear();

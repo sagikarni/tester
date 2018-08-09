@@ -6,6 +6,9 @@
             <!--<v-flex>-->
             <!--<slide-show-menu-pane class="mtop-5" ref="topPane"></slide-show-menu-pane>-->
             <!--</v-flex>-->
+            <v-flex>
+                <close-pane></close-pane>
+            </v-flex>
 
             <categorization
                     v-if="firstPageLoad"
@@ -34,6 +37,7 @@
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import {State} from 'vuex-class';
+    import ClosePane from '@/modules/common/components/closePane.vue';
 
     @Component({
         components: {
@@ -41,6 +45,7 @@
             RotateScreenAlert,
             Categorization,
             ActivityDisabledNotification,
+            ClosePane,
         },
     })
     export default class CategorizationActivity extends BaseComponent {

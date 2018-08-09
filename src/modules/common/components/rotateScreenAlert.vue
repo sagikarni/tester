@@ -1,14 +1,15 @@
 <template>
     <v-layout row justify-center>
-        <v-btn v-show="orientation" color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
-            <v-icon>close</v-icon>
-        </v-btn>
+        <!--<v-btn v-show="orientation" color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">-->
+        <!--<v-icon>close</v-icon>-->
+        <!--</v-btn>-->
 
-        <v-dialog v-model="orientation" persistent  >
+        <close-pane v-show="orientation"></close-pane>
+        <v-dialog v-model="orientation" persistent>
             <v-card>
                 <v-card-title class="headline">
                     <div class="card_title" color="white">
-                       {{ $locale.general.rotateScreenPopup }}
+                        {{ $locale.general.rotateScreenPopup }}
                     </div>
                     <div class="card_test">
                         <v-icon color="white">screen_rotation</v-icon>
@@ -20,10 +21,15 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import ClosePane from '@/modules/common/components/closePane.vue';
 
-    @Component
+    @Component({
+        components: {
+            ClosePane,
+        },
+    })
     export default class RotateScreenAlert extends BaseComponent {
         @Prop() public orientation?: boolean;
 
@@ -35,7 +41,7 @@
 </script>
 
 <style scoped lang="scss">
-    .close_rotation_issue{
+    .close_rotation_issue {
         z-index: 100000;
         right: 10px;
         top: 10px;
@@ -45,7 +51,8 @@
         padding: 2px;
         border-radius: 50%;
     }
-    .rotation_icon{
+
+    .rotation_icon {
         width: 15px;
         height: 15px;
         display: inline-block;
@@ -54,10 +61,11 @@
         background-size: contain;
     }
 
-    .card__title{
+    .card__title {
         display: block;
     }
-    .card_title{
+
+    .card_title {
         font-size: 16px;
         margin: 0 auto;
         color: white;
@@ -65,16 +73,19 @@
         text-align: center;
 
     }
-    .card_test{
+
+    .card_test {
         margin: 0 auto;
         color: white;
         text-align: center;
 
     }
-    .card_test i{
+
+    .card_test i {
         font-size: 30px;
     }
-    .theme--light .card{
-        background: transparent!important;
+
+    .theme--light .card {
+        background: transparent !important;
     }
 </style>

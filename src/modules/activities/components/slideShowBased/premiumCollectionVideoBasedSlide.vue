@@ -12,7 +12,7 @@
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout} from '@/modules/activities/store/types';
+    import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
 
     @Component
     export default class PremiumCollectionVideoBasedSlide extends BaseComponent {
@@ -28,6 +28,12 @@
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
 
+        get getImageTypes(): any {
+            return ImageType;
+        }
+        get getMediaTypes(): any {
+            return MediaType;
+        }
         public onPlayerPlay(player: any) {
             this.pause = true;
         }
@@ -55,7 +61,7 @@
                 playbackRates: [0.7, 1.0, 1.5, 2.0],
                 sources: [{
                     type: "video/mp4",
-                    src: this.selectVideoMedia(this.parameter.media.videos[0]),
+                    src: this.getImagePath(this.parameter.media.videos[0], this.getImageTypes.Content, this.getMediaTypes.Video),
                 }],
             };
         }

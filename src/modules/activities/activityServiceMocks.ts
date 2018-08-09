@@ -3,156 +3,10 @@ import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType
 
 mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
     details: {
-        title: 'Hands',
-        description: 'This deck demonstrats hands',
-        coverPhoto: '/media/restricted/collections/photos/hands/iStock-649175052.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
-        activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
-        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
-        mediaCount: 12, // number of videos or photos in this activity
-        orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
-        isPinned: false,
-        sessionsInfo : [
-            {id: 1, description: "Short", slidesCount: 4},
-            {id: 2, description: "Medium", slidesCount: 8},
-            {id: 3, description: "Long", slidesCount: 12},
-        ],
-        images: [
-            {
-                id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-171328775.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-171328775.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
-            },
-            {
-                id: 2,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-472150005.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-472150005.jpg',
-                title: 'some title 2',
-                filterInfo: [1, 2, 3],
-            },
-            {
-                id: 3,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-509425044.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-509425044.jpg',
-                title: 'some title 3',
-                filterInfo: [1, 2, 3],
-            },
-            {
-                id: 4,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-607929238.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-607929238.jpg',
-                title: 'some title 4',
-                filterInfo: [1, 2, 3],
-            },
-            {
-                id: 5,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-614132554.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-614132554.jpg',
-                title: 'some title 5',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 6,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-625739874.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-625739874.jpg',
-                title: 'some title 6',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 7,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-641428548.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-641428548.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 8,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-646057690.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-646057690.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 9,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-649175052.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-649175052.jpg',
-                title: 'some title 7',
-                filterInfo: [3],
-            },
-            {
-                id: 10,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-654562488.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-654562488.jpg',
-                title: 'some title 7',
-                filterInfo: [3],
-            },
-            {
-                id: 11,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-669462222.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-669462222.jpg',
-                title: 'some title 7',
-                filterInfo: [3],
-            },
-            {
-                id: 12,
-                thumbnailSrc: '/media/restricted/collections/photos/hands/thumbnails/iStock-925586520.jpg',
-                imgSrc: '/media/restricted/collections/photos/hands/content/iStock-925586520.jpg',
-                title: 'some title 7',
-                filterInfo: [3],
-            },
-        ],
-    },
-    content: {
-        layout: PremiumCollectionLayout.SingleMedia,
-        slides: [
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-171328775.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-472150005.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-509425044.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-607929238.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-614132554.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-625739874.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-641428548.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-646057690.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-649175052.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-654562488.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-669462222.jpg'],
-            },
-            {
-                photos: ['/media/restricted/collections/photos/hands/content/iStock-925586520.jpg'],
-            },
-        ],
-    },
-});
-mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
-    details: {
         title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -169,64 +23,182 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
+                title: 'some title 7',
+                filterInfo: [2, 3],
+            },
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                photos: ['1.jpg'],
+            },
+            {
+                photos: ['2.jpg'],
+            },
+            {
+                photos: ['3.jpg'],
+            },
+            {
+                photos: ['4.jpg'],
+            },
+            {
+                photos: ['5.jpg'],
+            },
+            {
+                photos: ['6.jpg'],
+            },
+            {
+                photos: ['7.jpg'],
+            },
+            {
+                photos: ['8.jpg'],
+            },
+            {
+                photos: ['9.jpg'],
+            },
+        ],
+    },
+});
+mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
+    details: {
+        title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 12, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        selectedSessionInfoId: 3,
+        selectedSessionInfoDesc: 'Long',
+        isPinned: false,
+        sessionsInfo : [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
+        images: [
+            {
+                id: 1,
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
+                title: 'some title 1',
+                filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
+            },
+            {
+                id: 2,
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
+                title: 'some title 2',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 3,
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
+                title: 'some title 3',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 4,
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+            {
+                id: 5,
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
+                title: 'some title 5',
+                filterInfo: [3],
+            },
+            {
+                id: 6,
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
+                title: 'some title 6',
+                filterInfo: [2, 3],
+            },
+            {
+                id: 7,
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
+                title: 'some title 7',
+                filterInfo: [2, 3],
+            },
+            {
+                id: 8,
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
+                title: 'some title 7',
+                filterInfo: [2, 3],
+            },
+            {
+                id: 9,
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
@@ -236,16 +208,16 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         layout: PremiumCollectionLayout.TwoMediasHorizontal,
         slides: [
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
+                photos: ['1.jpg', '2.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg', '/media/restricted/collections/photos/collection-1/content/4.jpg'],
+                photos: ['3.jpg', '4.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg', '/media/restricted/collections/photos/collection-1/content/6.jpg'],
+                photos: ['4.jpg', '6.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg', '/media/restricted/collections/photos/collection-1/content/8.jpg'],
+                photos: ['7.jpg', '8.jpg'],
             },
         ],
     },
@@ -253,8 +225,9 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
 mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
     details: {
         title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -271,64 +244,64 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
@@ -338,25 +311,26 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         layout: PremiumCollectionLayout.TwoMediasVertical,
         slides: [
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg', '/media/restricted/collections/photos/collection-1/content/2.jpg'],
+                photos: ['1.jpg', '2.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg', '/media/restricted/collections/photos/collection-1/content/4.jpg'],
+                photos: ['3.jpg', '4.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg', '/media/restricted/collections/photos/collection-1/content/6.jpg'],
+                photos: ['4.jpg', '6.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg', '/media/restricted/collections/photos/collection-1/content/8.jpg'],
+                photos: ['7.jpg', '8.jpg'],
             },
         ],
     },
 });
 mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
     details: {
-        title: 'Compare Feelings',
-        description: 'Compare Feelings',
-        coverPhoto: '/media/restricted/communication/photos/compare/feelings1/iStock-184652774_super.jpg',
+        title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -373,113 +347,64 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-135448176_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-135448176_super.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-184652774_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-184652774_super.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-506616340_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-506616340_super.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-520016598_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-520016598_super.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-520792461_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-520792461_super.jpg',
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-521236382_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-521236382_super.jpg',
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-524525002_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-524525002_super.jpg',
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-604031152_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-604031152_super.jpg',
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-619241638_medium.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-619241638_medium.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 10,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-626461490_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-626461490_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 1,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-638378146_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-638378146_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 12,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-639581692_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-639581692_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 13,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-641217430_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-641217430_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 14,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-642091690_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-642091690_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 15,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-660654876_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-660654876_super.jpg',
-                title: 'some title 7',
-                filterInfo: [2, 3],
-            },
-            {
-                id: 16,
-                thumbnailSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-700702502_super.jpg',
-                imgSrc: '/media/restricted/communication/photos/compare/feelings1/content/iStock-700702502_super.jpg',
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
@@ -489,16 +414,10 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         layout: PremiumCollectionLayout.FourMedias,
         slides: [
             {
-                photos: ['/media/restricted/communication/photos/compare/feelings1/content/iStock-135448176_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-184652774_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-506616340_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-520016598_super.jpg'],
+                photos: ['1.jpg', '2.jpg', '3.jpg', '4.jpg'],
             },
             {
-                photos: ['/media/restricted/communication/photos/compare/feelings1/content/iStock-520792461_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-521236382_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-524525002_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-604031152_super.jpg'],
-            },
-            {
-                photos: ['/media/restricted/communication/photos/compare/feelings1/content/iStock-639581692_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-638378146_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-626461490_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-619241638_medium.jpg'],
-            },
-            {
-                photos: ['/media/restricted/communication/photos/compare/feelings1/content/iStock-700702502_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-660654876_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-642091690_super.jpg', '/media/restricted/communication/photos/compare/feelings1/content/iStock-641217430_super.jpg'],
+                photos: ['5.jpg', '6.jpg', '7.jpg', '8.jpg'],
             },
         ],
     },
@@ -506,8 +425,9 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
 mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, {
     details: {
         title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/videos/collection-2',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -524,43 +444,29 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
              },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/3.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/4.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/4.jpg',
-                title: 'some title 4',
-                filterInfo: [3],
-            },
-            {
-                id: 5,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/5.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/5.jpg',
-                title: 'some title 4',
-                filterInfo: [3],
-            },
-            {
-                id: 6,
-                thumbnailSrc: '/media/restricted/collections/videos/collection-2/thumbnails/6.jpg',
-                imgSrc: '/media/restricted/collections/videos/collection-2/thumbnails/6.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
@@ -570,22 +476,16 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         layout: PremiumCollectionLayout.SingleMedia,
         slides: [
             {
-                videos: ['https://media.istockphoto.com/videos/new-hairstyle-after-showering-video-id516408404'],
+                videos: ['1.mp4'],
             },
             {
-                videos: ['https://media.istockphoto.com/videos/cute-little-boy-having-fun-trying-to-put-on-his-tshirt-video-id466750048'],
+                videos: ['2.mp4'],
             },
             {
-                videos: ['https://media.istockphoto.com/videos/positive-little-girl-waking-up-from-her-bed-video-id834306760'],
+                videos: ['3.mp4'],
             },
             {
-                videos: ['https://media.istockphoto.com/videos/tying-shoes-video-id472867221'],
-            },
-            {
-                videos: ['https://media.istockphoto.com/videos/girl-brushing-teeth-at-bathroom-sink-video-id625539030'],
-            },
-            {
-                videos: ['https://media.istockphoto.com/videos/family-at-home-eating-breakfast-in-kitchen-together-video-id621287792'],
+                videos: ['4.mp4'],
             },
         ],
     },
@@ -593,8 +493,9 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
 mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
     details: {
         title: 'This is a Meaning activity',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Meaning, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -611,8 +512,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
@@ -621,9 +522,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 2,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                imgSrc: '2.jpg',
 
                 title: 'some title 2',
 
@@ -635,9 +536,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 3,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                imgSrc: '3.jpg',
 
                 title: 'some title 3',
 
@@ -649,9 +550,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 4,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                thumbnailSrc: '4.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                imgSrc: '4.jpg',
 
                 title: 'some title 4',
 
@@ -663,9 +564,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 5,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                thumbnailSrc: '5.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                imgSrc: '5.jpg',
 
                 title: 'some title 5',
 
@@ -677,9 +578,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 6,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                thumbnailSrc: '6.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                imgSrc: '6.jpg',
 
                 title: 'some title 6',
 
@@ -691,9 +592,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 7,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                thumbnailSrc: '7.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                imgSrc: '7.jpg',
 
                 title: 'some title 7',
 
@@ -705,9 +606,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 8,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                thumbnailSrc: '8.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                imgSrc: '8.jpg',
 
                 title: 'some title 7',
 
@@ -719,9 +620,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 
                 id: 9,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                thumbnailSrc: '9.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                imgSrc: '9.jpg',
 
                 title: 'some title 7',
 
@@ -736,38 +637,38 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         slides: [
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],
+                photos: ['1.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/2.jpg'],
+                photos: ['2.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg'],
+                photos: ['3.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg'],
+                photos: ['4.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/5.jpg'],
+                photos: ['5.jpg'],
             },
             {
-                photos: ['/media/restricted/collections/photos/collection-1/content/6.jpg'],
-            },
-            {
-                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg'],
+                photos: ['6.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/8.jpg'],
+                photos: ['7.jpg'],
             },
             {
                 phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/9.jpg'],
+                photos: ['8.jpg'],
+            },
+            {
+                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
+                photos: ['9.jpg'],
             },
         ],
     },
@@ -775,8 +676,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
 mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
     details: {
         title: 'this is What in the picture Activity',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.WhatInThePicture, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -793,8 +695,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
@@ -803,9 +705,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 2,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                imgSrc: '2.jpg',
 
                 title: 'some title 2',
 
@@ -817,9 +719,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 3,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                imgSrc: '3.jpg',
 
                 title: 'some title 3',
 
@@ -831,9 +733,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 4,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                thumbnailSrc: '4.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                imgSrc: '4.jpg',
 
                 title: 'some title 4',
 
@@ -845,9 +747,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 5,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                thumbnailSrc: '5.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                imgSrc: '5.jpg',
 
                 title: 'some title 5',
 
@@ -859,9 +761,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 6,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                thumbnailSrc: '6.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                imgSrc: '6.jpg',
 
                 title: 'some title 6',
 
@@ -873,9 +775,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 7,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                thumbnailSrc: '7.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                imgSrc: '7.jpg',
 
                 title: 'some title 7',
 
@@ -887,9 +789,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 8,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                thumbnailSrc: '8.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                imgSrc: '8.jpg',
 
                 title: 'some title 7',
 
@@ -901,9 +803,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
 
                 id: 9,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                thumbnailSrc: '9.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                imgSrc: '9.jpg',
 
                 title: 'some title 7',
 
@@ -918,60 +820,61 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         slides: [
             {
                 questions: ['This is question number 1 for photo number 1', 'This is question number 2 for photo number 1', 'This is question number 3 for photo number 1', 'This is question number 4 for photo number 1'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],
+                photos: ['1.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 2', 'This is question number 2 for photo number 2', 'This is question number 3 for photo number 2', 'This is question number 4 for photo number 2'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/2.jpg'],
+                photos: ['2.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 3', 'This is question number 2 for photo number 3', 'This is question number 3 for photo number 3', 'This is question number 4 for photo number 3'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg'],
+                photos: ['3.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 4', 'This is question number 2 for photo number 4', 'This is question number 3 for photo number 4', 'This is question number 4 for photo number 4'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg'],
+                photos: ['4.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 5', 'This is question number 2 for photo number 5', 'This is question number 3 for photo number 5', 'This is question number 4 for photo number 5'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/5.jpg'],
+                photos: ['5.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 6', 'This is question number 2 for photo number 6', 'This is question number 3 for photo number 6', 'This is question number 4 for photo number 6'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/6.jpg'],
+                photos: ['6.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 7', 'This is question number 2 for photo number 7', 'This is question number 3 for photo number 7', 'This is question number 4 for photo number 7'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg'],
+                photos: ['7.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 8', 'This is question number 2 for photo number 8', 'This is question number 3 for photo number 8', 'This is question number 4 for photo number 8'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/8.jpg'],
+                photos: ['8.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 9', 'This is question number 2 for photo number 9', 'This is question number 3 for photo number 9', 'This is question number 4 for photo number 9'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/9.jpg'],
+                photos: ['9.jpg'],
             },
         ],
     },
 });
 mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
     details: {
-        title: 'Empty vs. Full',
+        title: 'this is Cetegorization Activity',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-139957751_medium.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Categorization, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
-        mediaCount: 12, // number of videos or photos in this activity
+        mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
         selectedSessionInfoId: 3,
         isPinned: false,
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-139957751_medium.jpg',
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-139957751_medium.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
@@ -980,9 +883,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 2,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-467362980_high.jpg',
+                thumbnailSrc: '2.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-467362980_high.jpg',
+                imgSrc: '2.jpg',
 
                 title: 'some title 2',
 
@@ -994,9 +897,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 3,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-477820284_super.jpg',
+                thumbnailSrc: '3.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-477820284_super.jpg',
+                imgSrc: '3.jpg',
 
                 title: 'some title 3',
 
@@ -1008,9 +911,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 4,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-481644975_super.jpg',
+                thumbnailSrc: '4.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-481644975_super.jpg',
+                imgSrc: '4.jpg',
 
                 title: 'some title 4',
 
@@ -1022,9 +925,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 5,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-492668996_super.jpg',
+                thumbnailSrc: '5.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-492668996_super.jpg',
+                imgSrc: '5.jpg',
 
                 title: 'some title 5',
 
@@ -1036,9 +939,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 6,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-531505727_high.jpg',
+                thumbnailSrc: '6.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-531505727_high.jpg',
+                imgSrc: '6.jpg',
 
                 title: 'some title 6',
 
@@ -1050,9 +953,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 7,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-627856016_super.jpg',
+                thumbnailSrc: '7.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-627856016_super.jpg',
+                imgSrc: '7.jpg',
 
                 title: 'some title 7',
 
@@ -1064,9 +967,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 8,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-637951328_super.jpg',
+                thumbnailSrc: '8.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-637951328_super.jpg',
+                imgSrc: '8.jpg',
 
                 title: 'some title 7',
 
@@ -1078,48 +981,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 
                 id: 9,
 
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-832587060_super.jpg',
+                thumbnailSrc: '9.jpg',
 
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-832587060_super.jpg',
-
-                title: 'some title 7',
-
-                filterInfo: [2, 3],
-
-            },
-            {
-
-                id: 10,
-
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-857545002_super.jpg',
-
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/9iStock-857545002_super.jpg',
-
-                title: 'some title 7',
-
-                filterInfo: [2, 3],
-
-            },
-            {
-
-                id: 11,
-
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-866714174_super.jpg',
-
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-866714174_super.jpg',
-
-                title: 'some title 7',
-
-                filterInfo: [2, 3],
-
-            },
-            {
-
-                id: 12,
-
-                thumbnailSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-889525400_super.jpg',
-
-                imgSrc: '/media/restricted/cognitive/categorizations/empty-full/content/iStock-889525400_super.jpg',
+                imgSrc: '9.jpg',
 
                 title: 'some title 7',
 
@@ -1133,60 +997,48 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
         categories: [
             {
                 categorId: 1,
-                categoryName: 'Empty',
+                categoryName: 'Hot',
             },
             {
                 categorId: 2,
-                categoryName: 'Full',
+                categoryName: 'Cold',
             },
         ],
         Media: [
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-139957751_medium.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-467362980_high.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-477820284_super.jpg",
-                categoryId: 2,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-492668996_super.jpg",
+                photo: "1.jpg",
                 categoryId: 1,
             },
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-481644975_super.jpg",
+                photo: "2.jpg",
+                categoryId: 1,
+            },
+            {
+                photo: "3.jpg",
                 categoryId: 2,
             },
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-531505727_high.jpg",
+                photo: "4.jpg",
+                categoryId: 1,
+            },
+            {
+                photo: "5.jpg",
                 categoryId: 2,
             },
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-637951328_super.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-627856016_super.jpg",
+                photo: "6.jpg",
                 categoryId: 2,
             },
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-832587060_super.jpg",
+                photo: "7.jpg",
+                categoryId: 2,
+            },
+            {
+                photo: "8.jpg",
                 categoryId: 1,
             },
             {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-857545002_super.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-866714174_super.jpg",
-                categoryId: 1,
-            },
-            {
-                photo: "/media/restricted/cognitive/categorizations/empty-full/content/iStock-889525400_super.jpg",
+                photo: "9.jpg",
                 categoryId: 1,
             },
         ],
@@ -1195,8 +1047,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
     details: {
         title: 'this is Puzzle Activity',
+        baseFolder: '/media/restricted/cognitive/photos/puzzles/puzzle-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/cognitive/puzzle/food1/iStock-155129848_super.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Puzzle, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -1207,8 +1060,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/cognitive/puzzle/food1/thumbnails/iStock-155129848_super.jpg',
-                imgSrc: '/media/restricted/cognitive/puzzle/food1/content/puzzle-1/photo.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: 'puzzle-1/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
             },
@@ -1216,22 +1069,63 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 2,
-                thumbnailSrc: '/media/restricted/cognitive/puzzle/food1/thumbnails/iStock-534053642_super.jpg',
-                imgSrc: '/media/restricted/cognitive/puzzle/food1/content/puzzle-2/photo.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: 'puzzle-2/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
 
             },
+
+            {
+
+                id: 3,
+                thumbnailSrc: '3.jpg',
+                imgSrc: 'puzzle-3/photo.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+
+            },
+            {
+
+                id: 4,
+                thumbnailSrc: '4.jpg',
+                imgSrc: 'puzzle-4/photo.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+
+            },
+            {
+
+                id: 5,
+                thumbnailSrc: '5.jpg',
+                imgSrc: 'puzzle-5/photo.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+
+            },
+
         ],
     },
     content: {
         Media: [
             {
-                photo: "/media/restricted/cognitive/puzzle/food1/content/puzzle-1/photo.jpg",
+                photo: "puzzle-1/photo.jpg",
+                partsCount: 9,
+            },
+            {
+                photo: "puzzle-2/photo.jpg",
                 partsCount: 4,
             },
             {
-                photo: "/media/restricted/cognitive/puzzle/food1/content/puzzle-2/photo.jpg",
+                photo: "puzzle-3/photo.jpg",
+                partsCount: 16,
+            },
+            {
+                photo: "puzzle-4/photo.jpg",
+                partsCount: 9,
+            },
+            {
+                photo: "puzzle-5/photo.jpg",
                 partsCount: 9,
             },
         ],
@@ -1239,9 +1133,10 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
 });
 mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, {
     details: {
-        title: 'Sports',
+        title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/cognitive/zoom/sports/content/iStock-155017350_medium.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Zoom, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -1258,64 +1153,64 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-155017350_medium.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-155017350_medium.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-492887058_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-492887058_super.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-495114582_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-495114582_super.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-509106582_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-509106582_super.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-518019370_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-518019370_super.jpg',
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-532343318_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-532343318_super.jpg',
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-628276690_medium.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-628276690_medium.jpg',
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-827580260_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-827580260_super.jpg',
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-840886816_super.jpg',
-                imgSrc: '/media/restricted/cognitive/zoom/sports/content/iStock-840886816_super.jpg',
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
@@ -1326,31 +1221,31 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         shape: ShapeType.Circle,
         slides: [
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-155017350_medium.jpg'],
+                photos: ['1.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-492887058_super.jpg'],
+                photos: ['2.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-495114582_super.jpg'],
+                photos: ['3.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-509106582_super.jpg'],
+                photos: ['4.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-518019370_super.jpg'],
+                photos: ['5.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-532343318_super.jpg'],
+                photos: ['6.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-628276690_medium.jpg'],
+                photos: ['7.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-827580260_super.jpg'],
+                photos: ['8.jpg'],
             },
             {
-                photos: ['/media/restricted/cognitive/zoom/sports/content/iStock-840886816_super.jpg'],
+                photos: ['9.jpg'],
             },
         ],
     },
@@ -1358,14 +1253,14 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
 
 mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, {
     details: {
-        title: 'Animals Puzzle',
-        description: 'This is an animals puzzle',
-        coverPhoto: '/media/restricted/cognitive/memory/animals1/iStock-505602225.jpg',
+        title: 'Card Deck Name',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Memory, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         selectedSessionInfoId: 3,
         selectedSessionInfoDesc: 'Long',
         isPinned: false,
@@ -1374,63 +1269,78 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
         ],
+        mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-93157220.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-93157220.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 2,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-98378798.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-98378798.jpg',
+                thumbnailSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 3,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-177533648.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-177533648.jpg',
+                thumbnailSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 4,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-505602225.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-505602225.jpg',
+                thumbnailSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 5,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-508496372.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-508496372.jpg',
+                thumbnailSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 6,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-516318760.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-516318760.jpg',
+                thumbnailSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 7,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-638654490.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-638654490.jpg',
+                thumbnailSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
             {
                 id: 8,
-                thumbnailSrc: '/media/restricted/cognitive/memory/animals1/thumbnails/iStock-531856654.jpg',
-                imgSrc: '/media/restricted/cognitive/memory/animals1/content/iStock-531856654.jpg',
+                thumbnailSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 8',
-                filterInfo: [2, 3],
-             },
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 9,
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
+                title: 'some title 9',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 10,
+                thumbnailSrc: '9.jpg',
+                imgSrc: '9.jpg',
+                title: 'some title 9',
+                filterInfo: [1, 2, 3],
+            },
         ],
     },
     content: {
@@ -1439,14 +1349,14 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         rowsCount: 4,
         memoryLayout: MamoryLayout.FourRowsFourColumns,
         photos: [
-            '/media/restricted/cognitive/memory/animals1/content/iStock-93157220.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-98378798.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-177533648.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-505602225.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-508496372.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-516318760.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-638654490.jpg',
-            '/media/restricted/cognitive/memory/animals1/content/iStock-531856654.jpg',
+            '1.jpg',
+            '2.jpg',
+            '3.jpg',
+            '4.jpg',
+            '5.jpg',
+            '6.jpg',
+            '7.jpg',
+            '8.jpg',
         ],
     },
 });
@@ -1455,8 +1365,9 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
 mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
     details: {
         title: 'this is WH Questions Activity',
+        baseFolder: '/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: '/media/restricted/collections/photos/collection-1/cover.jpg',
+        coverPhoto: 'cover.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.WHQuestions, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -1473,8 +1384,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/1.jpg',
+                thumbnailSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
              },
@@ -1483,9 +1394,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 2,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                thumbnailSrc: '2.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/2.jpg',
+                imgSrc: '2.jpg',
 
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
@@ -1496,9 +1407,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 3,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                thumbnailSrc: '3.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/3.jpg',
+                imgSrc: '3.jpg',
 
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
@@ -1508,9 +1419,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 4,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                thumbnailSrc: '4.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/4.jpg',
+                imgSrc: '4.jpg',
 
                 title: 'some title 4',
                 filterInfo: [1, 2, 3],
@@ -1520,9 +1431,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 5,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                thumbnailSrc: '5.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/5.jpg',
+                imgSrc: '5.jpg',
 
                 title: 'some title 5',
                 filterInfo: [1, 2, 3],
@@ -1532,9 +1443,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 6,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                thumbnailSrc: '6.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/6.jpg',
+                imgSrc: '6.jpg',
 
                 title: 'some title 6',
                 filterInfo: [1, 2, 3],
@@ -1544,9 +1455,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 7,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                thumbnailSrc: '7.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/7.jpg',
+                imgSrc: '7.jpg',
 
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
@@ -1556,9 +1467,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 8,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                thumbnailSrc: '8.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/8.jpg',
+                imgSrc: '8.jpg',
 
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
@@ -1568,9 +1479,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 9,
 
-                thumbnailSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                thumbnailSrc: '9.jpg',
 
-                imgSrc: '/media/restricted/collections/photos/collection-1/thumbnails/9.jpg',
+                imgSrc: '9.jpg',
 
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
@@ -1583,39 +1494,39 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         slides: [
             {
                 questions: ['This is question number 1 for photo number 1', 'This is question number 2 for photo number 1', 'This is question number 3 for photo number 1', 'This is question number 4 for photo number 1'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/1.jpg'],
+                photos: ['1.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 2', 'This is question number 2 for photo number 2', 'This is question number 3 for photo number 2', 'This is question number 4 for photo number 2'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/2.jpg'],
+                photos: ['2.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 3', 'This is question number 2 for photo number 3', 'This is question number 3 for photo number 3', 'This is question number 4 for photo number 3'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/3.jpg'],
+                photos: ['3.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 4', 'This is question number 2 for photo number 4', 'This is question number 3 for photo number 4', 'This is question number 4 for photo number 4'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/4.jpg'],
+                photos: ['4.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 5', 'This is question number 2 for photo number 5', 'This is question number 3 for photo number 5', 'This is question number 4 for photo number 5'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/5.jpg'],
+                photos: ['5.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 6', 'This is question number 2 for photo number 6', 'This is question number 3 for photo number 6', 'This is question number 4 for photo number 6'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/6.jpg'],
+                photos: ['6.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 7', 'This is question number 2 for photo number 7', 'This is question number 3 for photo number 7', 'This is question number 4 for photo number 7'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/7.jpg'],
+                photos: ['7.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 8', 'This is question number 2 for photo number 8', 'This is question number 3 for photo number 8', 'This is question number 4 for photo number 8'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/8.jpg'],
+                photos: ['8.jpg'],
             },
             {
                 questions: ['This is question number 1 for photo number 9', 'This is question number 2 for photo number 9', 'This is question number 3 for photo number 9', 'This is question number 4 for photo number 9'],
-                photos: ['/media/restricted/collections/photos/collection-1/content/9.jpg'],
+                photos: ['9.jpg'],
             },
         ],
     },

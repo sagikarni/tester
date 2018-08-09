@@ -9,7 +9,7 @@
                 <div id="scroll-box">
                     <div id="tile-container">
                         <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
-                            <img  class="tile" :src="slide.media.photo" alt="" :data-id="slide.media.categoryId">
+                            <img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId">
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,8 @@
     import TimelineMax from 'gsap';
     import Draggable from 'gsap/Draggable.js';
     import $ from "jquery";
-    import {ActivityType, MediaType} from '@/modules/activities/store/types';
+    import {ActivityType, MediaType, ImageType} from '@/modules/activities/store/types';
+
     const  category: string = 'category';
 
     @Component
@@ -63,6 +64,9 @@
 
         get dropDataId1(): number {
             return this.categoryTypes && this.categoryTypes[0] && this.categoryTypes[0][category] && this.categoryTypes[1][category]['categorId'];
+        }
+        get getMediaTypes(): any {
+            return ImageType;
         }
 
         public mounted() {
