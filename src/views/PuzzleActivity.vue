@@ -3,7 +3,7 @@
         <rotate-screen-alert :orientation="hasCorrectOrientation && isBeginningSlide"></rotate-screen-alert>
         <section v-show="!orientationStatus">
             <v-flex>
-                <slide-show-menu-pane ref="topPane"></slide-show-menu-pane>
+                <close-pane></close-pane>
             </v-flex>
 
             <v-layout row wrap class="puzzle-content">
@@ -35,6 +35,7 @@
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
     import PuzzleView from '@/modules/activities/components/otherActivities/puzzleView.vue';
     import PuzzleLeftPanel from '@/modules/activities/components/otherActivities/puzzleLeftPanel.vue';
+    import ClosePane from '@/modules/common/components/closePane.vue';
 
 
     import SideNavigations from '@/modules/common/components/sideNavigations.vue';
@@ -53,6 +54,7 @@
             RotateScreenAlert,
             PuzzleView,
             PuzzleLeftPanel,
+            ClosePane,
         },
     })
     export default class PuzzleActivity extends BaseComponent {
@@ -158,7 +160,7 @@
 
 
         public stopPointEvents(pointEvent: boolean) {
-             this.stopEvents = pointEvent;
+            this.stopEvents = pointEvent;
         }
 
         public created() {
@@ -189,4 +191,3 @@
     }
 
 </style>
-

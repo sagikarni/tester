@@ -1,9 +1,9 @@
 <template>
     <div id="memoryRoot">
         <div ref="memoryContainer" id="memoryContainer">
-            <v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">
-                <v-icon>close</v-icon>
-            </v-btn>
+            <!--<v-btn color="white" class="close_rotation_issue" flat @click.native="$router.go(-1)">-->
+                <!--<v-icon>close</v-icon>-->
+            <!--</v-btn>-->
             <transition-group v-show="!showExit" :name="shuffleSpeed" tag="div" class="memoryInnerContainer">
 
                 <div v-for="card in imgCards" :key="card.id" :data-id="card.imgID" :data-wrapper="card.id"
@@ -44,7 +44,6 @@
     import { ImageType} from '@/modules/activities/store/types';
     import Vue from 'vue';
     import TimelineMax from 'gsap';
-
     const timeLineMax = TimelineMax as any;
 
     @Component

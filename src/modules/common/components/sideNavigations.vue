@@ -43,9 +43,8 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Watch } from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import TimelineMax from 'gsap';
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
@@ -54,8 +53,11 @@
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
     import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
     import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
+    import TimelineMax from 'gsap';
 
+    const timeLineMax = TimelineMax as any;
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
+
     @Component({
         components: {
             PremiumCollectionPhotoBasedSlide,
@@ -117,6 +119,7 @@
                         this.hideAllPanes();
                     },
                     slideChange: () => {
+                        this.clearBrightnessEffect();
                         const el: any = this.$refs.swiper;
                         const realIndex = el && el.swiper && el.swiper.realIndex;
                         this.stopVideo(realIndex);
@@ -158,8 +161,13 @@
                     if (this.mediaType === MediaType.Photo) {
                         return 'WHQuestionsSlide';
                     }
-                default: break;
+                default:
+                    break;
             }
+        }
+
+        public clearBrightnessEffect() {
+            timeLineMax.to('.fourCell', 0.2, {filter: 'brightness(1)', className: "-=clicked"});
         }
 
         public slideChanged(isBeginning: boolean) {
@@ -167,11 +175,11 @@
         }
 
         public redirectBack() {
-                this.$router.go(-1);
+            this.$router.go(-1);
         }
 
         public hideSidePanes(animationLength: number): void {
-                (TimelineMax as any).to('.swiper-button-white', animationLength , {opacity : 0.1 });
+            (TimelineMax as any).to('.swiper-button-white', animationLength, {opacity: 0.1});
         }
 
         public hideAllPanes(): void {
@@ -202,9 +210,6 @@
                 this.showMenu = true;
             });
         }
-
-
-
 
 
         public pressButton(realIndex: number): void {
@@ -243,86 +248,86 @@
 
         public moveShapes() {
             const el: any = this.$refs.swiper;
-            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            const realIndex = el && el.swiper && el.swiper.realIndex;
             (this.$refs.slideComponent as any)[realIndex - 1].rePosition();
         }
 
         public addShape() {
             const el: any = this.$refs.swiper;
-            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            const realIndex = el && el.swiper && el.swiper.realIndex;
             (this.$refs.slideComponent as any)[realIndex - 1].addData();
         }
 
         public enlargeShape() {
             const el: any = this.$refs.swiper;
-            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            const realIndex = el && el.swiper && el.swiper.realIndex;
             (this.$refs.slideComponent as any)[realIndex - 1].enlarge();
         }
 
         public revealPhoto() {
             const el: any = this.$refs.swiper;
-            const realIndex = el &&  el.swiper && el.swiper.realIndex;
+            const realIndex = el && el.swiper && el.swiper.realIndex;
             (this.$refs.slideComponent as any)[realIndex - 1].reveal();
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .swiper-container{
+    .swiper-container {
         height: 100vh;
         background-color: #000000;
-        color:#fff;
+        color: #fff;
     }
+
     .swiper-slide {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .swiper-button-white{
+    .swiper-button-white {
         height: 100%;
-        top: 48px;
+        top: 0px;
         width: 100px;
         opacity: 0.5;
         margin-top: 0;
-        background-color: rgba(204,204, 255, .2);
+        background-color: rgba(204, 204, 255, .2);
         background-size: 60px;
-        background-position-y: calc(50% - 48px);
     }
-    .swiper-button-prev{
+
+    .swiper-button-prev {
         left: 0;
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            /*opacity: .86!important;*/
         }
-        /*&:focus{*/
-            /*opacity: 0.1!important;*/
-        /*}*/
+
     }
-    .swiper-button-next{
+
+    .swiper-button-next {
         right: 0;
         transition: all 0.5s ease;
         &:hover {
             cursor: pointer;
-            /*opacity: .86!important;*/
+
         }
-        /*&:focus{*/
-            /*opacity: 0.1!important;*/
-        /*}*/
+
     }
-    .firstActivity{
+
+    .firstActivity {
         flex-direction: column;
-        h2{
+        h2 {
             font-size: 24px;
             margin-bottom: 10px;
         }
     }
-    .showMenu{
-        display: none!important;
+
+    .showMenu {
+        display: none !important;
     }
+
     @media only screen and (max-width: 960px) {
-        .swiper-button-white{
+        .swiper-button-white {
             width: 50px;
             background-size: 30px;
         }
