@@ -1,6 +1,6 @@
 <template>
-    <div class="closePane">
-        <v-icon @click="resizButton($event)" class="iconRes" ref="rez">close</v-icon>
+    <div class="closePane" @click="resizButton($event)">
+        <v-icon  class="iconRes" ref="rez">close</v-icon>
     </div>
 
 </template>
@@ -38,7 +38,9 @@
         top: 15px;
         left: 24px;
         position: absolute;
-        z-index: 203;
+        z-index: 201;
+        cursor: pointer;
+        padding: 15px;
     }
 
     .btn__content {

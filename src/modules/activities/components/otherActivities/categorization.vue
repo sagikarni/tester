@@ -1,9 +1,9 @@
 <template>
 
     <main>
-        <v-btn color="white" class="category-back_button" flat @click.native="$router.go(-1)">
-            <v-icon>close</v-icon>
-        </v-btn>
+        <!--<v-btn color="white" class="category-back_button" flat @click.native="$router.go(-1)">-->
+            <!--<v-icon>close</v-icon>-->
+        <!--</v-btn>-->
         <section id="top-bar" >
             <div id="clone-container">
                 <div id="scroll-box">
