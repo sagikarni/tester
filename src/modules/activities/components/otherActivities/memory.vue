@@ -20,7 +20,7 @@
                             <div class="cardFace back"
                                  :style="{ width: cardWidth + 'px', height: cardHeight + 'px' }">
                                 <div class="card_back_in">
-                                    <img class="cardShuffle" :src="getImagePath(card.src, getMediaTypes.Content)" alt="">
+                                    <v-img class="cardShuffle" :src="getImagePath(card.src, getMediaTypes.Content)" alt=""></v-img>
                                 </div>
                             </div>
 

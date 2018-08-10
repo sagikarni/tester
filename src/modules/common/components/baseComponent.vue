@@ -16,6 +16,7 @@
         public $notificationSystem: any;
         public explicitExitFromFullScreen: boolean = false;
         @State(state => state.isHDMedia) public isHDMedia?: boolean;
+        @State(state => state.isFullScreen) public isFullScreen?: boolean;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.baseFolder)) public baseFolder?: string;
 
         constructor() {
@@ -70,7 +71,7 @@
         public enterFullScreen() {
             try {
                 this.explicitExitFromFullScreen = false;
-                if (this.hasFullScreenSupport()) {
+                if (this.hasFullScreenSupport()  && this.isFullScreen) {
                     this.$fullscreen.enter(document.getElementById("app"), {
                         callback: (isFullScreen: boolean) => {
                             if (!isFullScreen && !this.explicitExitFromFullScreen) {
