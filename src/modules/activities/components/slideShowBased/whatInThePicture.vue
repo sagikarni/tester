@@ -3,8 +3,8 @@
         <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
             <div class="cell">
                 <div class="cell-content">
-                    <img style="width: 100%; background-color: white" class="object-fit_contain"
-                         :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)">
+                    <v-img style="width: 100%; background-color: white" class="object-fit_contain"
+                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"></v-img>
                     <div class="witp-questions" @click="openModalQuestions">
                         <span>{{switchQuestions}}</span>
                     </div>

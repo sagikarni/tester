@@ -9,7 +9,7 @@
                 <div id="scroll-box">
                     <div id="tile-container">
                         <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
-                            <img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId">
+                            <v-img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId"></v-img>
                         </div>
                     </div>
                 </div>

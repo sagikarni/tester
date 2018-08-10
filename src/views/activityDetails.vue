@@ -28,8 +28,8 @@
                            :sessionBtnDescription="sessionBtnDescription">
 
             </image-gallery>
-            <img v-for='photo in allImages' style="display:none"
-                 :src="getImagePath(photo.imgSrc, getMediaTypes.Content)">
+            <v-img v-for='photo in allImages' style="display:none"
+                   :src="getImagePath(photo.imgSrc, getMediaTypes.Content)"></v-img>
         </section>
     </div>
 </template>

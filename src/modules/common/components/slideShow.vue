@@ -3,9 +3,9 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain"
+                    <v-img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain"
                          :src="getImagePath(image.imgSrc, getMediaTypes.Thumbnail)"
-                         :alt="image.title" @click.stop="closeModal">
+                           :alt="image.title" @click.stop="closeModal"></v-img>
                 </div>
             </div>
         </swiper-slide>
