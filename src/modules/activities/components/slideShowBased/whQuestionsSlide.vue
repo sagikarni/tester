@@ -3,8 +3,8 @@
         <div class="full-height table">
             <div class="cell">
                 <div class="cell-content">
-                    <img style="width: 100%; background-color: white" class="object-fit_contain"
-                         :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)">
+                    <v-img style="width: 100%; background-color: white" class="object-fit_contain"
+                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"></v-img>
                     <div v-if="question" class="wh-question" @click="changeQuestion">
                         <div class="text_refresh_wrapper">
                             <span class="refresh_icon">

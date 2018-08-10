@@ -1,15 +1,15 @@
 <template>
 
     <main>
-        <v-btn color="white" class="category-back_button" flat @click.native="$router.go(-1)">
-            <v-icon>close</v-icon>
-        </v-btn>
+        <!--<v-btn color="white" class="category-back_button" flat @click.native="$router.go(-1)">-->
+            <!--<v-icon>close</v-icon>-->
+        <!--</v-btn>-->
         <section id="top-bar" >
             <div id="clone-container">
                 <div id="scroll-box">
                     <div id="tile-container">
                         <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
-                            <img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId">
+                            <v-img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId"></v-img>
                         </div>
                     </div>
                 </div>
@@ -71,9 +71,7 @@
 
         public mounted() {
             if (this.rigthOrentation) {
-                setTimeout(() => {
-                    this.draggAndDrop();
-                }, 500);
+                this.draggAndDrop();
             }
         }
 
