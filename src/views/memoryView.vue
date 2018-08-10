@@ -85,7 +85,9 @@
         public onPropertyChanged(value: any, oldValue: any) {
             if (value === this.activityDetailsState.orientation && this.isMobileDevice) {
                 this.hasCorrectOrientation = false;
-                this.firstPageLoad = true;
+                setTimeout(() => {
+                    this.firstPageLoad = true;
+                }, 500);
             } else {
                 this.hasCorrectOrientation = true;
             }

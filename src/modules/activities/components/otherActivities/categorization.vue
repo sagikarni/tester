@@ -71,9 +71,7 @@
 
         public mounted() {
             if (this.rigthOrentation) {
-                setTimeout(() => {
-                    this.draggAndDrop();
-                }, 500);
+                this.draggAndDrop();
             }
         }
 
