@@ -28,6 +28,8 @@
                            :sessionBtnDescription="sessionBtnDescription">
 
             </image-gallery>
+            <img v-for='photo in allImages' style="display:none"
+                 :src="getImagePath(photo.imgSrc, getMediaTypes.Content)">
         </section>
     </div>
 </template>
@@ -43,7 +45,13 @@
     import BackButton from '@/modules/common/components/backButton.vue';
     import PinUnpinButton from '@/modules/common/components/pinUnpinButton.vue';
     import ErrorPane from '@/modules/common/components/errorPane.vue';
-    import {SessionsInfo, ActivityMainDetailsInfo, MediaType, Orientation} from "@/modules/activities/store/types";
+    import {
+        SessionsInfo,
+        ActivityMainDetailsInfo,
+        MediaType,
+        Orientation,
+        ImageType,
+    } from "@/modules/activities/store/types";
     import {ImageInfo, GeneralError} from "@/modules/store/typeClasses";
     import TimelineMax from 'gsap';
     import NoSleep from 'nosleep.js';
@@ -70,7 +78,6 @@
         public loading?: boolean = false;
         public sessionSelectedItem?: string = 'Long';
         public noDeviceSleep: any;
-        public allImages: object[] = [];
         @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
         @State(state => state.errorPane) public errorPane?: any;
         @State(state => state.activities.activity) public activityState?: any;
@@ -99,6 +106,10 @@
 
         get sessionsInfo(): SessionsInfo[] {
             return this.activityState && this.activityState.details && this.activityState.details.sessionsInfo;
+        }
+
+        get getMediaTypes(): any {
+            return ImageType;
         }
 
         get activityMainDetailsInfo(): ActivityMainDetailsInfo {
@@ -133,8 +144,10 @@
         }
 
         get imageGalleryInfo(): ImageInfo {
+
             const imageGalleryInfo = new ImageInfo();
             if (this.activityState && this.activityState.details) {
+                // this.cacheImages();
                 imageGalleryInfo.thumbnails = this.activityState.details.images;
             }
             return imageGalleryInfo;
@@ -154,6 +167,10 @@
             this.updateSessionInfoType({selectedSessionInfo});
         }
 
+        get allImages(): any[] {
+            return this.activityState && this.activityState.details && this.activityState.details.images;
+        }
+
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
@@ -161,10 +178,12 @@
                     const activityState = JSON.parse(JSON.stringify(this.activityState));
 
                     if (activityState && activityState.details) {
+
                         this.updateActivity({activity: undefined});
                         this.updateActivity({activity: activityState});
                         this.sessionSelectedItem = activityState.details.selectedSessionInfoDesc;
                         this.show();
+
                         this.changeReloadActivityDetails({status: true}); // Need to reload form api the activities
                     }
                 } else {
@@ -178,6 +197,7 @@
                         } else {
                             this.showErrorPane = false; // Important for hide error pane and show the activity section
                         }
+
                         this.isPinned = res.data && res.data.details && res.data.details.isPinned;
                     }).catch((err: any) => {
                         this.showErrorPane = true;

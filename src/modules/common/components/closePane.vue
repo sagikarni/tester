@@ -1,6 +1,6 @@
 <template>
-    <div class="closePane"   @click="resizButton($event)">
-        <v-icon  class="iconRes" ref="rez" >close</v-icon>
+    <div class="closePane" @click="resizButton($event)">
+        <v-icon class="iconRes" ref="rez">close</v-icon>
     </div>
 
 </template>
@@ -19,7 +19,7 @@
             if (!this.isCloseBtn) {
                 this.isCloseBtn = true;
                 timeLineMax.from(this.$refs.rez, 0.1,
-                    {css: {scale:1.2, opacity: 1,padding:"4px" }, ease: Quad.easeInOut, delay: 2.8});
+                    {css: {scale: 1.2, opacity: 1, padding: "4px"}, ease: Quad.easeInOut, delay: 2.8});
                 this.setTime = setTimeout(() => {
                     this.isCloseBtn = false;
                 }, 3000);
@@ -31,7 +31,7 @@
         }
     }
 </script>
-
+s
 <style scoped lang="scss">
     .closePane {
 

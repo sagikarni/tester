@@ -92,6 +92,8 @@
     import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
+    const timeLineMax = TimelineMax as any;
+
     @Component
     export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
         @Prop() public parameter?: any;
@@ -114,57 +116,57 @@
         public created() {
             if (this.isValid()) {
                 this.switchQuestions = this.$locale.activities.switchQuestions;
-                (TimelineMax as any).set("body", {className: "+=Witp-globalClass"});
+                timeLineMax.set("body", {className: "+=Witp-globalClass"});
             }
         }
 
         public fllipAllOpenCards() {
-            (TimelineMax as any).to(('.openCard'), 1.2, {
+            timeLineMax.to(('.openCard'), 1.2, {
                 className: "-=openCard",
                 rotationY: 0,
-                ease: Back.easeOut
+                ease: Back.easeOut,
             });
-            (TimelineMax as any).set(".openCard .front .iQuestion", {display: 'none'});
-            (TimelineMax as any).set(".openCard .front .iDone", {display: 'block'});
-            this.dialog=false;
+            timeLineMax.set(".openCard .front .iQuestion", {display: 'none'});
+            timeLineMax.set(".openCard .front .iDone", {display: 'block'});
+            this.dialog = false;
 
         }
 
         public openModalQuestions() {
             this.dialog = true;
-            (TimelineMax as any).set(".cardWrapper", {perspective: 800});
-            (TimelineMax as any).set(".card", {transformStyle: "preserve-3d"});
-            (TimelineMax as any).set(".back", {rotationY: -180});
-            (TimelineMax as any).set([".back", ".front"], {backfaceVisibility: "hidden"});
+            timeLineMax.set(".cardWrapper", {perspective: 800});
+            timeLineMax.set(".card", {transformStyle: "preserve-3d"});
+            timeLineMax.set(".back", {rotationY: -180});
+            timeLineMax.set([".back", ".front"], {backfaceVisibility: "hidden"});
         }
 
         public openQuestionCard(event: any) {
             if (event.currentTarget.classList.contains('openCard')) {
-                (TimelineMax as any).to(('.openCard'), 1.2, {
+                timeLineMax.to(('.openCard'), 1.2, {
                     className: "-=openCard",
                     rotationY: 0,
-                    ease: Back.easeOut
+                    ease: Back.easeOut,
                 });
             } else {
-                (TimelineMax as any).to(('.openCard'), 1.2, {
+                timeLineMax.to(('.openCard'), 1.2, {
                     className: "-=openCard",
                     rotationY: 0,
-                    ease: Back.easeOut
+                    ease: Back.easeOut,
                 });
-                (TimelineMax as any).to((event.currentTarget), 1.2, {
+                timeLineMax.to((event.currentTarget), 1.2, {
                     className: "+=openCard",
                     rotationY: 180,
                     ease: Back.easeOut,
                 });
             }
-            (TimelineMax as any).set(".openCard .front .iQuestion", {display: 'none'});
-            (TimelineMax as any).set(".openCard .front .iDone", {display: 'block'});
+            timeLineMax.set(".openCard .front .iQuestion", {display: 'none'});
+            timeLineMax.set(".openCard .front .iDone", {display: 'block'});
         }
 
         public revertWitpModal(): void {
-            (TimelineMax as any).set(".front .iDone", {display: 'none'});
-            (TimelineMax as any).set(".front .iQuestion", {display: 'block'});
-            (TimelineMax as any).to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
+            timeLineMax.set(".front .iDone", {display: 'none'});
+            timeLineMax.set(".front .iQuestion", {display: 'block'});
+            timeLineMax.to(('.openCard'), 1.2, {className: "-=openCard", rotationY: 0, ease: Back.easeOut});
             this.dialog = false;
         }
 
