@@ -3,7 +3,9 @@
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <div class="img_cover">
-                    <img :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)" :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}" @click="showSlideImages(thumbnail)">
+                    <v-img  :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)"
+                            :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}"
+                            @click="showSlideImages(thumbnail)"> </v-img>
                 <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
                 </div>
             </v-flex>

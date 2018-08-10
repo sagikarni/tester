@@ -2,7 +2,7 @@
     <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}">
         <v-flex class="hidden-xs-only ex-fixed-image-scope" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
-                <img :src="getImagePath(activityMainDetailsInfo.coverPhoto)" alt="img" width="100%" height="100%">
+                <v-img :src="coverImagePath ? getImagePath(coverImagePath) : ''" alt="img" width="100%" height="100%"></v-img>
             </div>
         </v-flex>
         <v-flex :class="{'ex-rtl': $isRTL === true}">
@@ -41,6 +41,10 @@
     export default class ActivityMainDetails extends BaseComponent {
 
         @Prop() public activityMainDetailsInfo?: ActivityMainDetailsInfo;
+
+        get coverImagePath(): string | undefined {
+            return this.activityMainDetailsInfo && this.activityMainDetailsInfo.coverPhoto;
+        }
 
         constructor() {
             super();
