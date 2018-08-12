@@ -9,7 +9,7 @@
                 <div id="scroll-box">
                     <div id="tile-container">
                         <div class="tile-wrapper" v-for="slide in slides" :key="slide.id">
-                            <v-img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId"></v-img>
+                            <img  class="tile" :src="getImagePath(slide.media.photo, getMediaTypes.Content)" alt="" :data-id="slide.media.categoryId"/>
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,9 @@
         }
 
         public mounted() {
+            // set up the layout only after the orientation of the activity is the correct one
+            // since we are setting layout in px and not in % - if we will do it in the wrong orientation
+            // the layout will be calculated on the wrong orientation...
             if (this.rigthOrentation) {
                 this.draggAndDrop();
             }

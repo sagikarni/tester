@@ -39,15 +39,17 @@
 <script lang="ts">
     import Vue from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
-    import SearchTest from '@/modules/search/components/searchTest.vue'; // @ is an alias to /src
+    import SearchComponent from '@/modules/search/components/searchComponent.vue'; // @ is an alias to /src
 
     @Component({
     components: {
-        SearchTest,
+        SearchComponent,
        },
     })
     export default class NormalView extends Vue {
         public drawer: boolean = false;
+
+
 
     }
 </script>

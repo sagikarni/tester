@@ -3,7 +3,20 @@ export interface Ilocale {
     home: {
         name: string,
     };
+    search: {
+        activityFilterLabel: string,
+        mediaFilterLabel: string,
+        agesFilterLabel: string,
+        categoryFilterLabel: string,
+        subCategoryFilterLabel: string,
+    };
     activities: {
+        activityTypes: {
+            Collection: string;
+            whatsInThePicture: string;
+            Meaning: string;
+            Categorization: string;
+         },
         name: string,
         activityDetails: {
          videoBasedText: string,
@@ -38,6 +51,8 @@ export interface Ilocale {
         revealPhoto: string,
     };
     general: {
+        photoText: string,
+        videoText: string,
         slidesText: string,
         sesstionLength: string,
         social: {

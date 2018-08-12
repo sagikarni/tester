@@ -4,8 +4,9 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import {ImageType, MediaType} from '@/modules/activities/store/types';
+    import { MediaType} from '@/modules/activities/store/types';
     import { State } from 'vuex-class';
+    import { ImageType } from '@/modules/store/typeEnums';
 
     @Component
     export default class BaseComponent extends Vue {

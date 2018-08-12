@@ -1,13 +1,28 @@
 <template>
     <v-container grid-list-md class="pa-0">
         <v-layout v-bind="addColumnProp">
-            <v-flex sm6 md4 v-for="(thumbnail, index) in thumbnails" :key="index">
-                <div class="img_cover">
-                    <v-img  :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)"
-                            :alt="thumbnail.title" width="100%" height="100%" style="object-fit: cover" :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}"
-                            @click="showSlideImages(thumbnail)"> </v-img>
-                <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
-                </div>
+            <v-flex sm6 md4 xs12 v-for="(thumbnail, index) in thumbnails" :key="index">
+                <div  @click="showSlideImages(thumbnail)" >
+                <v-card flat tile  class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
+                  <v-img  
+                    :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)"
+                    :lazy-src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.PreLoad)"
+                    aspect-ratio="1.5"
+                  >
+                             <v-layout
+                      slot="placeholder"
+                      fill-height
+                      align-center
+                      justify-center
+                      ma-0
+                    >
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-layout>
+                  </v-img>
+         
+                    <p class="img_content" v-if="!thumbnail.active">{{ $locale.activities.notIncluded.text }} {{ sessionDescription }} {{ $locale.activities.notIncluded.session }}</p>
+                </v-card>
+           </div>
             </v-flex>
 
             <div row justify-center v-if="dialogSlideShow">
