@@ -14,7 +14,7 @@
                      :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item' ]"
                      :style="!puzzleShuffle ? `width: ${100/Math.sqrt(count)}%; height: ${100/Math.sqrt(count)}%` : `width: ${itemWidth}px; height: ${itemHeight}px`">
                     <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
-                        <v-img :src="getImagePath(item.puzzlePath, getMediaTypes.Content)" alt=""></v-img>
+                        <img :src="getImagePath(item.puzzlePath, getMediaTypes.Content)" alt=""/>
                         <span class="order">{{index}}</span>
                     </div>
                 </div>

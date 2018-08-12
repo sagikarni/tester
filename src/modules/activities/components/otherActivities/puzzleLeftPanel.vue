@@ -3,7 +3,7 @@
         <div v-for="image in images" :key="image.id">
             <div :class="['cell', image.id === 0 ? 'active' : '']" @click="changePuzzle($event)"
                  :data-count="image.media.partsCount" :data-url="image.media.photo" :data-id="image.id">
-                <v-img :src="getImagePath(image.media.photo, getMediaTypes.Content)"></v-img>
+                <img :src="getImagePath(image.media.photo, getMediaTypes.Content)"/>
             </div>
         </div>
     </div>

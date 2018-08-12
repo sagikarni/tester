@@ -3,8 +3,8 @@
         <div v-if="isSinglePhotoSlide" class="full-height table">
             <div class="cell">
                 <div class="cell-content">
-                    <v-img style="width: 100%; background-color: white" class="object-fit_contain"
-                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"></v-img>
+                    <img style="width: 100%; background-color: white" class="object-fit_contain"
+                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"/>
                     <div v-if="phrase" class="phrases" @click="randomWord">
                         <span class="spanFade meaningSpanFade">{{phraseWord}}</span>
                         <span class="refresh_icon">

@@ -28,9 +28,11 @@
                            :sessionBtnDescription="sessionBtnDescription">
 
             </image-gallery>
-            <v-img v-for='photo in allImages' style="display:none"
-                   :src="getImagePath(photo.imgSrc, getMediaTypes.Content)"></v-img>
-        </section>
+      </section>
+         <div v-for='(photo, index) in allImagesForCaching' :key="index">
+              <img style="display:none"
+                   :src="getImagePath(photo.imgSrc, getMediaTypes.Content)"/>  
+         </div>
     </div>
 </template>
 
@@ -71,6 +73,7 @@
         },
     })
     export default class ActivityDetails extends BaseComponent {
+        public startCaching: boolean = false;
         public drawContent: boolean = false;
         public activityId: string = '1'; // TODO need to remove default value = '1'
         public isPinned: boolean = false;
@@ -170,6 +173,9 @@
         get allImages(): any[] {
             return this.activityState && this.activityState.details && this.activityState.details.images;
         }
+          get allImagesForCaching(): any[] {
+            return this.startCaching && this.activityState && this.activityState.details && this.activityState.details.images;
+        }
 
         public created() {
             if (this.$route.params.activityId) {
@@ -197,7 +203,9 @@
                         } else {
                             this.showErrorPane = false; // Important for hide error pane and show the activity section
                         }
-
+                        setTimeout(() => {
+                            this.startCaching = true; // delay the fetch of the content images to avoid race condition with the thumbnails
+                        }, 1000);
                         this.isPinned = res.data && res.data.details && res.data.details.isPinned;
                     }).catch((err: any) => {
                         this.showErrorPane = true;

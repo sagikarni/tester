@@ -2,19 +2,19 @@
 <div>
  <div v-if="isSinglePhotoSlide" class="full-height table">
                 <div class="cell">
-                    <v-img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"></v-img>
+                    <img style="height: 100%; width: 100%; background-color: white"  class="object-fit_contain" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"/>>
                 </div>
  </div>
 
     <div v-else-if="isTwoVerticalPhotoes" class="full-height table">
         <div class="row">
             <div class="cell">
-                <v-img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"></v-img>
+                <img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"/>
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <v-img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )"></v-img>
+                img class="object-fit_contain twoCell" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )"/>
             </div>
 
             </div>
@@ -25,15 +25,15 @@
 
         <div class="row">
             <div class="cell">
-                <v-img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"></v-img>
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content )"/>
 
-                    <v-img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )"></v-img>
+                    <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[1], getMediaTypes.Content )"/>
             </div>
         </div>
         <div class="row">
             <div class=" cell">
-                <v-img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[2], getMediaTypes.Content )"></v-img>
-                <v-img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[3], getMediaTypes.Content )"></v-img>
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[2], getMediaTypes.Content )"/>
+                <img class="object-fit_contain fourCell" @click="changeBrightness($event)" :src="getImagePath(parameter.media.photos[3], getMediaTypes.Content )"/>
             </div>
 
             </div>
