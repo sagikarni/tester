@@ -54,8 +54,6 @@
         @Prop() public aspectRatio?: number;
         @Prop() public memoryLayout?: number;
         @Prop() public isMobile?: boolean;
-        @Prop() public rigthOrentation?: boolean;
-
         public cards: any[] = [];
         public shuffleCount: number = 0;
         public shuffledDeck: boolean = false;
@@ -74,9 +72,7 @@
         }
 
         public mounted() {
-            if (this.rigthOrentation) {
-                this.initializeMemory();
-            }
+            this.initializeMemory();
         }
 
         public initializeMemory() {

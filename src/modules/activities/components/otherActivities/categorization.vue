@@ -74,11 +74,11 @@
             // since we are setting layout in px and not in % - if we will do it in the wrong orientation
             // the layout will be calculated on the wrong orientation...
             if (this.rigthOrentation) {
-                this.initializeCategorization();
+                this.draggAndDrop();
             }
         }
 
-        public initializeCategorization() {
+        public draggAndDrop() {
                 const container = $("#clone-container");
                 const scrollBox = $("#scroll-box");
                 const droppaneContainer: any = document.querySelector('.droppane-container');

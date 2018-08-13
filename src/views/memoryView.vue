@@ -8,7 +8,6 @@
         <section v-show="!isSizeXS && !hasCorrectOrientation">
             <memory
                     v-if="firstPageLoad"
-                    :rigthOrentation="firstPageLoad"
                     :images="slides"
                     :isMobile="isMobileDevice"
                     :memoryLayout="memoryLayout"
