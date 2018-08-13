@@ -80,7 +80,7 @@ export interface Ilocale {
   };
 }
 
-export const locale: Ilocale = dictionary;
+export const locale: Ilocale | any = dictionary;
 
 export const isRTL: boolean = rtl;
 

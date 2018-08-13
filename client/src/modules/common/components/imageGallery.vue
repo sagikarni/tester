@@ -5,8 +5,8 @@
                 <div  @click="showSlideImages(thumbnail)" >
                 <v-card flat tile  class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
                   <v-img  
-                    :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)"
-                    :lazy-src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.PreLoad)"
+                    :src="getImagePath(thumbnail.imgSrc, getMediaTypes.Thumbnail)"
+                    :lazy-src="getImagePath(thumbnail.imgSrc, getMediaTypes.PreLoad)"
                     aspect-ratio="1.5"
                   >
                              <v-layout
@@ -102,17 +102,17 @@
                     if (filterId && item.filterInfo) {
                         if (item.filterInfo.indexOf(filterId) > -1) {
                             imageItem = {
-                                thumbnailSrc: item.thumbnailSrc,
+                                imgSrc: item.imgSrc,
                                 title: item.title,
                                 active: true,
                                 id: item.id,
                             };
                             slideImages.push({id: item.id, title: item.title, imgSrc: item.imgSrc});
                         } else {
-                            imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: false};
+                            imageItem = {imgSrc: item.imgSrc, title: item.title, active: false};
                         }
                     } else {
-                        imageItem = {thumbnailSrc: item.thumbnailSrc, title: item.title, active: true, id: item.id};
+                        imageItem = {imgSrc: item.imgSrc, title: item.title, active: true, id: item.id};
                         slideImages.push({id: item.id, title: item.title, imgSrc: item.imgSrc});
                     }
                     thumbnailItems.push(imageItem);
@@ -137,6 +137,7 @@
 
         public created() {
             this.chooseGalleryThumbnails(this.imageGalleryInfo, this.filterId);
+
         }
     }
 </script>
