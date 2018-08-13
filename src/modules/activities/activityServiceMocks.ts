@@ -23,63 +23,54 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
                 imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
                 imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
                 imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
                 imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
@@ -141,63 +132,54 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
                 imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
                 imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
                 imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
                 imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
@@ -244,63 +226,54 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
                 imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
                 imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
                 imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
                 imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
@@ -347,63 +320,54 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
                 imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
                 imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
                 imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
                 imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
@@ -444,28 +408,24 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
              },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
@@ -512,7 +472,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
@@ -521,9 +480,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 2,
-
-                thumbnailSrc: '2.jpg',
-
                 imgSrc: '2.jpg',
 
                 title: 'some title 2',
@@ -535,9 +491,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 3,
-
-                thumbnailSrc: '3.jpg',
-
                 imgSrc: '3.jpg',
 
                 title: 'some title 3',
@@ -549,9 +502,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 4,
-
-                thumbnailSrc: '4.jpg',
-
                 imgSrc: '4.jpg',
 
                 title: 'some title 4',
@@ -563,9 +513,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 5,
-
-                thumbnailSrc: '5.jpg',
-
                 imgSrc: '5.jpg',
 
                 title: 'some title 5',
@@ -577,9 +524,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 6,
-
-                thumbnailSrc: '6.jpg',
-
                 imgSrc: '6.jpg',
 
                 title: 'some title 6',
@@ -591,9 +535,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 7,
-
-                thumbnailSrc: '7.jpg',
-
                 imgSrc: '7.jpg',
 
                 title: 'some title 7',
@@ -605,9 +546,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 8,
-
-                thumbnailSrc: '8.jpg',
-
                 imgSrc: '8.jpg',
 
                 title: 'some title 7',
@@ -619,9 +557,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
             {
 
                 id: 9,
-
-                thumbnailSrc: '9.jpg',
-
                 imgSrc: '9.jpg',
 
                 title: 'some title 7',
@@ -695,7 +630,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
@@ -704,8 +638,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 2,
-
-                thumbnailSrc: '2.jpg',
 
                 imgSrc: '2.jpg',
 
@@ -718,9 +650,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 3,
-
-                thumbnailSrc: '3.jpg',
-
                 imgSrc: '3.jpg',
 
                 title: 'some title 3',
@@ -732,9 +661,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 4,
-
-                thumbnailSrc: '4.jpg',
-
                 imgSrc: '4.jpg',
 
                 title: 'some title 4',
@@ -746,9 +672,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 5,
-
-                thumbnailSrc: '5.jpg',
-
                 imgSrc: '5.jpg',
 
                 title: 'some title 5',
@@ -760,9 +683,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 6,
-
-                thumbnailSrc: '6.jpg',
-
                 imgSrc: '6.jpg',
 
                 title: 'some title 6',
@@ -774,9 +694,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 7,
-
-                thumbnailSrc: '7.jpg',
-
                 imgSrc: '7.jpg',
 
                 title: 'some title 7',
@@ -788,9 +705,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 8,
-
-                thumbnailSrc: '8.jpg',
-
                 imgSrc: '8.jpg',
 
                 title: 'some title 7',
@@ -802,9 +716,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
             {
 
                 id: 9,
-
-                thumbnailSrc: '9.jpg',
-
                 imgSrc: '9.jpg',
 
                 title: 'some title 7',
@@ -873,7 +784,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
@@ -882,8 +792,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 2,
-
-                thumbnailSrc: '2.jpg',
 
                 imgSrc: '2.jpg',
 
@@ -896,9 +804,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 3,
-
-                thumbnailSrc: '3.jpg',
-
                 imgSrc: '3.jpg',
 
                 title: 'some title 3',
@@ -910,9 +815,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 4,
-
-                thumbnailSrc: '4.jpg',
-
                 imgSrc: '4.jpg',
 
                 title: 'some title 4',
@@ -924,9 +826,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 5,
-
-                thumbnailSrc: '5.jpg',
-
                 imgSrc: '5.jpg',
 
                 title: 'some title 5',
@@ -938,9 +837,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 6,
-
-                thumbnailSrc: '6.jpg',
-
                 imgSrc: '6.jpg',
 
                 title: 'some title 6',
@@ -952,9 +848,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 7,
-
-                thumbnailSrc: '7.jpg',
-
                 imgSrc: '7.jpg',
 
                 title: 'some title 7',
@@ -966,9 +859,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 8,
-
-                thumbnailSrc: '8.jpg',
-
                 imgSrc: '8.jpg',
 
                 title: 'some title 7',
@@ -980,9 +870,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
             {
 
                 id: 9,
-
-                thumbnailSrc: '9.jpg',
-
                 imgSrc: '9.jpg',
 
                 title: 'some title 7',
@@ -1060,7 +947,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: 'puzzle-1/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
@@ -1069,7 +955,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: 'puzzle-2/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
@@ -1079,7 +964,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: 'puzzle-3/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
@@ -1088,7 +972,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: 'puzzle-4/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
@@ -1097,7 +980,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             {
 
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: 'puzzle-5/photo.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
@@ -1153,63 +1035,54 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [2, 3], // this relates to the sessionsInfo. This thumbnail (photo) appears in the Long and Medium sessions but not in the short session
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
                 imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
                 imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
                 imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
                 imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
                 imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
                 imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
                 imgSrc: '8.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
                 imgSrc: '9.jpg',
                 title: 'some title 7',
                 filterInfo: [2, 3],
@@ -1273,71 +1146,61 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
-                imgSrc: '1.jpg',
+                                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 2,
-                thumbnailSrc: '2.jpg',
-                imgSrc: '2.jpg',
+                                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                thumbnailSrc: '3.jpg',
-                imgSrc: '3.jpg',
+                                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                thumbnailSrc: '4.jpg',
-                imgSrc: '4.jpg',
+                                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 5,
-                thumbnailSrc: '5.jpg',
-                imgSrc: '5.jpg',
+                                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 6,
-                thumbnailSrc: '6.jpg',
-                imgSrc: '6.jpg',
+                                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 7,
-                thumbnailSrc: '7.jpg',
-                imgSrc: '7.jpg',
+                                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 8,
-                thumbnailSrc: '8.jpg',
-                imgSrc: '8.jpg',
+                                imgSrc: '8.jpg',
                 title: 'some title 8',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 9,
-                thumbnailSrc: '9.jpg',
-                imgSrc: '9.jpg',
+                                imgSrc: '9.jpg',
                 title: 'some title 9',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 10,
-                thumbnailSrc: '9.jpg',
-                imgSrc: '9.jpg',
+                                imgSrc: '9.jpg',
                 title: 'some title 9',
                 filterInfo: [1, 2, 3],
             },
@@ -1384,8 +1247,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         images: [
             {
                 id: 1,
-                thumbnailSrc: '1.jpg',
-                imgSrc: '1.jpg',
+                                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
              },
@@ -1394,7 +1256,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 2,
 
-                thumbnailSrc: '2.jpg',
 
                 imgSrc: '2.jpg',
 
@@ -1407,7 +1268,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 3,
 
-                thumbnailSrc: '3.jpg',
 
                 imgSrc: '3.jpg',
 
@@ -1419,7 +1279,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 4,
 
-                thumbnailSrc: '4.jpg',
 
                 imgSrc: '4.jpg',
 
@@ -1431,7 +1290,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 5,
 
-                thumbnailSrc: '5.jpg',
 
                 imgSrc: '5.jpg',
 
@@ -1443,7 +1301,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 6,
 
-                thumbnailSrc: '6.jpg',
 
                 imgSrc: '6.jpg',
 
@@ -1455,7 +1312,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 7,
 
-                thumbnailSrc: '7.jpg',
 
                 imgSrc: '7.jpg',
 
@@ -1467,7 +1323,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 8,
 
-                thumbnailSrc: '8.jpg',
 
                 imgSrc: '8.jpg',
 
@@ -1479,7 +1334,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
                 id: 9,
 
-                thumbnailSrc: '9.jpg',
 
                 imgSrc: '9.jpg',
 

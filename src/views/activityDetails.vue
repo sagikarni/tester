@@ -255,3 +255,9 @@
         }
     }
 </script>
+<style>
+
+    .menu{
+        display: inline-block;
+    }
+</style>
