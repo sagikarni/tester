@@ -1,33 +1,29 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2016",
-    "module": "es2015",
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "jsx": "preserve",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
     "baseUrl": ".",
-    "types": [
-      "node",
-      "greensock"
-    ],
+    "lib": ["es2015"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+      "@server/*": ["server/*"],
+      "@modules/*": ["server/modules/*"],
+      "@/*": ["client/src/*"],
+      "@config/*": ["client/src/config"]
+    },
+    "types": ["greensock", "node"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.vue",
-    "tests/**/*.ts"
-  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "node_modules/**/*.*",
+    "dist",
+    "client",
+    "server/**/*.spec.ts",
+    "server/**/*.e2e.ts"
   ]
 }
