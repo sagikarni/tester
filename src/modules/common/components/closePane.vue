@@ -1,6 +1,6 @@
 <template>
     <div class="closePane" @click="resizButton($event)">
-        <v-icon class="iconRes" ref="rez">close</v-icon>
+        <v-icon class="iconRes">close</v-icon>
     </div>
 
 </template>
@@ -18,8 +18,8 @@
         public resizButton(e: object) {
             if (!this.isCloseBtn) {
                 this.isCloseBtn = true;
-                timeLineMax.from(this.$refs.rez, 0.1,
-                    {css: {scale: 1.2, opacity: 1, padding: "4px"}, ease: Quad.easeInOut, delay: 2.8});
+                timeLineMax.from('.iconRes', 0.3,
+                    {css: {scale: 1.2, opacity: 1, padding: "4px"}, ease: Quad.easeInOut, delay: 2.7});
                 this.setTime = setTimeout(() => {
                     this.isCloseBtn = false;
                 }, 3000);

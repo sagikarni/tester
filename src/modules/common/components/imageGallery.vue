@@ -3,8 +3,9 @@
         <v-layout v-bind="addColumnProp">
             <v-flex sm6 md4 xs12 v-for="(thumbnail, index) in thumbnails" :key="index">
                 <div  @click="showSlideImages(thumbnail)" >
-                <v-card flat tile  class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}">
-                  <v-img  
+                <v-card flat tile >
+                  <v-img
+                    :class="{'active-item': thumbnail.active, 'inactive-item': !thumbnail.active}"
                     :src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.Thumbnail)"
                     :lazy-src="getImagePath(thumbnail.thumbnailSrc, getMediaTypes.PreLoad)"
                     aspect-ratio="1.5"
