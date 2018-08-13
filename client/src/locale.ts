@@ -15,7 +15,7 @@ export interface Ilocale {
     name: string;
     activityDetails: {
       videoBasedText: string;
-      imageBasedText: string;
+      photoBasedText: string;
       landscapeText: string;
       portraitText: string;
     };
@@ -52,10 +52,6 @@ export interface Ilocale {
     revealPhoto: string;
   };
   general: {
-    photoText: string;
-    videoText: string;
-    slidesText: string;
-    sesstionLength: string;
     social: {
       pin: string;
       unPin: string;
@@ -66,7 +62,11 @@ export interface Ilocale {
         twitterText: string;
       };
     };
+    photoText: string;
+    videoText: string;
     close: string;
+    slidesText: string;
+    sessionLengthText: string;
     oopsTitleText: string;
     tryAgainText: string;
     homeText: string;
