@@ -20,9 +20,10 @@
     import { State } from 'vuex-class';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {ShapeType, ImageType} from '@/modules/activities/store/types';
+    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
 
     @Component
-    export default class ZoomSlide extends BaseComponent {
+    export default class ZoomSlide extends SlideBase {
         @Prop() public parameter?: any;
         @Prop() public slideIndex?: number;
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
@@ -31,16 +32,6 @@
         public size: number = 1;
         public largeEvent: boolean = true ;
         public showShape: boolean = true ;
-
-        public pauseAction(): void {
-            // do nothing
-        }
-        public stopAction(): void {
-            // do nothing
-        }
-        public revertWitpModal(): void {
-            // do nothing
-        }
 
         get getMediaTypes(): any {
             return ImageType;

@@ -81,19 +81,6 @@
                       });
             (TimelineMax as any).to(elemFadingWord, 0, {css: {"margin-left": "0", "margin-right": "0"}});
         }
-        public pauseAction(): void {
-            // do nothing
-        }
-        public stopAction(): void {
-            // do nothing
-        }
-        public revertWitpModal(): void {
-            // do nothing
-        }
-        public showFirstShape() {
-            // do nothing
-        }
-
     }
 </script>
 

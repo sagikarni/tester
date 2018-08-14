@@ -82,22 +82,6 @@
             }
         }
 
-        public pauseAction(): void {
-            // do nothing
-        }
-
-        public stopAction(): void {
-            // do nothing
-        }
-
-        public revertWitpModal(): void {
-            // do nothing
-        }
-
-        public showFirstShape() {
-            // do nothing
-        }
-
     }
 </script>
 

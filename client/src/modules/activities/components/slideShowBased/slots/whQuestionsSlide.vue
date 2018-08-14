@@ -3,14 +3,13 @@
         <div class="full-height table">
             <div class="cell">
                 <div class="cell-content">
-                    <img style="width: 100%; background-color: white" class="object-fit_contain"
-                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"/>
-                    <div v-if="question" class="wh-question" @click="changeQuestion">
+                    <slot></slot>
+                    <div v-if="hasQuestions" class="wh-question" @click="changeQuestion">
                         <div class="text_refresh_wrapper">
                             <span class="refresh_icon">
                                 <i class="material-icons meaningRefresh"> cached </i>
                             </span>
-                            <span class="spanFade meaningSpanFade">{{questionsArray[0]}}</span>
+                            <span class="spanFade meaningSpanFade">{{currentQuestion}}</span>
                         </div>
                     </div>
                 </div>
@@ -25,31 +24,23 @@
     import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
 
     import TimelineMax from 'gsap';
+    const timeLineMax = TimelineMax as any;
 
     @Component
-    export default class WHQuestionsSlide extends BaseComponent {
-        @Prop() public parameter?: any;
-        public question: boolean = false;
-        public transitionEnded = true;
-        public buttonSheet: boolean = true;
+    export default class WHQuestionsSlideBase extends BaseComponent {
+        @Prop() public hasQuestions?: boolean;
+        @Prop() public questions?: string[];
 
-        get questionsArray(): any[] {
-            return this.parameter && this.parameter.media && this.parameter.media.questions;
-        }
-        get getMediaTypes(): any {
-            return ImageType;
-        }
-        public isValid(): boolean {
-            return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
-        }
-        public getNextQuestion() {
-            const firstQ = this.questionsArray.shift();
-            this.questionsArray.push(firstQ);
-        }
+        private currentQuestion?: string;
+        private transitionEnded = true;
 
         public created() {
-            if (this.isValid()) {
-                this.question = true;
+            this.getNextQuestion();
+        }
+
+        public getNextQuestion() {
+            if (this.questions && this.questions.length > 0) {
+                this.currentQuestion = this.questions.shift();
             }
         }
 
@@ -62,16 +53,15 @@
             const elemFadingWord = document.getElementsByClassName("meaningSpanFade");
 
             this.transitionEnded = false;
-            (TimelineMax as any).set(elemrefresh, {transform: "rotate(180deg)", autoAlpha: 0.5 });
-
-            (TimelineMax as any).to(elemFadingWord, 0.5,
+            timeLineMax.set(elemrefresh, {transform: "rotate(180deg)", autoAlpha: 0.5 });
+            timeLineMax.to(elemFadingWord, 0.5,
                 {
                     autoAlpha: 0,
                     ease: Power1.easeOut,
                     onComplete: () => {
-                        (TimelineMax as any).set(elemrefresh, {transform: "rotate(0deg)", autoAlpha: 1 });
+                        timeLineMax.set(elemrefresh, {transform: "rotate(0deg)", autoAlpha: 1 });
                         this.getNextQuestion();
-                        (TimelineMax as any).to(elemFadingWord, 0.5, {
+                        timeLineMax.to(elemFadingWord, 0.5, {
                             autoAlpha: 1, ease: Power1.easeOut, onComplete: () => {
                                 this.transitionEnded = true;
                             },
@@ -79,8 +69,12 @@
                     },
                 });
         }
+
     }
+
 </script>
+
+
 
 <style scoped lang="scss">
     .object-fit_contain { object-fit: contain }

@@ -1,9 +1,9 @@
  <template>
      <div>
-         <wh-questions-slide-base :question="question" :questionsText="questionsArray">
+         <wh-questions-slide :question="question" :questionsText="questionsArray">
              <video-player class="vjs-custom-box vjs-big-play-centered">
              </video-player>
-         </wh-questions-slide-base>
+         </wh-questions-slide>
      </div>
  </template>
 
@@ -11,50 +11,19 @@
      import { Component, Prop } from 'vue-property-decorator';
      import BaseComponent from '@/modules/common/components/baseComponent.vue';
      import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
-     import whQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
+     import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlide.vue';
+     import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
+     import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
 
 
      @Component({
          components: {
-             whQuestionsSlideBase,
+             WhQuestionsSlide,
          },
      })
-     export default class WHQuestionsPhotoSlide extends BaseComponent {
-         @Prop() public parameter?: any;
-         public question: boolean = false;
-
-         get questionsArray(): any[] {
-             return this.parameter && this.parameter.media && this.parameter.media.questions;
-         }
-         get getMediaTypes(): any {
-             return ImageType;
-         }
-         public isValid(): boolean {
-             return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
-         }
-
-         public created() {
-             if (this.isValid()) {
-                 this.question = true;
-             }
-         }
-
-         public pauseAction(): void {
-             // do nothing
-         }
-         public stopAction(): void {
-             // do nothing
-         }
-         public revertWitpModal(): void {
-             // do nothing
-         }
-         public showFirstShape() {
-             // do nothing
-         }
+     export default class WHQuestionsPhotoSlide extends WhQuestionsSlideBase {
      }
-
  </script>
-
 
  <style scoped lang="scss">
      .object-fit_contain { object-fit: contain }
