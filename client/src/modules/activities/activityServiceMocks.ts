@@ -12,8 +12,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -121,8 +119,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -215,8 +211,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -309,8 +303,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -397,8 +389,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -461,8 +451,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
@@ -619,8 +607,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
@@ -779,7 +765,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
-        selectedSessionInfoId: 3,
         isPinned: false,
         images: [
             {
@@ -942,7 +927,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 3, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
         isPinned: false,
         images: [
             {
@@ -1024,8 +1008,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -1134,8 +1116,6 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         activityType: ActivityType.Memory, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         isPinned: false,
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
@@ -1236,8 +1216,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        selectedSessionInfoId: 3,
-        selectedSessionInfoDesc: 'Long',
         sessionsInfo : [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
