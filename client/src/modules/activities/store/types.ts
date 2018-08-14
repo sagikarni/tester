@@ -64,6 +64,7 @@ export class ActivityMainDetailsInfo {
     public orientationText?: string;
     public orientationIconClass?: string;
     public mediaCount?: number;
+    public selectedSessionInfoId?: number = 3;
 }
 
 export interface IActivitiesState {
@@ -80,7 +81,7 @@ export interface IActivitiesState {
             mediaCount: number, // number of videos or photos in this activity
             sessionsInfo: SessionsInfo[],
             selectedSessionInfoId: number,
-            selectedSessionInfoDesc: string,
+            selectedSessionInfoDesc: 'Long',
             isPinned: boolean,
         },
         content: { },

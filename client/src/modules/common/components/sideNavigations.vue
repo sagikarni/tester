@@ -48,6 +48,7 @@
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
+    import WHQuestionsPhotoSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsPhotoSlide.vue';
     import ZoomSlide from '@/modules/activities/components/slideShowBased/zoomSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
@@ -67,6 +68,7 @@
             WHQuestionsSlide,
             ZoomSlide,
             ZoomToolbar,
+            WHQuestionsPhotoSlide,
         },
     })
     export default class SideNavigantions extends BaseComponent {
@@ -159,7 +161,7 @@
                     }
                 case ActivityType.WHQuestions:
                     if (this.mediaType === MediaType.Photo) {
-                        return 'WHQuestionsSlide';
+                        return 'WHQuestionsPhotoSlide';
                     }
                 default:
                     break;

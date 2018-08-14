@@ -80,6 +80,7 @@
         public showErrorPane: boolean = false;
         public loading?: boolean = false;
         public sessionSelectedItem?: string = 'Long';
+        public sessionSelectedItemId?: number = 3;
         public noDeviceSleep: any;
         @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
         @State(state => state.errorPane) public errorPane?: any;
@@ -157,17 +158,25 @@
         }
 
         get sessionBtnId(): number | undefined {
-            return this.selectedSessionInfoId;
+            if (this.selectedSessionInfoId !== undefined && this.sessionsInfo) {
+                return this.selectedSessionInfoId;
+            } else {
+                return this.sessionSelectedItemId;
+            }
         }
 
         get sessionBtnDescription(): string | undefined {
             if (this.selectedSessionInfoId !== undefined && this.sessionsInfo) {
                 return this.sessionsInfo[this.selectedSessionInfoId - 1]['description'];
+            } else {
+                return this.sessionSelectedItem;
             }
         }
 
         public changedSessionInfoId(selectedSessionInfo: any) {
             this.updateSessionInfoType({selectedSessionInfo});
+            this.sessionSelectedItemId = selectedSessionInfo.id;
+            this.sessionSelectedItem = selectedSessionInfo.description;
         }
 
         get allImages(): any[] {

@@ -1,9 +1,6 @@
 <template>
     <div class="closePane" @click="resizButton($event)">
-        <div ref="rez">
-            <v-icon class="iconRes">close</v-icon>
-
-        </div>
+        <v-icon class="iconRes">close</v-icon>
     </div>
 
 </template>
@@ -21,8 +18,8 @@
         public resizButton(e: object) {
             if (!this.isCloseBtn) {
                 this.isCloseBtn = true;
-                timeLineMax.from(this.$refs.rez, 0.2,
-                    {css: {scale: 1.4, opacity: 1}, ease: Back.easeOut, delay: 2.6});
+                timeLineMax.from('.iconRes', 0.4,
+                    {scale: 1.4, autoAlpha: 1, delay: 2.6});
                 this.setTime = setTimeout(() => {
                     this.isCloseBtn = false;
                 }, 3000);
@@ -34,16 +31,14 @@
         }
     }
 </script>
-s
+
 <style scoped lang="scss">
     .closePane {
-
         top: 15px;
         left: 24px;
         position: absolute;
         z-index: 201;
         cursor: pointer;
-        padding: 15px;
     }
 
     .btn__content {
@@ -55,16 +50,13 @@ s
     }
 
     .iconRes {
-        background-color: grey;
-        display: block;
-        border-radius: 50%;
         opacity: 0.5;
-        cursor: pointer;
-        color: white;
-        font-size: 18px;
-        margin: 3px;
-        padding: 4px;
-
+        padding: 5px;
+        background-color: #666666;
+        border-radius: 50%;
+        display: block;
+        color: white !important;
+        font-size: 16px;
     }
 
     .closeButton {
