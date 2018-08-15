@@ -1,99 +1,66 @@
- <template>
-     <div>
-         <wh-questions-slide :question="question" :questionsText="questionsArray">
-             <video-player class="vjs-custom-box vjs-big-play-centered">
-             </video-player>
-         </wh-questions-slide>
-     </div>
- </template>
+<template>
+    <div>
+        <wh-questions-slide :hasQuestions="hasQquestions" :questions="questionsArray">
+            <slide-video-player v-if='isSingleVideoSlide' class="vjs-custom-box vjs-big-play-centered"
+                                ref="videoPlayer"
+                                :videoPath="videoPath">
+            </slide-video-player>
+        </wh-questions-slide>
+    </div>
+</template>
 
- <script lang="ts">
-     import { Component, Prop } from 'vue-property-decorator';
-     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-     import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
-     import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlide.vue';
-     import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
-     import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
+<script lang="ts">
+    import {Component, Prop} from 'vue-property-decorator';
+    import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
+    import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlide.vue';
+    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
+    import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
+    import SlideVideoPlayer from '@/modules/activities/components/slideShowBased/slideVideoPlayer.vue';
 
+    @Component({
+        components: {
+            WhQuestionsSlide,
+            SlideVideoPlayer,
+        },
+    })
+    export default class WHQuestionsVideoSlide extends WhQuestionsSlideBase {
+        @Prop() public parameter?: any;
+        public playerOptions: any;
+        public pause: boolean = false;
 
-     @Component({
-         components: {
-             WhQuestionsSlide,
-         },
-     })
-     export default class WHQuestionsPhotoSlide extends WhQuestionsSlideBase {
-     }
- </script>
+        get player(): SlideVideoPlayer {
+            return (this.$refs.videoPlayer as SlideVideoPlayer);
+        }
 
- <style scoped lang="scss">
-     .object-fit_contain { object-fit: contain }
-     .full-height{
-         height:100%;
-         background:#F8F8F8;
-     }
-     .table{
-         display:table;
-         width:100%;
-         position:relative;
-         background: transparent!important;
-     }
+        get videoPath(): string {
+            return this.getImagePath(this.parameter.media.videos[0], this.getImageTypes.Content, this.getMediaTypes.Video);
+        }
+        get getImageTypes(): any {
+            return ImageType;
+        }
 
-     .cell {
-         display: table-cell;
-         vertical-align: middle;
-         width: 100%;
-         margin: 0 auto;
-         height: 100%;
-         text-align: center;
-         .cell-content {
-             position: relative;
-             max-height: 100vh !important;
-         }
-     }
+        get getMediaTypes(): any {
+            return MediaType;
+        }
+        get isSingleVideoSlide(): boolean {
+            return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
+        }
 
-     .wh-question {
-         cursor: pointer;
-         position: absolute;
-         padding: 7px 55px 1px 100px;
-         color: white;
-         bottom: 16px;
-         left: 0;
-         text-align: left;
-         box-sizing: border-box;
-         font-size: 18px;
-         background: rgba(0, 0, 0, 0.6);
-         width: 100%;
-         .text_refresh_wrapper {
-             display: inline-block;
-             position: relative;
-             min-width: 150px;
-         }
-         span {
-             font-size: 24px;
-             min-width: 150px;
-             display: inline-block;
-             float: left;
-             line-height: 32px;
-             padding-left: 80px;
-         }
-         .refresh_icon {
-             position: absolute;
-             top: -7px;
-             left: 0;
-             width: 40px;
-             min-width: 55px;
-             background: #000000;
-             margin-right: 0;
-             padding-left: 0;
-         }
-         i {
-             font-size: 32px;
-             float: right;
-             margin: 0 10px;
-             margin: 8px 10px;
-             transition: all 0.5s;
-         }
-     }
+    }
 
- </style>
+</script>
 
+<style scoped lang="scss">
+    .full-height {
+        background: #F8F8F8;
+    }
+
+    .table {
+        display: table;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background: transparent !important;
+    }
+</style>

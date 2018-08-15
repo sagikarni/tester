@@ -1,14 +1,15 @@
 <template>
-            <video-player class="vjs-custom-box vjs-big-play-centered"
-                          ref="videoPlayer"
-                          @play="onPlayerPlay($event)"
-                          :options="playerOptions"
-                          :playsinline="true">
-            </video-player>
+    <video-player class="vjs-custom-box vjs-big-play-centered"
+                  ref="videoPlayer"
+                  @play="onPlayerPlay($event)"
+                  :options="playerOptions"
+                  :playsinline="true">
+
+    </video-player>
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
 
@@ -48,6 +49,7 @@
         }
 
         public created() {
+
             this.playerOptions = {
                 autoplay: false,
                 muted: true,
@@ -55,13 +57,15 @@
                 playbackRates: [0.7, 1.0, 1.5, 2.0],
                 sources: [{
                     type: "video/mp4",
-                    src: this.getImagePath(this.videoPath, this.getImageTypes.Content, this.getMediaTypes.Video),
+                    src: this.videoPath,
                 }],
             };
         }
+
         public revertWitpModal(): void {
             // do nothing
         }
+
         public showFirstShape() {
             // do nothing
         }
@@ -70,15 +74,16 @@
 </script>
 
 <style scoped lang="scss">
-    .full-height{
-        background:#F8F8F8;
+    .full-height {
+        background: #F8F8F8;
     }
-    .table{
-        display:table;
-        height:100%;
-        width:100%;
-        position:relative;
-        background: transparent!important;
+
+    .table {
+        display: table;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background: transparent !important;
     }
 
 </style>

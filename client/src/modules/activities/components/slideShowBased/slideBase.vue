@@ -5,6 +5,8 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import {ImageType, MediaType} from '@/modules/activities/store/types';
+
 
     @Component
     export default class SlideBase extends BaseComponent {
@@ -20,6 +22,16 @@
          public showFirstShape() {
              // do nothing
          }
+
+        get getImageTypes(): any {
+            return ImageType;
+        }
+
+        get getMediaTypes(): any {
+            return MediaType;
+        }
+
+
     }
 </script>
 
