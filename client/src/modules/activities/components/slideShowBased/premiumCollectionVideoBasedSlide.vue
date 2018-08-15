@@ -1,90 +1,57 @@
 <template>
-        <div v-if="isSingleVideoSlide" class="full-height table">
-            <video-player class="vjs-custom-box vjs-big-play-centered"
-                          ref="videoPlayer"
-                          @play="onPlayerPlay($event)"
-                          :options="playerOptions"
-                          :playsinline="true">
-            </video-player>
-        </div>
+    <div v-if="isSingleVideoSlide" class="full-height table">
+        <slide-video-player class="vjs-custom-box vjs-big-play-centered"
+                            ref="videoPlayer"
+                            :videoPath="videoPath" >
+
+        </slide-video-player>
+    </div>
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
+    import SlideVideoPlayer from '@/modules/activities/components/slideShowBased/slideVideoPlayer.vue';
 
-    @Component
+
+    @Component({
+        components: {
+            SlideVideoPlayer,
+        },
+    })
     export default class PremiumCollectionVideoBasedSlide extends BaseComponent {
         @Prop() public parameter?: any;
         public playerOptions: any;
         public pause: boolean = false;
 
-        get player(): any {
-            return (this.$refs.videoPlayer as any).player;
+        get player(): SlideVideoPlayer {
+            return (this.$refs.videoPlayer as SlideVideoPlayer);
+        }
+
+        get videoPath(): string {
+            return this.getImagePath(this.parameter.media.videos[0], this.getImageTypes.Content, this.getMediaTypes.Video);
         }
 
         get isSingleVideoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
 
-        get getImageTypes(): any {
-            return ImageType;
-        }
-        get getMediaTypes(): any {
-            return MediaType;
-        }
-        public onPlayerPlay(player: any) {
-            this.pause = true;
-        }
-
-        public pauseAction(): void {
-            if (!this.player.paused() && !this.pause) {
-                this.player.pause();
-            }
-            this.pause = false;
-        }
-
-        public stopAction(): void {
-            if (!this.player.paused()) {
-                this.player.pause();
-            }
-            this.player.currentTime(0);
-            this.pause = false;
-        }
-
-        public created() {
-            this.playerOptions = {
-                autoplay: false,
-                muted: true,
-                language: 'en',
-                playbackRates: [0.7, 1.0, 1.5, 2.0],
-                sources: [{
-                    type: "video/mp4",
-                    src: this.getImagePath(this.parameter.media.videos[0], this.getImageTypes.Content, this.getMediaTypes.Video),
-                }],
-            };
-        }
-        public revertWitpModal(): void {
-            // do nothing
-        }
-        public showFirstShape() {
-            // do nothing
-        }
 
     }
 </script>
 
 <style scoped lang="scss">
-    .full-height{
-        background:#F8F8F8;
+    .full-height {
+        background: #F8F8F8;
     }
-    .table{
-        display:table;
-        height:100%;
-        width:100%;
-        position:relative;
-        background: transparent!important;
+
+    .table {
+        display: table;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background: transparent !important;
     }
 
 </style>

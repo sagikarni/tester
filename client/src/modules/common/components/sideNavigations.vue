@@ -55,6 +55,7 @@
     import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
     import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
     import TimelineMax from 'gsap';
+    import WHQuestionsVideoSLide from '@/modules/activities/components/slideShowBased/slots/whQuestionsVideoSlide.vue';
 
     const timeLineMax = TimelineMax as any;
     import {ActivityType, MediaType} from '@/modules/activities/store/types';
@@ -69,6 +70,7 @@
             ZoomSlide,
             ZoomToolbar,
             WHQuestionsPhotoSlide,
+            WHQuestionsVideoSLide,
         },
     })
     export default class SideNavigantions extends BaseComponent {
@@ -132,7 +134,7 @@
                         this.slideChanged(this.isBeginning);
                     },
                     beforeDestroy: () => {
-                        (TimelineMax as any).to('div.avtivities-background', 0, {opacity: 0});
+                        timeLineMax.to('div.avtivities-background', 0, {opacity: 0});
                     },
                 },
             };
@@ -162,6 +164,8 @@
                 case ActivityType.WHQuestions:
                     if (this.mediaType === MediaType.Photo) {
                         return 'WHQuestionsPhotoSlide';
+                    } else if (this.mediaType === MediaType.Video) {
+                        return "WHQuestionsVideoSLide";
                     }
                 default:
                     break;
@@ -181,12 +185,12 @@
         }
 
         public hideSidePanes(animationLength: number): void {
-            (TimelineMax as any).to('.swiper-button-white', animationLength, {opacity: 0.1});
+            timeLineMax.to('.swiper-button-white', animationLength, {opacity: 0.1});
         }
 
         public hideAllPanes(): void {
             // hide top pane
-            this.$emit('hideTopPane');
+            // this.$emit('hideTopPane');
             // hide side pane
             this.hideSidePanes(0.2);
         }
@@ -196,7 +200,7 @@
             const tapLength = currentTime - this.lastTap;
             clearTimeout(this.timeout);
             if (tapLength < 500 && tapLength > 0) {
-                this.$emit('showTopPane');
+                // this.$emit('showTopPane');
             } else {
                 this.timeout = setTimeout(() => {
                     clearTimeout(this.timeout);
@@ -215,23 +219,31 @@
 
 
         public pressButton(realIndex: number): void {
+
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
-                el[realIndex - 1].pauseAction();
+                if (el[realIndex - 1].$refs.videoPlayer) {
+                    el[realIndex - 1].$refs.videoPlayer.pauseAction();
+                }
             }
         }
 
         public stopVideo(realIndex: number): void {
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
-                el[realIndex - 1].stopAction();
+                if (el[realIndex - 1].$refs.videoPlayer) {
+
+                    el[realIndex - 1].$refs.videoPlayer.stopAction();
+                }
             }
         }
 
         public revertWitpModal(realIndex: number): void {
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
-                el[realIndex - 1].revertWitpModal();
+                if (el[realIndex - 1].$refs.videoPlayer) {
+                    el[realIndex - 1].$refs.videoPlayer.revertWitpModal();
+                }
             }
         }
 
@@ -243,7 +255,9 @@
             if (slideStatus) {
                 const el: any = this.$refs.slideComponent;
                 if (el[index - 1]) {
-                    el[index - 1].showFirstShape();
+                    if (el[index - 1].$refs.videoPlayer) {
+                        el[index - 1].$refs.videoPlayer.showFirstShape();
+                    }
                 }
             }
         }

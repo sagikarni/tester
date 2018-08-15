@@ -84,6 +84,14 @@
                 // do nothing
             }
         }
+        get getImageTypes(): any {
+            return ImageType;
+        }
+
+        get getMediaTypes(): any {
+            return MediaType;
+        }
+
 
         public setNotificationSystemSettings() {
             this.$notificationSystem = {
