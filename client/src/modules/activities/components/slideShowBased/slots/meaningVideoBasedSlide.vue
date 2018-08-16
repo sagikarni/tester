@@ -1,30 +1,28 @@
 <template>
     <div>
-        <wh-questions-slide :hasQuestions="hasQquestions" :questions="questionsArray">
+        <meaning-bar>
             <slide-video-player v-if='isSingleVideoSlide' class="vjs-custom-box vjs-big-play-centered"
                                 ref="videoPlayer"
                                 :videoPath="videoPath">
             </slide-video-player>
-        </wh-questions-slide>
+        </meaning-bar>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
-    import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlide.vue';
-    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
-    import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
     import SlideVideoPlayer from '@/modules/activities/components/slideShowBased/slideVideoPlayer.vue';
+    import MeaningSlideBase from '@/modules/activities/components/slideShowBased/slots/meaningSlideBase.vue';
+    import MeaningBar from '@/modules/activities/components/slideShowBased/slots/meaningBar.vue';
 
     @Component({
         components: {
-            WhQuestionsSlide,
+            MeaningBar,
             SlideVideoPlayer,
         },
     })
-    export default class WHQuestionsVideoSlide extends WhQuestionsSlideBase {
+    export default class MeaningVideoBasedSlide extends MeaningSlideBase {
         @Prop() public parameter?: any;
         public playerOptions: any;
         public pause: boolean = false;

@@ -27,7 +27,7 @@
     const timeLineMax = TimelineMax as any;
 
     @Component
-    export default class WHQuestionsSlideBase extends BaseComponent {
+    export default class WhQuestionsSlide extends BaseComponent {
         @Prop() public hasQuestions?: boolean;
         @Prop() public questions?: string[];
 
@@ -37,7 +37,6 @@
         public created() {
             this.getNextQuestion();
         }
-
         public getNextQuestion() {
             if (this.questions && this.questions.length > 0) {
                 this.currentQuestion = this.questions.shift();
@@ -70,7 +69,9 @@
                 });
         }
 
+
     }
+
 
 </script>
 

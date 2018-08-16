@@ -1,7 +1,7 @@
 import {mock} from '@/httpClient';
 import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType, MamoryLayout} from './store/types';
 
-mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '1'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -13,7 +13,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -108,7 +108,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '1' } }).reply(200, {
         ],
     },
 });
-mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '2'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -120,7 +120,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -200,7 +200,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '2' } }).reply(200, {
         ],
     },
 });
-mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '3'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -212,7 +212,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -292,7 +292,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '3' } }).reply(200, {
         ],
     },
 });
-mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '4'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -304,7 +304,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -378,7 +378,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '4' } }).reply(200, {
         ],
     },
 });
-mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '10'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/videos/collection-2',
@@ -390,7 +390,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -401,7 +401,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
                 imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
-             },
+            },
             {
                 id: 2,
                 imgSrc: '2.jpg',
@@ -440,6 +440,15 @@ mock.onGet('/general/getActivity', { params: { activityId: '10' } }).reply(200, 
         ],
     },
 });
+
+
+
+
+
+
+
+
+
 mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
     details: {
         title: 'This is a Meaning activity',
@@ -596,6 +605,81 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         ],
     },
 });
+mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
+    details: {
+        title: 'Card Deck Name',
+        baseFolder: '/assets/media/restricted/collections/videos/collection-2',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: ActivityType.Meaning, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 4, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        sessionsInfo: [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
+        images: [
+            {
+                id: 1,
+                imgSrc: '1.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 2,
+                imgSrc: '2.jpg',
+                title: 'some title 2',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 3,
+                imgSrc: '3.jpg',
+                title: 'some title 3',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 4,
+                imgSrc: '4.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
+                videos: ['1.mp4'],
+            },
+            {
+                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
+                videos: ['2.mp4'],
+            },
+            {
+                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
+                videos: ['3.mp4'],
+            },
+            {
+                phrases: ['love', 'inspiration', 'wind', 'spirit', 'opputunity'],
+                videos: ['4.mp4'],
+            },
+        ],
+    },
+});
+
+
+
+
+
+
+
+
+
 mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
     details: {
         title: 'this is What in the picture Activity',
@@ -754,6 +838,81 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         ],
     },
 });
+mock.onGet('/general/getActivity', {params: {activityId: '22'}}).reply(200, {
+    details: {
+        title: 'this is whatinThePictureVideo activty',
+        baseFolder: '/assets/media/restricted/collections/videos/collection-2',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType:  ActivityType.WhatInThePicture, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 4, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        sessionsInfo: [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
+        images: [
+            {
+                id: 1,
+                imgSrc: '1.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 2,
+                imgSrc: '2.jpg',
+                title: 'some title 2',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 3,
+                imgSrc: '3.jpg',
+                title: 'some title 3',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 4,
+                imgSrc: '4.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                questions: ['This is question number 100 for photo number 1', 'This is question number 2 for photo number 1', 'This is question number 3 for photo number 1', 'This is question number 4 for photo number 1'],
+                videos: ['1.mp4'],
+            },
+            {
+                questions: ['This is question number 101 for photo number 2', 'This is question number 2 for photo number 2', 'This is question number 3 for photo number 2', 'This is question number 4 for photo number 2'],
+                videos: ['2.mp4'],
+            },
+            {
+                questions: ['This is question number 102 for photo number 3', 'This is question number 2 for photo number 3', 'This is question number 3 for photo number 3', 'This is question number 4 for photo number 3'],
+                videos: ['3.mp4'],
+            },
+            {
+                questions: ['This is question number 103 for photo number 4', 'This is question number 2 for photo number 4', 'This is question number 3 for photo number 4', 'This is question number 4 for photo number 4'],
+                videos: ['4.mp4'],
+            },
+        ],
+    },
+});
+
+
+
+
+
+
+
+
+
 mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
     details: {
         title: 'this is Cetegorization Activity',
@@ -997,7 +1156,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         ],
     },
 });
-mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '15'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -1009,7 +1168,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -1105,8 +1264,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '15' } }).reply(200, 
         ],
     },
 });
-
-mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, {
+mock.onGet('/general/getActivity', {params: {activityId: '16'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
@@ -1117,7 +1275,7 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -1126,61 +1284,61 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
         images: [
             {
                 id: 1,
-                                imgSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 2,
-                                imgSrc: '2.jpg',
+                imgSrc: '2.jpg',
                 title: 'some title 2',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 3,
-                                imgSrc: '3.jpg',
+                imgSrc: '3.jpg',
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 4,
-                                imgSrc: '4.jpg',
+                imgSrc: '4.jpg',
                 title: 'some title 4',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 5,
-                                imgSrc: '5.jpg',
+                imgSrc: '5.jpg',
                 title: 'some title 5',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 6,
-                                imgSrc: '6.jpg',
+                imgSrc: '6.jpg',
                 title: 'some title 6',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 7,
-                                imgSrc: '7.jpg',
+                imgSrc: '7.jpg',
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 8,
-                                imgSrc: '8.jpg',
+                imgSrc: '8.jpg',
                 title: 'some title 8',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 9,
-                                imgSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 9',
                 filterInfo: [1, 2, 3],
             },
             {
                 id: 10,
-                                imgSrc: '9.jpg',
+                imgSrc: '9.jpg',
                 title: 'some title 9',
                 filterInfo: [1, 2, 3],
             },
@@ -1205,6 +1363,15 @@ mock.onGet('/general/getActivity', { params: { activityId: '16' } }).reply(200, 
 });
 
 
+
+
+
+
+
+
+
+
+
 mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
     details: {
         title: 'this is WH Questions Activity',
@@ -1216,7 +1383,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        sessionsInfo : [
+        sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
             {id: 3, description: "Long", slidesCount: 18},
@@ -1225,10 +1392,10 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         images: [
             {
                 id: 1,
-                                imgSrc: '1.jpg',
+                imgSrc: '1.jpg',
                 title: 'some title 1',
                 filterInfo: [1, 2, 3],
-             },
+            },
 
             {
 
@@ -1248,7 +1415,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
 
 
                 imgSrc: '3.jpg',
-
                 title: 'some title 3',
                 filterInfo: [1, 2, 3],
             },
@@ -1256,10 +1422,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 4,
-
-
                 imgSrc: '4.jpg',
-
                 title: 'some title 4',
                 filterInfo: [1, 2, 3],
             },
@@ -1267,10 +1430,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 5,
-
-
                 imgSrc: '5.jpg',
-
                 title: 'some title 5',
                 filterInfo: [1, 2, 3],
             },
@@ -1278,10 +1438,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 6,
-
-
                 imgSrc: '6.jpg',
-
                 title: 'some title 6',
                 filterInfo: [1, 2, 3],
             },
@@ -1289,10 +1446,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 7,
-
-
                 imgSrc: '7.jpg',
-
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
             },
@@ -1300,10 +1454,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 8,
-
-
                 imgSrc: '8.jpg',
-
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
             },
@@ -1311,10 +1462,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {
 
                 id: 9,
-
-
                 imgSrc: '9.jpg',
-
                 title: 'some title 7',
                 filterInfo: [1, 2, 3],
             },
@@ -1363,9 +1511,90 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         ],
     },
 });
+mock.onGet('/general/getActivity', {params: {activityId: '18'}}).reply(200, {
+    details: {
+        title: 'Card Deck Name',
+        baseFolder: '/assets/media/restricted/collections/videos/collection-2',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'cover.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: ActivityType.WHQuestions, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        mediaCount: 4, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        sessionsInfo: [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ],
+        images: [
+            {
+                id: 1,
+                imgSrc: '1.jpg',
+                title: 'some title 1',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 2,
+                imgSrc: '2.jpg',
+                title: 'some title 2',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 3,
+                imgSrc: '3.jpg',
+                title: 'some title 3',
+                filterInfo: [1, 2, 3],
+            },
+            {
+                id: 4,
+                imgSrc: '4.jpg',
+                title: 'some title 4',
+                filterInfo: [3],
+            },
+        ],
+    },
+    content: {
+        layout: PremiumCollectionLayout.SingleMedia,
+        slides: [
+            {
+                videos: ['1.mp4'],
+                questions: ['This is question number 1 for photo number 1', 'This is question number 2 for photo number 1', 'This is question number 3 for photo number 1', 'This is question number 4 for photo number 1'],
+
+            },
+            {
+                videos: ['2.mp4'],
+                questions: ['This is question number 1 for photo number 2', 'This is question number 2 for photo number 2', 'This is question number 3 for photo number 2', 'This is question number 4 for photo number 2'],
+
+            },
+            {
+                videos: ['3.mp4'],
+                questions: ['This is question number 1 for photo number 3', 'This is question number 2 for photo number 3', 'This is question number 3 for photo number 3', 'This is question number 4 for photo number 3'],
+
+            },
+            {
+                videos: ['4.mp4'],
+                questions: ['This is question number 1 for photo number 4', 'This is question number 2 for photo number 4', 'This is question number 3 for photo number 4', 'This is question number 4 for photo number 4'],
+
+            },
+        ],
+    },
+});
 
 
-mock.onGet('/general/getActivity', { params: { activityId: '100' } }).reply(500, {});
-mock.onGet('/general/getActivity', { params: { activityId: '101' } }).reply(404, {});
-mock.onGet('/general/pinActivity', { params: { activityId: '1', isPinned: true } }).reply(200, { status: true});
-mock.onGet('/general/unPinActivity', { params: { activityId: '1', isPinned: false } }).reply(200, { status: true});
+
+
+
+
+
+
+
+
+
+
+
+mock.onGet('/general/getActivity', {params: {activityId: '100'}}).reply(500, {});
+mock.onGet('/general/getActivity', {params: {activityId: '101'}}).reply(404, {});
+mock.onGet('/general/pinActivity', {params: {activityId: '1', isPinned: true}}).reply(200, {status: true});
+mock.onGet('/general/unPinActivity', {params: {activityId: '1', isPinned: false}}).reply(200, {status: true});
