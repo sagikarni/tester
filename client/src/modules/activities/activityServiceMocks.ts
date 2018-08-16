@@ -1363,15 +1363,6 @@ mock.onGet('/general/getActivity', {params: {activityId: '16'}}).reply(200, {
 });
 
 
-
-
-
-
-
-
-
-
-
 mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
     details: {
         title: 'this is WH Questions Activity',
@@ -1511,6 +1502,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         ],
     },
 });
+
 mock.onGet('/general/getActivity', {params: {activityId: '18'}}).reply(200, {
     details: {
         title: 'Card Deck Name',
@@ -1583,7 +1575,77 @@ mock.onGet('/general/getActivity', {params: {activityId: '18'}}).reply(200, {
 });
 
 
+mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
+    details: {
+        title: 'Sounds and Photos',
+        baseFolder: '/assets/media/restricted/cognitive/soundPhotoSelection/soundPhotoSelection1',
+        description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
+        coverPhoto: 'iStock-505602225.jpg',
+        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        activityType: ActivityType.PhotoSelectionBySound, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
+        mediaCount: 8, // number of videos or photos in this activity
+        orientation: Orientation.Landscape,
+        isPinned: false,
+        mediaType: MediaType.PhotoAndSound, // 0 = photos , 1 = videos - should be defined as enum in the store types file
+        images: [
+            {
+                id: 1,
+                imgSrc: 'iStock-93157220.jpg',
+                title: 'some title 1',
+            },
+            {
+                id: 2,
+                imgSrc: 'iStock-98378798.jpg',
+                title: 'some title 2',
+            },
+            {
+                id: 3,
+                imgSrc: 'iStock-177533648.jpg',
+                title: 'some title 3',
+            },
+            {
+                id: 4,
+                imgSrc: 'iStock-505602225.jpg',
+                title: 'some title 4',
+            },
+            {
+                id: 5,
+                imgSrc: 'iStock-508496372.jpg',
+                title: 'some title 5',
+            },
+            {
+                id: 6,
+                imgSrc: 'iStock-516318760.jpg',
+                title: 'some title 6',
+            },
+            {
+                id: 7,
+                imgSrc: 'iStock-531856654.jpg',
+                title: 'some title 7',
+            },
+            {
+                id: 8,
+                imgSrc: 'iStock-638654490.jpg',
+                title: 'some title 8',
+            },
+        ],
+    },
+    content: {
+        slides: [
+            {
+                photos: ['iStock-93157220.jpg', 'iStock-98378798.jpg', 'iStock-177533648.jpg', 'iStock-505602225.jpg'],
+                sound: 'sounds/sound1.mp3',
+                correctPhotoIndex: 1,
 
+            },
+            {
+                photos: ['iStock-508496372.jpg', 'iStock-516318760.jpg', 'iStock-531856654.jpg', 'iStock-638654490.jpg'],
+                sound: 'sounds/sound2.mp3',
+                correctPhotoIndex: 3,
+            },
+        ],
+    },
+});
 
 
 
