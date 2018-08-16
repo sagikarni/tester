@@ -26,9 +26,11 @@
         get getImageTypes(): any {
             return ImageType;
         }
+
         get getMediaTypes(): any {
             return MediaType;
         }
+
         public onPlayerPlay(player: any) {
             this.pause = true;
         }
@@ -49,7 +51,6 @@
         }
 
         public created() {
-
             this.playerOptions = {
                 autoplay: false,
                 muted: true,

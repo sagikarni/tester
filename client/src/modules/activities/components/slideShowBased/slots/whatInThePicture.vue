@@ -3,8 +3,7 @@
         <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
             <div class="cell">
                 <div class="cell-content">
-                    <img style="width: 100%; background-color: white" class="object-fit_contain"
-                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"/>
+                    <slot></slot>
                     <div class="witp-questions" @click="openModalQuestions">
                         <span>{{switchQuestions}}</span>
                     </div>
@@ -89,7 +88,7 @@
     const timeLineMax = TimelineMax as any;
 
     @Component
-    export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
+    export default class WhatInThePicture extends BaseComponent {
         @Prop() public parameter?: any;
         public switchQuestions: string = '';
         public dialog: boolean = false;
@@ -98,9 +97,6 @@
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
 
-        get getMediaTypes(): any {
-            return ImageType;
-        }
 
         public isValid(): boolean {
             return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
@@ -109,6 +105,7 @@
 
         public created() {
             if (this.isValid()) {
+
                 this.switchQuestions = this.$locale.activities.switchQuestions;
                 timeLineMax.set("body", {className: "+=Witp-globalClass"});
             }
@@ -167,7 +164,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .object-fit_contain {
         object-fit: contain
     }

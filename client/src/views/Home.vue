@@ -17,11 +17,15 @@
               <v-btn @click="$router.push('activity-details/14')">Puzzle</v-btn>
                <v-btn @click="$router.push('activity-details/15')">Zoom</v-btn>
                <v-btn @click="$router.push('activity-details/16')">Memory</v-btn>
+               <v-btn @click="$router.push('activity-details/17')">Wh question photo</v-btn>
 
                <v-btn @click="$router.push('activity-details/100')">Premium - Server Error</v-btn>
                <v-btn @click="$router.push('activity-details/101')">Premium - Not Found</v-btn>
 
                <v-btn @click="$router.push('activity-details/101')">shlomi</v-btn>
+               <v-btn @click="$router.push('activity-details/19')">meaning-Video</v-btn>
+               <v-btn @click="$router.push('activity-details/18')">Wh-Video</v-btn>
+               <v-btn @click="$router.push('activity-details/22')">What in The Video</v-btn>
 
   <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br><video src="  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>"></video>
 
