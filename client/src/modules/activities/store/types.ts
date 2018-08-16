@@ -10,6 +10,7 @@ export enum Orientation {
 export enum MediaType {
     Photo = 1,
     Video = 2,
+    PhotoAndSound = 1,
 }
 export enum ActivityType {
     PremiumCollction = 1,
@@ -21,6 +22,7 @@ export enum ActivityType {
     Puzzle = 7,
     Zoom = 8,
     Memory = 9,
+    PhotoSelectionBySound = 10,
 }
 export enum Category {
     Communication = 1,
