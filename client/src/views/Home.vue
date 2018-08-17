@@ -23,7 +23,7 @@
                <v-btn @click="$router.push('activity-details/101')">Premium - Not Found</v-btn>
 
                <v-btn @click="$router.push('activity-details/101')">shlomi</v-btn>
-               <v-btn @click="$router.push('activity-details/19')">meaning-Video</v-btn>
+               <v-btn @click="$router.push('activity-details/19')">Sounds and Photos</v-btn>
                <v-btn @click="$router.push('activity-details/18')">Wh-Video</v-btn>
                <v-btn @click="$router.push('activity-details/22')">What in The Video</v-btn>
 

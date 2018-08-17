@@ -48,10 +48,6 @@
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
     import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     import MeaningVideoBasedSlide from '@/modules/activities/components/slideShowBased/meaningVideoBasedSlide.vue';
-    // import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
-    // import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
-    // import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
-
     import ZoomSlide from '@/modules/activities/components/slideShowBased/zoomSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
@@ -60,6 +56,8 @@
     import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
     import WHQuestionsPhotoSlide from '@/modules/activities/components/slideShowBased/whQuestionsPhotoSlide.vue';
     import WHQuestionsVideoSLide from '@/modules/activities/components/slideShowBased/whQuestionsVideoSlide.vue';
+    import SoundPhotoSelectionSlide from '@/modules/activities/components/slideShowBased/soundPhotoSelectionSlide.vue';
+
     import TimelineMax from 'gsap';
 
 
@@ -78,6 +76,7 @@
             ZoomToolbar,
             WHQuestionsPhotoSlide,
             WHQuestionsVideoSLide,
+            SoundPhotoSelectionSlide,
         },
     })
     export default class SideNavigantions extends BaseComponent {
@@ -176,7 +175,11 @@
                     if (this.mediaType === MediaType.Photo) {
                         return 'WHQuestionsPhotoSlide';
                     } else if (this.mediaType === MediaType.Video) {
-                        return "WHQuestionsVideoSLide";
+                        return "WHQuestionsVideoSlide";
+                    }
+                case ActivityType.PhotoSelectionBySound:
+                    if (this.mediaType === MediaType.PhotoAndSound) {
+                        return 'SoundPhotoSelectionSlide';
                     }
                 default:
                     break;
@@ -200,9 +203,6 @@
         }
 
         public hideAllPanes(): void {
-            // hide top pane
-            // this.$emit('hideTopPane');
-            // hide side pane
             this.hideSidePanes(0.2);
         }
 
