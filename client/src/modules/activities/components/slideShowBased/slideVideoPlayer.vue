@@ -60,6 +60,7 @@
                     type: "video/mp4",
                     src: this.videoPath,
                 }],
+                controlBar: false,
             };
         }
 

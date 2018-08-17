@@ -5,10 +5,16 @@
             <v-flex>
                 <close-pane></close-pane>
             </v-flex>
-            <side-navigations ref="slideNavigations" :mediaType="mediaType" @isFirstSlide="isFirstSlide"
-                              :activityType="activityType" :slides="slides"
-                              :mediaCount="mediaCountInfo" :activityName="activityNameInfo"
-                              :activityContent="activityContent"></side-navigations>
+            <side-navigations
+                    ref="slideNavigations"
+                    @isFirstSlide="isFirstSlide"
+                    :mediaType="mediaType"
+                    :activityType="activityType"
+                    :slides="slides"
+                    :mediaCount="mediaCountInfo"
+                    :activityName="activityNameInfo"
+                    :activityContent="activityContent">
+            </side-navigations>
         </section>
         <v-snackbar v-model="showRotateNotification">
             {{ $locale.general.rotateScreenWarning }}
@@ -37,7 +43,7 @@
             ClosePane,
         },
     })
-    export default class PremiumCollection extends BaseComponent {
+    export default class SoundsAndPhoto extends BaseComponent {
         @State(state => state.deviceOrientation) public deviceOrientation?: number;
         @State(state => state.activities.activity && state.activities.activity.details) public activityDetailsState?: any;
         @State(state => state.activities.activity && state.activities.activity.content) public activityDetailsContent?: any;
@@ -79,19 +85,7 @@
         }
 
         get slides(): any[] {
-            const slides = [];
-
-            if (this.activityDetailsContent && this.activityDetailsContent.slides && this.activityDetailsContent.slides.length > 0) {
-                for (let i = 0; i < this.activityDetailsContent.slides.length; i++) {
-                    slides.push({
-                        id: i,
-                        layout: this.activityDetailsContent.layout,
-                        media: this.activityDetailsContent.slides[i],
-                    });
-                }
-            }
-
-            return slides;
+            return this.activityDetailsContent && this.activityDetailsContent.slides;
         }
 
         get activityType() {

@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import { MediaType} from '@/modules/activities/store/types';
-    import { State } from 'vuex-class';
-    import { ImageType } from '@/modules/store/typeEnums';
+    import {Component, Vue} from 'vue-property-decorator';
+    import {MediaType} from '@/modules/activities/store/types';
+    import {State} from 'vuex-class';
+    import {ImageType} from '@/modules/store/typeEnums';
 
     @Component
     export default class BaseComponent extends Vue {
@@ -24,7 +24,7 @@
             this.setNotificationSystemSettings();
         }
 
-        public getImagePath(mediaName: string , imageType: number = ImageType.None, mediaType: number = MediaType.Photo): string {
+        public getImagePath(mediaName: string, imageType: number = ImageType.None, mediaType: number = MediaType.Photo): string {
             const pathName = mediaName;
 
             if (this.isHDMedia && pathName) {
@@ -51,16 +51,15 @@
                     type = '/';
                     break;
             }
-
             return this.baseFolder + type + pathName;
         }
 
         public hasFullScreenSupport(): boolean {
-           return (document.body.requestFullscreen || (document.body as any).msRequestFullscreen || (document.body as any).mozRequestFullScreen || (document.body as any).webkitRequestFullscreen) != null;
+            return (document.body.requestFullscreen || (document.body as any).msRequestFullscreen || (document.body as any).mozRequestFullScreen || (document.body as any).webkitRequestFullscreen) != null;
         }
 
         public exitFullScreen() {
-              try {
+            try {
                 this.explicitExitFromFullScreen = true;
                 this.$fullscreen.exit();
             } catch {
@@ -71,7 +70,7 @@
         public enterFullScreen() {
             try {
                 this.explicitExitFromFullScreen = false;
-                if (this.hasFullScreenSupport()  && this.isFullScreen) {
+                if (this.hasFullScreenSupport() && this.isFullScreen) {
                     this.$fullscreen.enter(document.getElementById("app"), {
                         callback: (isFullScreen: boolean) => {
                             if (!isFullScreen && !this.explicitExitFromFullScreen) {
@@ -84,6 +83,7 @@
                 // do nothing
             }
         }
+
         get getImageTypes(): any {
             return ImageType;
         }

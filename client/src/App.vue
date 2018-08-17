@@ -57,6 +57,7 @@
                 && (oldValue.path === `/premium-collection/${oldValue.params.activityId}`
                     || oldValue.path === `/categorization-activity/${oldValue.params.activityId}`
                     || oldValue.path === `/memory-activity/${oldValue.params.activityId}`
+                    || oldValue.path === `/photo-sound/${oldValue.params.activityId}`
                     || oldValue.path === `/puzzle-activity/${oldValue.params.activityId}`)) {
                 (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "white"});
                 this.changeReloadActivityDetails({status: false}); // No need to reload activities if they are exist

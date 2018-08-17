@@ -11,6 +11,7 @@ import PremiumCollection from './views/PremiumCollection.vue';
 import CategorizationActivity from './views/CategorizationActivity.vue';
 import PuzzleActivity from './views/PuzzleActivity.vue';
 import MemoryView from './views/memoryView.vue';
+import SoundsAndPhoto from './views/SoundsAndPhoto.vue';
 import {bus, busConstants} from './modules/utils/eventBus';
 Vue.use(Router);
 
@@ -80,6 +81,10 @@ export default new Router({
                 {
                     path: '/memory-activity/:activityId',
                     component: MemoryView,
+                },
+                {
+                    path: '/photo-sound/:activityId',
+                    component: SoundsAndPhoto,
                 },
             ],
 
