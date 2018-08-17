@@ -10,11 +10,11 @@
 
 <script lang="ts">
     import { Component, Prop } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
-    import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlide.vue';
-    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
-    import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/slots/whQuestionsSlideBase.vue';
+    import BaseComponent from '../../../common/components/baseComponent.vue';
+    import {PremiumCollectionLayout, ImageType} from '../../store/types';
+    import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
+    import SlideBase from 'slideBase.vue';
+    import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/whQuestionsSlideBase.vue';
 
     @Component({
         components: {

@@ -46,8 +46,8 @@
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import PremiumCollectionSlide from '@/modules/activities/components/slideShowBased/premiumCollectionSlide.vue';
-    import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/slots/meaningPhotoBasedSlide.vue';
-    import MeaningVideoBasedSlide from '@/modules/activities/components/slideShowBased/slots/meaningVideoBasedSlide.vue';
+    import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
+    import MeaningVideoBasedSlide from '@/modules/activities/components/slideShowBased/meaningVideoBasedSlide.vue';
     // import WHQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
     // import MeaningPhotoBasedSlide from '@/modules/activities/components/slideShowBased/meaningPhotoBasedSlide.vue';
     // import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
@@ -55,11 +55,11 @@
     import ZoomSlide from '@/modules/activities/components/slideShowBased/zoomSlide.vue';
     import PremiumCollectionPhotoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionPhotoBasedSlide.vue';
     import PremiumCollectionVideoBasedSlide from '@/modules/activities/components/slideShowBased/premiumCollectionVideoBasedSlide.vue';
-    import WhatInThePicturePhotoSlide from '@/modules/activities/components/slideShowBased/slots/whatInThePicturePhotoSlide.vue';
-    import WhatInThePictureVideoSlide from '@/modules/activities/components/slideShowBased/slots/whatInThePictureVideoSlide.vue';
+    import WhatInThePicturePhotoSlide from '@/modules/activities/components/slideShowBased/whatInThePicturePhotoSlide.vue';
+    import WhatInThePictureVideoSlide from '@/modules/activities/components/slideShowBased/whatInThePictureVideoSlide.vue';
     import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
-    import WHQuestionsPhotoSlide from '@/modules/activities/components/slideShowBased/slots/whQuestionsPhotoSlide.vue';
-    import WHQuestionsVideoSLide from '@/modules/activities/components/slideShowBased/slots/whQuestionsVideoSlide.vue';
+    import WHQuestionsPhotoSlide from '@/modules/activities/components/slideShowBased/whQuestionsPhotoSlide.vue';
+    import WHQuestionsVideoSLide from '@/modules/activities/components/slideShowBased/whQuestionsVideoSlide.vue';
     import TimelineMax from 'gsap';
 
 

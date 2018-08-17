@@ -4,9 +4,9 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {MediaType} from '@/modules/activities/store/types';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
+    import {MediaType} from '../../store/types';
+    import BaseComponent from '../../../common/components/baseComponent.vue';
+    import {PremiumCollectionLayout, ImageType} from '../../store/types';
     import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
 
     @Component

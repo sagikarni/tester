@@ -1,10 +1,9 @@
-<template>
+j<template>
     <div>
         <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
             <div class="cell">
                 <div class="cell-content">
-                    <img style="width: 100%; background-color: white" class="object-fit_contain"
-                           :src="getImagePath(parameter.media.photos[0], getMediaTypes.Content)"/>
+                    <slot></slot>
                     <div class="witp-questions" @click="openModalQuestions">
                         <span>{{switchQuestions}}</span>
                     </div>
@@ -82,51 +81,51 @@
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
+    import BaseComponent from '../../../common/components/baseComponent.vue';
+    import {PremiumCollectionLayout, ImageType} from '../../store/types';
     import TimelineMax from 'gsap';
 
     const timeLineMax = TimelineMax as any;
 
     @Component
-    export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
+    export default class WhatInThePicture extends BaseComponent {
         @Prop() public parameter?: any;
         public switchQuestions: string = '';
         public dialog: boolean = false;
+        public ifDialogOpened: boolean = false;
 
         get isSinglePhotoSlide(): boolean {
             return (this.parameter.layout as PremiumCollectionLayout) === PremiumCollectionLayout.SingleMedia;
         }
 
-        get getMediaTypes(): any {
-            return ImageType;
-        }
-
-        public isValid(): boolean {
-            return this.parameter && this.parameter.media && this.parameter.media.questions && this.parameter.media.questions.length > 0;
-        }
-
 
         public created() {
-            if (this.isValid()) {
-                this.switchQuestions = this.$locale.activities.switchQuestions;
-                timeLineMax.set("body", {className: "+=Witp-globalClass"});
-            }
+
+            this.switchQuestions = this.$locale.activities.switchQuestions;
+            timeLineMax.set("body", {className: "+=Witp-globalClass"});
+
+
         }
 
         public fllipAllOpenCards() {
+            timeLineMax.set(".openCard .front .iQuestion", {display: 'none'});
+            timeLineMax.set(".openCard .front .iDone", {display: 'block'});
+
             timeLineMax.to(('.openCard'), 1.2, {
                 className: "-=openCard",
                 rotationY: 0,
                 ease: Back.easeOut,
             });
-            timeLineMax.set(".openCard .front .iQuestion", {display: 'none'});
-            timeLineMax.set(".openCard .front .iDone", {display: 'block'});
             this.dialog = false;
 
         }
 
         public openModalQuestions() {
+            if (!this.ifDialogOpened) {
+                this.revertWitpModal();
+                this.ifDialogOpened = true;
+
+            }
             this.dialog = true;
             timeLineMax.set(".cardWrapper", {perspective: 800});
             timeLineMax.set(".card", {transformStyle: "preserve-3d"});
@@ -135,6 +134,7 @@
         }
 
         public openQuestionCard(event: any) {
+
             if (event.currentTarget.classList.contains('openCard')) {
                 timeLineMax.to(('.openCard'), 1.2, {
                     className: "-=openCard",
@@ -324,6 +324,9 @@
         border-radius: 3px;
 
     }
+    .v-dialog__content--active{
+        background: black;
+    }
 
     @media screen and (max-width: 1264px) {
         .close_what_in_picture {
@@ -366,4 +369,22 @@
         }
 
     }
+
+    /*.v-overlay--active:before {*/
+        /*opacity: 1 !important;*/
+    /*}*/
+
+    /*.v-overlay:before {*/
+        /*background-color: #000000 !important;*/
+        /*color: white;*/
+
+    /*}*/
+
+    /*.theme--light.v-icon {*/
+        /*color: white !important;*/
+    /*}*/
+
+    /*.v-overlay--active {*/
+        /*z-index: 202 !important;*/
+    /*}*/
 </style>
