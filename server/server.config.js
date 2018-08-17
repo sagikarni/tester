@@ -1,39 +1,36 @@
-const { resolve } = require('path');
-const {  CheckerPlugin,  TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const path = require('path');
+const {
+  CheckerPlugin,
+  TsConfigPathsPlugin
+} = require('awesome-typescript-loader');
 
-function root(path) {
-  return resolve(__dirname, '../', path);
-}
+const configFileName = path.resolve(__dirname, './tsconfig.json');
 
-const nodeExternals = require('webpack-node-externals');
-
-module.exports = function(options, webpackOptions) {
-  return [
-    {
-      entry: root('./server/bin/www.ts'),
-      target: 'node',
-      output: {
-        path: root('dist'),
-        filename: 'www.js'
-      },
-      devtool: 'source-map',
-      resolve: {
-        extensions: ['.ts', '.js'],
-        plugins: [new TsConfigPathsPlugin()]
-      },
-      node: {
-        __dirname: false,
-      },
-      externals: [nodeExternals()],
-      module: {
-        rules: [
-          {
-            test: /\.tsx?$/,
-            loader: 'awesome-typescript-loader'
-          }
-        ]
-      },
-      plugins: [new CheckerPlugin()]
-    }
-  ];
-};
+module.exports = (options, webpackOptions) => [
+  {
+    entry: path.resolve(__dirname, './bin/www.ts'),
+    output: {
+      filename: 'www.js',
+      path: path.resolve(__dirname, '../dist')
+    },
+    target: 'node',
+    devtool: 'source-map',
+    node: {
+      __dirname: false
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      plugins: [new TsConfigPathsPlugin({ configFileName })]
+    },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
+          query: { configFileName }
+        }
+      ]
+    },
+    plugins: [new CheckerPlugin()]
+  }
+];
