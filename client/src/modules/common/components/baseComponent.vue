@@ -47,15 +47,10 @@
                 case ImageType.PreLoad:
                     type = '/preload/';
                     break;
-                case ImageType.Sound:
-                    type = '/sounds/';
-                    break;
                 default:
                     type = '/';
                     break;
             }
-            console.log(this.baseFolder + type + pathName)
-
             return this.baseFolder + type + pathName;
         }
 

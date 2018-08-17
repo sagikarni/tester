@@ -3,18 +3,18 @@
         <div class="full-height table">
             <div class="row">
                 <div class="cell">
-                    <img class="object-fit_contain fourCell" @click="changeBrightness($event)"
+                    <img class="object-fit_contain fourCell" data-id='1' @click="checkIndex($event)"
                          :src="getImagePath(parameter.photos[0], getMediaTypes.Content )"/>
-                    <img class="object-fit_contain fourCell" @click="changeBrightness($event)"
+                    <img class="object-fit_contain fourCell" data-id='2' @click="checkIndex($event)"
                          :src="getImagePath(parameter.photos[1], getMediaTypes.Content )"/>
                 </div>
             </div>
             <v-icon class="sound-up" @click="playSound">volume_up</v-icon>
             <div class="row">
                 <div class=" cell">
-                    <img class="object-fit_contain fourCell" @click="changeBrightness($event)"
+                    <img class="object-fit_contain fourCell" data-id='3' @click="checkIndex($event)"
                          :src="getImagePath(parameter.photos[2], getMediaTypes.Content )"/>
-                    <img class="object-fit_contain fourCell" @click="changeBrightness($event)"
+                    <img class="object-fit_contain fourCell" data-id='4' @click="checkIndex($event)"
                          :src="getImagePath(parameter.photos[3], getMediaTypes.Content )"/>
                 </div>
             </div>
@@ -40,13 +40,13 @@
         }
 
         public playSound() {
-            const soundPath = this.getImagePath(this.parameter.sound)
+            const soundPath = this.getImagePath(this.parameter.sound);
             const audio = new Audio(soundPath);
             audio.play();
-            this.ifSoundPlayed = true
+            this.ifSoundPlayed = true;
         }
 
-        public changeBrightness(event: any) {
+        public checkIndex(event: any) {
             if (this.ifSoundPlayed) {
                 if (event.target.classList.contains("clicked")) {
                     timeLineMax.to('.fourCell', 0.2, {filter: 'brightness(1)', className: "-=clicked"});
@@ -56,10 +56,16 @@
                 }
             }
 
-            // if (this.$el.querySelectorAll('.object-fit_contain.fourCell')[this.parameter.correctPhotoIndex].classList.contains('clicked')) {
-            //     console.log(1)
-            // }
+            if (this.parameter.correctPhotoIndex === Number(event.target.getAttribute('data-id')) ) {
+                timeLineMax.set('.fourCell', { className: "object-fit_contain fourCell"});
+                timeLineMax.set(event.target, { className: "+=greenBorder"});
+            } else {
+                timeLineMax.set('.fourCell', { className: "object-fit_contain fourCell"});
+                timeLineMax.set(event.target, { className: "+=redBorder"});
+            }
+
         }
+
 
     }
 </script>
@@ -119,7 +125,6 @@
 
     .sound-up {
         color: white !important;
-        left: 888px;
         position: absolute;
         z-index: 9999;
         font-size: 150px;
@@ -127,7 +132,31 @@
         padding: 10px;
         border-radius: 50%;
         background-color: black;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
+    .snack-bar {
+        z-index: 9999;
+    }
+
+    .greenBorder {
+        border: solid 2px green;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .redBorder {
+        border: solid 2px red;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .nonBorder {
+        border: none;
+    }
 
 </style>
