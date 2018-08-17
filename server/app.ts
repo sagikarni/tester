@@ -1,10 +1,10 @@
-import * as express from 'express';
-import * as helmet from 'helmet';
-import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
-import * as methodOverride from 'method-override';
-import * as compress from 'compression';
-import * as path from 'path';
+import express from 'express';
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
+import compress from 'compression';
+import path from 'path';
 
 import { routes } from './routes';
 import { clientErrorHandler, errorHandler } from '@server/core';
@@ -32,5 +32,3 @@ app.use(clientErrorHandler);
 app.use(errorHandler);
 
 export default app;
-
-

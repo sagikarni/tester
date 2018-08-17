@@ -3,30 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:client": "vue-cli-service serve",
-    "build:client": "vue-cli-service build",
-    "build:server": "npm run webpack -- --config ./server/server.config.js",
-    "start:server": "npm run build:server && node --inspect dist/www.js",
-    "watch:server": "nodemon --inspect dist/www.js",
-    "build:watch:server": "npm run build:server -- --watch --mode development",
     "start": "npm run start:server && npm run start:client",
+    "watch": "concurrently -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"npm run watch:server\" \"npm run watch:client\"",
+    "build": "npm run build:client && npm run build:server -- --mode production",
+    "test": "jest --forceExit --coverage --verbose --config jest.config.js",
     "start:qa": "cross-env DEBUG_ENV=QA npm start",
     "start:stage": "cross-env DEBUG_ENV=STAGE npm start",
     "start:prod": "cross-env DEBUG_ENV=PROD npm start",
-    "watch": "concurrently --kill-others \"npm run start:client\" \"npm run build:watch:server\" \"npm run watch:server\"  ",
     "watch:qa": "cross-env DEBUG_ENV=QA npm run watch",
     "watch:stage": "cross-env DEBUG_ENV=STAGE npm run watch",
     "watch:prod": "cross-env DEBUG_ENV=PROD npm run watch",
-    "build": "npm run build:client && npm run build:server -- --mode production",
     "build:prod": "npm run build",
-    "test": "jest --forceExit --coverage --verbose --config jest.config.js",
+    "start:client": "vue-cli-service serve",
+    "watch:client": "vue-cli-service serve",
+    "build:client": "vue-cli-service build",
+    "start:server": "npm run build:server && node --inspect dist/www.js",
+    "watch:server": "concurrently -p \"[{name}]\" -n \"Watch,NodeJS\" -c \"yellow.bold,cyan.bold\" \"npm run build:server -- --watch\" \"nodemon --watch dist/www.js --inspect dist/www.js\"",
+    "build:server": "npm run webpack -- --config ./server/server.config.js --mode development",
     "clean:dist": "npm run rimraf -- dist",
     "watch-test": "npm run test -- --watchAll",
     "rimraf": "rimraf",
     "webpack": "webpack",
+    "webpack-dev-server": "webpack-dev-server",
     "security": "nsp check"
   },
-  "dependencies": {
+   "dependencies": {
     "@babel/plugin-proposal-optional-catch-binding": "^7.0.0-rc.1",
     "@types/greensock": "^1.15.32",
     "@types/gsap": "^1.19.2",
@@ -117,5 +118,7 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "author": "Shlomi Levi (wizardnet972@gmail.com)",
+  "license": "MIT"
 }
