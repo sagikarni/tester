@@ -23,6 +23,10 @@
              // do nothing
          }
 
+        public stopSound() {
+            // do nothing
+        }
+
 
 
     }
