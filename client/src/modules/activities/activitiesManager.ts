@@ -32,6 +32,7 @@ export class ActivitiesManager {
                 break;
             case ActivityType.Memory:
                 res.url = '/memory-activity/';
+                break;
             case ActivityType.PhotoSelectionBySound:
                 res.url = '/photo-sound/';
                 break;
