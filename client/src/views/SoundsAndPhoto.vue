@@ -85,6 +85,11 @@
         }
 
         get slides(): any[] {
+            if (this.activityDetailsContent && this.activityDetailsContent.slides && this.activityDetailsContent.slides.length > 0) {
+                this.activityDetailsContent.slides.forEach((slide: any, id: number) => {
+                    slide.id = id;
+                });
+            }
             return this.activityDetailsContent && this.activityDetailsContent.slides;
         }
 

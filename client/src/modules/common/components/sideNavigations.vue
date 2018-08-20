@@ -132,10 +132,12 @@
                         this.clearBrightnessEffect();
                         const el: any = this.$refs.swiper;
                         const realIndex = el && el.swiper && el.swiper.realIndex;
-                        this.stopVideo(realIndex);
-                        this.revertWitpModal(realIndex);
+                        const previousIndex = el && el.swiper && el.swiper.previousIndex;
                         this.isBeginning = !!(el.swiper && el.swiper.isBeginning);
                         const slideStatus = !(el.swiper && (el.swiper.isBeginning || el.swiper.isEnd));
+                        this.stopVideo(realIndex);
+                        this.stopAudio(previousIndex);
+                        this.revertWitpModal(realIndex);
                         this.checkZoomSlide(slideStatus, realIndex);
                         this.slideChanged(this.isBeginning);
                     },
@@ -230,7 +232,6 @@
 
 
         public pressButton(realIndex: number): void {
-
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
                 if (el[realIndex - 1].$refs.videoPlayer) {
@@ -243,8 +244,16 @@
             const el: any = this.$refs.slideComponent;
             if (el[realIndex - 1]) {
                 if (el[realIndex - 1].$refs.videoPlayer) {
-
                     el[realIndex - 1].$refs.videoPlayer.stopAction();
+                }
+            }
+        }
+
+        public stopAudio(index: number): void {
+            const el: any = this.$refs.slideComponent;
+            if (el[index - 1]) {
+                if (el[index - 1]) {
+                    el[index - 1].stopSound();
                 }
             }
         }
