@@ -4,7 +4,6 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {MediaType} from '../../store/types';
     import {ImageType} from '../../../store/typeEnums';
     import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
 

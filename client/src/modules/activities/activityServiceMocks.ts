@@ -1090,14 +1090,14 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         images: [
             {
                 id: 1,
-                imgSrc: 'photo1.jpg',
+                imgSrc: 'iStock-155129848_super.jpg',
                 title: 'some title 1',
             },
 
             {
 
                 id: 2,
-                imgSrc: 'photo2.jpg',
+                imgSrc: 'iStock-534053642_super.jpg',
                 title: 'some title 1',
 
             },

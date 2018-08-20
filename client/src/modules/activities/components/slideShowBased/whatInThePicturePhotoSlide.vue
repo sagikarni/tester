@@ -9,8 +9,6 @@
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '../../../common/components/baseComponent.vue';
-    import {PremiumCollectionLayout, ImageType} from '../../store/types';
     import TimelineMax from 'gsap';
     import WhatInThePicture from '@/modules/activities/components/slideShowBased/whatInThePicture.vue';
     import WhatInThePictureSlideBase from '@/modules/activities/components/slideShowBased/whatInThePictureSlideBase.vue';

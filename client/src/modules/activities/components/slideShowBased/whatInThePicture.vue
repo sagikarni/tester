@@ -1,6 +1,6 @@
 j<template>
     <div>
-        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
+        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture" >
             <div class="cell">
                 <div class="cell-content">
                     <slot></slot>
@@ -9,8 +9,12 @@ j<template>
                     </div>
                 </div>
             </div>
+
             <v-layout row justify-center>
-                <v-dialog v-model="dialog" persistent class="Witp-modal">
+
+                <v-dialog v-model="dialog"  class="Witp-modal">
+                    <div class="clearDiv">
+                    </div>
                     <div class="dialog_wrappers first_dialog_wrappers">
                         <div class="cardWrapper">
                             <div class="card" @click="openQuestionCard($event)">
@@ -74,6 +78,7 @@ j<template>
                     </div>
 
                 </v-dialog>
+
             </v-layout>
         </div>
     </div>
@@ -100,7 +105,6 @@ j<template>
 
 
         public created() {
-
             this.switchQuestions = this.$locale.activities.switchQuestions;
             timeLineMax.set("body", {className: "+=Witp-globalClass"});
 
@@ -121,16 +125,28 @@ j<template>
         }
 
         public openModalQuestions() {
+            let percentW=30;
+            let percentH=24;
+            let marginSize=20;
+            let rows=2
             if (!this.ifDialogOpened) {
                 this.revertWitpModal();
                 this.ifDialogOpened = true;
 
             }
+            const root = document.getElementById("app") as any;
+            let availableHeight = root.offsetHeight-(root.offsetHeight * percentH)/100;
+            let availableWidth = root.offsetWidth-(root.offsetWidth  * percentW)/100;
+            let height = availableHeight/rows - marginSize;
+            let width = availableWidth/rows -marginSize;
             this.dialog = true;
-            timeLineMax.set(".cardWrapper", {perspective: 800});
+            timeLineMax.set(".cardWrapper", {perspective: 1200,height:height,width:width});
+            timeLineMax.set(".cardFace", {height:height,width:width});
             timeLineMax.set(".card", {transformStyle: "preserve-3d"});
             timeLineMax.set(".back", {rotationY: -180});
             timeLineMax.set([".back", ".front"], {backfaceVisibility: "hidden"});
+
+
         }
 
         public openQuestionCard(event: any) {
@@ -214,7 +230,15 @@ j<template>
             min-width: 150px;
         }
     }
-
+.clearDiv{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+}
     .cardWrapper {
         width: 450px;
         height: 270px;
@@ -314,7 +338,7 @@ j<template>
         color: white;
         box-sizing: border-box;
         background: rgba(0, 0, 0, 0.6);
-        padding-top: 15px;
+
     }
 
     .btnDialogClose {
@@ -323,6 +347,10 @@ j<template>
         border: 1px solid white !important;
         border-radius: 3px;
 
+
+    }
+    .v-dialog{
+        z-index: 205;
     }
     .v-dialog__content--active{
         background: black;
@@ -335,7 +363,7 @@ j<template>
 
     }
 
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: 1260px) {
         .cardWrapper, .cardFace {
             width: 230px;
             height: 130px;
@@ -361,8 +389,9 @@ j<template>
             padding: 0 30px;
         }
         .cardWrapper, .cardFace {
-            width: 100%;
+            width: 100% !important;
             margin: 0 10px 10px 0;
+
         }
         .close_what_in_picture {
             right: 8px;
@@ -370,21 +399,4 @@ j<template>
 
     }
 
-    /*.v-overlay--active:before {*/
-        /*opacity: 1 !important;*/
-    /*}*/
-
-    /*.v-overlay:before {*/
-        /*background-color: #000000 !important;*/
-        /*color: white;*/
-
-    /*}*/
-
-    /*.theme--light.v-icon {*/
-        /*color: white !important;*/
-    /*}*/
-
-    /*.v-overlay--active {*/
-        /*z-index: 202 !important;*/
-    /*}*/
 </style>
