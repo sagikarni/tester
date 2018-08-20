@@ -1078,9 +1078,9 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
 mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
     details: {
         title: 'this is Puzzle Activity',
-        baseFolder: '/assets/media/restricted/cognitive/photos/puzzles/puzzle-1',
+        baseFolder: '/assets/media/restricted/cognitive/puzzle/food1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
-        coverPhoto: 'cover.jpg',
+        coverPhoto: 'iStock-155129848_super.jpg',
         category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Puzzle, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
@@ -1090,67 +1090,28 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         images: [
             {
                 id: 1,
-                imgSrc: 'puzzle-1/photo.jpg',
+                imgSrc: 'photo1.jpg',
                 title: 'some title 1',
-                filterInfo: [1, 2, 3],
             },
 
             {
 
                 id: 2,
-                imgSrc: 'puzzle-2/photo.jpg',
+                imgSrc: 'photo2.jpg',
                 title: 'some title 1',
-                filterInfo: [1, 2, 3],
 
             },
-
-            {
-
-                id: 3,
-                imgSrc: 'puzzle-3/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-            {
-
-                id: 4,
-                imgSrc: 'puzzle-4/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-            {
-
-                id: 5,
-                imgSrc: 'puzzle-5/photo.jpg',
-                title: 'some title 1',
-                filterInfo: [1, 2, 3],
-
-            },
-
         ],
     },
     content: {
+       aspectRatio: 1.23,
         Media: [
             {
                 photo: "puzzle-1/photo.jpg",
-                partsCount: 9,
-            },
-            {
-                photo: "puzzle-2/photo.jpg",
                 partsCount: 4,
             },
             {
-                photo: "puzzle-3/photo.jpg",
-                partsCount: 16,
-            },
-            {
-                photo: "puzzle-4/photo.jpg",
-                partsCount: 9,
-            },
-            {
-                photo: "puzzle-5/photo.jpg",
+                photo: "puzzle-2/photo.jpg",
                 partsCount: 9,
             },
         ],
