@@ -1,6 +1,6 @@
 j<template>
     <div>
-        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
+        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture" >
             <div class="cell">
                 <div class="cell-content">
                     <slot></slot>
@@ -9,8 +9,12 @@ j<template>
                     </div>
                 </div>
             </div>
+
             <v-layout row justify-center>
-                <v-dialog v-model="dialog" persistent class="Witp-modal">
+
+                <v-dialog v-model="dialog"  class="Witp-modal">
+                    <div class="clearDiv">
+                    </div>
                     <div class="dialog_wrappers first_dialog_wrappers">
                         <div class="cardWrapper">
                             <div class="card" @click="openQuestionCard($event)">
@@ -74,6 +78,7 @@ j<template>
                     </div>
 
                 </v-dialog>
+
             </v-layout>
         </div>
     </div>
@@ -100,7 +105,6 @@ j<template>
 
 
         public created() {
-
             this.switchQuestions = this.$locale.activities.switchQuestions;
             timeLineMax.set("body", {className: "+=Witp-globalClass"});
 
@@ -214,7 +218,15 @@ j<template>
             min-width: 150px;
         }
     }
-
+.clearDiv{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+}
     .cardWrapper {
         width: 450px;
         height: 270px;
@@ -323,6 +335,10 @@ j<template>
         border: 1px solid white !important;
         border-radius: 3px;
 
+
+    }
+    .v-dialog{
+        z-index: 205;
     }
     .v-dialog__content--active{
         background: black;
@@ -370,21 +386,4 @@ j<template>
 
     }
 
-    /*.v-overlay--active:before {*/
-        /*opacity: 1 !important;*/
-    /*}*/
-
-    /*.v-overlay:before {*/
-        /*background-color: #000000 !important;*/
-        /*color: white;*/
-
-    /*}*/
-
-    /*.theme--light.v-icon {*/
-        /*color: white !important;*/
-    /*}*/
-
-    /*.v-overlay--active {*/
-        /*z-index: 202 !important;*/
-    /*}*/
 </style>
