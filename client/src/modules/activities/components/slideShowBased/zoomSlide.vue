@@ -39,7 +39,6 @@
         get index(): number {
             return this.slideIndex ? this.slideIndex : 0;
         }
-
         get isCircle(): boolean {
             return (this.activityDetailsContent.shape as ShapeType) === ShapeType.Circle;
         }
