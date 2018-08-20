@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
     import {PremiumCollectionLayout, ImageType, MediaType} from '@/modules/activities/store/types';
     import SlideVideoPlayer from '@/modules/activities/components/slideShowBased/slideVideoPlayer.vue';
 
@@ -20,7 +20,7 @@
             SlideVideoPlayer,
         },
     })
-    export default class PremiumCollectionVideoBasedSlide extends BaseComponent {
+    export default class PremiumCollectionVideoBasedSlide extends SlideBase {
         @Prop() public parameter?: any;
         public playerOptions: any;
         public pause: boolean = false;

@@ -53,14 +53,14 @@
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
+    import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
     import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
 
     const timeLineMax = TimelineMax as any;
 
     @Component
-    export default class PremiumCollectionPhotoBasedSlide extends BaseComponent {
+    export default class PremiumCollectionPhotoBasedSlide extends SlideBase {
         @Prop() public parameter?: any;
 
         get isSinglePhotoSlide(): boolean {

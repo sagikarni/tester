@@ -9,6 +9,7 @@
                          :src="getImagePath(parameter.photos[1], getMediaTypes.Content )"/>
                 </div>
             </div>
+            <audio :src="getImagePath(this.parameter.sound)" :id="`audio_id_${audioIndex}`"></audio>
             <v-icon class="sound-up" @click="playSound">volume_up</v-icon>
             <div class="row">
                 <div class=" cell">
@@ -23,7 +24,7 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop} from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import SlideBase from '@/modules/activities/components/slideShowBased/slideBase.vue';
     import {PremiumCollectionLayout, ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
@@ -33,17 +34,48 @@
     @Component
     export default class SoundPhotoSelectionSlide extends SlideBase {
         @Prop() public parameter?: any;
+        @Prop() public slideIndex?: number;
+        public audioObj: any;
         public ifSoundPlayed: boolean = false;
+        public play: boolean = false;
+        public soundEnd: boolean = false;
+
+        public mounted() {
+            this.audioObj = document.querySelector(`#audio_id_${this.audioIndex}`);
+            this.soundEnd = this.audioObj.ended;
+        }
 
         get getMediaTypes(): any {
             return ImageType;
         }
 
+        get audioIndex(): number | undefined {
+            return this.slideIndex;
+        }
+
+        @Watch('soundEnd')
+        public onPropertyChanged(value: boolean, oldValue: boolean) {
+            if (value) {
+                this.soundEnd = false;
+                this.play = false;
+            }
+        }
+
         public playSound() {
-            const soundPath = this.getImagePath(this.parameter.sound);
-            const audio = new Audio(soundPath);
-            audio.play();
-            this.ifSoundPlayed = true;
+            if (!this.play) {
+                this.audioObj.play();
+                this.ifSoundPlayed = true;
+                this.play = true;
+            } else {
+                this.audioObj.pause();
+                this.play = false;
+            }
+        }
+
+        public stopSound() {
+            this.audioObj.pause();
+            this.audioObj.currentTime = 0;
+            this.play = false;
         }
 
         public checkIndex(event: any) {
