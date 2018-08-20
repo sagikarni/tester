@@ -27,7 +27,7 @@
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import { ImageType} from '@/modules/activities/store/types';
+    import {ImageType} from '@/modules/activities/store/types';
     import TimelineMax from 'gsap';
     import Draggable from 'gsap/Draggable.js';
     import $ from 'jquery';
@@ -54,27 +54,28 @@
         get getMediaTypes(): any {
             return ImageType;
         }
+
         public created() {
-                this.changeImageData(this.indexId);
-                localStorage.clear();
-                this.stopEvents = true;
+            this.changeImageData(this.indexId);
+            localStorage.clear();
+            this.stopEvents = true;
+            setTimeout(() => {
+                this.itemWidth = $(".list-complete-item").width();
+                this.itemHeight = $(".list-complete-item").height();
+                this.repeatShuffle();
                 setTimeout(() => {
-                    this.itemWidth = $(".list-complete-item").width();
-                    this.itemHeight = $(".list-complete-item").height();
-                    this.repeatShuffle();
-                    setTimeout(() => {
-                        (TimelineMax as any).to($(".container"), 0.8, {
-                            autoAlpha: 1, onComplete: () => {
-                                this.puzzleShuffle = true;
-                                this.puzzleRender();
-                                (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
-                                this.savePuzzleIndex();
-                                this.stopEvents = false;
-                            },
-                        });
-                    }, 1500);
-                }, 3000);
-         }
+                    (TimelineMax as any).to($(".container"), 0.8, {
+                        autoAlpha: 1, onComplete: () => {
+                            this.puzzleShuffle = true;
+                            this.puzzleRender();
+                            (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                            this.savePuzzleIndex();
+                            this.stopEvents = false;
+                        },
+                    });
+                }, 1500);
+            }, 3000);
+        }
 
         get filteredItems() {
             return this.puzzleImage;
@@ -136,12 +137,16 @@
                 this.count = 1;
                 const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                 this.puzzleImage = [{id: 1, puzzlePath}];
-                (TimelineMax as any).to($(".container"), 0.1, {
-                    autoAlpha: 0, onComplete: () => {
-                        (TimelineMax as any).set($(".list-complete-item"), {className: '+=stopDragg'});
-                        (TimelineMax as any).to($(".container"), 0.1, {autoAlpha: 1});
-                    },
-                });
+                (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                setTimeout(() => {
+                    this.itemWidth = $(".list-complete-item").width();
+                    this.itemHeight = $(".list-complete-item").height();
+                    this.puzzleShuffle = true;
+                    this.puzzleRender();
+                    this.stopEvents = false;
+                    (TimelineMax as any).set($(".list-item"), {className: '+=stopDragg'});
+
+                }, 1000);
             });
         }
 
@@ -173,16 +178,20 @@
                                     this.count = 1;
                                     const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                                     this.puzzleImage = [{id: 1, puzzlePath}];
-                                    this.$nextTick(() => {
-                                        (TimelineMax as any).set($(".list-complete-item"), {className: '+=stopDragg'});
-                                        (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                                    (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                                    setTimeout(() => {
+                                        this.itemWidth = $(".list-complete-item").width();
+                                        this.itemHeight = $(".list-complete-item").height();
+                                        this.puzzleShuffle = true;
+                                        this.puzzleRender();
                                         this.stopEvents = false;
-                                    });
+                                        (TimelineMax as any).set($(".list-item"), {className: '+=stopDragg'});
+                                    }, 1000);
                                 },
                             });
                             this.puzzleIsComplate = false;
-                        } else {
-
+                        }
+                        else {
                             const data = this.images && this.images[index] && this.images[index]['puzzleMadia'];
                             const newData = puzzleData.map((item: any) => {
                                 return data[item.item - 1];
