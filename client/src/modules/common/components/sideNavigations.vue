@@ -55,7 +55,7 @@
     import WhatInThePictureVideoSlide from '@/modules/activities/components/slideShowBased/whatInThePictureVideoSlide.vue';
     import ZoomToolbar from '@/modules/activities/components/slideShowBased/zoomToolbar.vue';
     import WHQuestionsPhotoSlide from '@/modules/activities/components/slideShowBased/whQuestionsPhotoSlide.vue';
-    import WHQuestionsVideoSLide from '@/modules/activities/components/slideShowBased/whQuestionsVideoSlide.vue';
+    import WHQuestionsVideoSlide from '@/modules/activities/components/slideShowBased/whQuestionsVideoSlide.vue';
     import SoundPhotoSelectionSlide from '@/modules/activities/components/slideShowBased/soundPhotoSelectionSlide.vue';
 
     import TimelineMax from 'gsap';
@@ -75,7 +75,7 @@
             ZoomSlide,
             ZoomToolbar,
             WHQuestionsPhotoSlide,
-            WHQuestionsVideoSLide,
+            WHQuestionsVideoSlide,
             SoundPhotoSelectionSlide,
         },
     })
@@ -129,7 +129,6 @@
                         this.hideAllPanes();
                     },
                     slideChange: () => {
-                        this.clearBrightnessEffect();
                         const el: any = this.$refs.swiper;
                         const realIndex = el && el.swiper && el.swiper.realIndex;
                         const previousIndex = el && el.swiper && el.swiper.previousIndex;
@@ -140,6 +139,7 @@
                         this.revertWitpModal(realIndex);
                         this.checkZoomSlide(slideStatus, realIndex);
                         this.slideChanged(this.isBeginning);
+                        this.clearBrightnessEffect();
                     },
                     beforeDestroy: () => {
                         timeLineMax.to('div.avtivities-background', 0, {opacity: 0});
@@ -275,9 +275,7 @@
             if (slideStatus) {
                 const el: any = this.$refs.slideComponent;
                 if (el[index - 1]) {
-                    if (el[index - 1].$refs.videoPlayer) {
-                        el[index - 1].$refs.videoPlayer.showFirstShape();
-                    }
+                    el[index - 1].showFirstShape();
                 }
             }
         }

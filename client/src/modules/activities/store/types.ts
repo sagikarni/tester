@@ -81,6 +81,7 @@ export interface IActivitiesState {
             mediaType: MediaType, // 0 = photos , 1 = videos - should be defined as enum in the store types file
             orientation: Orientation,
             mediaCount: number, // number of videos or photos in this activity
+            hasDifferentSessionLength:boolean,
             sessionsInfo: SessionsInfo[],
             selectedSessionInfoId: number,
             selectedSessionInfoDesc: 'Long',

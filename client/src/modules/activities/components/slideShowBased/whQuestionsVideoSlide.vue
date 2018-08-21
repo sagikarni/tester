@@ -11,10 +11,8 @@
 
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
-    import BaseComponent from '../../../common/components/baseComponent.vue';
     import {PremiumCollectionLayout, ImageType, MediaType} from '../../store/types';
     import WhQuestionsSlide from '@/modules/activities/components/slideShowBased/whQuestionsSlide.vue';
-    import SlideBase from 'slideBase.vue';
     import WhQuestionsSlideBase from '@/modules/activities/components/slideShowBased/whQuestionsSlideBase.vue';
     import SlideVideoPlayer from '@/modules/activities/components/slideShowBased/slideVideoPlayer.vue';
 
@@ -24,7 +22,7 @@
             SlideVideoPlayer,
         },
     })
-    export default class WHQuestionsVideoSlide extends WhQuestionsSlideBase {
+    export default class WhQuestionsVideoSlide extends WhQuestionsSlideBase {
         @Prop() public parameter?: any;
         public playerOptions: any;
         public pause: boolean = false;

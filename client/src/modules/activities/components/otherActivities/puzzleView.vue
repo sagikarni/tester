@@ -6,7 +6,7 @@
                               :key="image.id"
                               :class="[!puzzleShuffle ? 'list-complete' : '', image.id === indexId && !puzzleShuffle ? 'activeSection' : '']"
                               tag="section">
-                <div v-for="item,index in filteredItems"
+                <div v-for="(item,index) in filteredItems"
                      :key="item.id"
                      :data-id="item.id"
                      :data-paretId="image.id"
@@ -33,6 +33,7 @@
     import $ from 'jquery';
     import _ from "lodash";
 
+    const timeLineMax = TimelineMax as any;
     @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images?: any[];
@@ -45,6 +46,7 @@
         public itemHeight: number = 0;
         public puzzleIsComplate: boolean = false;
         public stopEvents: boolean = false;
+
 
         constructor() {
             super();
@@ -64,11 +66,11 @@
                 this.itemHeight = $(".list-complete-item").height();
                 this.repeatShuffle();
                 setTimeout(() => {
-                    (TimelineMax as any).to($(".container"), 0.8, {
+                    timeLineMax.to($(".container"), 0.8, {
                         autoAlpha: 1, onComplete: () => {
                             this.puzzleShuffle = true;
                             this.puzzleRender();
-                            (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                            timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
                             this.savePuzzleIndex();
                             this.stopEvents = false;
                         },
@@ -105,7 +107,7 @@
                             if (complete) {
                                 this.puzzleIsComplate = true;
                                 if (!status) {
-                                    (TimelineMax as any).to($('.item-content'), 1, {
+                                    timeLineMax.to($('.item-content'), 1, {
                                         className: '+=puzzle-correct',
                                         autoAlpha: 0,
                                         onComplete: () => {
@@ -123,7 +125,13 @@
         }
 
         public puzzleOver(index: number) {
-            (TimelineMax as any).set($(".container"), {autoAlpha: 0});
+
+                this.puzzleShuffle = true;
+                this.puzzleRender();
+                timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
+                return this.savePuzzleIndex();
+
+            timeLineMax.set($(".container"), {autoAlpha: 0});
             this.indexId = index !== 0 ? 0 : 1;
 
             this.puzzleShuffle = false;
@@ -137,28 +145,29 @@
                 this.count = 1;
                 const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                 this.puzzleImage = [{id: 1, puzzlePath}];
-                (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
                 setTimeout(() => {
                     this.itemWidth = $(".list-complete-item").width();
                     this.itemHeight = $(".list-complete-item").height();
                     this.puzzleShuffle = true;
                     this.puzzleRender();
                     this.stopEvents = false;
-                    (TimelineMax as any).set($(".list-item"), {className: '+=stopDragg'});
+                    timeLineMax.set($(".list-item"), {className: '+=stopDragg'});
 
                 }, 1000);
             });
         }
 
         public savePuzzleIndex() {
-            this.$nextTick(() => {
-                const stack: any[] = [];
-                $('.list-item').each((index: number, item: any) => {
-                    stack.push({id: index, item: $(item).data('id')});
+
+                this.$nextTick(() => {
+                    const stack: any[] = [];
+                    $('.list-item').each((index: number, item: any) => {
+                        stack.push({id: index, item: $(item).data('id')});
+                    });
+                    localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                    this.puzzleComplete(false);
                 });
-                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
-                this.puzzleComplete(false);
-            });
         }
 
         public changePuzzleImage(index: number) {
@@ -172,20 +181,20 @@
                     this.puzzleComplete(true);
                     this.$nextTick(() => {
                         if (this.puzzleIsComplate) {
-                            (TimelineMax as any).to($(".container"), 0.15, {
+                            timeLineMax.to($(".container"), 0.15, {
                                 autoAlpha: 0, onComplete: () => {
                                     this.puzzleShuffle = false;
                                     this.count = 1;
                                     const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
                                     this.puzzleImage = [{id: 1, puzzlePath}];
-                                    (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                                    timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
                                     setTimeout(() => {
                                         this.itemWidth = $(".list-complete-item").width();
                                         this.itemHeight = $(".list-complete-item").height();
                                         this.puzzleShuffle = true;
                                         this.puzzleRender();
                                         this.stopEvents = false;
-                                        (TimelineMax as any).set($(".list-item"), {className: '+=stopDragg'});
+                                        timeLineMax.set($(".list-item"), {className: '+=stopDragg'});
                                     }, 1000);
                                 },
                             });
@@ -196,12 +205,12 @@
                             const newData = puzzleData.map((item: any) => {
                                 return data[item.item - 1];
                             });
-                            (TimelineMax as any).to($(".container"), 0.15, {
+                            timeLineMax.to($(".container"), 0.15, {
                                 autoAlpha: 0, onComplete: () => {
                                     this.puzzleShuffle = false;
                                     this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
                                     this.puzzleImage = newData;
-                                    (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                                    timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
                                     setTimeout(() => {
                                         this.itemWidth = $(".list-complete-item").width();
                                         this.itemHeight = $(".list-complete-item").height();
@@ -215,11 +224,11 @@
                     });
                 }
             } else {
-                (TimelineMax as any).to($(".container"), 0.15, {
+                timeLineMax.to($(".container"), 0.15, {
                     autoAlpha: 0, onComplete: () => {
                         this.puzzleShuffle = false;
                         this.changeImageData(index);
-                        (TimelineMax as any).to($(".container"), 0.8, {autoAlpha: 1});
+                        timeLineMax.to($(".container"), 0.8, {autoAlpha: 1});
                         setTimeout(() => {
                             this.itemWidth = $(".list-complete-item").width();
                             this.itemHeight = $(".list-complete-item").height();
@@ -229,7 +238,7 @@
                                 this.puzzleRender();
                                 this.savePuzzleIndex();
                                 this.stopEvents = false;
-                            }, 2500);
+                            }, 1500);
                         }, 3000);
                     },
                 });
@@ -249,7 +258,7 @@
 
                 const cells: any[] = [];
 
-                // (TimelineMax as any).to(document.querySelector(".list-item"), 0.5, { top: 0, left: 0 });
+                // timeLineMax.to(document.querySelector(".list-item"), 0.5, { top: 0, left: 0 });
 // Map cell locations to array
                 for (let row = 0; row < totalRows; row++) {
                     for (let col = 0; col < totalCols; col++) {
@@ -262,12 +271,13 @@
                     }
                 }
 
+
                 const container = document.querySelector(".container");
                 const listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
                 const sortables = listItems.map(Sortable); // Array of sortables
                 const total = sortables.length;
 
-                (TimelineMax as any).to(container, 0.5, {autoAlpha: 1});
+                timeLineMax.to(container, 0.5, {autoAlpha: 1});
 
                 function changeIndex(item: any, to: any, sameRow: any, sameCol: any) {
 
@@ -297,7 +307,7 @@
                     const content = element.querySelector(".item-content");
                     const order = element.querySelector(".order");
 
-                    const animation = (TimelineMax as any).to(content, 0.3, {
+                    const animation = timeLineMax.to(content, 0.3, {
                         boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
                         force3D: true,
                         scale: 1.1,
@@ -323,7 +333,7 @@
                         setIndex,
                     };
 
-                    (TimelineMax as any).set(element, {
+                    timeLineMax.set(element, {
                         x: sortable.cell.x,
                         y: sortable.cell.y,
                     });
@@ -375,7 +385,7 @@
                     }
 
                     function layout() {
-                        (TimelineMax as any).to(element, 0.3, {
+                        timeLineMax.to(element, 0.3, {
                             x: sortable.cell.x,
                             y: sortable.cell.y,
                         });
@@ -405,11 +415,22 @@
             this.shuffle();
             setTimeout(() => {
                 this.shuffle();
+                    const stack: any[] = [];
+                    $('.list-complete-item').each((index: number, item: any) => {
+                        stack.push({id: index, item: $(item).data('id')});
+                    });
+                    const disableShuffleWin: boolean = stack.every((a) => ((a.id + 1) == a.item));
+                    if (disableShuffleWin) {
+                        this.repeatShuffle();
+                    }
+
             }, 1200);
+
         }
 
         public shuffle() {
             this.puzzleImage = (_ as any).shuffle(this.puzzleImage);
+
         }
 
     }
