@@ -6,15 +6,17 @@
                 <close-pane></close-pane>
             </v-flex>
 
-            <v-layout row wrap class="puzzle-content">
-                <v-flex xs3>
+            <v-layout class="puzzle-content" row wrap>
+                <v-flex  sm3>
                     <puzzle-left-panel
                             @getPuzzleData="changePuzzleImage"
+                            :aspectRatio="aspectRatio"
                             :images="slides"></puzzle-left-panel>
                 </v-flex>
-                <v-flex xs9>
+                <v-flex sm9>
                     <puzzle-view
                             ref="puzzleView"
+                            :aspectRatio="aspectRatio"
                             @stopEvents="stopPointEvents"
                             :images="slides">
                     </puzzle-view>
@@ -113,6 +115,10 @@
                 }
             }
             return slides;
+        }
+
+        get aspectRatio(): number {
+            return this.activityDetailsContent && this.activityDetailsContent.aspectRatio;
         }
 
         get activityType() {

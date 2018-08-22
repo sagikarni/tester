@@ -2,6 +2,7 @@
     <div class="sllider-wrapper">
         <div v-for="image in images" :key="image.id">
             <div :class="['cell', image.id === 0 ? 'active' : '']" @click="changePuzzle($event)"
+                 :style="`height: ${itemHeight}px`"
                  :data-count="image.media.partsCount" :data-url="image.media.photo" :data-id="image.id">
                 <img :src="getImagePath(image.media.photo, getMediaTypes.Content)"/>
             </div>
@@ -20,9 +21,19 @@
     @Component
     export default class PuzzleLeftPanel extends BaseComponent {
         @Prop() public images?: object[];
+        @Prop() public aspectRatio?: number;
+        public itemHeight: number = 0;
 
         get getMediaTypes(): any {
             return ImageType;
+        }
+
+        public mounted() {
+            const elem: any = document.querySelector('.cell');
+            const width = elem && elem.offsetWidth;
+            if (this.aspectRatio) {
+                this.itemHeight = width / this.aspectRatio;
+            }
         }
 
         public changePuzzle(event: any) {
@@ -50,8 +61,7 @@
         overflow-x: hidden;
         .cell {
             width: 90%;
-            height: 200px;
-            margin: 15px;
+            margin: 5px 15px;
             border: 1px solid #4c6cff;
             position: relative;
             &:after {
