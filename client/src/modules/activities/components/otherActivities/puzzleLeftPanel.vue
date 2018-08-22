@@ -16,6 +16,8 @@
     import { ImageType} from '@/modules/activities/store/types';
     import $ from 'jquery';
     import TimelineMax from 'gsap';
+    const timeLineMax = TimelineMax as any;
+
 
 
     @Component
@@ -38,10 +40,10 @@
 
         public changePuzzle(event: any) {
             if (!event.currentTarget.classList.contains('active')) {
-                (TimelineMax as any).set($('.active'), {
+                timeLineMax.set($('.active'), {
                     className: "-=active",
                     onComplete: () => {
-                        (TimelineMax as any).set(event.target, {className: "+=active"});
+                        timeLineMax.set(event.target, {className: "+=active"});
                         this.$emit('getPuzzleData', {
                             url: $(event.target).data('url'),
                             count: $(event.target).data('count'),
@@ -56,7 +58,7 @@
 
 <style scoped lang="scss">
     .sllider-wrapper {
-        height: 80vh;
+        height: 90vh;
         overflow-y: scroll;
         overflow-x: hidden;
         .cell {

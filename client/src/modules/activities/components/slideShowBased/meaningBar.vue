@@ -22,6 +22,8 @@
     import BaseComponent from '../../../common/components/baseComponent.vue';
     import {PremiumCollectionLayout, ImageType} from '../../store/types';
     import TimelineMax from 'gsap';
+    const timelineMax = TimelineMax as any;
+
 
     @Component
     export default class MeaningBar extends BaseComponent {
@@ -81,25 +83,25 @@
             const elemFadingWord = document.getElementsByClassName("meaningSpanFade");
 
             this.transitionEnded = false;
-            (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(180deg)", autoAlpha: 0.5});
-            (TimelineMax as any).to(elemFadingWord, 0.5,
+            timelineMax.to(elemrefresh, 0, {transform: "rotate(180deg)", autoAlpha: 0.5});
+            timelineMax.to(elemFadingWord, 0.5,
                 {
                     css: {"margin-right": "-200px", "alpha": "0"},
                     ease: Power1.easeOut,
                     onComplete: () => {
-                        (TimelineMax as any).to(elemrefresh, 0, {transform: "rotate(0deg)", autoAlpha: 1});
-                        (TimelineMax as any).set(elemFadingWord, {
+                        timelineMax.to(elemrefresh, 0, {transform: "rotate(0deg)", autoAlpha: 1});
+                        timelineMax.set(elemFadingWord, {
                             css: {"margin-left": "-400px"},
                         });
                         this.phraseWord = this.getNextRandomPhrase(this.randomizeCount);
-                        (TimelineMax as any).to(elemFadingWord, 0.5, {
+                        timelineMax.to(elemFadingWord, 0.5, {
                             css: {"margin-left": "-200px", "alpha": "1"}, ease: Power1.easeOut, onComplete: () => {
                                 this.transitionEnded = true;
                             },
                         });
                     },
                 });
-            (TimelineMax as any).to(elemFadingWord, 0, {css: {"margin-left": "0", "margin-right": "0"}});
+            timelineMax.to(elemFadingWord, 0, {css: {"margin-left": "0", "margin-right": "0"}});
         }
     }
 </script>

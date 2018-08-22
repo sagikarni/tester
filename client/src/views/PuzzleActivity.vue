@@ -47,6 +47,7 @@
 
     import TimelineMax from 'gsap';
     import { State } from 'vuex-class';
+    const timelineMax = TimelineMax as any;
 
 
     @Component({
@@ -172,7 +173,7 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
-                (TimelineMax as any).to(".application--wrap", 0,  {backgroundColor: "#000000"});
+                 timelineMax.to(".application--wrap", 0,  {backgroundColor: "#000000"});
 
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);

@@ -230,15 +230,15 @@ j<template>
             min-width: 150px;
         }
     }
-.clearDiv{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-}
+    .clearDiv{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+    }
     .cardWrapper {
         width: 450px;
         height: 270px;

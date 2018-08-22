@@ -140,8 +140,11 @@
                                         className: '+=puzzle-correct',
                                         autoAlpha: 0,
                                         onComplete: () => {
-                                            this.puzzleOver(this.indexId);
-                                            this.puzzleIsComplate = false;
+                                            setTimeout(()=>{
+                                                this.puzzleOver(this.indexId);
+                                                this.puzzleIsComplate = false;
+                                            },1200)
+
                                         },
                                     });
                                 }
