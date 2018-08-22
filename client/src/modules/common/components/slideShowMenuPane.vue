@@ -7,6 +7,7 @@
     import { Component } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import TimelineMax from 'gsap';
+    const timelineMax = TimelineMax as any;
 
     @Component
     export default class SlideShowMenuPane extends BaseComponent {
@@ -14,7 +15,7 @@
 
 
        public showPane(): void {
-            (TimelineMax as any).to('.top_pane', 0.1, {opacity: .86 , onComplete: () => {
+            timelineMax.to('.top_pane', 0.1, {opacity: .86 , onComplete: () => {
                 this.isCloseBtnVisible = true;
             }});
         }
@@ -23,7 +24,7 @@
         }
 
         private hidePaneInternal(animationTime: number): void {
-             (TimelineMax as any).to('.top_pane', animationTime, {opacity: 0.07, onComplete: () => {
+             timelineMax.to('.top_pane', animationTime, {opacity: 0.07, onComplete: () => {
                 this.isCloseBtnVisible = false;
             }});
         }

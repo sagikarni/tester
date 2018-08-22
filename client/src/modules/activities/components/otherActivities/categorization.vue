@@ -39,6 +39,7 @@
     import Draggable from 'gsap/Draggable.js';
     import $ from "jquery";
     import {ActivityType, MediaType, ImageType} from '@/modules/activities/store/types';
+    const timelineMax = TimelineMax as any;
 
     const  category: string = 'category';
 
@@ -111,10 +112,10 @@
                 const elementTopHeight = wrapperTopHeight - wrapperOffset;
                 const elementTopWidth = wrapperTopWidth - wrapperOffset;
 
-                (TimelineMax as any).set("#scroll-box", {width: wrapperTopWidth});
-                (TimelineMax as any).set(".tile-wrapper", {width: wrapperTopWidth, height: wrapperTopHeight});
+                timelineMax.set("#scroll-box", {width: wrapperTopWidth});
+                timelineMax.set(".tile-wrapper", {width: wrapperTopWidth, height: wrapperTopHeight});
 
-                (TimelineMax as any).set([".tile-wrapper .tile", ".tile-wrapper .clone"], {width: elementTopWidth, height: elementTopHeight});
+                timelineMax.set([".tile-wrapper .tile", ".tile-wrapper .clone"], {width: elementTopWidth, height: elementTopHeight});
 
                 ///////////////////////////////////////////////////////////////
 
@@ -148,8 +149,8 @@
                 function startDraggable(event: any) {
                     const tile = event.data;
 
-                    (TimelineMax as any).set(tile.element, {autoAlpha: 0});
-                    (TimelineMax as any).set(tile.clone, {x: tile.x, y: tile.y, autoAlpha: 1});
+                    timelineMax.set(tile.element, {autoAlpha: 0});
+                    timelineMax.set(tile.clone, {x: tile.x, y: tile.y, autoAlpha: 1});
 
                     tile.draggable.startDrag(event.originalEvent);
                 }
@@ -171,25 +172,25 @@
 
                     function setActive() {
                         if (Draggable.hitTest(clone, scrollBox)) {
-                            (TimelineMax as any).to(clone, 0.15, {scale: 0.6, autoAlpha: 0.75});
+                            timelineMax.to(clone, 0.15, {scale: 0.6, autoAlpha: 0.75});
                         } else {
-                            (TimelineMax as any).to(clone, 0.15, {scale: 1.2, autoAlpha: 0.75});
+                            timelineMax.to(clone, 0.15, {scale: 1.2, autoAlpha: 0.75});
                         }
                     }
 
                     function collapseSpace(this: any) {
                         if (this.hitTest(dropPanel, threshold)) {
-                            (TimelineMax as any).set(dropPanel, {className: "+=highlight"});
+                            timelineMax.set(dropPanel, {className: "+=highlight"});
                         } else if (this.hitTest(dropPanel2, threshold)) {
-                            (TimelineMax as any).set(dropPanel2, {className: "+=highlight"});
+                            timelineMax.set(dropPanel2, {className: "+=highlight"});
                         } else {
-                            (TimelineMax as any).set([dropPanel, dropPanel2], {className: "-=highlight"});
+                            timelineMax.set([dropPanel, dropPanel2], {className: "-=highlight"});
                         }
 
                         if (!tile.moved) {
                             if (!this.hitTest(wrapper)) {
                                 tile.moved = true;
-                                (TimelineMax as any).to(wrapper, 0.3, {width: 0});
+                                timelineMax.to(wrapper, 0.3, {width: 0});
                             }
                         }
 
@@ -210,7 +211,7 @@
                         }
 
                         moveBack(tile, className);
-                        (TimelineMax as any).set([dropPanel, dropPanel2], {className: "-=highlight"});
+                        timelineMax.set([dropPanel, dropPanel2], {className: "-=highlight"});
                     }
                 }
 
@@ -221,10 +222,10 @@
                     const wrapper = tile.wrapper;
 
                     if (className) {
-                        (TimelineMax as any).set(wrapper, {width: wrapperWidth, height: wrapperHeight});
-                        (TimelineMax as any).set(element, {autoAlpha: 0, width: 0, height: elementHeight});
+                        timelineMax.set(wrapper, {width: wrapperWidth, height: wrapperHeight});
+                        timelineMax.set(element, {autoAlpha: 0, width: 0, height: elementHeight});
                         setTimeout(() => {
-                                (TimelineMax as any).to(clone, 0.3, {
+                                timelineMax.to(clone, 0.3, {
                                     width: elementWidth,
                                     height: elementHeight,
                                     scale: 1,
@@ -236,12 +237,12 @@
 
                                 function done() {
                                     tile.moved = false;
-                                    (TimelineMax as any).set(clone, {
+                                    timelineMax.set(clone, {
                                         autoAlpha: 0,
                                         width: elementWidth,
                                         height: elementHeight,
                                     });
-                                    (TimelineMax as any).set(element, {
+                                    timelineMax.set(element, {
                                         autoAlpha: 1,
                                         width: elementWidth,
                                         height: elementHeight,
@@ -250,9 +251,9 @@
                             }
                             , 110);
                     } else {
-                        (TimelineMax as any).to(wrapper, 0.1, {width: tile.dropped ? wrapperWidth :  tile.width});
+                        timelineMax.to(wrapper, 0.1, {width: tile.dropped ? wrapperWidth :  tile.width});
                         setTimeout(() => {
-                            (TimelineMax as any).to(clone, 0.3, {
+                            timelineMax.to(clone, 0.3, {
                                 scale: 1,
                                 autoAlpha: 1,
                                 x: tile.x,
@@ -262,8 +263,8 @@
 
                             function done() {
                                 tile.moved = false;
-                                (TimelineMax as any).set(clone, {autoAlpha: 0});
-                                (TimelineMax as any).set(element, {autoAlpha: 1});
+                                timelineMax.set(clone, {autoAlpha: 0});
+                                timelineMax.set(element, {autoAlpha: 1});
                             }
                         }, 110);
                     }
@@ -275,20 +276,20 @@
                     // If different catigory border is red
                     if (Draggable.hitTest(letter.element, dropPanel)) {
                         if (dropPanel.data("id") === letter.element.data("id")) {
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "+=greenBorder"});
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "-=redBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "+=greenBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "-=redBorder"});
 
                         } else {
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "+=redBorder"});
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "-=greenBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "+=redBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "-=greenBorder"});
                         }
                     } else if (Draggable.hitTest(letter.element, dropPanel2)) {
                         if (dropPanel2.data("id") === letter.element.data("id")) {
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "+=greenBorder"});
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "-=redBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "+=greenBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "-=redBorder"});
                         } else {
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "+=redBorder"});
-                            (TimelineMax as any).set([letter.element, letter.clone], {className: "-=greenBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "+=redBorder"});
+                            timelineMax.set([letter.element, letter.clone], {className: "-=greenBorder"});
                         }
                     }
                 }

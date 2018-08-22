@@ -2,6 +2,7 @@
     <div class="sllider-wrapper">
         <div v-for="image in images" :key="image.id">
             <div :class="['cell', image.id === 0 ? 'active' : '']" @click="changePuzzle($event)"
+                 :style="`height: ${itemHeight}px`"
                  :data-count="image.media.partsCount" :data-url="image.media.photo" :data-id="image.id">
                 <img :src="getImagePath(image.media.photo, getMediaTypes.Content)"/>
             </div>
@@ -15,22 +16,34 @@
     import { ImageType} from '@/modules/activities/store/types';
     import $ from 'jquery';
     import TimelineMax from 'gsap';
+    const timeLineMax = TimelineMax as any;
+
 
 
     @Component
     export default class PuzzleLeftPanel extends BaseComponent {
         @Prop() public images?: object[];
+        @Prop() public aspectRatio?: number;
+        public itemHeight: number = 0;
 
         get getMediaTypes(): any {
             return ImageType;
         }
 
+        public mounted() {
+            const elem: any = document.querySelector('.cell');
+            const width = elem && elem.offsetWidth;
+            if (this.aspectRatio) {
+                this.itemHeight = width / this.aspectRatio;
+            }
+        }
+
         public changePuzzle(event: any) {
             if (!event.currentTarget.classList.contains('active')) {
-                (TimelineMax as any).set($('.active'), {
+                timeLineMax.set($('.active'), {
                     className: "-=active",
                     onComplete: () => {
-                        (TimelineMax as any).set(event.target, {className: "+=active"});
+                        timeLineMax.set(event.target, {className: "+=active"});
                         this.$emit('getPuzzleData', {
                             url: $(event.target).data('url'),
                             count: $(event.target).data('count'),
@@ -45,13 +58,12 @@
 
 <style scoped lang="scss">
     .sllider-wrapper {
-        height: 80vh;
+        height: 90vh;
         overflow-y: scroll;
         overflow-x: hidden;
         .cell {
             width: 90%;
-            height: 200px;
-            margin: 15px;
+            margin: 5px 15px;
             border: 1px solid #4c6cff;
             position: relative;
             &:after {
