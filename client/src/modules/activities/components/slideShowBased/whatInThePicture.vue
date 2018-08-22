@@ -255,6 +255,8 @@ j<template>
 
     .cardFace.back {
         display: table;
+        border: 1px solid white;
+        border-radius: 4px;
     }
 
     .cardFace {

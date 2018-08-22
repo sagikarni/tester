@@ -146,6 +146,7 @@
 
     .fourCell {
         width: calc(50% - 60px);
+        height: calc(50vh - 10px);
         margin: 5px 5px 0 5px;
         background-color: white;
         border: solid 2px transparent;
@@ -156,6 +157,7 @@
         -webkit-box-sizing: border-box;
         transition: all 0.3s ease;
         -webkit-transition: all 0.3s ease;
+        object-fit: cover;
     }
 
     .twoCell {

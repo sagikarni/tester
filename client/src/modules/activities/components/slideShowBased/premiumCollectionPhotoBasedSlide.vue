@@ -134,9 +134,11 @@
     .fourCell {
         background-color: white;
         width: calc(50% - 60px);
-        padding: 5px 5px 0px 5px;
+        height: calc(50vh - 10px);
+        padding: 5px 5px 0 5px;
         -webkit-filter: brightness(1);
         filter: brightness(1);
+        object-fit: cover;
     }
 
     .twoCell {
