@@ -79,7 +79,7 @@
             img {
                 height: 100%;
                 width: 100%;
-                object-fit: cover;
+                object-fit: scale-down;
             }
             &.active {
                 border: 1px solid transparent;

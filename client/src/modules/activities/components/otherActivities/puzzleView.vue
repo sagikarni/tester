@@ -6,7 +6,7 @@
                               :key="image.id"
                               :class="[!puzzleShuffle ? 'list-complete' : '', image.id === indexId && !puzzleShuffle ? 'activeSection' : '']"
                               tag="section">
-                <div v-for="item,index in filteredItems"
+                <div v-for="(item,index) in filteredItems"
                      :key="item.id"
                      :data-id="item.id"
                      :data-paretId="image.id"
@@ -34,7 +34,6 @@
     import _ from "lodash";
 
     const timelineMax = TimelineMax as any;
-
     @Component
     export default class PuzzleView extends BaseComponent {
         @Prop() public images?: any[];
@@ -43,12 +42,13 @@
         public puzzleShuffle?: boolean = false;
         public width?: number = 0;
         public puzzleImage: any;
-        public count: number = 9;
-        public indexId: number = 1;
+        public count: number = 0;
+        public indexId: number = 0;
         public itemWidth: number = 0;
         public itemHeight: number = 0;
         public puzzleIsComplate: boolean = false;
         public stopEvents: boolean = false;
+
 
         constructor() {
             super();
@@ -176,14 +176,15 @@
         }
 
         public savePuzzleIndex() {
-            this.$nextTick(() => {
-                const stack: any[] = [];
-                $('.list-item').each((index: number, item: any) => {
-                    stack.push({id: index, item: $(item).data('id')});
+
+                this.$nextTick(() => {
+                    const stack: any[] = [];
+                    $('.list-item').each((index: number, item: any) => {
+                        stack.push({id: index, item: $(item).data('id')});
+                    });
+                    localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                    this.puzzleComplete(false);
                 });
-                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
-                this.puzzleComplete(false);
-            });
         }
 
         public changePuzzleImage(index: number) {
@@ -429,11 +430,22 @@
             this.shuffle();
             setTimeout(() => {
                 this.shuffle();
+                    const stack: any[] = [];
+                    $('.list-complete-item').each((index: number, item: any) => {
+                        stack.push({id: index, item: $(item).data('id')});
+                    });
+                    const disableShuffleWin: boolean = stack.every((a) => ((a.id + 1) == a.item));
+                    if (disableShuffleWin) {
+                        this.repeatShuffle();
+                    }
+
             }, 1200);
+
         }
 
         public shuffle() {
             this.puzzleImage = (_ as any).shuffle(this.puzzleImage);
+
         }
 
     }
