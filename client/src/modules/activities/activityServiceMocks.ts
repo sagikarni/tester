@@ -12,12 +12,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '1'}}).reply(200, {
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
-        isPinned: false,
-        sessionsInfo: [
-            {id: 1, description: "Short", slidesCount: 6},
-            {id: 2, description: "Medium", slidesCount: 12},
-            {id: 3, description: "Long", slidesCount: 18},
-        ],
+        isPinned: true,
+        hasDifferentSessionLength:true,
         images: [
             {
                 id: 1,
@@ -120,6 +116,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '2'}}).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -212,6 +210,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '3'}}).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -304,6 +304,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '4'}}).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -390,6 +392,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '10'}}).reply(200, {
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -461,6 +465,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -617,6 +623,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -692,6 +700,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -850,6 +860,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '22'}}).reply(200, {
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -925,6 +937,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
         mediaCount: 9, // number of videos or photos in this activity
         orientation: Orientation.Portrait,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         images: [
             {
                 id: 1,
@@ -1087,6 +1101,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         mediaCount: 3, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         images: [
             {
                 id: 1,
@@ -1129,6 +1145,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '15'}}).reply(200, {
         mediaCount: 12, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -1236,6 +1254,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '16'}}).reply(200, {
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -1341,6 +1361,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
             {id: 3, description: "Long", slidesCount: 18},
         ],
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         images: [
             {
                 id: 1,
@@ -1476,6 +1498,8 @@ mock.onGet('/general/getActivity', {params: {activityId: '18'}}).reply(200, {
         mediaCount: 4, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+                hasDifferentSessionLength:false,
+
         sessionsInfo: [
             {id: 1, description: "Short", slidesCount: 6},
             {id: 2, description: "Medium", slidesCount: 12},
@@ -1547,6 +1571,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
         mediaCount: 8, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
         isPinned: false,
+        hasDifferentSessionLength:false,
         mediaType: MediaType.PhotoAndSound, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         images: [
             {

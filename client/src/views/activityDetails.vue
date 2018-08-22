@@ -28,11 +28,11 @@
                            :sessionBtnDescription="sessionBtnDescription">
 
             </image-gallery>
-      </section>
-         <div v-for='(photo, index) in allImagesForCaching' :key="index">
-              <img style="display:none"
-                   :src="getImagePath(photo.imgSrc, getMediaTypes.Content)"/>  
-         </div>
+        </section>
+        <div v-for='(photo, index) in allImagesForCaching' :key="index">
+            <img style="display:none"
+                 :src="getImagePath(photo.imgSrc, getMediaTypes.Content)"/>
+        </div>
     </div>
 </template>
 
@@ -82,7 +82,13 @@
         public sessionSelectedItem?: string = 'Long';
         public sessionSelectedItemId?: number = 3;
         public noDeviceSleep: any;
+        public sessionsInfoArr: any = [
+            {id: 1, description: "Short", slidesCount: 6},
+            {id: 2, description: "Medium", slidesCount: 12},
+            {id: 3, description: "Long", slidesCount: 18},
+        ];
         @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
+        @State(state => state.activities.activity.details.hasDifferentSessionLength) public hasDifferentSessionLength?: boolean;
         @State(state => state.errorPane) public errorPane?: any;
         @State(state => state.activities.activity) public activityState?: any;
         @State(state => (state.activities.activity && state.activities.activity.details && state.activities.activity.details.selectedSessionInfoId)) public selectedSessionInfoId?: number;
@@ -109,7 +115,12 @@
         }
 
         get sessionsInfo(): SessionsInfo[] {
-            return this.activityState && this.activityState.details && this.activityState.details.sessionsInfo;
+            let sessionArr: SessionsInfo[] = [];
+            if (this.activityState && this.activityState.details && this.activityState.details.hasDifferentSessionLength) {
+                return this.sessionsInfoArr
+            } else {
+                return sessionArr;
+            }
         }
 
         get getMediaTypes(): any {
@@ -127,7 +138,6 @@
                 detailsInfo.mediaCount = this.activityState.details.mediaCount;
                 detailsInfo.mediaType = this.activityState.details.mediaType;
                 detailsInfo.orientation = this.activityState.details.orientation;
-
                 if (detailsInfo.mediaType === MediaType.Photo) {
                     detailsInfo.mediaTypeText = this.$locale.activities.activityDetails.photoBasedText;
                     detailsInfo.mediaTypeIconClass = "far fa-image";
@@ -135,7 +145,6 @@
                     detailsInfo.mediaTypeText = this.$locale.activities.activityDetails.videoBasedText;
                     detailsInfo.mediaTypeIconClass = "fas fa-play-circle";
                 }
-
                 if (detailsInfo.orientation === Orientation.Landscape) {
                     detailsInfo.orientationText = this.$locale.activities.activityDetails.landscapeText;
                     detailsInfo.orientationIconClass = "ex-landscape";
@@ -148,10 +157,8 @@
         }
 
         get imageGalleryInfo(): ImageInfo {
-
             const imageGalleryInfo = new ImageInfo();
             if (this.activityState && this.activityState.details) {
-                // this.cacheImages();
                 imageGalleryInfo.thumbnails = this.activityState.details.images;
             }
             return imageGalleryInfo;
@@ -182,7 +189,8 @@
         get allImages(): any[] {
             return this.activityState && this.activityState.details && this.activityState.details.images;
         }
-          get allImagesForCaching(): any[] {
+
+        get allImagesForCaching(): any[] {
             return this.startCaching && this.activityState && this.activityState.details && this.activityState.details.images;
         }
 
@@ -266,7 +274,7 @@
 </script>
 <style>
 
-    .menu{
+    .menu {
         display: inline-block;
     }
 </style>

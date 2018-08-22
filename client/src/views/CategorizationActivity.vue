@@ -38,6 +38,7 @@
     import TimelineMax from 'gsap';
     import {State} from 'vuex-class';
     import ClosePane from '@/modules/common/components/closePane.vue';
+    const timelineMax = TimelineMax as any;
 
     @Component({
         components: {
@@ -120,7 +121,7 @@
 
         public mounted() {
             if ((this.$route.params as any).activityId) {
-                (TimelineMax as any).to(".application--wrap", 0, {backgroundColor: "#000000"});
+                timelineMax.to(".application--wrap", 0, {backgroundColor: "#000000"});
                 this.activityId = (this.$route.params as any).activityId;
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);

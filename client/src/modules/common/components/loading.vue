@@ -7,6 +7,7 @@
     import {ISystemLoading} from "../../store/types";
     import {State, Action, Getter} from 'vuex-class';
     import TimelineMax from 'gsap';
+    const timelineMax = TimelineMax as any;
 
     @Component
     export default class Loading extends Vue {
@@ -21,7 +22,7 @@
 
         public close() {
             setTimeout(() => {
-              (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
+              timelineMax.to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
                     this.isLoading = false;
                 } });
             } , 21);
@@ -29,7 +30,7 @@
         public show(): void {
             this.isLoading = true;
             setTimeout(() => {
-                  (TimelineMax as any).to('.tera-overlay', 1, {opacity : 0.5 });
+                  timelineMax.to('.tera-overlay', 1, {opacity : 0.5 });
              } , 20);
         }
 
