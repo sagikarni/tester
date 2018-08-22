@@ -23,6 +23,8 @@ export const errorHandler = (correlationId, req, res, next) => {
 
 export const async = fn => (req, res, next, ...args) => Promise.resolve(fn(req, res, next, ...args)).catch(next);
 
+export const asyncAll = fns => fns.map(fn => async(fn));
+
 export class AppError extends Error {
   constructor(message: string) {
       super(message);

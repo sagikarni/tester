@@ -3,6 +3,7 @@ const {
   CheckerPlugin,
   TsConfigPathsPlugin
 } = require('awesome-typescript-loader');
+var nodeExternals = require('webpack-node-externals');
 
 const configFileName = path.resolve(__dirname, './tsconfig.json');
 
@@ -14,6 +15,7 @@ module.exports = (options, webpackOptions) => [
       path: path.resolve(__dirname, '../dist')
     },
     target: 'node',
+    externals: [nodeExternals()], 
     devtool: 'source-map',
     node: {
       __dirname: false

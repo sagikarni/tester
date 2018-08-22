@@ -2,9 +2,14 @@
   "name": "tera",
   "version": "0.1.0",
   "private": true,
+  "nodemonConfig": {
+    "ignore": [
+      "public/*"
+    ]
+  },
   "scripts": {
     "start": "npm run start:server && npm run start:client",
-    "watch": "concurrently -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"npm run watch:server\" \"npm run watch:client\"",
+    "watch": "concurrently -p \"[{name}]\" -n \"Database,Server,Client\" -c \"blue.bold,yellow.bold,cyan.bold\" \"npm run db\" \"npm run watch:server\" \"npm run watch:client\"",
     "build": "npm run build:client && npm run build:server -- --mode production",
     "test": "jest --forceExit --coverage --verbose --config jest.config.js",
     "start:qa": "cross-env DEBUG_ENV=QA npm start",
@@ -18,24 +23,27 @@
     "watch:client": "vue-cli-service serve",
     "build:client": "vue-cli-service build",
     "start:server": "npm run build:server && node --inspect dist/www.js",
-    "watch:server": "concurrently -p \"[{name}]\" -n \"Watch,NodeJS\" -c \"yellow.bold,cyan.bold\" \"npm run build:server -- --watch\" \"nodemon --watch dist/www.js --inspect dist/www.js\"",
+    "watch:server": "concurrently -p \"[{name}]\" -n \"Database,Watch,NodeJS\" -c \"blue.bold,yellow.bold,cyan.bold\" \"npm run db\" \"npm run build:server -- --watch\" \"nodemon --inspect dist/www.js\"",
     "build:server": "npm run webpack -- --config ./server/server.config.js --mode development",
     "clean:dist": "npm run rimraf -- dist",
     "watch-test": "npm run test -- --watchAll",
     "rimraf": "rimraf",
     "webpack": "webpack",
     "webpack-dev-server": "webpack-dev-server",
-    "security": "nsp check"
+    "security": "nsp check",
+    "db": "mongod"
   },
-   "dependencies": {
+  "dependencies": {
     "@babel/plugin-proposal-optional-catch-binding": "^7.0.0-rc.1",
     "@types/greensock": "^1.15.32",
     "@types/gsap": "^1.19.2",
+    "@types/mongoose": "^5.2.6",
     "awesome-typescript-loader": "^5.0.0",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
     "babel-jest": "^23.0.1",
     "babel-polyfill": "^6.26.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "child-process-fork-string": "^1.0.0",
     "codelyzer": "^4.3.0",
@@ -52,11 +60,13 @@
     "helmet": "^3.12.1",
     "http": "0.0.0",
     "jquery": "^3.3.1",
+    "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "material-design-icons": "^3.0.1",
     "material-design-icons-iconfont": "^3.0.3",
     "memoizee": "^0.4.12",
     "method-override": "^2.3.10",
+    "mongoose": "^5.2.9",
     "node-sass": "^4.9.3",
     "node-uuid": "^1.4.8",
     "nosleep.js": "^0.7.0",

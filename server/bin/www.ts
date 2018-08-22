@@ -2,22 +2,24 @@ import './polyfills';
 
 import { createServer } from 'http';
 import { logger } from '@server/core';
+import { db } from '@server/database';
 
 import app from '@server/app';
 
 const PORT = process.env.PORT || 3000;
 
 (async () => {
-  // await connect();
+  db.connection.once('open', async () => {
+    console.log('Connection database has been established successfully.');
 
-  console.log('Connection database has been established successfully.');
+    await db.connection.db.dropDatabase();
 
-  // await sequelize.sync({ force: true });
+    const server = createServer(app);
 
-  const server = createServer(app);
-
-  server.listen(PORT, () => {
-    logger.log(`server started on port ${PORT}`);
-    console.info(`server started on port ${PORT}`);
+    server.listen(process.env.PORT || 3000, function() {
+      console.log('app listening on port 3000!');
+    });
   });
+
+  await db.connect();
 })();
