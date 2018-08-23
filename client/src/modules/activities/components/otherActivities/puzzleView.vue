@@ -181,14 +181,15 @@
         }
 
         public savePuzzleIndex() {
-            this.$nextTick(() => {
-                const stack: any[] = [];
-                $('.list-item').each((index: number, item: any) => {
-                    stack.push({id: index, item: $(item).data('id')});
+
+                this.$nextTick(() => {
+                    const stack: any[] = [];
+                    $('.list-item').each((index: number, item: any) => {
+                        stack.push({id: index, item: $(item).data('id')});
+                    });
+                    localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                    this.puzzleComplete(false);
                 });
-                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
-                this.puzzleComplete(false);
-            });
         }
 
         public changePuzzleImage(index: number) {
@@ -258,7 +259,7 @@
                                 this.savePuzzleIndex();
                                 timelineMax.from('.containerPuzzle', 0.4, {autoAlpha: 0});
                                 this.stopEvents = false;
-                            }, 2500);
+                            }, 1500);
                         }, 3000);
                     },
                 });

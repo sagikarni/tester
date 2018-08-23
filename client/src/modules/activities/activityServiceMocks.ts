@@ -1117,6 +1117,13 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
                 title: 'some title 1',
 
             },
+            {
+
+                id: 3,
+                imgSrc: 'iStock-508496372.jpg',
+                title: 'some title 1',
+
+            },
         ],
     },
     content: {
@@ -1128,6 +1135,10 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
             },
             {
                 photo: "puzzle-2/photo.jpg",
+                partsCount: 9,
+            },
+            {
+                photo: "puzzle-3/photo.jpg",
                 partsCount: 9,
             },
         ],
