@@ -1,6 +1,6 @@
-j<template>
+<template>
     <div>
-        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture" >
+        <div v-if="isSinglePhotoSlide" class="full-height table what_in_picture">
             <div class="cell">
                 <div class="cell-content">
                     <slot></slot>
@@ -24,7 +24,7 @@ j<template>
                                 </div>
                                 <div class="cardFace back">
                                     <div class="card_back_in">
-                                        <p>{{this.parameter.media.questions[0]}}</p>
+                                        <p class="questionP">{{this.parameter.media.questions[0]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@ j<template>
                                 </div>
                                 <div class="cardFace back">
                                     <div class="card_back_in">
-                                        <p>{{this.parameter.media.questions[1]}}</p>
+                                        <p class="questionP">{{this.parameter.media.questions[1]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@ j<template>
                                 </div>
                                 <div class="cardFace back">
                                     <div class="card_back_in">
-                                        <p>{{this.parameter.media.questions[2]}}</p>
+                                        <p class="questionP">{{this.parameter.media.questions[2]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ j<template>
                                 </div>
                                 <div class="cardFace back">
                                     <div class="card_back_in">
-                                        <p>{{this.parameter.media.questions[3]}}</p>
+                                        <p class="questionP">{{this.parameter.media.questions[3]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -125,23 +125,40 @@ j<template>
         }
 
         public openModalQuestions() {
-            let percentW=30;
-            let percentH=24;
-            let marginSize=20;
-            let rows=2
+            const aspectRatio = 1.66;
+            const spaceWidth = 250;
+            const containerPadding = 240;
+            const closeButtonHeight = 60;
+            const defaultMinHeight = 100;
+            const defaultMaxHeight = 380;
+            let rows = 2;
             if (!this.ifDialogOpened) {
                 this.revertWitpModal();
                 this.ifDialogOpened = true;
 
             }
             const root = document.getElementById("app") as any;
-            let availableHeight = root.offsetHeight-(root.offsetHeight * percentH)/100;
-            let availableWidth = root.offsetWidth-(root.offsetWidth  * percentW)/100;
-            let height = availableHeight/rows - marginSize;
-            let width = availableWidth/rows -marginSize;
+            let availableHeight = root.offsetHeight;
+            let availableWidth = root.offsetWidth;
+            let elemHeight = Math.floor((availableHeight - closeButtonHeight - containerPadding) / rows);
+            let elemWidth = Math.floor((availableWidth - containerPadding - spaceWidth / rows));
+            if (elemHeight < defaultMinHeight) {
+                timeLineMax.set(".questionP", {fontSize: "14px"});
+                elemHeight = defaultMinHeight;
+            } else if (elemHeight > defaultMaxHeight) {
+                elemHeight = defaultMaxHeight;
+            }
+            if (elemWidth / elemHeight < aspectRatio) {
+                elemHeight = Math.floor(elemWidth / aspectRatio);
+            } else {
+                elemWidth = Math.floor(elemHeight * aspectRatio);
+
+            }
+
+
             this.dialog = true;
-            timeLineMax.set(".cardWrapper", {perspective: 1200,height:height,width:width});
-            timeLineMax.set(".cardFace", {height:height,width:width});
+            timeLineMax.set(".cardWrapper", {perspective: 1200, height: elemHeight, width: elemWidth});
+            timeLineMax.set(".cardFace", {height: elemHeight, width: elemWidth});
             timeLineMax.set(".card", {transformStyle: "preserve-3d"});
             timeLineMax.set(".back", {rotationY: -180});
             timeLineMax.set([".back", ".front"], {backfaceVisibility: "hidden"});
@@ -230,7 +247,8 @@ j<template>
             min-width: 150px;
         }
     }
-    .clearDiv{
+
+    .clearDiv {
         width: 100%;
         height: 100%;
         position: absolute;
@@ -239,9 +257,9 @@ j<template>
         top: 0;
         left: 0;
     }
+
     .cardWrapper {
-        width: 450px;
-        height: 270px;
+
         float: left;
         margin: 0 20px 20px 0;
         cursor: pointer;
@@ -261,8 +279,6 @@ j<template>
 
     .cardFace {
         position: absolute;
-        width: 450px;
-        height: 270px;
         overflow: hidden;
         border: 1px solid white;
         border-radius: 4px;
@@ -349,12 +365,11 @@ j<template>
         border: 1px solid white !important;
         border-radius: 3px;
 
-
     }
-    .v-dialog{
+    .v-dialog {
         z-index: 205;
     }
-    .v-dialog__content--active{
+    .v-dialog__content--active {
         background: black;
     }
 
@@ -366,10 +381,7 @@ j<template>
     }
 
     @media screen and (max-width: 1260px) {
-        .cardWrapper, .cardFace {
-            width: 230px;
-            height: 130px;
-        }
+
         .close_button_what_in_picture {
             margin-top: 0;
         }
@@ -395,10 +407,14 @@ j<template>
             margin: 0 10px 10px 0;
 
         }
+        .card_back_in p {
+            font-size: 18px;
+        }
         .close_what_in_picture {
             right: 8px;
         }
 
     }
+
 
 </style>
