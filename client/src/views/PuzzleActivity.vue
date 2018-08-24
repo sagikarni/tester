@@ -6,16 +6,18 @@
                 <close-pane></close-pane>
             </v-flex>
 
-            <v-layout class="puzzle-content" row wrap>
+            <v-layout v-if="firstPageLoad" class="puzzle-content" row wrap>
                 <v-flex  sm3>
                     <puzzle-left-panel
                             @getPuzzleData="changePuzzleImage"
+                            :rigthOrentation="firstPageLoad"
                             :aspectRatio="aspectRatio"
                             :images="slides"></puzzle-left-panel>
                 </v-flex>
                 <v-flex sm9>
                     <puzzle-view
                             ref="puzzleView"
+                            :rigthOrentation="firstPageLoad"
                             :aspectRatio="aspectRatio"
                             @stopEvents="stopPointEvents"
                             :images="slides">
@@ -73,6 +75,8 @@
         public hasCorrectOrientation: boolean = false;
         public pageLoad: boolean = false;
         public stopEvents: boolean = false;
+        public firstPageLoad: boolean = false;
+
 
         constructor() {
             super();
@@ -94,13 +98,14 @@
                 this.orientationStatus = false;
                 this.showRotateNotification = false;
                 if (this.pageLoad) {
-                    setTimeout(() => {
-                        (this.$refs.topPane as any).hidePaneInternal(1);
-                        (this.$refs.slideNavigations as any).hideSidePanes(1);
-                    }, 3000);
                     this.pageLoad = false;
                 }
+                setTimeout(() => {
+                    this.firstPageLoad = true;
+                }, 500);
             }
+
+
         }
 
         get slides(): any[] {
@@ -182,6 +187,8 @@
                     this.hasCorrectOrientation = true;
                     this.orientationStatus = true;
                     this.pageLoad = true;
+                } else {
+                    this.firstPageLoad = true;
                 }
             }
         }

@@ -24,13 +24,22 @@
     export default class PuzzleLeftPanel extends BaseComponent {
         @Prop() public images?: object[];
         @Prop() public aspectRatio?: number;
+        @Prop() public rigthOrentation?: boolean;
+
         public itemHeight: number = 0;
 
         get getMediaTypes(): any {
             return ImageType;
         }
 
+
         public mounted() {
+            if (this.rigthOrentation) {
+                this.initializePuzzleLeftPanel();
+            }
+        }
+
+        public initializePuzzleLeftPanel() {
             const elem: any = document.querySelector('.cell');
             const width = elem && elem.offsetWidth;
             if (this.aspectRatio) {
@@ -58,13 +67,13 @@
 
 <style scoped lang="scss">
     .sllider-wrapper {
-        height: 90vh;
+        height: calc(100vh - 60px);
         overflow-y: scroll;
         overflow-x: hidden;
         .cell {
             width: 90%;
             margin: 5px 15px;
-            border: 1px solid #4c6cff;
+            /*border: 1px solid #4c6cff;*/
             position: relative;
             &:after {
                 content: "";
