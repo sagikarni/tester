@@ -11,9 +11,9 @@
                      :data-id="item.id"
                      :data-paretId="image.id"
                      v-if="image.id === indexId"
-                     :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item', puzzleIsComplate ? 'puzzle-correct' : '' ]"
+                     :class="[ puzzleShuffle ? 'list-item' : 'list-complete-item']"
                      :style="`width: ${itemWidth}px; height: ${itemHeight}px`">
-                    <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img']">
+                    <div :class="[puzzleShuffle ? 'item-content' : 'list-complete-img', isComplate ? 'puzzle-correct' : '']">
                         <img :src="getImagePath(item.puzzlePath, getMediaTypes.Content)" alt=""/>
                         <span class="order">{{index}}</span>
                     </div>
@@ -47,6 +47,7 @@
         public itemWidth: number = 0;
         public itemHeight: number = 0;
         public puzzleIsComplate: boolean = false;
+        public isComplate: boolean = false;
         public stopEvents: boolean = false;
 
 
@@ -95,17 +96,13 @@
             }
         }
 
-        public getSizes(index: number = -1) {
-            if (index === -1) {
-                this.count = 1;
-            } else {
-                this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
-            }
+        public getSizes(index: number) {
+            this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
+
             const puzzelWrapper: any = document.querySelector('.containerPuzzle');
             const appElem: any = document.querySelector('#app');
             const paddingTop = 60;
             const padding = 5;
-
             const elemWidth = puzzelWrapper && puzzelWrapper.offsetWidth;
             const elemHeight = appElem && appElem.offsetHeight - paddingTop;
             const count = Math.sqrt(this.count);
@@ -132,20 +129,20 @@
                 if (getPuzzleData) {
                     const puzzleData = JSON.parse(getPuzzleData);
                     if (puzzleData && puzzleData.length > 0) {
-                        for (let i = 1; i < puzzleData.length; i++) {
-                            if (puzzleData[i].item < puzzleData[i - 1].item) {
+                        puzzleData.reduce((a: any, b: any) => {
+                            if (a.item > b.item) {
                                 complete = false;
                             }
-                        }
+                            return b;
+                        });
+
                         if (complete) {
                             this.puzzleIsComplate = true;
                             if (!status) {
-                                timelineMax.to('.item-content', 1, {
-                                    className: '+=puzzle-correct',
-                                    onComplete: () => {
-                                        timelineMax.set("section", {className: '+=stopDragg'});
-                                        this.puzzleIsComplate = false;
-                                    },
+                                timelineMax.set("section", {className: '+=stopDragg'});
+                                timelineMax.to('.item-content', 0.5, {
+                                    padding: '0px',
+                                    delay: 0.3,
                                 });
                             }
                         }
@@ -170,6 +167,7 @@
 
         public changePuzzleImage(index: number) {
             this.stopEvents = true;
+            this.isComplate = false;
             timelineMax.set("section", {className: '-=stopDragg'});
 
             this.indexId = index;
@@ -182,11 +180,10 @@
                         if (this.puzzleIsComplate) {
                             timelineMax.to(".puzzel-wrapper", 0.15, {
                                 autoAlpha: 0, onComplete: () => {
-                                    this.getSizes();
+                                    this.getSizes(this.indexId);
                                     this.puzzleShuffle = false;
-                                    this.count = 1;
-                                    const puzzlePath = this.images && this.images[index] && this.images[index]['media']['photo'];
-                                    this.puzzleImage = [{id: 1, puzzlePath}];
+                                    this.isComplate = true;
+                                    this.changeImageData(this.indexId);
                                     timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                                     setTimeout(() => {
                                         this.puzzleShuffle = true;
@@ -228,13 +225,13 @@
                         this.changeImageData(index);
                         timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                         setTimeout(() => {
-                            this.repeatShuffle(true);
+                            this.repeatShuffle(false);
                             setTimeout(() => {
                                 this.puzzleShuffle = true;
                                 this.puzzleRender();
                                 this.savePuzzleIndex();
                                 this.stopEvents = false;
-                            }, 2500);
+                            }, 3000);
                         }, 3000);
                     },
                 });
@@ -410,22 +407,21 @@
             this.shuffle();
             setTimeout(() => {
                 this.shuffle();
-
-                const stack: any[] = [];
-                const listItems: any = document.querySelectorAll('.list-complete-item');
-
-                for (const [index, element] of listItems.entries()) {
-                    stack.push({id: index, item: Number(element.getAttribute('data-id'))});
-                }
-                const disableShuffleWin: boolean = stack.every((a) => ((a.id + 1) == a.item));
-                if (disableShuffleWin) {
-                    this.repeatShuffle(true);
-                } else {
-                    this.startPuzzleRender();
-                }
-
+                setTimeout(() => {
+                    let disableShuffleWin: boolean = true;
+                    const listItems: any = document.querySelectorAll('.list-complete-item');
+                    if (listItems && listItems.length > 0) {
+                        for (const [index, element] of listItems.entries()) {
+                            if (index + 1 < listItems.length) {
+                                if (Number(element.getAttribute('data-id')) > Number(listItems[index + 1].getAttribute('data-id'))) {
+                                    disableShuffleWin = false;
+                                }
+                            }
+                        }
+                    }
+                    disableShuffleWin ? this.repeatShuffle(isFirst) : isFirst ? this.startPuzzleRender() : '';
+                }, 1500);
             }, 1200);
-
         }
 
         public shuffle() {
@@ -467,7 +463,6 @@
         padding: 0 15px;
         height: 100%;
         .containerPuzzle {
-            /*padding: 0px;*/
             margin: 0 auto;
             position: relative;
             width: 100%;
@@ -476,7 +471,6 @@
             cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/cursor.png) 16 16, move;
             .activeSection {
                 width: 100%;
-                /*height: 100%;*/
             }
             .list-item {
                 position: absolute;

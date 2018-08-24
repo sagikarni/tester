@@ -48,7 +48,7 @@
     import PinUnpinButton from '@/modules/common/components/pinUnpinButton.vue';
     import ErrorPane from '@/modules/common/components/errorPane.vue';
     import {
-        SessionsInfo,
+        // SessionsInfo,
         ActivityMainDetailsInfo,
         MediaType,
         Orientation,
@@ -82,10 +82,10 @@
         public sessionSelectedItem?: string = 'Long';
         public sessionSelectedItemId?: number = 3;
         public noDeviceSleep: any;
-        public sessionsInfoArr: any = [
-            {id: 1, description: "Short", slidesCount: 6},
-            {id: 2, description: "Medium", slidesCount: 12},
-            {id: 3, description: "Long", slidesCount: 18},
+        public sessionsInfoArray: any = [
+            {id: 1, description: this.$locale.activities.sessionsInfo.shortText, slidesCount: 6},
+            {id: 2, description: this.$locale.activities.sessionsInfo.mediumText, slidesCount: 12},
+            {id: 3, description: this.$locale.activities.sessionsInfo.longText, slidesCount: 18},
         ];
         @State(state => state.reloadActivityDetails) public reloadActivityDetails?: boolean;
         @State(state => state.activities.activity.details.hasDifferentSessionLength) public hasDifferentSessionLength?: boolean;
@@ -114,13 +114,13 @@
             el.showError(value);
         }
 
-        get sessionsInfo(): SessionsInfo[] {
-            let sessionArr: SessionsInfo[] = [];
+        get sessionsInfo(): any[] {
+            let sessionsInfo: any[] = [];
             if (this.activityState && this.activityState.details && this.activityState.details.hasDifferentSessionLength) {
-                return this.sessionsInfoArr
-            } else {
-                return sessionArr;
+                sessionsInfo = this.sessionsInfoArray
             }
+            return sessionsInfo;
+
         }
 
         get getMediaTypes(): any {

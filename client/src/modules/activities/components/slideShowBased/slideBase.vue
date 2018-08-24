@@ -32,6 +32,24 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+    .theme--light.v-card {
+        background-color: black !important;
+        color: rgba(0,0,0,.87);
+    }
+    .v-card__title {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding: 16px;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
 
 </style>
