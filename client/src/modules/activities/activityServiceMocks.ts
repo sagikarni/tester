@@ -1,5 +1,5 @@
 import {mock} from '@/httpClient';
-import {MediaType, Orientation, PremiumCollectionLayout, ActivityType, ShapeType, MamoryLayout} from './store/types';
+import {MediaType, Orientation, Domain, PremiumCollectionLayout, ActivityType, ShapeType, MamoryLayout} from './store/types';
 
 mock.onGet('/general/getActivity', {params: {activityId: '1'}}).reply(200, {
     details: {
@@ -7,7 +7,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '1'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Cognitive, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
@@ -110,7 +110,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '2'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Cognitive, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
@@ -204,7 +204,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '3'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
@@ -298,7 +298,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '4'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
@@ -386,7 +386,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '10'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/videos/collection-2',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: 1, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
@@ -449,17 +449,13 @@ mock.onGet('/general/getActivity', {params: {activityId: '10'}}).reply(200, {
 
 
 
-
-
-
-
 mock.onGet('/general/getActivity', {params: {activityId: '11'}}).reply(200, {
     details: {
         title: 'This is a Meaning activity',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Meaning, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
@@ -617,7 +613,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/videos/collection-2',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Meaning, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
@@ -681,20 +677,13 @@ mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
 });
 
 
-
-
-
-
-
-
-
 mock.onGet('/general/getActivity', {params: {activityId: '12'}}).reply(200, {
     details: {
         title: 'this is What in the picture Activity',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.WhatInThePicture, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
@@ -854,7 +843,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '22'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/videos/collection-2',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType:  ActivityType.WhatInThePicture, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
@@ -920,18 +909,13 @@ mock.onGet('/general/getActivity', {params: {activityId: '22'}}).reply(200, {
 
 
 
-
-
-
-
-
 mock.onGet('/general/getActivity', {params: {activityId: '13'}}).reply(200, {
     details: {
         title: 'this is Cetegorization Activity',
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Categorization, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
@@ -1095,7 +1079,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '14'}}).reply(200, {
         baseFolder: '/assets/media/restricted/cognitive/puzzle/food1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'iStock-155129848_super.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Puzzle, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 3, // number of videos or photos in this activity
@@ -1150,7 +1134,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '15'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Zoom, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 12, // number of videos or photos in this activity
@@ -1260,7 +1244,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '16'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.Memory, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaCount: 10, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
@@ -1361,7 +1345,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '17'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/photos/collection-1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.WHQuestions, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Photo, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 9, // number of videos or photos in this activity
@@ -1503,7 +1487,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '18'}}).reply(200, {
         baseFolder: '/assets/media/restricted/collections/videos/collection-2',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'cover.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.WHQuestions, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaType: MediaType.Video, // 0 = photos , 1 = videos - should be defined as enum in the store types file
         mediaCount: 4, // number of videos or photos in this activity
@@ -1577,7 +1561,7 @@ mock.onGet('/general/getActivity', {params: {activityId: '19'}}).reply(200, {
         baseFolder: '/assets/media/restricted/cognitive/soundPhotoSelection/soundPhotoSelection1',
         description: 'This is a short description of the deck.  It should be between one to 2 lines. It just indicates what this pack contains (not what you can do with the pack)',
         coverPhoto: 'iStock-505602225.jpg',
-        category: 1, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+        domain: Domain.Communication, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
         activityType: ActivityType.PhotoSelectionBySound, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
         mediaCount: 8, // number of videos or photos in this activity
         orientation: Orientation.Landscape,
