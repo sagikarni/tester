@@ -23,8 +23,9 @@ export enum ActivityType {
     Zoom = 8,
     Memory = 9,
     PhotoSelectionBySound = 10,
+    SpotTheDifference = 11,
 }
-export enum Category {
+export enum Domain {
     Communication = 1,
     Cognitive = 2,
 }
@@ -57,7 +58,7 @@ export class ActivityMainDetailsInfo {
     public baseFolder?: string;
     public description?: string;
     public coverPhoto?: string;
-    public category?: Category;
+    public category?: Domain;
     public activityType?: ActivityType;
     public mediaType?: MediaType;
     public mediaTypeText?: string;
@@ -76,7 +77,7 @@ export interface IActivitiesState {
             baseFolder: string,
             description: string,
             coverPhoto: string,
-            category: Category, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
+            category: Domain, // the category of this activity (e.g. communication, cognitive,premium collection) ,should be defined as enum in the store types file
             activityType: ActivityType, // the activity type (e.g. wh questions , a good store) - should be defined as enum in the store types file (activityType always belong to a specifc category)
             mediaType: MediaType, // 0 = photos , 1 = videos - should be defined as enum in the store types file
             orientation: Orientation,

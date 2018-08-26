@@ -1,4 +1,4 @@
-import {Category, ActivityType, MediaType} from '@/modules/activities/store/types';
+import {Domain, ActivityType, MediaType} from '@/modules/activities/store/types';
 
 export const pageSize = 50;
 

@@ -1,7 +1,7 @@
 import {mock} from '@/httpClient';
-import {Category, ActivityType, MediaType} from '@/modules/activities/store/types';
+import {Domain, ActivityType, MediaType} from '@/modules/activities/store/types';
 
-mock.onGet('/search/getFilters', { params: { category: Category , activityType: ActivityType } }).reply(200, {
+mock.onGet('/search/getFilters', { params: { domain: Domain , activityType: ActivityType } }).reply(200, {
     mediaType:  [MediaType.Video, MediaType.Photo],
     targetAudience: {
         forChilds : true,
