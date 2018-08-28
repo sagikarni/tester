@@ -72,7 +72,7 @@
         overflow-x: hidden;
         .cell {
             width: 90%;
-            margin: 5px 15px;
+            margin: 0px 15px 5px 15px;
             /*border: 1px solid #4c6cff;*/
             position: relative;
             &:after {

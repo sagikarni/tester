@@ -74,7 +74,7 @@
         public isBeginningSlide: boolean = true;
         public hasCorrectOrientation: boolean = false;
         public pageLoad: boolean = false;
-        public stopEvents: boolean = false;
+        public stopEvents: boolean = true;
         public firstPageLoad: boolean = false;
 
 

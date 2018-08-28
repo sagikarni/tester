@@ -54,6 +54,7 @@
         constructor() {
             super();
             this.puzzleImage = [];
+            this.stopEvents = true;
         }
 
         get getMediaTypes(): any {
@@ -75,18 +76,17 @@
             this.getSizes(this.indexId);
             this.changeImageData(this.indexId);
             setTimeout(() => {
-                this.stopEvents = true;
-                this.repeatShuffle(true);
+                this.repeatShuffle();
             }, 3000);
         }
 
-        public startPuzzleRender() {
+        public startPuzzleRender(startTime: number) {
             setTimeout(() => {
                 this.puzzleShuffle = true;
                 this.puzzleRender();
                 this.savePuzzleIndex();
                 this.stopEvents = false;
-            }, 2500);
+            }, startTime);
         }
 
         public changeImageData(index: number) {
@@ -185,12 +185,8 @@
                                     this.isComplate = true;
                                     this.changeImageData(this.indexId);
                                     timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
-                                    setTimeout(() => {
-                                        this.puzzleShuffle = true;
-                                        this.puzzleRender();
-                                        this.stopEvents = false;
-                                        timelineMax.set("section", {className: '+=stopDragg'});
-                                    }, 1000);
+                                    this.startPuzzleRender(1000);
+                                    timelineMax.set("section", {className: '+=stopDragg'});
                                 },
                             });
                             this.puzzleIsComplate = false;
@@ -204,14 +200,9 @@
                                 autoAlpha: 0, onComplete: () => {
                                     this.getSizes(this.indexId);
                                     this.puzzleShuffle = false;
-                                    this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
                                     this.puzzleImage = newData;
                                     timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
-                                    setTimeout(() => {
-                                        this.puzzleShuffle = true;
-                                        this.puzzleRender();
-                                        this.stopEvents = false;
-                                    }, 1000);
+                                    this.startPuzzleRender(1000);
                                 },
                             });
                         }
@@ -225,18 +216,13 @@
                         this.changeImageData(index);
                         timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                         setTimeout(() => {
-                            this.repeatShuffle(false);
-                            setTimeout(() => {
-                                this.puzzleShuffle = true;
-                                this.puzzleRender();
-                                this.savePuzzleIndex();
-                                this.stopEvents = false;
-                            }, 3000);
+                            this.repeatShuffle();
                         }, 3000);
                     },
                 });
             }
         }
+
 
         public puzzleRender() {
             this.$nextTick(() => {
@@ -403,29 +389,32 @@
             this.$emit('stopEvents', value);
         }
 
-        public repeatShuffle(isFirst: boolean = false) {
+        public repeatShuffle() {
             this.shuffle();
             setTimeout(() => {
                 this.shuffle();
-                setTimeout(() => {
-                    let disableShuffleWin: boolean = true;
-                    const listItems: any = document.querySelectorAll('.list-complete-item');
-                    if (listItems && listItems.length > 0) {
-                        for (const [index, element] of listItems.entries()) {
-                            if (index + 1 < listItems.length) {
-                                if (Number(element.getAttribute('data-id')) > Number(listItems[index + 1].getAttribute('data-id'))) {
-                                    disableShuffleWin = false;
-                                }
-                            }
-                        }
-                    }
-                    disableShuffleWin ? this.repeatShuffle(isFirst) : isFirst ? this.startPuzzleRender() : '';
-                }, 1500);
+                this.startShuffle();
             }, 1200);
         }
 
-        public shuffle() {
+        public startShuffle() {
+            setTimeout(() => {
+                let count: number = 0;
+                const listItems: any = document.querySelectorAll('.list-complete-item');
+                if (listItems && listItems.length > 0) {
+                    for (const [index, element] of listItems.entries()) {
+                        if ((index + 1) === Number(element.getAttribute('data-id'))) {
+                            count++;
+                        }
+                    }
+                }
+                count > 1 ? this.shuffle(true) : this.startPuzzleRender(500);
+            }, 1200);
+        }
+
+        public shuffle(isShuffle: boolean = false) {
             this.puzzleImage = (_ as any).shuffle(this.puzzleImage);
+            isShuffle ? this.startShuffle() : '';
         }
 
     }
@@ -443,7 +432,6 @@
         }
         .list-complete-item {
             transition: transform 1s;
-            width: 250px;
             height: 100%;
             .list-complete-img {
                 height: 100%;
@@ -488,6 +476,8 @@
                         object-fit: inherit;
                         height: 100%;
                         width: 100%;
+                        vertical-align: top;
+                        max-width: 100%;
                     }
                 }
             }
