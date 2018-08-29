@@ -90,7 +90,7 @@
             img {
                 height: 100%;
                 width: 100%;
-                object-fit: scale-down;
+                object-fit: fill;
             }
             &.active {
                 border: 1px solid transparent;

@@ -23,6 +23,8 @@
     })
     export default class WhatInThePicturePhotoSlide extends WhatInThePictureSlideBase {
         @Prop() public parameter?: any;
+
+
     }
 </script>
 

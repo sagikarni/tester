@@ -7,7 +7,7 @@
             </v-flex>
 
             <v-layout v-if="firstPageLoad" class="puzzle-content" row wrap>
-                <v-flex  sm3>
+                <v-flex sm3>
                     <puzzle-left-panel
                             @getPuzzleData="changePuzzleImage"
                             :rigthOrentation="firstPageLoad"
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Watch } from 'vue-property-decorator';
+    import {Component, Watch} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import SlideShowMenuPane from '@/modules/common/components/slideShowMenuPane.vue';
     import PuzzleView from '@/modules/activities/components/otherActivities/puzzleView.vue';
@@ -48,7 +48,8 @@
     import {ActivityType, PremiumCollectionLayout} from '@/modules/activities/store/types';
 
     import TimelineMax from 'gsap';
-    import { State } from 'vuex-class';
+    import {State} from 'vuex-class';
+
     const timelineMax = TimelineMax as any;
 
 
@@ -115,7 +116,10 @@
                 for (let i = 0; i < this.activityDetailsContent.Media.length; i++) {
                     const puzzleMadia = [];
                     for (let j = 0; j < this.activityDetailsContent.Media[i]['partsCount']; j++) {
-                        puzzleMadia.push({ id: j + 1, puzzlePath:  this.activityDetailsContent.Media[i]['photo'].replace(/photo.jpg$/gi, "parts/") + (j + 1) + ".jpeg"});
+                        puzzleMadia.push({
+                            id: j + 1,
+                            puzzlePath: this.activityDetailsContent.Media[i]['photo'].replace(/photo.jpg$/gi, "parts/") + (j + 1) + ".jpeg"
+                        });
                     }
                     slides.push({id: i, media: this.activityDetailsContent.Media[i], puzzleMadia});
                 }
@@ -130,6 +134,7 @@
         get activityType() {
             return this.activityDetailsState && this.activityDetailsState.activityType;
         }
+
         get activityOrientation(): number {
             return this.orientationUtil.orientation;
         }
@@ -137,6 +142,7 @@
         get mediaType() {
             return this.activityDetailsState && this.activityDetailsState.mediaType;
         }
+
         get mediaCountInfo(): number {
             return this.activityDetailsState && this.activityDetailsState.mediaCount;
         }
@@ -178,7 +184,7 @@
         public created() {
             if (this.$route.params.activityId) {
                 this.activityId = this.$route.params.activityId;
-                 timelineMax.to(".application--wrap", 0,  {backgroundColor: "#000000"});
+                timelineMax.to(".application--wrap", 0, {backgroundColor: "#000000"});
 
                 if (!this.activityDetailsState) {
                     this.$router.push(`/activity-details/${this.activityId}`);
@@ -200,7 +206,7 @@
         margin-top: 60px;
     }
 
-    .stopPointerEvents{
+    .stopPointerEvents {
         pointer-events: none;
     }
 
