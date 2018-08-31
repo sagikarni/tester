@@ -48,6 +48,9 @@
         }
 
         public changePuzzle(event: any) {
+            $('.sllider-wrapper').animate({
+                scrollTop:$('.sllider-wrapper').scrollTop() + $(event.target).position().top
+            },1000);
             if (!event.currentTarget.classList.contains('active')) {
                 timeLineMax.set($('.active'), {
                     className: "-=active",

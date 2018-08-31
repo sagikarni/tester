@@ -48,7 +48,6 @@
         public puzzleIsComplate: boolean = false;
         public isComplate: boolean = false;
         public stopEvents: boolean = false;
-        public puzzleFullimage: any;
         public getFirstSizes: boolean = true;
 
 
@@ -67,7 +66,8 @@
         }
 
         public mounted() {
-            if (this.rigthOrentation) {
+            if (this.rigthOrentation && 'localStorage' in window && window.localStorage !== null) {
+                window.sessionStorage.clear();
                 this.initializePuzzleView();
             }
 
@@ -87,16 +87,15 @@
             setTimeout(() => {
                 this.puzzleShuffle = true;
                 this.puzzleRender();
-                // this.savePuzzleIndex();
+                this.savePuzzleIndex();
                 this.stopEvents = false;
             }, startTime);
         }
 
         public changeImageData(index: number) {
-            if (this.images && this.images[index]) {
+            if (this.images ) {
                 this.count = this.images[index] && this.images[index]['media']['partsCount'];
                 this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
-                this.puzzleFullimage = this.images[index]['media']["photo"];
 
             }
         }
@@ -123,11 +122,11 @@
                     if ((elemWidth / elemHeight) < this.aspectRatio) {
                         this.itemWidth = Math.floor((elemWidth / count) - (padding * count));
                         this.itemHeight = Math.floor(this.itemWidth / this.aspectRatio);
-                        // puzzelWrapper.style.height = (this.itemHeight * count - padding * count) + "px";
+                        puzzelWrapper.style.height = (this.itemHeight * count - padding * count) + "px";
                     } else {
                         this.itemHeight = Math.floor((elemHeight / count) - (padding * count));
                         this.itemWidth = Math.floor(this.itemHeight * this.aspectRatio);
-                        // puzzelWrapper.style.width = (this.itemWidth * count + padding * count) + "px";
+                        puzzelWrapper.style.width = (this.itemWidth * count + padding * count) + "px";
                     }
                 }
 
@@ -140,8 +139,9 @@
         public puzzleComplete(status: boolean) {
             let complete = true;
             this.puzzleIsComplate = false;
-            if (localStorage.getItem(`puzzleIndex-${this.indexId}`)) {
-                const getPuzzleData = localStorage.getItem(`puzzleIndex-${this.indexId}`);
+            if ('localStorage' in window && window.localStorage !== null && window.localStorage.getItem(`puzzleIndex-${this.indexId}`)) {
+                const getPuzzleData = window.localStorage.getItem(`puzzleIndex-${this.indexId}`);
+
                 if (getPuzzleData) {
                     const puzzleData = JSON.parse(getPuzzleData);
                     if (puzzleData && puzzleData.length > 0) {
@@ -161,8 +161,11 @@
                                     // delay: 0.2,
                                     onComplete: () => {
                                         this.getSizes();
-                                        this.puzzleImage = [{id: 1, puzzlePath: this.puzzleFullimage}];
-                                        timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
+                                        if(this.images){
+                                            this.puzzleImage = [{id: 1, puzzlePath: this.images[this.indexId]['media']["photo"]}];
+                                            timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
+                                        }
+
                                     }
                                 })
 
@@ -181,9 +184,11 @@
                 for (const [index, element] of listItems.entries()) {
                     stack.push({id: index, item: Number(element.getAttribute('data-id'))});
                 }
+                if ('localStorage' in window && window.localStorage !== null) {
+                    window.localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                    this.puzzleComplete(false);
+                }
 
-                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
-                this.puzzleComplete(false);
             });
         }
 
@@ -194,8 +199,8 @@
 
             this.indexId = index;
 
-            if (localStorage.getItem(`puzzleIndex-${index}`)) {
-                const getPuzzleData = localStorage.getItem(`puzzleIndex-${index}`);
+            if ('localStorage' in window && window.localStorage !== null && window.localStorage.getItem(`puzzleIndex-${index}`)) {
+                const getPuzzleData = window.localStorage.getItem(`puzzleIndex-${index}`);
                 if (getPuzzleData) {
                     const puzzleData: any = JSON.parse(getPuzzleData);
                     this.puzzleComplete(true);
@@ -205,7 +210,7 @@
                                 autoAlpha: 0, onComplete: () => {
                                     this.getSizes();
                                     if (this.images) {
-                                        const puzzlePath = this.images[this.indexId]['media']["photo"];
+                                        const puzzlePath = this.images[index]['media']["photo"];
                                         this.puzzleImage = [{id: 1, puzzlePath}];
                                         timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                                         this.startPuzzleRender(1000);
@@ -238,7 +243,7 @@
                     autoAlpha: 0, onComplete: () => {
                         this.getSizes(this.indexId);
                         this.puzzleShuffle = false;
-                        this.changeImageData(index);
+                        this.changeImageData(this.indexId);
                         timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                         setTimeout(() => {
                             this.repeatShuffle();
@@ -472,7 +477,7 @@
     }
 
     .puzzel-wrapper {
-        padding: 0 8px;
+        padding: 0 15px;
         height: 100%;
         .containerPuzzle {
             margin: 0 auto;
