@@ -52,15 +52,19 @@
                 scrollTop:$('.sllider-wrapper').scrollTop() + $(event.target).position().top
             },1000);
             if (!event.currentTarget.classList.contains('active')) {
+                let puzzleData = {
+                    url: $(event.target).data('url'),
+                    count: $(event.target).data('count'),
+                    id: $(event.target).data('id'),
+                };
                 timeLineMax.set($('.active'), {
                     className: "-=active",
                     onComplete: () => {
                         timeLineMax.set(event.target, {className: "+=active"});
-                        this.$emit('getPuzzleData', {
-                            url: $(event.target).data('url'),
-                            count: $(event.target).data('count'),
-                            id: $(event.target).data('id'),
-                        });
+
+
+                            this.$emit('getPuzzleData', puzzleData);
+
                     },
                 });
             }

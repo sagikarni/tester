@@ -67,7 +67,7 @@
 
         public mounted() {
             if (this.rigthOrentation && 'localStorage' in window && window.localStorage !== null) {
-                window.sessionStorage.clear();
+                window.localStorage.clear();
                 this.initializePuzzleView();
             }
 
@@ -93,7 +93,7 @@
         }
 
         public changeImageData(index: number) {
-            if (this.images ) {
+            if (this.images) {
                 this.count = this.images[index] && this.images[index]['media']['partsCount'];
                 this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
 
@@ -131,12 +131,15 @@
                 }
 
             }
+
+
             this.getFirstSizes = false;
 
 
         }
 
         public puzzleComplete(status: boolean) {
+            console.log(status)
             let complete = true;
             this.puzzleIsComplate = false;
             if ('localStorage' in window && window.localStorage !== null && window.localStorage.getItem(`puzzleIndex-${this.indexId}`)) {
@@ -156,19 +159,41 @@
                             this.puzzleIsComplate = true;
                             if (!status) {
                                 timelineMax.set("section", {className: '+=stopDragg'});
-                                timelineMax.to(".puzzel-wrapper", 0.2, {
-                                    // autoAlpha: 0,
-                                    // delay: 0.2,
-                                    onComplete: () => {
-                                        this.getSizes();
-                                        if(this.images){
-                                            this.puzzleImage = [{id: 1, puzzlePath: this.images[this.indexId]['media']["photo"]}];
-                                            timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
-                                        }
-
+                                if ('localStorage' in window && window.localStorage !== null && localStorage.getItem(`puzzleIndex-${this.indexId} -isComplete`) !== null) {
+                                    if (this.images) {
+                                        this.puzzleImage = [{
+                                            id: 1,
+                                            puzzlePath: this.images[this.indexId]['media']["photo"]
+                                        }];
                                     }
-                                })
 
+                                    this.getSizes();
+
+                                } else {
+                                    timelineMax.to(".puzzel-wrapper", 1, {
+                                        autoAlpha: 0,
+                                        // delay: 1,
+                                        onComplete: () => {
+
+                                            setTimeout(() => {
+                                                timelineMax.to(".puzzel-wrapper", 0.2, {autoAlpha: 1});
+                                                this.getSizes();
+                                            }, 200);
+                                            if (this.images) {
+                                                this.puzzleImage = [{
+                                                    id: 1,
+                                                    puzzlePath: this.images[this.indexId]['media']["photo"]
+                                                }];
+                                                window.localStorage.setItem(`puzzleIndex-${this.indexId} -isComplete`, "true")
+                                            }
+
+
+
+
+
+                                        }
+                                    })
+                                }
                             }
                         }
                     }
