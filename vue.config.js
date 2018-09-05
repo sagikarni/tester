@@ -12,7 +12,7 @@ module.exports = {
         template: path.resolve('client/public/index.html')
       })
     ]);
-    config.set('entry', './src/main.ts');
+    config.set('entry',["@babel/polyfill", './src/main.ts']);
     config.set('context', path.join(__dirname + '/client'));
     config.resolve.alias.set('@', path.join(__dirname + '/client/src'));
   },

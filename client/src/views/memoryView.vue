@@ -32,6 +32,7 @@
     import TimelineMax from 'gsap';
     import {State} from 'vuex-class';
     import ClosePane from '@/modules/common/components/closePane.vue';
+
     @Component({
         components: {
             ClosePane,

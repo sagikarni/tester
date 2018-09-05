@@ -18,7 +18,6 @@
                         <span class="order">{{index}}</span>
                     </div>
                 </div>
-
             </transition-group>
         </section>
     </div>
@@ -49,6 +48,7 @@
         public puzzleIsComplate: boolean = false;
         public isComplate: boolean = false;
         public stopEvents: boolean = false;
+        public getFirstSizes: boolean = true;
 
 
         constructor() {
@@ -66,11 +66,14 @@
         }
 
         public mounted() {
-            if (this.rigthOrentation) {
-                localStorage.clear();
+            if (this.rigthOrentation && 'localStorage' in window && window.localStorage !== null) {
+                window.localStorage.clear();
                 this.initializePuzzleView();
             }
+
+
         }
+
 
         public initializePuzzleView() {
             this.getSizes(this.indexId);
@@ -90,42 +93,58 @@
         }
 
         public changeImageData(index: number) {
-            if (this.images && this.images[index]) {
+            if (this.images) {
                 this.count = this.images[index] && this.images[index]['media']['partsCount'];
                 this.puzzleImage = this.images[index] && this.images[index]['puzzleMadia'];
+
             }
         }
 
-        public getSizes(index: number) {
-            this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
+        public getSizes(index: number = -1) {
+
+            if (index === -1) {
+                this.count = 1;
+            } else {
+                this.count = this.images && this.images[index] && this.images[index]['media']['partsCount'];
+            }
 
             const puzzelWrapper: any = document.querySelector('.containerPuzzle');
             const appElem: any = document.querySelector('#app');
             const paddingTop = 60;
-            const padding = 5;
+            const padding = 1;
             const elemWidth = puzzelWrapper && puzzelWrapper.offsetWidth;
             const elemHeight = appElem && appElem.offsetHeight - paddingTop;
             const count = Math.sqrt(this.count);
-
             if (this.aspectRatio) {
-                if ((elemWidth / elemHeight) < this.aspectRatio) {
-                    this.itemWidth = Math.floor((elemWidth / count) - (padding * count));
-                    this.itemHeight = Math.floor(this.itemWidth / this.aspectRatio);
-                    puzzelWrapper.style.height = Math.floor((this.itemHeight * count + padding * count)) + "px";
+                if (elemWidth / elemHeight < 1) {
+
                 } else {
-                    this.itemHeight = Math.floor((elemHeight / count) - (padding * count));
-                    this.itemWidth = Math.floor(this.itemHeight * this.aspectRatio);
-                    puzzelWrapper.style.width = Math.floor((this.itemWidth * count + padding * count)) + "px";
+                    if ((elemWidth / elemHeight) < this.aspectRatio) {
+                        this.itemWidth = Math.floor((elemWidth / count) - (padding * count));
+                        this.itemHeight = Math.floor(this.itemWidth / this.aspectRatio);
+                        puzzelWrapper.style.height = (this.itemHeight * count - padding * count) + "px";
+                    } else {
+                        this.itemHeight = Math.floor((elemHeight / count) - (padding * count));
+                        this.itemWidth = Math.floor(this.itemHeight * this.aspectRatio);
+                        puzzelWrapper.style.width = (this.itemWidth * count + padding * count) + "px";
+                    }
                 }
+
             }
+
+
+            this.getFirstSizes = false;
+
 
         }
 
         public puzzleComplete(status: boolean) {
+            console.log(status)
             let complete = true;
             this.puzzleIsComplate = false;
-            if (localStorage.getItem(`puzzleIndex-${this.indexId}`)) {
-                const getPuzzleData = localStorage.getItem(`puzzleIndex-${this.indexId}`);
+            if ('localStorage' in window && window.localStorage !== null && window.localStorage.getItem(`puzzleIndex-${this.indexId}`)) {
+                const getPuzzleData = window.localStorage.getItem(`puzzleIndex-${this.indexId}`);
+
                 if (getPuzzleData) {
                     const puzzleData = JSON.parse(getPuzzleData);
                     if (puzzleData && puzzleData.length > 0) {
@@ -140,10 +159,41 @@
                             this.puzzleIsComplate = true;
                             if (!status) {
                                 timelineMax.set("section", {className: '+=stopDragg'});
-                                timelineMax.to('.item-content', 0.5, {
-                                    padding: '0px',
-                                    delay: 0.3,
-                                });
+                                if ('localStorage' in window && window.localStorage !== null && localStorage.getItem(`puzzleIndex-${this.indexId} -isComplete`) !== null) {
+                                    if (this.images) {
+                                        this.puzzleImage = [{
+                                            id: 1,
+                                            puzzlePath: this.images[this.indexId]['media']["photo"]
+                                        }];
+                                    }
+
+                                    this.getSizes();
+
+                                } else {
+                                    timelineMax.to(".puzzel-wrapper", 1, {
+                                        autoAlpha: 0,
+                                        // delay: 1,
+                                        onComplete: () => {
+
+                                            setTimeout(() => {
+                                                timelineMax.to(".puzzel-wrapper", 0.2, {autoAlpha: 1});
+                                                this.getSizes();
+                                            }, 200);
+                                            if (this.images) {
+                                                this.puzzleImage = [{
+                                                    id: 1,
+                                                    puzzlePath: this.images[this.indexId]['media']["photo"]
+                                                }];
+                                                window.localStorage.setItem(`puzzleIndex-${this.indexId} -isComplete`, "true")
+                                            }
+
+
+
+
+
+                                        }
+                                    })
+                                }
                             }
                         }
                     }
@@ -159,9 +209,11 @@
                 for (const [index, element] of listItems.entries()) {
                     stack.push({id: index, item: Number(element.getAttribute('data-id'))});
                 }
+                if ('localStorage' in window && window.localStorage !== null) {
+                    window.localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
+                    this.puzzleComplete(false);
+                }
 
-                localStorage.setItem(`puzzleIndex-${this.indexId}`, JSON.stringify(stack));
-                this.puzzleComplete(false);
             });
         }
 
@@ -171,22 +223,25 @@
             timelineMax.set("section", {className: '-=stopDragg'});
 
             this.indexId = index;
-            if (localStorage.getItem(`puzzleIndex-${index}`)) {
-                const getPuzzleData = localStorage.getItem(`puzzleIndex-${index}`);
+
+            if ('localStorage' in window && window.localStorage !== null && window.localStorage.getItem(`puzzleIndex-${index}`)) {
+                const getPuzzleData = window.localStorage.getItem(`puzzleIndex-${index}`);
                 if (getPuzzleData) {
                     const puzzleData: any = JSON.parse(getPuzzleData);
                     this.puzzleComplete(true);
                     this.$nextTick(() => {
-                        if (this.puzzleIsComplate) {
+                        if (this.puzzleIsComplate && this) {
                             timelineMax.to(".puzzel-wrapper", 0.15, {
                                 autoAlpha: 0, onComplete: () => {
-                                    this.getSizes(this.indexId);
-                                    this.puzzleShuffle = false;
-                                    this.isComplate = true;
-                                    this.changeImageData(this.indexId);
-                                    timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
-                                    this.startPuzzleRender(1000);
-                                    timelineMax.set("section", {className: '+=stopDragg'});
+                                    this.getSizes();
+                                    if (this.images) {
+                                        const puzzlePath = this.images[index]['media']["photo"];
+                                        this.puzzleImage = [{id: 1, puzzlePath}];
+                                        timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
+                                        this.startPuzzleRender(1000);
+                                        timelineMax.set("section", {className: '+=stopDragg'});
+                                    }
+
                                 },
                             });
                             this.puzzleIsComplate = false;
@@ -213,7 +268,7 @@
                     autoAlpha: 0, onComplete: () => {
                         this.getSizes(this.indexId);
                         this.puzzleShuffle = false;
-                        this.changeImageData(index);
+                        this.changeImageData(this.indexId);
                         timelineMax.to(".puzzel-wrapper", 0.8, {autoAlpha: 1});
                         setTimeout(() => {
                             this.repeatShuffle();
@@ -244,12 +299,11 @@
                         cells.push({
                             row,
                             col,
-                            x: col * colSize,
-                            y: row * rowSize,
+                            x: (col * colSize),
+                            y: (row * rowSize),
                         });
                     }
                 }
-
                 const container = document.querySelector(".containerPuzzle");
                 const listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
                 const sortables = listItems.map(Sortable); // Array of sortables
@@ -280,6 +334,13 @@
                 }
 
                 function Sortable(element: any, index: any) {
+                    const dragger = new Draggable(element, {
+                        onDragStart: downAction,
+                        onRelease: upAction,
+                        onDrag: dragAction,
+                        cursor: "inherit",
+
+                    });
 
                     const content = element.querySelector(".item-content");
                     const order = element.querySelector(".order");
@@ -290,18 +351,7 @@
                         scale: 1.1,
                         paused: true,
                     });
-
-                    const dragger = new Draggable(element, {
-                        onDragStart: downAction,
-                        onRelease: upAction,
-                        onDrag: dragAction,
-                        cursor: "inherit",
-
-                    });
-
-                    const position = element._gsTransform;
-
-                    // Public properties and methods
+// Public properties and methods
                     const sortable = {
                         cell: cells[index],
                         dragger,
@@ -315,6 +365,9 @@
                         y: sortable.cell.y,
                     });
 
+                    const position = element._gsTransform;
+
+
                     function setIndex(indexId: any) {
 
                         const cell = cells[indexId];
@@ -323,7 +376,6 @@
                         sortable.cell = cell;
                         sortable.index = indexId;
                         order.textContent = indexId + 1;
-
                         // Don't layout if you're dragging
                         if (!dragger.isDragging && dirty) {
                             layout();
@@ -398,6 +450,8 @@
         }
 
         public startShuffle() {
+            let startShuffleAgain = Math.round(this.count * 0.4);
+
             setTimeout(() => {
                 let count: number = 0;
                 const listItems: any = document.querySelectorAll('.list-complete-item');
@@ -408,7 +462,7 @@
                         }
                     }
                 }
-                count > 1 ? this.shuffle(true) : this.startPuzzleRender(500);
+                count >= startShuffleAgain ? this.shuffle(true) : this.startPuzzleRender(500);
             }, 1200);
         }
 
@@ -435,9 +489,9 @@
             height: 100%;
             .list-complete-img {
                 height: 100%;
-                padding: 5px;
+                padding: 3px;
                 img {
-                    object-fit: inherit;
+                    object-fit: fill;
                     height: 100%;
                     width: 100%;
                     vertical-align: top;
@@ -466,14 +520,14 @@
                 left: unset !important;
                 border-radius: 4px;
                 .item-content {
-                    padding: 5px;
+                    padding: 3px;
                     width: 100%;
                     height: 100%;
                     &.puzzle-correct {
                         padding: 0;
                     }
                     img {
-                        object-fit: inherit;
+                        object-fit: fill;
                         height: 100%;
                         width: 100%;
                         vertical-align: top;

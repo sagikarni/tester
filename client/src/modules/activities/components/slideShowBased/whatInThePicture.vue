@@ -32,7 +32,7 @@
                         <div class="cardWrapper">
                             <div class="card" @click="openQuestionCard($event)">
                                 <div class="cardFace front">
-                                    <v-icon class="iQuestion">fas fa-question</v-icon>
+                                    <v-icon class="iQuestion"> fa-question</v-icon>
                                     <v-icon class="iDone">done</v-icon>
                                 </div>
                                 <div class="cardFace back">
@@ -234,7 +234,7 @@
         cursor: pointer;
         position: absolute;
         padding: 7px 55px 35px 35px;
-        color: white;
+        color: white !important;
         bottom: 50px;
         left: 0;
         box-sizing: border-box;

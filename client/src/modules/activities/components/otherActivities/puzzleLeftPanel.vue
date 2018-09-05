@@ -48,16 +48,23 @@
         }
 
         public changePuzzle(event: any) {
+            $('.sllider-wrapper').animate({
+                scrollTop:$('.sllider-wrapper').scrollTop() + $(event.target).position().top
+            },1000);
             if (!event.currentTarget.classList.contains('active')) {
+                let puzzleData = {
+                    url: $(event.target).data('url'),
+                    count: $(event.target).data('count'),
+                    id: $(event.target).data('id'),
+                };
                 timeLineMax.set($('.active'), {
                     className: "-=active",
                     onComplete: () => {
                         timeLineMax.set(event.target, {className: "+=active"});
-                        this.$emit('getPuzzleData', {
-                            url: $(event.target).data('url'),
-                            count: $(event.target).data('count'),
-                            id: $(event.target).data('id'),
-                        });
+
+
+                            this.$emit('getPuzzleData', puzzleData);
+
                     },
                 });
             }
@@ -90,7 +97,7 @@
             img {
                 height: 100%;
                 width: 100%;
-                object-fit: scale-down;
+                object-fit: fill;
             }
             &.active {
                 border: 1px solid transparent;

@@ -3,8 +3,9 @@
         <swiper-slide v-for="image in images" :key="image.id">
             <div class="full-height table">
                 <div class="cell">
-                    <v-img style="height: 100%; width: 100%; background-color: black"  class="object-fit_contain"
-                         :src="getImagePath(image.imgSrc, getMediaTypes.Thumbnail)"
+                    <v-img style="height: 100%; width: 100%; background-color: black" class="object-fit_contain"
+                           :src="getImagePath(image.imgSrc, getMediaTypes.Thumbnail)"
+                           :lazy-src="getImagePath(image.imgSrc, getMediaTypes.Thumbnail)"
                            :alt="image.title" @click.stop="closeModal"></v-img>
                 </div>
             </div>
@@ -16,9 +17,9 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import { ImageType } from '@/modules/activities/store/types';
+    import {ImageType} from '@/modules/activities/store/types';
 
 
     @Component
@@ -29,11 +30,12 @@
 
         public swiperOption: any;
         public dialogSlideShow: boolean = false;
+
         constructor() {
             super();
             let selectedImgIndex = 0;
             if (this.images) {
-                this.images.forEach( (img: any, index: number) => {
+                this.images.forEach((img: any, index: number) => {
                     if (img.id === this.selectedImgId) {
                         selectedImgIndex = index;
                     }
@@ -55,9 +57,14 @@
                 },
             };
         }
+
+        public created() {
+        }
+
         get getMediaTypes(): any {
             return ImageType;
         }
+
         public closeModal() {
             return true;
         }
@@ -67,31 +74,39 @@
 
 <style scoped lang="scss">
 
-    .object-fit_contain { object-fit: contain }
-    .full-height{
-        height:100%;
-        background:#F8F8F8;
+    .object-fit_contain {
+        object-fit: contain
     }
-    .full-height.two{
-        background:#ACACAC;
+
+    .full-height {
+        height: 100%;
+        background: #F8F8F8;
     }
-    .full-height.three{
-        background:#5E5E5E;
+
+    .full-height.two {
+        background: #ACACAC;
     }
-    .table{
-        display:table;
-        width:100%;
-        position:relative;
-        background: transparent!important;
+
+    .full-height.three {
+        background: #5E5E5E;
     }
+
+    .table {
+        display: table;
+        width: 100%;
+        position: relative;
+        background: transparent !important;
+    }
+
     .cell {
         display: table-cell;
         vertical-align: middle;
         width: 100%;
         margin: 0 auto;
-        height:100%;
+        height: 100%;
         text-align: center;
     }
+
     .dialog:not(.dialog--fullscreen) {
         max-width: 95%;
     }
