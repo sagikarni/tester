@@ -7,7 +7,7 @@ import compress from 'compression';
 import path from 'path';
 
 import { routes } from './routes';
-import { clientErrorHandler, errorHandler } from '@server/core';
+import { clientErrorHandler, errorHandler } from '@libs/express-zone';
 
 const app = express();
 

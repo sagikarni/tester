@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { logger } from '@server/core';
+import { logger } from '@libs/express-zone';
 
 function isTrustedError(error) {
   return error.isOperational;

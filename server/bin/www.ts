@@ -1,8 +1,8 @@
 import './polyfills';
 
 import { createServer } from 'http';
-import { logger } from '@server/core';
-import { db } from '@server/database';
+import { logger } from '@libs/express-zone';
+import { db } from '@libs/auth';
 
 import app from '@server/app';
 

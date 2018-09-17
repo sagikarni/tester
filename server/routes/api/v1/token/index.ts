@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { login, confirmEmail, refreshToken, sendConfirm, resetPassword, newPassword } from '@modules/auth';
+import { login, confirmEmail, refreshToken, sendConfirm, resetPassword, newPassword } from '@libs/auth';
 
 const router = Router();
 

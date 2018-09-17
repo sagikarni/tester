@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
-import { User } from '@server/database';
+import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
-import { async, asyncAll, AppHttpError } from '@server/core';
+import { async, asyncAll, AppHttpError } from '@libs/express-zone';
 import { get } from 'lodash';
 
 export const register = asyncAll([

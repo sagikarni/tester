@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { register } from '@modules/auth';
+import { register } from '@libs/auth';
 
 const router = Router();
 
