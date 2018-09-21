@@ -4,10 +4,16 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import compress from 'compression';
-import path from 'path';
+import * as path from 'path';
+
+import { use } from 'passport';
+
+import { facebookStrategy } from '@libs/auth';
 
 import { routes } from './routes';
 import { clientErrorHandler, errorHandler } from '@libs/express-zone';
+
+use(facebookStrategy);
 
 const app = express();
 

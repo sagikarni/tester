@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     //   "module": "commonjs",
     //   "esModuleInterop": true,
     //   "target": "es6",
@@ -7,11 +7,12 @@
     //   "moduleResolution": "node",
     //   "sourceMap": true,
     //   "declaration": false,
-      "baseUrl": ".",
-      "paths": {
-        "@libs/*": ["libs/*"],
-        "@server/*": ["server/*"]
-      }
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@libs/*": ["libs/*"],
+      "@server/*": ["server/*"],
+      "@/*": ["client/src/*"]
     }
   }
-  
+}

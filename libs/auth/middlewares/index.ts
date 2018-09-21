@@ -123,10 +123,11 @@ export function findUser(getAttributes) {
 
 export function createUser(getAttributes) {
   return async (req, res, next) => {
-    const { name, email, password } = pick(getAttributes(req), [
+    const { name, email, password, verified } = pick(getAttributes(req), [
       'name',
       'email',
-      'password'
+      'password',
+      'verified'
     ]);
 
     let user = await User.findOne({ email });
@@ -134,7 +135,7 @@ export function createUser(getAttributes) {
       throw new AppHttpError(409, 'EMAIL_EXIST');
     }
 
-    req.user = await new User({ name, email, password }).save();
+    req.user = await new User({ name, email, password, verified }).save();
 
     next();
   };
@@ -158,15 +159,17 @@ export function sendWelcomeEmail({ getUser }) {
 export function sendVerifyEmail({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
-
-    console.log(`send email to ${user.email} token: ${user.getConfirmToken()}`);
-    // sendWelcome({
-    //     emailTo: attributes.email,
-    //     fullname: attributes.name,
-    //     password: attributes.password
-    // });
-    res.setHeader('confirm_token', user.getConfirmToken());
-
+    if (!user.verified) {
+      console.log(
+        `send email to ${user.email} token: ${user.getConfirmToken()}`
+      );
+      // sendWelcome({
+      //     emailTo: attributes.email,
+      //     fullname: attributes.name,
+      //     password: attributes.password
+      // });
+      res.setHeader('confirm_token', user.getConfirmToken());
+    }
     next();
   };
 }
