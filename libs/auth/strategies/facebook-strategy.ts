@@ -57,7 +57,7 @@ const strategy = async (req, token, refreshToken, profile, next, n, v) => {
 
   if (user) {
     request = {
-      url: '/api/v1/token/login',
+      url: '/api/v1/users/login',
       method: 'POST',
       body: {
         email: user.email,
@@ -83,16 +83,14 @@ const strategy = async (req, token, refreshToken, profile, next, n, v) => {
   }
 
   response.on('end', async(breq, bres, bnext) => {
-    // console.log('done done!!1', res1._getData());
-    const xxx = JSON.parse(response._getData());
-    console.log('fuck yeah!!!', xxx);
+    const payload = JSON.parse(response._getData());
 
-    // user = await User.findOne({ email });
+    const token = response.get('access_token');
 
-    // user.verified = true;
-    // user.save();
-
-    next(null, xxx);
+    next(null, {
+      token,
+      payload
+    });
   });
 
   (<any>routes).handle(request, response);

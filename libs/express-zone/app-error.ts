@@ -6,7 +6,7 @@ export const clientErrorHandler = (error, req, res, next) => {
   }
 
   const { correlationId } = logger.log('error', 'Express Middleware %s', error);
-  console.log('[logErrors]', correlationId);
+  console.log('[logErrors]', error, correlationId);
 
   if (req.xhr) {
     res.status(500).send({ correlationId });

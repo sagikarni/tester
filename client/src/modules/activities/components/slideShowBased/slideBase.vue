@@ -34,7 +34,7 @@
 
 <style lang="scss">
     .theme--light.v-card {
-        background-color: black !important;
+        // background-color: black !important;
         color: rgba(0,0,0,.87);
     }
     .v-card__title {

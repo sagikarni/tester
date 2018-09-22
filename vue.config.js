@@ -42,6 +42,11 @@ module.exports = {
         target: apiUrl,
         ws: true,
         changeOrigin: true
+      },
+      '/auth': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true
       }
     }
   }

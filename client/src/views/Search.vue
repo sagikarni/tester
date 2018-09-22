@@ -25,7 +25,7 @@
             </v-list>
             <v-list class="pt-0" dense>
                 <v-divider></v-divider>
-                <v-list-tile v-for="item in items" :key="item.title" @click="">
+                <v-list-tile v-for="item in items" :key="item.title">
                     <v-list-tile-action>
                      </v-list-tile-action>
                     <v-list-tile-content>
