@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import JwtService from '@/shared/jwt.service';
+import StorageService, { StorageTypes } from '@/shared/storage.service';
 // import { API_URL } from '@/common/config';
 import VueResource from 'vue-resource';
 
@@ -12,7 +12,7 @@ const ApiService = {
   setHeader() {
     Vue.http.headers!.common![
       'Authorization'
-    ] = `Bearer ${JwtService.getToken()}`;
+    ] = `Bearer ${StorageService.get(StorageTypes.TOKEN)}`;
   },
 
   query(resource: string, params: any) {

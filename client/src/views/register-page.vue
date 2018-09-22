@@ -46,17 +46,22 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { State, Action, Getter } from 'vuex-class';
+import { State, Action, Getter, namespace } from 'vuex-class';
 import { REGISTER, SET_AUTH_SOCIAL } from '@/store/actions.type';
 import { connectWith } from '@/shared/social.service';
 
+const Auth = namespace('auth');
+
 @Component({})
 export default class RegisterPage extends BaseComponent {
+  @Auth.Action(SET_AUTH_SOCIAL) setAuthSocial: any;
+  @Auth.Action(REGISTER) register: any;
+
   public valid = false;
 
-  public name = 'shlomi levi';
-  public email = 'wizardnet972@gmail.com';
-  public password = 'pass@word';
+  public name = '';
+  public email = '';
+  public password = '';
 
   public nameRules = [
     (v: string) => !!v || 'Name is required',
@@ -82,20 +87,16 @@ export default class RegisterPage extends BaseComponent {
 
     if (!form.validate()) return;
 
-    this.$store
-      .dispatch(REGISTER, {
-        name: this.name,
-        email: this.email,
-        password: this.password
-      })
-      .then(() => this.$router.push({ name: 'NormalView' }));
+    this.register({
+      name: this.name,
+      email: this.email,
+      password: this.password
+    }).then(() => this.$router.push({ name: 'NormalView' }));
   }
 
   public loginWithFacebook() {
     connectWith('facebook', '/auth/facebook')
-      .then(({ token, payload }: any) =>
-        this.$store.dispatch(SET_AUTH_SOCIAL, { token, payload })
-      )
+      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
       .then(() => this.$router.push({ name: 'NormalView' }));
   }
 }

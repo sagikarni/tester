@@ -1,5 +1,5 @@
 import ApiService from '@/shared/api.service';
-import JwtService from '@/shared/jwt.service';
+import StorageService, {StorageTypes} from '@/shared/storage.service';
 import { get } from 'lodash';
 
 import {
@@ -10,12 +10,13 @@ import {
   UPDATE_USER,
   SET_AUTH_SOCIAL,
 } from './actions.type';
+
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
 
 const state = {
   errors: null,
-  user: {},
-  isAuthenticated: !!JwtService.getToken(),
+  user: StorageService.get(StorageTypes.USER) || {},
+  isAuthenticated: !!StorageService.get(StorageTypes.TOKEN),
 };
 
 const getters = {
@@ -33,8 +34,9 @@ const actions = {
       ApiService.post('users/login', credentials)
         .then((response: any) => {
           const token = get(response, 'headers.map.access_token[0]');
+          const { user } = response.data;
 
-          context.commit(SET_AUTH, token, response.data.user);
+          context.commit(SET_AUTH, { token, user });
           resolve(response.data);
         })
         .catch((response: any) => {
@@ -50,8 +52,8 @@ const actions = {
       ApiService.post('users', credentials)
         .then((response: any) => {
           const token = get(response, 'headers.map.access_token[0]');
-
-          context.commit(SET_AUTH, token, response.data.user);
+          const { user } = response.data;
+          context.commit(SET_AUTH, { token, user });
           resolve(response.data);
         })
         .catch((response: any) => {
@@ -61,12 +63,12 @@ const actions = {
   },
   [SET_AUTH_SOCIAL](context: any, { token, payload }: any) {
     return new Promise((resolve, reject) => {
-      context.commit(SET_AUTH, token, payload.user);
+      context.commit(SET_AUTH, { token, user: payload.user });
       resolve();
     });
   },
   [CHECK_AUTH](context: any) {
-    if (JwtService.getToken()) {
+    if (StorageService.get(StorageTypes.TOKEN)) {
       ApiService.setHeader();
 
       //   const publicPages: any = ['/login', '/register'];
@@ -113,21 +115,24 @@ const mutations = {
   [SET_ERROR](state: any, error: any) {
     state.errors = error;
   },
-  [SET_AUTH](state: any, token: string, user: any) {
+  [SET_AUTH](state: any, { token, user }: any) {
     state.isAuthenticated = true;
     state.user = user;
     state.errors = {};
-    JwtService.saveToken(token);
+    StorageService.save(StorageTypes.USER, state.user);
+    StorageService.save(StorageTypes.TOKEN, token);
   },
   [PURGE_AUTH](state: any) {
     state.isAuthenticated = false;
     state.user = {};
     state.errors = {};
-    JwtService.destroyToken();
+    StorageService.destroy(StorageTypes.USER);
+    StorageService.destroy(StorageTypes.TOKEN);
   },
 };
 
 export default {
+  namespaced: true,
   state,
   actions,
   mutations,

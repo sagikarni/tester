@@ -21,6 +21,8 @@ import VueLodash from 'vue-lodash';
 import { CHECK_AUTH } from '@/store/actions.type';
 import ApiService from '@/shared/api.service';
 
+import { namespace, Action } from 'vuex-class';
+
 Vue.config.productionTip = false;
 
 // httpClient.setDefaultHeaders();
@@ -45,7 +47,8 @@ Vue.use(VideoPlayer);
 Vue.use(VueLodash, { name: 'lodash' });
 
 router.beforeEach((to, from, next) => {
-  return Promise.all([store.dispatch(CHECK_AUTH)]).then(() => next());
+
+   return Promise.all([store.dispatch(`auth/${CHECK_AUTH}`)]).then(() => next());
 });
 
 new Vue({
