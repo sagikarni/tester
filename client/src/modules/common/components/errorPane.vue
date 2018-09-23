@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-    import { Component } from 'vue-property-decorator';
+    import { Component, Prop } from 'vue-property-decorator';
     import BaseComponent from '@/modules/common/components/baseComponent.vue';
     import { Action } from 'vuex-class';
     import { GeneralError } from "@/modules/store/typeClasses";
@@ -23,19 +23,20 @@
     export default class ErrorPane extends BaseComponent {
         @Action('errorPaneAction') public errorPaneAction?: any;
 
-        public dialog?: boolean;
-        public message?: string;
+        @Prop() public dialog?: boolean;
+        @Prop() public message?: string;
 
         constructor() {
             super();
-            this.dialog = false;
-            this.message = '';
+            // this.dialog = false;
+            // this.message = '';
         }
 
-        public showError(er: GeneralError) {
-            this.message = er.message;
-            this.dialog = true;
-        }
+        // public showError(er: GeneralError) {
+        //     this.message = er.message;
+        //     this.dialog = true;
+        // }
+
         public tryAgain() {
             this.hideView();
             this.$router.go(0); // Reloading the current route like this this.$router.currentRoute

@@ -1,7 +1,6 @@
 const connectWith = (vendor: string, url: string) =>
   new Promise((resolve, reject) => {
     const listener = (e: any) => {
-      console.log('e.data', e.data);
       const { message, access_token, payload } = e.data;
       if (message === vendor + 'Login') {
         window.removeEventListener('message', listener, false);

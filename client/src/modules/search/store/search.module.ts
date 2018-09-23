@@ -1,5 +1,5 @@
 import ApiService from '@/shared/api.service';
-import StorageService, {StorageTypes} from '@/shared/storage.service';
+import StorageService, { StorageTypes } from '@/shared/storage.service';
 import { get } from 'lodash';
 
 import {
@@ -131,7 +131,7 @@ const mutations = {
   },
 };
 
-export default {
+export const store = {
   namespaced: true,
   state,
   actions,

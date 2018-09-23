@@ -2,11 +2,7 @@
     <v-layout class="ex-activity-main-details" :class="{'ex-dir-row-reverse': $isRTL}">
         <v-flex class="hidden-xs-only ex-fixed-image-scope" :class="[$isRTL ? 'ml-4' : 'mr-4']">
             <div class="ex-cover-image-wrapper">
-                <v-img :lazy-src="coverImagePath ? getImagePath((preloadPhoto + coverImagePath)) : '' "
-                        :src="coverImagePath ? getImagePath(coverImagePath) : ''"
-                        alt="img"
-                        width="100%"
-                        height="100%">
+                <v-img :lazy-src="coverImagePath ? getImagePath((preloadPhoto + coverImagePath)) : '' " :src="coverImagePath ? getImagePath(coverImagePath) : ''" alt="img" width="100%" height="100%">
                 </v-img>
             </div>
         </v-flex>
@@ -18,7 +14,7 @@
                     <v-layout row justify-space-around class="text-xs-center">
                         <v-flex>
                             <p class="mb-1">{{activityMainDetailsInfo.mediaCount}} {{ $locale.general.slidesText }}</p>
-                             <v-icon>far fa-images</v-icon>
+                            <v-icon>far fa-images</v-icon>
                         </v-flex>
                         <v-flex>
                             <p class="mb-1">{{activityMainDetailsInfo.mediaTypeText}}</p>
@@ -36,24 +32,24 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop } from 'vue-property-decorator';
-    import BaseComponent from '@/modules/common/components/baseComponent.vue';
-    import {ActivityMainDetailsInfo} from '../../store/types';
-    import { ImageType} from '@/modules/activities/store/types';
+import { Component, Prop } from 'vue-property-decorator';
+import BaseComponent from '@/modules/common/components/baseComponent.vue';
+import { ActivityMainDetailsInfo } from '../../store/types';
+import { ImageType } from '@/modules/activities/store/types';
 
+@Component
+export default class ActivityMainDetails extends BaseComponent {
+  public preloadPhoto: string = 'preload_';
+  @Prop() public activityMainDetailsInfo?: ActivityMainDetailsInfo;
 
-    @Component
-    export default class ActivityMainDetails extends BaseComponent {
-        public preloadPhoto:string = 'preload_';
-        @Prop() public activityMainDetailsInfo?: ActivityMainDetailsInfo;
+  get coverImagePath(): string | undefined {
+    return (
+      this.activityMainDetailsInfo && this.activityMainDetailsInfo.coverPhoto
+    );
+  }
 
-        get coverImagePath(): string | undefined {
-           return this.activityMainDetailsInfo && this.activityMainDetailsInfo.coverPhoto
-
-        }
-
-        constructor() {
-            super();
-        }
-    }
+  constructor() {
+    super();
+  }
+}
 </script>

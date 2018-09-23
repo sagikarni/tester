@@ -47,7 +47,7 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { REGISTER, SET_AUTH_SOCIAL } from '@/store/actions.type';
+import { REGISTER, SET_AUTH_SOCIAL } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
 
 const Auth = namespace('auth');

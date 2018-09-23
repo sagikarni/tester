@@ -1,21 +1,25 @@
+export * from './actions.type';
+export * from './mutations.type';
 
-import { Module } from 'vuex';
-import {ISearchState} from './types';
-import {getters} from './getters';
-import {IRootState} from '../../store/types';
-import {actions} from './actions';
-import {mutations} from './mutations';
+export { store } from './search.module';
 
-export const state: ISearchState = {
-     test: '',
-};
+// import { Module } from 'vuex';
+// import {ISearchState} from './types';
+// import {getters} from './getters';
+// import {IRootState} from '../../store/types';
+// import {actions} from './actions';
+// import {mutations} from './mutations';
 
-const namespaced: boolean = true;
+// export const state: ISearchState = {
+//      test: '',
+// };
 
-export const search: Module<ISearchState, IRootState> = {
-    namespaced,
-    state,
-    getters,
-    actions,
-    mutations,
-};
+// const namespaced: boolean = true;
+
+// export const search: Module<ISearchState, IRootState> = {
+//     namespaced,
+//     state,
+//     getters,
+//     actions,
+//     mutations,
+// };

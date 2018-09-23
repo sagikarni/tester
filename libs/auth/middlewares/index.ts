@@ -192,3 +192,20 @@ export function sendResetPasswordEmail({ getUser }) {
     next();
   };
 }
+
+
+
+
+
+
+
+
+
+export function testMiddleware(getAttributes) {
+  return async (req, res, next) => {
+    
+    console.log('in middleware');
+
+    next();
+  };
+}

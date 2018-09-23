@@ -6,12 +6,11 @@ import methodOverride from 'method-override';
 import compress from 'compression';
 import * as path from 'path';
 
-import { use } from 'passport';
-
-import { facebookStrategy } from '@libs/auth';
-
 import { routes } from './routes';
 import { clientErrorHandler, errorHandler } from '@libs/express-zone';
+
+import { use } from 'passport';
+import { facebookStrategy } from '@libs/auth';
 
 use(facebookStrategy);
 

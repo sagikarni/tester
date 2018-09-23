@@ -87,7 +87,8 @@
                     <v-menu bottom v-if="isAuthenticated">
                         <v-btn slot="activator">
                             <v-avatar>
-                                <img src="http://www.gravatar.com/avatar/?d=identicon">
+                                <img v-if="currentUser.picture" :src="currentUser.picture">
+                                <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
                             </v-avatar>
                         </v-btn>
                         <v-list>
@@ -105,7 +106,7 @@
             <transition name="page" mode="out-in">
                 <router-view></router-view>
             </transition>
-            <error-modal ref="errorModal"></error-modal>
+            <error-modal :dialog="showDialog" :message="errorMessage" ref="errorModal"></error-modal>
         </v-app>
 
     </div>
@@ -133,6 +134,9 @@ const auth = namespace('auth');
 export default class App extends BaseComponent {
   @auth.Getter('isAuthenticated') isAuthenticated: any;
   @auth.Getter('currentUser') currentUser: any;
+
+private showDialog = false;
+private errorMessage = '';
 
   public drawer: boolean = false;
 
@@ -225,9 +229,13 @@ export default class App extends BaseComponent {
   }
 
   @Watch('generalGerror')
-  public onPropertyChanged(value: any, oldValue: any) {
+  public onGeneralGerrorChanged(value: any, oldValue: any) {
     const el: any = this.$refs.errorModal;
-    el.showError(value);
+    this.showDialog = true;
+    this.errorMessage = value.message;
+    console.log('value', value);
+    console.log('errror here?');
+    // el.showError(value);
   }
 
   @Watch('$route')
