@@ -16,15 +16,16 @@ router.post('/login', login, (req, res, next) => {
   res.json(user.toJSON());
 });
 
-router.post('/confirm', confirmEmail, (req, res, next) => {
+router.post('/confirm', sendConfirm, (req, res, next) => {
+  res.sendStatus(200);
+});
+
+router.post('/confirmed', confirmEmail, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());
 });
 
-router.post('/reconfirm', sendConfirm, (req, res, next) => {
-  res.sendStatus(200);
-});
 
 router.post('/reset-password', resetPassword, (req, res, next) => {
   res.sendStatus(200);

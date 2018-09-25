@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400');
+        /* -- BEGIN MOBILE -- */
+
+        @media only screen and (max-device-width: 736px) {
+            a[class="button"] {
+                display: block !important
+            }
+            a[class="guid"] {
+                display: block;
+                font-size: 14px !important
+            }
+            body {
+                font-size: 16px !important
+            }
+            h1 {
+                display: block !important;
+                font-size: 18px !important;
+                max-width: 300px !important;
+                padding: 5px 0 0 0 !important;
+                text-align: center !important
+            }
+            span[class="mobile-footer-break"] {
+                display: block
+            }
+            table[class="body-table"] {
+                width: 100% !important
+            }
+            table[class="footer-table"] td:first-of-type {
+                text-align: center !important;
+                width: 50% !important
+            }
+            table[class="footer-table"] td:last-of-type {
+                text-align: center !important;
+                width: 50% !important
+            }
+            table[class="footer-table"] td:nth-child(2) {
+                display: none
+            }
+            table[class="mobile-apps-col"] {
+                display: table !important
+            }
+            table[class="two-btn-table"] a:first-of-type {
+                margin-right: 0 !important
+            }
+            table[class="two-btn-table"] a:last-of-type {
+                margin-left: 0 !important;
+                margin-top: 15px
+            }
+            td[class="header-col"] {
+                padding-bottom: 10px !important
+            }
+        }
+
+        /* -- END MOBILE -- */
+
+        a {
+            color: #10ade4;
+            text-decoration: none
+        }
+
+        a[class="button"] {
+            border-radius: 20px;
+            color: #fff;
+            display: inline-block;
+            font-size: 13px;
+            padding: 10px 30px;
+            text-align: center;
+            text-transform: uppercase
+        }
+
+        a[class="guid"] {
+            font-weight: bold
+        }
+
+        body {
+            background-color: #F9F9F9;
+            color: #4C4C4C;
+            font-family: 'Montserrat', Arial, sans-serif !important;
+            font-weight: 300 !important;
+            line-height: 1.5em;
+            margin: 0;
+            outline: none;
+            padding: 15px
+        }
+
+        table {
+            table-layout: fixed
+        }
+    </style>
+</head>
+
+<body style="background-color:#F9F9F9;color:#4C4C4C;font-family:Helvetica,Arial,Verdana,Trebuchet MS;font-size:14px;font-weight:400;line-height:1.5em;margin:0;outline:none;padding:15px;">
+    <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+        <tr>
+            <td align="center" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" class="body-table" style="table-layout:fixed;" width="600">
+                    <tr>
+                        <td align="center" valign="top">
+                            <!-- BEGIN HEADER -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#004A7C;color:#FFFFFF;table-layout:fixed;">
+                                <tr>
+                                    <td align="center" class="header-col" style="padding-bottom:32px;padding-top:32px;" valign="middle">
+                                        <img src="https://github.com/We-Test-Marketplace/We-Test/raw/master/wetest-logox2.png" alt="{{app}} Logo" style="height:50px;vertical-align:middle"
+                                        />
+                                        <h1 style="color:white;display:inline-block;font-size:20px;font-weight:300;line-height:1.2em;padding-left:20px;max-width:400px;text-align:left;vertical-align:middle;word-wrap:break-word;">
+                                            Verify Your Account</h1>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- END HEADER -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color:#FFFFFF;" valign="top">
+                            <!-- BEGIN BODY -->
+                            <table border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" width="85%">
+                                <tr>
+                                    <td align="center" valign="top" style="padding-top:30px;padding-bottom:20px;">
+                                        Verify your email below to complete your registration.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding-bottom:20px;">
+                                        <a class="button" href="{{tokenUrl}}" style="background:#10ADE4;border-radius:20px;color:#FFFFFF;display:inline-block;font-size:13px;margin-right:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;padding-top:10px;text-align:center;text-decoration:none;text-transform:uppercase;">Yes, This is my email</a>
+                                        <hr style="background-color:#D8D8D8;border:none;height:1px;margin-top:30px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" style="padding-bottom:25px;padding-top:10px;">
+
+                                        If you did not create a {{app}} account using this address, please contact us at {{emailContact}} </td>
+                                </tr>
+                            </table>
+                            <!-- END BODY -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top">
+                            <table border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <table border="0" cellpadding="0" cellspacing="0" class="mobile-apps-col" style="display:none;padding-top:30px;table-layout:fixed;"
+                                            width="100%">
+                                            <tr>
+                                                <td align="center" style="width:50%;">
+                                                    <a href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" style="text-decoration:none;">
+                                                        <img alt="Download on the App Store" src="https://blockchain.info/Resources/apple-badge@2x.png" style="height:40px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                </td>
+                                                <td align="center" style="width:50%;">
+                                                    <a href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" style="text-decoration:none;">
+                                                        <img alt="GET IT ON Google Play" src="https://blockchain.info/Resources/google-play-badge@2x.png" style="height:40px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <!-- BEGIN FOOTER -->
+                                        <table border="0" cellpadding="0" cellspacing="0" class="footer-table" style="padding-top:25px;table-layout:fixed;" width="100%">
+                                            <tr>
+                                                <td align="left" style="width:20%;">
+                                                    <a href="https://www.we-test.com/" style="text-decoration:none;">
+                                                        <img alt="{{app}}" src="https://github.com/We-Test-Marketplace/We-Test/raw/master/wetest-logox2.png" style="height:35px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                </td>
+                                                <td align="center" style="width:40%">
+                                                    <a href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" style="text-decoration:none;">
+                                                        <img alt="Download on the App Store" src="https://blockchain.info/Resources/apple-badge@2x.png" style="height:35px;margin-right:5px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                    <a href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" style="text-decoration:none;">
+                                                        <img alt="GET IT ON Google Play" src="https://blockchain.info/Resources/google-play-badge@2x.png" style="height:35px;margin-left:5px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                </td>
+                                                <td align="right" style="width:20%;">
+                                                    <a href="https://twitter.com/WeTestonline" style=="text-decoration:none;">
+                                                        <img alt="Twitter" src="https://blockchain.info/Resources/twitter-email@2x.png" style="height:35px;margin-right:4px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                    <a href="https://www.facebook.com/WeTest.online/" style="text-decoration:none;">
+                                                        <img alt="Facebook" src="https://blockchain.info/Resources/facebook-email@2x.png" style="height:35px;margin-left:4px;vertical-align:middle;"
+                                                        />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" colspan="3" style="font-size:12px;line-height:1.5;padding-top:20px;">
+                                                    Copyright &copy; 2017 {{app}}.
+                                                    <span class="mobile-footer-break">All rights reserved.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" colspan="3" style="font-size:12px;padding-top:5px;">
+                                                    Click here to
+                                                    <a href="https://blockchain.info/wallet/#/unsubscribe/Y31w1JS0BypsE0U0pQMBY9SQRPnLi0Fo6NKUug0Vxm1ZPj0ziKdq5L9T7iqm0h7quytxoo2WJJ5ceGbPuI%2BBe49B2F11pGW%2BDlvASgoP3aErOxwxswPgRHgkih1gIUrx"
+                                                        style="color:#10ADE4;text-decoration:none;">Unsubscribe</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- END FOOTER -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

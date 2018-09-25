@@ -2,6 +2,12 @@
     <div>
 
         <v-content>
+            <v-alert v-if="!currentUser.verified" :value="true" color="error" icon="new_releases">
+                Please confirm your account. confirming your account will give you
+                <b>full access</b> and all future notifications will be sent to this email address. Didn't receive the email? Please check your spam email folder,
+                <v-btn flat small @click="sendConfirmEmail">resubmit the request</v-btn> or contact our support team.
+
+            </v-alert>
             <v-container>
                 <transition name="page" mode="out-in">
                     <router-view></router-view>
@@ -21,9 +27,21 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import TimelineMax from 'gsap';
+import { State, Action, namespace } from 'vuex-class';
+import ApiService from '@/shared/api.service';
+
+const auth = namespace('auth');
 
 @Component
-export default class NormalView extends Vue {}
+export default class NormalView extends Vue {
+  @auth.Getter('currentUser') currentUser: any;
+
+  sendConfirmEmail() {
+    ApiService.post('users/confirm', {}).then((response: any) => {
+      console.log('sent');
+    });
+  }
+}
 </script>
 
 

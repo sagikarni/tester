@@ -3,6 +3,7 @@ import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
 import { async, asyncAll, AppHttpError } from '@libs/express-zone';
 import { get } from 'lodash';
+import { sendWelcome, sendVerify } from '../email';
 
 export const register = asyncAll([
   createUser(req => req.body),
@@ -143,14 +144,12 @@ export function createUser(getAttributes) {
 
 export function sendWelcomeEmail({ getUser }) {
   return (req, res, next) => {
-    const user = getUser(req);
+    console.log('sendWelcomeEmail');
 
-    console.log(`sendWelcomeEmail to ${user.email}`);
-    // sendWelcome({
-    //     emailTo: attributes.email,
-    //     fullname: attributes.name,
-    //     password: attributes.password
-    // });
+    const user = getUser(req);
+    const { password } = req.body;
+
+    sendWelcome({ emailTo: user.email, password, fullname: user.name });
 
     next();
   };
@@ -160,15 +159,12 @@ export function sendVerifyEmail({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
     if (!user.verified) {
-      console.log(
-        `send email to ${user.email} token: ${user.getConfirmToken()}`
-      );
-      // sendWelcome({
-      //     emailTo: attributes.email,
-      //     fullname: attributes.name,
-      //     password: attributes.password
-      // });
-      res.setHeader('confirm_token', user.getConfirmToken());
+      const token = user.getConfirmToken();
+      console.log(`send email to ${user.email} token: ${token}`);
+
+      sendVerify({ emailTo: user.email, token });
+
+      res.setHeader('confirm_token', token);
     }
     next();
   };
@@ -193,17 +189,8 @@ export function sendResetPasswordEmail({ getUser }) {
   };
 }
 
-
-
-
-
-
-
-
-
 export function testMiddleware(getAttributes) {
   return async (req, res, next) => {
-    
     console.log('in middleware');
 
     next();

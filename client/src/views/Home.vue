@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-flex>
-{{ currentUser }}
 
-      
+      {{ currentUser }}
+
       <div v-if="!isAuthenticated">
         <router-link to="/login" class="btn btn-link">Login</router-link>
       </div>

@@ -5,6 +5,7 @@ const router = Router();
 
 router.all('/', (req, res, next) => {
     console.log('in api route');
+
     res.sendStatus(200);
 });
 

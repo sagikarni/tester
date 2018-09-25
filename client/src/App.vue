@@ -2,6 +2,7 @@
     <div id="app">
         <loading ref="loading"></loading>
         <v-app id="inspire" class="theme-dark">
+             
             <v-navigation-drawer clipped temporary v-model="drawer" app color="red" @transitionend="menuStateChanged">
                 <v-list dense>
                     <v-list-tile class="hidden menuItem">
@@ -102,7 +103,7 @@
                     <v-btn v-if="!isAuthenticated" flat to="/register">Register</v-btn>
                 </v-toolbar-items>
             </v-toolbar>
-
+         
             <transition name="page" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -135,8 +136,8 @@ export default class App extends BaseComponent {
   @auth.Getter('isAuthenticated') isAuthenticated: any;
   @auth.Getter('currentUser') currentUser: any;
 
-private showDialog = false;
-private errorMessage = '';
+  private showDialog = false;
+  private errorMessage = '';
 
   public drawer: boolean = false;
 
