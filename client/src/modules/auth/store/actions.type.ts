@@ -21,3 +21,4 @@ export const LOGOUT = 'logout';
 export const REGISTER = 'register';
 export const UPDATE_USER = 'updateUser';
 export const SET_AUTH_SOCIAL = 'setAuthSocial';
+export const CONFIRM_ACCOUNT = 'confirmAccount';

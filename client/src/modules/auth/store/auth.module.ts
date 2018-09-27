@@ -9,13 +9,14 @@ import {
   CHECK_AUTH,
   UPDATE_USER,
   SET_AUTH_SOCIAL,
+  CONFIRM_ACCOUNT,
 } from './actions.type';
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
 
 const state = {
   errors: null,
-  user: StorageService.get(StorageTypes.USER) || {},
+  user: StorageService.get(StorageTypes.USER) || null,
   isAuthenticated: !!StorageService.get(StorageTypes.TOKEN),
 };
 
@@ -93,6 +94,29 @@ const actions = {
       context.commit(PURGE_AUTH);
     }
   },
+  [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
+    return new Promise((resolve, reject) => {
+      ApiService.post(
+        'users/confirmed',
+        {},
+        {
+          headers: {
+            Authorization: `Basic ${confirmToken}`,
+          },
+        },
+      )
+        .then((response: any) => {
+
+          const token = get(response, 'headers.map.access_token[0]');
+          const { user } = response.data;
+          context.commit(SET_AUTH, { token, user });
+          resolve(response.data);
+        })
+        .catch((response: any) => {
+          context.commit(SET_ERROR, response.data.errors);
+        });
+    });
+  },
   [UPDATE_USER](context: any, payload: any) {
     // const { email, username, password, image, bio } = payload;
     // const user = {
@@ -118,14 +142,14 @@ const mutations = {
   [SET_AUTH](state: any, { token, user }: any) {
     state.isAuthenticated = true;
     state.user = user;
-    state.errors = {};
+    state.errors = null;
     StorageService.save(StorageTypes.USER, state.user);
     StorageService.save(StorageTypes.TOKEN, token);
   },
   [PURGE_AUTH](state: any) {
     state.isAuthenticated = false;
-    state.user = {};
-    state.errors = {};
+    state.user = null;
+    state.errors = null;
     StorageService.destroy(StorageTypes.USER);
     StorageService.destroy(StorageTypes.TOKEN);
   },

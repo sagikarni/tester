@@ -1,4 +1,3 @@
-
 export enum StorageTypes {
   TOKEN = 'teratoken',
   USER = 'terauser',
@@ -6,7 +5,9 @@ export enum StorageTypes {
 
 export default {
   get(key: string) {
-    return JSON.parse(window.localStorage.getItem(key) as string);
+    const item = window.localStorage.getItem(key) as string;
+    if (!item) { return null; }
+    return JSON.parse(item);
   },
 
   save(key: string, item: any) {

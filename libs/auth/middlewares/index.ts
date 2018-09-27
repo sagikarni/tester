@@ -3,7 +3,7 @@ import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
 import { async, asyncAll, AppHttpError } from '@libs/express-zone';
 import { get } from 'lodash';
-import { sendWelcome, sendVerify } from '../email';
+import { sendWelcome, sendVerify, sendVerification } from '../email';
 
 export const register = asyncAll([
   createUser(req => req.body),
@@ -17,6 +17,7 @@ export const login = asyncAll([authenticateUser(req => req.body), token()]);
 export const confirmEmail = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'confirm' }),
   validateUser({ getUser: req => req.user }),
+  sendVerificationEmail({ getUser: req => req.user }),
   token()
 ]);
 
@@ -48,7 +49,11 @@ export function validateUser({ getUser }) {
   return async (req, res, next) => {
     let user = getUser(req);
 
-    user = await User.findOneAndUpdate({ _id: user.id }, { verified: true });
+    user = await User.findOne({ _id: user.id });
+    if (user.verified) throw new AppHttpError(401, 'Unauthorized');
+
+    user.verified = true;
+    user.save();
 
     req.user = user;
     next();
@@ -72,6 +77,7 @@ export function validateToken({ headerKey, grant }) {
 
       req.token = parts[1];
       req.user = await User.findOne({ _id: decoded.id });
+      if (!req.user) throw new AppHttpError(401, 'Unauthorized');
       next();
     });
   };
@@ -165,6 +171,16 @@ export function sendVerifyEmail({ getUser }) {
       sendVerify({ emailTo: user.email, token });
 
       res.setHeader('confirm_token', token);
+    }
+    next();
+  };
+}
+
+export function sendVerificationEmail({ getUser }) {
+  return (req, res, next) => {
+    const user = getUser(req);
+    if (user.verified) {
+      sendVerification({ emailTo: user.email, fullname: user.name });
     }
     next();
   };

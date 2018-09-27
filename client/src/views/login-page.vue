@@ -11,14 +11,21 @@
             </v-toolbar>
             <v-card-text>
               <v-layout justify-space-around>
-                <v-btn @click="loginWithFacebook" flat icon color="red lighten-2">
+                <v-btn @click="loginWithFacebook" flat icon color="lighten-2">
                   <v-icon large>fa fa-facebook</v-icon>
                 </v-btn>
-
-                <v-btn flat icon color="red lighten-2">
+                <v-btn @click="loginWithTwitter" flat icon color="lighten-2">
                   <v-icon large>fa fa-twitter</v-icon>
                 </v-btn>
+                <v-btn @click="loginWithGoogle" flat icon color="lighten-2">
+                  <v-icon large>fa fa-google</v-icon>
+                </v-btn>
+                <v-btn @click="loginWithLinkedin" flat icon color="lighten-2">
+                  <v-icon large>fa fa-linkedin</v-icon>
+                </v-btn>
               </v-layout>
+              <br><br>
+              <h3>Or with an account</h3>
 
               <v-form v-model="valid" ref="form">
 
@@ -53,8 +60,10 @@ const Auth = namespace('auth');
 
 @Component({})
 export default class RegisterPage extends BaseComponent {
-  @Auth.Action(SET_AUTH_SOCIAL) setAuthSocial: any;
-  @Auth.Action(LOGIN) login: any;
+  @Auth.Action(SET_AUTH_SOCIAL)
+  setAuthSocial: any;
+  @Auth.Action(LOGIN)
+  login: any;
 
   public valid = false;
 
@@ -83,13 +92,28 @@ export default class RegisterPage extends BaseComponent {
     this.login({
       email: this.email,
       password: this.password
-    }).then(() => this.$router.push({ name: 'NormalView' }));
+    }).then(() => this.$router.push('/'));
   }
 
   public loginWithFacebook() {
     connectWith('facebook', '/auth/facebook')
       .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
-      .then(() => this.$router.push({ name: 'NormalView' }));
+      .then(() => this.$router.push('/'));
+  }
+  public loginWithTwitter() {
+    connectWith('twitter', '/auth/twitter')
+      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
+      .then(() => this.$router.push('/'));
+  }
+  public loginWithGoogle() {
+    connectWith('google', '/auth/google')
+      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
+      .then(() => this.$router.push('/'));
+  }
+  public loginWithLinkedin() {
+    connectWith('linkedin', '/auth/linkedin')
+      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
+      .then(() => this.$router.push('/'));
   }
 }
 </script>

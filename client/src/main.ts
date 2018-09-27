@@ -30,12 +30,12 @@ ApiService.init();
 Vue.use(LocalePlugin);
 Vue.use(DirectionPlugin);
 Vue.use(Vuetify, {
-  theme: {
-    primary: '#3f51b5',
-    secondary: '#b0bec5',
-    accent: '#8c9eff',
-    error: '#b0bec5',
-  },
+  // theme: {
+  //   primary: '#3f51b5',
+  //   secondary: '#b0bec5',
+  //   accent: '#8c9eff',
+  //   error: '#b0bec5',
+  // },
 });
 
 Vue.use(fullscreen);
@@ -45,7 +45,7 @@ Vue.use(VideoPlayer);
 Vue.use(VueLodash, { name: 'lodash' });
 
 router.beforeEach((to, from, next) => {
-   return Promise.all([store.dispatch(`auth/${CHECK_AUTH}`)]).then(() => next());
+  return Promise.all([store.dispatch(`auth/${CHECK_AUTH}`)]).then(() => next());
 });
 
 new Vue({

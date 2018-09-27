@@ -29,9 +29,9 @@ const ApiService = {
     // });
   },
 
-  post(resource: string, params: any) {
+  post(resource: string, params: any, options: any = null) {
     console.log('in post');
-    return Vue.http.post(`${resource}`, params);
+    return Vue.http.post(`${resource}`, params, options);
   },
 
   update(resource: string, slug: any, params: any) {

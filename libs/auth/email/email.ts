@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { load, compile, app, emailDefaultSender } from './template';
 
 const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
-const urlVerifyAccount = process.env.URL_VERIFY_ACCOUNT;
+const urlConfirmAccount = process.env.URL_CONFIRM_ACCOUNT;
 const urlResetPassword = process.env.URL_RESET_PASSWORD;
 
 setApiKey(process.env.EMAIL_SENDGRID_KEY);
@@ -31,6 +31,8 @@ export function sendWelcome({ emailTo, fullname, password }) {
 }
 
 export function sendVerify({ emailTo, token }) {
+  const tokenUrl = urlConfirmAccount + token;
+
   const msg = {
     to: emailTo,
     from: emailDefaultSender,
@@ -41,11 +43,30 @@ export function sendVerify({ emailTo, token }) {
         email: emailTo,
         app,
         emailContact: emailContactMail,
-        tokenUrl: urlVerifyAccount + token
+        tokenUrl
       }
     })
   };
 
   console.log('sendVerify: ', msg);
+  send(msg);
+}
+
+export function sendVerification({ emailTo, fullname }) {
+  const msg = {
+    to: emailTo,
+    from: emailDefaultSender,
+    subject: `Your email address has been successfully verified`,
+    ...compile({
+      templateName: 'verification',
+      context: {
+        email: emailTo,
+        app,
+        fullname
+      }
+    })
+  };
+
+  console.log('sendVerification: ', msg);
   send(msg);
 }

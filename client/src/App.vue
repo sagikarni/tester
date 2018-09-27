@@ -65,7 +65,7 @@
                     </v-list-tile>
                 </v-list>
             </v-navigation-drawer>
-            <v-toolbar app fixed clipped-left>
+            <v-toolbar app fixed clipped-left color="primary">
                 <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                 <v-menu offset-y content-class="ex-header-menu" v-if="!$vuetify.breakpoint.xsOnly">
                     <v-toolbar-title slot="activator" class="toolbarTitle">{{ $locale.general.menuActivities }}</v-toolbar-title>
@@ -86,7 +86,7 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-items class="hidden-sm-and-down">
                     <v-menu bottom v-if="isAuthenticated">
-                        <v-btn slot="activator">
+                        <v-btn small flat slot="activator">
                             <v-avatar>
                                 <img v-if="currentUser.picture" :src="currentUser.picture">
                                 <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
@@ -94,7 +94,7 @@
                         </v-btn>
                         <v-list>
                             <v-list-tile>
-                                <v-list-tile-title>{{currentUser.name}}</v-list-tile-title>
+                                <v-list-tile-title><b>Login as: </b>{{currentUser.name}}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -241,27 +241,28 @@ export default class App extends BaseComponent {
 
   @Watch('$route')
   public onPropertyChanged2(value: any, oldValue: any) {
-    if (
-      oldValue &&
-      oldValue.params &&
-      oldValue.params.activityId &&
-      (oldValue.path === `/premium-collection/${oldValue.params.activityId}` ||
-        oldValue.path ===
-          `/categorization-activity/${oldValue.params.activityId}` ||
-        oldValue.path === `/memory-activity/${oldValue.params.activityId}` ||
-        oldValue.path === `/photo-sound/${oldValue.params.activityId}` ||
-        oldValue.path === `/puzzle-activity/${oldValue.params.activityId}`)
-    ) {
-      (TimelineMax as any).to('.application--wrap', 0, {
-        backgroundColor: 'white'
-      });
-      this.changeReloadActivityDetails({ status: false }); // No need to reload activities if they are exist
-    }
-    const el: any = this.$refs.loading;
-    el.show();
-    setTimeout(() => {
-      el.close();
-    }, 1000);
+    //   console.log('dddddddddddd');
+    // if (
+    //   oldValue &&
+    //   oldValue.params &&
+    //   oldValue.params.activityId &&
+    //   (oldValue.path === `/premium-collection/${oldValue.params.activityId}` ||
+    //     oldValue.path ===
+    //       `/categorization-activity/${oldValue.params.activityId}` ||
+    //     oldValue.path === `/memory-activity/${oldValue.params.activityId}` ||
+    //     oldValue.path === `/photo-sound/${oldValue.params.activityId}` ||
+    //     oldValue.path === `/puzzle-activity/${oldValue.params.activityId}`)
+    // ) {
+    //   (TimelineMax as any).to('.application--wrap', 0, {
+    //     backgroundColor: 'white'
+    //   });
+    //   this.changeReloadActivityDetails({ status: false }); // No need to reload activities if they are exist
+    // }
+    // const el: any = this.$refs.loading;
+    // el.show();
+    // setTimeout(() => {
+    //   el.close();
+    // }, 1000);
   }
 }
 </script>
