@@ -118,9 +118,22 @@ userSchema.method('getResetPasswordToken', function(): string {
 });
 
 userSchema.method('toJSON', function(): any {
-  const { email, name, verified, picture } = this;
+  const user = this.toObject();
+  
+  delete user.password;
+  delete user._id;
+  delete user.__v;
+  if (user.facebook) {
+    user.facebook = true;
+  }
 
-  return { user: { email, name, verified, picture } };
+  console.log('user', user);
+
+  return { user };
+
+  // const { email, name, verified, picture } = this;
+
+  // return { user: { email, name, verified, picture } };
 });
 
 userSchema.static(

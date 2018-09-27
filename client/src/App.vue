@@ -2,7 +2,7 @@
     <div id="app">
         <loading ref="loading"></loading>
         <v-app id="inspire" class="theme-dark">
-             
+
             <v-navigation-drawer clipped temporary v-model="drawer" app color="red" @transitionend="menuStateChanged">
                 <v-list dense>
                     <v-list-tile class="hidden menuItem">
@@ -66,6 +66,7 @@
                 </v-list>
             </v-navigation-drawer>
             <v-toolbar app fixed clipped-left color="primary">
+
                 <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                 <v-menu offset-y content-class="ex-header-menu" v-if="!$vuetify.breakpoint.xsOnly">
                     <v-toolbar-title slot="activator" class="toolbarTitle">{{ $locale.general.menuActivities }}</v-toolbar-title>
@@ -84,26 +85,39 @@
                 </v-menu>
 
                 <v-spacer></v-spacer>
-                <v-toolbar-items class="hidden-sm-and-down">
-                    <v-menu bottom v-if="isAuthenticated">
-                        <v-btn small flat slot="activator">
-                            <v-avatar>
-                                <img v-if="currentUser.picture" :src="currentUser.picture">
-                                <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
-                            </v-avatar>
-                        </v-btn>
-                        <v-list>
-                            <v-list-tile>
-                                <v-list-tile-title><b>Login as: </b>{{currentUser.name}}</v-list-tile-title>
-                            </v-list-tile>
-                        </v-list>
-                    </v-menu>
 
+                <v-toolbar-items class="hidden-sm-and-down" v-if="!isAuthenticated">
                     <v-btn v-if="!isAuthenticated" flat to="/login">Login</v-btn>
                     <v-btn v-if="!isAuthenticated" flat to="/register">Register</v-btn>
                 </v-toolbar-items>
+
+                <v-menu v-else :close-on-content-click="false" :nudge-width="200" offset-y>
+                    <v-avatar slot="activator" class="ml-4" size=40>
+
+                        <img v-if="currentUser.picture" :src="currentUser.picture">
+                        <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
+</v-avatar>
+                        <v-card>
+                            <img v-if="currentUser.picture" :src="currentUser.picture" height="250px"  aspect-ratio="2.5">
+                            <img v-else height="250px"  aspect-ratio="2.5" src="http://www.gravatar.com/avatar/?d=identicon">
+
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">{{currentUser.name}}</h3>
+                                    <div v-if="currentUser && currentUser.verified">verified</div>
+                                    <div v-else>not verified</div>
+                                </div>
+                            </v-card-title>
+
+                            <v-card-actions>
+                                <v-btn flat color="orange" to="/profile">Profile</v-btn>
+                                <v-btn flat color="orange">Log out</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                </v-menu>
+
             </v-toolbar>
-         
+
             <transition name="page" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -133,8 +147,10 @@ const auth = namespace('auth');
   }
 })
 export default class App extends BaseComponent {
-  @auth.Getter('isAuthenticated') isAuthenticated: any;
-  @auth.Getter('currentUser') currentUser: any;
+  @auth.Getter('isAuthenticated')
+  isAuthenticated: any;
+  @auth.Getter('currentUser')
+  currentUser: any;
 
   private showDialog = false;
   private errorMessage = '';
@@ -188,7 +204,8 @@ export default class App extends BaseComponent {
       ]
     }
   ];
-  @Prop() public source!: string;
+  @Prop()
+  public source!: string;
 
   public menuStateChanged($event: any) {
     if ($event.propertyName === 'transform') {

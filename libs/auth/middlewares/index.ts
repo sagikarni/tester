@@ -45,6 +45,12 @@ export const newPassword = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'reset' })
 ]);
 
+export const disconnectFromSocial = asyncAll([
+  validateToken({ headerKey: 'Bearer', grant: 'access' }),
+  disconnectFrom({ getUser: req => req.user }),
+  token()
+]);
+
 export function validateUser({ getUser }) {
   return async (req, res, next) => {
     let user = getUser(req);
@@ -209,6 +215,20 @@ export function testMiddleware(getAttributes) {
   return async (req, res, next) => {
     console.log('in middleware');
 
+    next();
+  };
+}
+
+export function disconnectFrom({ getUser }) {
+  return async (req, res, next) => {
+    let user = getUser(req);
+
+    user = await User.findOne({ _id: user.id });
+    
+    user.facebook = null;
+    user.save();
+
+    req.user = user;
     next();
   };
 }

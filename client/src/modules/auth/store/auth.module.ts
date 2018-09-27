@@ -10,6 +10,7 @@ import {
   UPDATE_USER,
   SET_AUTH_SOCIAL,
   CONFIRM_ACCOUNT,
+  DISCONNECT_AUTH_SOCIAL,
 } from './actions.type';
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
@@ -68,6 +69,16 @@ const actions = {
       resolve();
     });
   },
+  [DISCONNECT_AUTH_SOCIAL](context: any, credentials: any) {
+    return new Promise((resolve, reject) => {
+      ApiService.post('users/facebook', {}).then((response: any) => {
+        const token = get(response, 'headers.map.access_token[0]');
+        const { user } = response.data;
+        context.commit(SET_AUTH, { token, user });
+        resolve(response.data);
+      });
+    });
+  },
   [CHECK_AUTH](context: any) {
     if (StorageService.get(StorageTypes.TOKEN)) {
       ApiService.setHeader();
@@ -106,7 +117,6 @@ const actions = {
         },
       )
         .then((response: any) => {
-
           const token = get(response, 'headers.map.access_token[0]');
           const { user } = response.data;
           context.commit(SET_AUTH, { token, user });

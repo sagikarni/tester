@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { register, login, confirmEmail, refreshToken, sendConfirm, resetPassword, newPassword } from '@libs/auth';
+import { register, login, confirmEmail, refreshToken, sendConfirm, resetPassword, newPassword, disconnectFromSocial } from '@libs/auth';
 
 const router = Router();
 
@@ -38,6 +38,12 @@ router.post('/new-password', newPassword, (req, res, next) => {
 });
 
 router.post('/refresh', refreshToken, (req, res, next) => {
+  const { user } = req;
+
+  res.json(user.toJSON());
+});
+
+router.post('/facebook', disconnectFromSocial, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());

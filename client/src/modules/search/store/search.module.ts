@@ -64,7 +64,7 @@ const actions = {
   [SET_AUTH_SOCIAL](context: any, { token, payload }: any) {
     return new Promise((resolve, reject) => {
       context.commit(SET_AUTH, { token, user: payload.user });
-      resolve();
+      resolve({ token, user: payload.user });
     });
   },
   [CHECK_AUTH](context: any) {
