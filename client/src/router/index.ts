@@ -18,6 +18,7 @@ import LoginPage from '@/views/login-page.vue';
 import RegisterPage from '@/views/register-page.vue';
 import ConfirmPage from '@/views/confirm-page.vue';
 import ProfilePage from '@/views/profile-page.vue';
+import ResetPasswordPage from '@/views/resert-password-page.vue';
 
 Vue.use(Router);
 
@@ -99,6 +100,7 @@ export const router = new Router({
     { path: '/register', component: RegisterPage },
     { path: '/confirm', component: ConfirmPage },
     { path: '/profile', component: ProfilePage },
+    { path: '/reset-password', component: ResetPasswordPage },
 
   ],
 });

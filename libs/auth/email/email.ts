@@ -70,3 +70,24 @@ export function sendVerification({ emailTo, fullname }) {
   console.log('sendVerification: ', msg);
   send(msg);
 }
+
+export function sendResetPassword({ emailTo, token }) {
+  const tokenUrl = urlConfirmAccount + token;
+
+  const msg = {
+    to: emailTo,
+    from: emailDefaultSender,
+    subject: `You told us you forgot your password`,
+    ...compile({
+      templateName: 'reset-password',
+      context: {
+        email: emailTo,
+        app,
+        tokenUrl
+      }
+    })
+  };
+
+  console.log('sendResetPassword: ', msg);
+  send(msg);
+}

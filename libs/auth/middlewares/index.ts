@@ -3,7 +3,7 @@ import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
 import { async, asyncAll, AppHttpError } from '@libs/express-zone';
 import { get } from 'lodash';
-import { sendWelcome, sendVerify, sendVerification } from '../email';
+import { sendWelcome, sendVerify, sendVerification, sendResetPassword } from '../email';
 
 export const register = asyncAll([
   createUser(req => req.body),
@@ -47,7 +47,7 @@ export const newPassword = asyncAll([
 
 export const disconnectFromSocial = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  disconnectFrom({ getUser: req => req.user }),
+  disconnectFrom({ getUser: req => req.user, getVendor: req => req.body.vendor }),
   token()
 ]);
 
@@ -196,16 +196,12 @@ export function sendResetPasswordEmail({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
 
-    console.log(
-      `send email to ${user.email} token: ${user.getResetPasswordToken()}`
-    );
+    const token = user.getConfirmToken();
+    console.log(`send email to ${user.email} token: ${token}`);
 
-    //   sendResetPassword({
-    //     emailTo: user.email,
-    //     token: token
-    // });
+    sendResetPassword({ emailTo: user.email, token });
 
-    res.setHeader('reset_password_token', user.getResetPasswordToken());
+    res.setHeader('reset_password_token', token);
 
     next();
   };
@@ -219,13 +215,15 @@ export function testMiddleware(getAttributes) {
   };
 }
 
-export function disconnectFrom({ getUser }) {
+export function disconnectFrom({ getUser, getVendor }) {
   return async (req, res, next) => {
     let user = getUser(req);
+    let vendor = getVendor(req);
 
     user = await User.findOne({ _id: user.id });
     
-    user.facebook = null;
+    console.log('remove socail from ', vendor);
+    user[vendor] = null;
     user.save();
 
     req.user = user;

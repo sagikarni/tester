@@ -14,6 +14,24 @@ export interface IUserDocument extends Document {
     refreshToken: string;
     _raw: string;
   };
+  twitter: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    _raw: string;
+  };
+  linkedin: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    _raw: string;
+  };
+  google: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    _raw: string;
+  };
 }
 
 export interface IUser extends IUserDocument {
@@ -35,6 +53,24 @@ export const userSchema: Schema = new Schema({
   verified: { type: Boolean, default: false },
   picture: { type: String },
   facebook: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    _raw: { type: String }
+  },
+  twitter: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    _raw: { type: String }
+  },
+  linkedin: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    _raw: { type: String }
+  },
+  google: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
@@ -123,10 +159,10 @@ userSchema.method('toJSON', function(): any {
   delete user.password;
   delete user._id;
   delete user.__v;
-  if (user.facebook) {
-    user.facebook = true;
-  }
+  delete user._v;
 
+  ['facebook', 'twitter', 'linkedin', 'google'].forEach(i => { if (user[i]) user[i] = true; })
+  
   console.log('user', user);
 
   return { user };

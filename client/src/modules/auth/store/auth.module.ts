@@ -69,9 +69,9 @@ const actions = {
       resolve();
     });
   },
-  [DISCONNECT_AUTH_SOCIAL](context: any, credentials: any) {
+  [DISCONNECT_AUTH_SOCIAL](context: any, vendor: any) {
     return new Promise((resolve, reject) => {
-      ApiService.post('users/facebook', {}).then((response: any) => {
+      ApiService.post('users/social', { vendor }).then((response: any) => {
         const token = get(response, 'headers.map.access_token[0]');
         const { user } = response.data;
         context.commit(SET_AUTH, { token, user });

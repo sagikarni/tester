@@ -38,6 +38,10 @@
               <v-btn color="primary" @click="submit">Login</v-btn>
 
               <router-link to="/register" class="btn btn-link">Register</router-link>
+
+              <v-divider></v-divider>
+              <router-link to="/reset-password" class="btn btn-link">Forget your password?</router-link>
+
             </v-card-actions>
 
           </v-card>

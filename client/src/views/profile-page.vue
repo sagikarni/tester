@@ -3,8 +3,17 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
+        <v-alert dismissible :value="currentUser && !currentUser.verified" color="error" icon="new_releases">
+          <div v-if="displayMessage">
+            Please confirm your account. confirming your account will give you
+            <b>full access</b> and all future notifications will be sent to this email address. Didn't receive the email? Please check your spam email folder,
+            <a @click="sendConfirmEmail">resubmit the request</a> or contact our support team.
+          </div>
+          <div v-else>Please check your email.</div>
+        </v-alert>
 
         <v-container>
+
           <v-card>
             <v-toolbar dark color="primary">
               <v-toolbar-title>Profile</v-toolbar-title>
@@ -90,6 +99,7 @@ import {
   DISCONNECT_AUTH_SOCIAL
 } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
+import ApiService from '@/shared/api.service';
 
 const Auth = namespace('auth');
 
@@ -108,6 +118,15 @@ export default class RegisterPage extends BaseComponent {
   googleLoading = false;
   linkedinLoading = false;
 
+  private displayMessage = true;
+
+  sendConfirmEmail() {
+    this.displayMessage = false;
+    ApiService.post('users/confirm', {}).then((response: any) => {
+      console.log('sent');
+    });
+  }
+
   constructor() {
     super();
   }
@@ -124,18 +143,64 @@ export default class RegisterPage extends BaseComponent {
           this.facebookLoading = false;
         });
     } else {
-      this.disconnectAuthSocial({ some: true })
+      this.disconnectAuthSocial('facebook')
         .then((this.facebookLoading = false))
         .catch((error: any) => (this.facebookLoading = false));
     }
   }
   twitterChange(e: boolean) {
+    this.twitterLoading = true;
+
+    if (e) {
+      connectWith('twitter', '/auth/twitter')
+        .then(({ token, payload }: any) =>
+          this.setAuthSocial({ token, payload })
+        )
+        .then(() => {
+          this.twitterLoading = false;
+        });
+    } else {
+      this.disconnectAuthSocial('twitter')
+        .then((this.twitterLoading = false))
+        .catch((error: any) => (this.twitterLoading = false));
+    }
     console.log('in twitterChange', e);
   }
+
   googleChange(e: boolean) {
+    this.googleLoading = true;
+
+    if (e) {
+      connectWith('google', '/auth/google')
+        .then(({ token, payload }: any) =>
+          this.setAuthSocial({ token, payload })
+        )
+        .then(() => {
+          this.googleLoading = false;
+        });
+    } else {
+      this.disconnectAuthSocial('google')
+        .then((this.googleLoading = false))
+        .catch((error: any) => (this.googleLoading = false));
+    }
     console.log('in googleChange', e);
   }
   linkedinChange(e: boolean) {
+    this.linkedinLoading = true;
+
+    if (e) {
+      connectWith('linkedin', '/auth/linkedin')
+        .then(({ token, payload }: any) =>
+          this.setAuthSocial({ token, payload })
+        )
+        .then(() => {
+          this.linkedinLoading = false;
+        });
+    } else {
+      this.disconnectAuthSocial('linkedin')
+        .then((this.linkedinLoading = false))
+        .catch((error: any) => (this.linkedinLoading = false));
+    }
     console.log('in linkedinChange', e);
   }
 }

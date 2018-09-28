@@ -43,7 +43,7 @@ router.post('/refresh', refreshToken, (req, res, next) => {
   res.json(user.toJSON());
 });
 
-router.post('/facebook', disconnectFromSocial, (req, res, next) => {
+router.post('/social', disconnectFromSocial, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());
