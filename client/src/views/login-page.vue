@@ -11,9 +11,8 @@
             </v-toolbar>
 
             <v-alert dismissible :value="error" color="error" icon="error">
-              <div v-if="error === 'EMAIL_EXIST'">This email is already registered. Want to <router-link to="/login">login</router-link> or <router-link to="/reset-password">recover your password?</router-link>
-              </div>
-              <div v-else>Cannot register right now, try again later</div>
+              <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
+              <div v-else>Cannot login right now, try again later</div>
             </v-alert>
 
             <v-card-text>

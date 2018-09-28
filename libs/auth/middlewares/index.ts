@@ -153,6 +153,7 @@ export function token() {
 
 export function authenticateUser(getAttributes) {
   return async (req, res, next) => {
+
     const { email, password } = pick(getAttributes(req), ['email', 'password']);
 
     const user = await User.findOne({ email });

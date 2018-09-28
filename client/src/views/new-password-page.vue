@@ -35,7 +35,7 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { LOGIN, SET_AUTH_SOCIAL, RESET_NEW_PASSWORD } from '@/modules/auth';
+import { RESET_NEW_PASSWORD } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
 import ApiService from '@/shared/api.service';
 

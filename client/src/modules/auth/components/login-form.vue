@@ -7,7 +7,6 @@
         <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="What's your password?" type="password" required></v-text-field>
 
       </v-form>
-
     </v-card-text>
 
     <v-list>
@@ -16,6 +15,12 @@
           <v-switch v-model="rememberMe" color="purple"></v-switch>
         </v-list-tile-action>
         <v-list-tile-title>Remember Me</v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile>
+        <router-link to="/reset-password">Forgot your password?</router-link>
+      </v-list-tile>
+      <v-list-tile>
+        <router-link to="/register">Don't have account?</router-link>
       </v-list-tile>
     </v-list>
 

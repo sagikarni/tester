@@ -97,8 +97,8 @@ import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
 import {
   REGISTER,
-  SET_AUTH_SOCIAL,
-  DISCONNECT_AUTH_SOCIAL
+  CONNECT_SOCIAL,
+  DISCONNECT_SOCIAL
 } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
 import ApiService from '@/shared/api.service';
@@ -109,11 +109,11 @@ const Auth = namespace('auth');
 export default class ProfilePage extends BaseComponent {
   @Auth.Getter('currentUser')
   currentUser: any;
-  @Auth.Action(SET_AUTH_SOCIAL)
-  setAuthSocial: any;
+  @Auth.Action(CONNECT_SOCIAL)
+  connectSocial: any;
 
-  @Auth.Action(DISCONNECT_AUTH_SOCIAL)
-  disconnectAuthSocial: any;
+  @Auth.Action(DISCONNECT_SOCIAL)
+  disconnectSocial: any;
 
   facebookLoading = false;
   twitterLoading = false;
@@ -139,13 +139,13 @@ export default class ProfilePage extends BaseComponent {
     if (e) {
       connectWith('facebook', '/auth/facebook')
         .then(({ token, payload }: any) =>
-          this.setAuthSocial({ token, payload })
+          this.connectSocial({ token, payload })
         )
         .then(() => {
           this.facebookLoading = false;
         });
     } else {
-      this.disconnectAuthSocial('facebook')
+      this.disconnectSocial('facebook')
         .then((this.facebookLoading = false))
         .catch((error: any) => (this.facebookLoading = false));
     }
@@ -156,13 +156,13 @@ export default class ProfilePage extends BaseComponent {
     if (e) {
       connectWith('twitter', '/auth/twitter')
         .then(({ token, payload }: any) =>
-          this.setAuthSocial({ token, payload })
+          this.connectSocial({ token, payload })
         )
         .then(() => {
           this.twitterLoading = false;
         });
     } else {
-      this.disconnectAuthSocial('twitter')
+      this.disconnectSocial('twitter')
         .then((this.twitterLoading = false))
         .catch((error: any) => (this.twitterLoading = false));
     }
@@ -175,13 +175,13 @@ export default class ProfilePage extends BaseComponent {
     if (e) {
       connectWith('google', '/auth/google')
         .then(({ token, payload }: any) =>
-          this.setAuthSocial({ token, payload })
+          this.connectSocial({ token, payload })
         )
         .then(() => {
           this.googleLoading = false;
         });
     } else {
-      this.disconnectAuthSocial('google')
+      this.disconnectSocial('google')
         .then((this.googleLoading = false))
         .catch((error: any) => (this.googleLoading = false));
     }
@@ -193,13 +193,13 @@ export default class ProfilePage extends BaseComponent {
     if (e) {
       connectWith('linkedin', '/auth/linkedin')
         .then(({ token, payload }: any) =>
-          this.setAuthSocial({ token, payload })
+          this.connectSocial({ token, payload })
         )
         .then(() => {
           this.linkedinLoading = false;
         });
     } else {
-      this.disconnectAuthSocial('linkedin')
+      this.disconnectSocial('linkedin')
         .then((this.linkedinLoading = false))
         .catch((error: any) => (this.linkedinLoading = false));
     }

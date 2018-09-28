@@ -19,15 +19,15 @@
 import { Component } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { namespace } from 'vuex-class';
-import { SET_AUTH_SOCIAL } from '@/modules/auth';
+import { CONNECT_SOCIAL } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
 
 const Auth = namespace('auth');
 
 @Component({})
 export default class SocialLoginComponent extends BaseComponent {
-  @Auth.Action(SET_AUTH_SOCIAL)
-  setAuthSocial: any;
+  @Auth.Action(CONNECT_SOCIAL)
+  connectSocial: any;
 
   constructor() {
     super();
@@ -35,7 +35,7 @@ export default class SocialLoginComponent extends BaseComponent {
 
   public loginWith(vendor: string, vendorUrl: string) {
     connectWith(vendor, vendorUrl)
-      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
+      .then(({ token, payload }: any) => this.connectSocial({ token, payload }))
       .then(() => this.$router.push('/'));
   }
 }

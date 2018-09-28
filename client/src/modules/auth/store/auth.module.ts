@@ -7,12 +7,11 @@ import {
   LOGOUT_ACCOUNT,
   REGISTER,
   CHECK_AUTH,
-  UPDATE_USER,
-  SET_AUTH_SOCIAL,
   CONFIRM_ACCOUNT,
-  DISCONNECT_AUTH_SOCIAL,
+  DISCONNECT_SOCIAL,
   RESET_NEW_PASSWORD,
   CHANGE_PASSWORD,
+  CONNECT_SOCIAL,
 } from './actions.type';
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
@@ -46,156 +45,93 @@ const getters = {
 };
 
 const actions = {
+  [REGISTER](context: any, credentials: any) {
+    return ApiService.post('users', credentials)
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
+  },
   [LOGIN](context: any, { email, password, rememberMe }: any) {
+    return ApiService.post('users/login', { email, password })
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: rememberMe, token, refreshToken, user }))
+      .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
+  },
+  [RESET_NEW_PASSWORD](context: any, { password, resetPasswordToken }: any) {
+    return ApiService.post(
+      'users/new-password',
+      { password },
+      { headers: { Authorization: `Basic ${resetPasswordToken}` } },
+    )
+    .then(extractAuthFromResponse)
+    .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+    .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
+  },
+  [CHANGE_PASSWORD](context: any, { password, oldPassword }: any) {
+    return ApiService.post('users/password', { password, oldPassword })
+    .then(extractAuthFromResponse)
+    .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
+  },
+  [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
+    ApiService.post(
+      'users/confirmed',
+      {},
+      { headers: { Authorization: `Basic ${confirmToken}` } },
+    )
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
+  },
+  [CONNECT_SOCIAL](context: any, { token, refreshToken, payload }: any) {
     return new Promise((resolve, reject) => {
-      ApiService.post('users/login', { email, password })
-        .then((response: any) => {
-          const token = get(response, 'headers.map.access_token[0]');
-          const refreshToken = get(response, 'headers.map.refresh_token[0]');
-          const { user } = response.data;
-          context.commit(SET_AUTH, {
-            token,
-            refreshToken,
-            user,
-            store: rememberMe,
-          });
-          resolve(response.data);
-        })
-        .catch((error: any) => {
-          const errorCode = get(error, 'body.error') || '';
-          context.commit(SET_ERROR, errorCode);
-          reject(error);
-        });
+      context.commit(SET_AUTH, { store: true, token, refreshToken, user: payload.user });
+      resolve();
     });
+  },
+  [DISCONNECT_SOCIAL](context: any, vendor: any) {
+      return ApiService.post('users/social', { vendor })
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .catch((error: any) => {
+        context.commit(SET_ERROR, error);
+        throw error;
+      });
   },
   [LOGOUT_ACCOUNT](context: any) {
-    return new Promise(resolve => {
-      context.commit(PURGE_AUTH);
-      resolve();
-    });
-  },
-  [REGISTER](context: any, credentials: any) {
-    return new Promise((resolve, reject) => {
-      ApiService.post('users', credentials)
-        .then((response: any) => {
-          const token = get(response, 'headers.map.access_token[0]');
-          const refreshToken = get(response, 'headers.map.refresh_token[0]');
-          const { user } = response.data;
-          context.commit(SET_AUTH, { token, refreshToken, user, store: true });
-          resolve(response.data);
-        })
-        .catch((error: any) => {
-          const errorCode = get(error, 'body.error') || '';
-          context.commit(SET_ERROR, errorCode);
-          reject(error);
-        });
-    });
-  },
-  [SET_AUTH_SOCIAL](context: any, { token, payload }: any) {
-    return new Promise((resolve, reject) => {
-      context.commit(SET_AUTH, { token, user: payload.user, store: true });
-      resolve();
-    });
-  },
-  [DISCONNECT_AUTH_SOCIAL](context: any, vendor: any) {
-    return new Promise((resolve, reject) => {
-      ApiService.post('users/social', { vendor }).then((response: any) => {
-        const token = get(response, 'headers.map.access_token[0]');
-        const { user } = response.data;
-        context.commit(SET_AUTH, { token, user, store: true });
-        resolve(response.data);
-      });
-    });
-  },
-  [RESET_NEW_PASSWORD](context: any, payload: any) {
-    return new Promise((resolve, reject) => {
-      ApiService.post(
-        'users/new-password',
-        { password: payload.password },
-        {
-          headers: {
-            Authorization: `Basic ${payload.resetPasswordToken}`,
-          },
-        },
-      )
-        .then((response: any) => {
-          const token = get(response, 'headers.map.access_token[0]');
-          const { user } = response.data;
-          context.commit(SET_AUTH, { token, user, store: true });
-          resolve(response.data);
-        })
-        .catch((response: any) => {
-          context.commit(SET_ERROR, response.data.errors);
-        });
-    });
-  },
-  [CHANGE_PASSWORD](context: any, payload: any) {
-    return new Promise((resolve, reject) => {
-      ApiService.post('users/password', {
-        password: payload.password,
-        oldPassword: payload.oldPassword,
-      })
-        .then((response: any) => {
-          const token = get(response, 'headers.map.access_token[0]');
-          const { user } = response.data;
-          context.commit(SET_AUTH, { token, user, store: true });
-          resolve(response.data);
-        })
-        .catch((response: any) => {
-          context.commit(SET_ERROR, response.data.errors);
-        });
-    });
+    context.commit(PURGE_AUTH);
+    ApiService.removeHeader();
+    return Promise.resolve();
   },
   [CHECK_AUTH](context: any) {
     if (context.state.token) {
       ApiService.setHeader(context.state.token);
+    } else {
+      ApiService.removeHeader();
     }
-  },
-  [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
-    return new Promise((resolve, reject) => {
-      ApiService.post(
-        'users/confirmed',
-        {},
-        {
-          headers: {
-            Authorization: `Basic ${confirmToken}`,
-          },
-        },
-      )
-        .then((response: any) => {
-          const token = get(response, 'headers.map.access_token[0]');
-          const { user } = response.data;
-          context.commit(SET_AUTH, { token, user, store: true });
-          resolve(response.data);
-        })
-        .catch((response: any) => {
-          context.commit(SET_ERROR, response.data.errors);
-        });
-    });
-  },
-  [UPDATE_USER](context: any, payload: any) {
-    // const { email, username, password, image, bio } = payload;
-    // const user = {
-    //   email,
-    //   username,
-    //   bio,
-    //   image
-    // };
-    // if (password) {
-    //   user.password = password;
-    // }
-    // return ApiService.put('user', user).then(({ data }) => {
-    //   context.commit(SET_AUTH, data.user);
-    //   return data;
-    // });
   },
 };
 
 const mutations = {
   [SET_ERROR](state: any, error: any) {
-    state.error = error;
+    state.error = get(error, 'body.error') || 'GENERAL_ERROR';
   },
-  [SET_AUTH](state: any, { token, refreshToken, user, store }: any) {
+  [SET_AUTH](state: any, { store, token, refreshToken, user }: any) {
     state.token = token;
     state.refreshToken = refreshToken;
     state.user = user;
@@ -204,7 +140,11 @@ const mutations = {
   },
   [PURGE_AUTH](state: any) {
     StorageService.destroy(StorageTypes.AUTH);
-    state = newState();
+    const { error, token, refreshToken, user } = newState();
+    state.token = token;
+    state.refreshToken = refreshToken;
+    state.user = user;
+    state.error = error;
   },
 };
 
@@ -214,4 +154,12 @@ export const auth = {
   actions,
   mutations,
   getters,
+};
+
+export const extractAuthFromResponse = (response: any) => {
+  return {
+    token: get(response, 'headers.map.access_token[0]') || null,
+    refreshToken: get(response, 'headers.map.refresh_token[0]') || null,
+    user: get(response, 'data.user') || null,
+  };
 };

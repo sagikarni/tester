@@ -8,10 +8,16 @@
         <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="New Password" type="password" required></v-text-field>
       </v-form>
 
-      <small>
-        By signing up, you agree to the Terms of Service and Privacy Policy, <br/>
-                including Cookie Use. Others will be able to find you by email when provided.
-            </small>
+      <v-list>
+        <v-list-tile>
+          <router-link to="/login">Do You Have an Account?</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <small>
+            By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email when provided.
+          </small>
+        </v-list-tile>
+      </v-list>
 
     </v-card-text>
 
