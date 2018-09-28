@@ -9,41 +9,30 @@
             <v-toolbar dark color="primary">
               <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
+
+            <v-alert dismissible :value="error" color="error" icon="error">
+              <div v-if="error === 'EMAIL_EXIST'">This email is already registered. Want to <router-link to="/login">login</router-link> or <router-link to="/reset-password">recover your password?</router-link>
+              </div>
+              <div v-else>Cannot register right now, try again later</div>
+            </v-alert>
+
             <v-card-text>
+              <v-subheader>
+                With Your Social Account
+              </v-subheader>
+
               <v-layout justify-space-around>
-                <v-btn @click="loginWithFacebook" flat icon color="lighten-2">
-                  <v-icon large>fa fa-facebook</v-icon>
-                </v-btn>
-                <v-btn @click="loginWithTwitter" flat icon color="lighten-2">
-                  <v-icon large>fa fa-twitter</v-icon>
-                </v-btn>
-                <v-btn @click="loginWithGoogle" flat icon color="lighten-2">
-                  <v-icon large>fa fa-google</v-icon>
-                </v-btn>
-                <v-btn @click="loginWithLinkedin" flat icon color="lighten-2">
-                  <v-icon large>fa fa-linkedin</v-icon>
-                </v-btn>
+                <social-login-component></social-login-component>
               </v-layout>
-              <br><br>
-              <h3>Or with an account</h3>
-
-              <v-form v-model="valid" ref="form">
-
-                <v-text-field v-model="email" :rules="emailRules" label="Email" required type="email" prepend-icon="person"></v-text-field>
-                <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="Password" type="password" required></v-text-field>
-              </v-form>
-            </v-card-text>
-            <v-card-actions class="pa-3">
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="submit">Login</v-btn>
-
-              <router-link to="/register" class="btn btn-link">Register</router-link>
 
               <v-divider></v-divider>
-              <router-link to="/reset-password" class="btn btn-link">Forget your password?</router-link>
 
-            </v-card-actions>
+              <v-subheader>
+                Or
+              </v-subheader>
 
+              <login-form-component @submit="submit"></login-form-component>
+            </v-card-text>
           </v-card>
 
         </v-container>
@@ -54,70 +43,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Prop } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { LOGIN, SET_AUTH_SOCIAL } from '@/modules/auth';
-import { connectWith } from '@/shared/social.service';
+import { LOGIN } from '@/modules/auth';
+import { SocialLoginComponent, LoginFormComponent } from '@/modules/auth';
 
 const Auth = namespace('auth');
 
-@Component({})
-export default class RegisterPage extends BaseComponent {
-  @Auth.Action(SET_AUTH_SOCIAL)
-  setAuthSocial: any;
+@Component({
+  components: { SocialLoginComponent, LoginFormComponent }
+})
+export default class LoginPage extends BaseComponent {
   @Auth.Action(LOGIN)
   login: any;
 
-  public valid = false;
-
-  public email = '';
-  public password = '';
-
-  public emailRules = [
-    (v: string) => !!v || 'E-mail is required',
-    (v: string) => /.+@.+/.test(v) || 'E-mail must be valid'
-  ];
-
-  public passwordRules = [
-    (v: string) => !!v || 'Password is required',
-    (v: string) => v.length >= 8 || ''
-  ];
+  @Auth.Getter('error')
+  error: any;
 
   constructor() {
     super();
   }
 
-  public submit() {
-    const { form }: any = this.$refs;
-
-    if (!form.validate()) return;
-
-    this.login({
-      email: this.email,
-      password: this.password
-    }).then(() => this.$router.push('/'));
-  }
-
-  public loginWithFacebook() {
-    connectWith('facebook', '/auth/facebook')
-      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
-      .then(() => this.$router.push('/'));
-  }
-  public loginWithTwitter() {
-    connectWith('twitter', '/auth/twitter')
-      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
-      .then(() => this.$router.push('/'));
-  }
-  public loginWithGoogle() {
-    connectWith('google', '/auth/google')
-      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
-      .then(() => this.$router.push('/'));
-  }
-  public loginWithLinkedin() {
-    connectWith('linkedin', '/auth/linkedin')
-      .then(({ token, payload }: any) => this.setAuthSocial({ token, payload }))
-      .then(() => this.$router.push('/'));
+  public submit(form: any) {
+    this.login(form).then(() => this.$router.push('/'));
   }
 }
 </script>

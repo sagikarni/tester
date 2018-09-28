@@ -39,6 +39,7 @@ export interface IUser extends IUserDocument {
   getConfirmToken(): string;
   getAccessToken(): string;
   getRefreshToken(): string;
+  getResetPasswordToken(): string;
   toJSON(): any;
 }
 

@@ -4,68 +4,96 @@ import { get } from 'lodash';
 
 import {
   LOGIN,
-  LOGOUT,
+  LOGOUT_ACCOUNT,
   REGISTER,
   CHECK_AUTH,
   UPDATE_USER,
   SET_AUTH_SOCIAL,
   CONFIRM_ACCOUNT,
   DISCONNECT_AUTH_SOCIAL,
+  RESET_NEW_PASSWORD,
+  CHANGE_PASSWORD,
 } from './actions.type';
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
 
-const state = {
-  errors: null,
-  user: StorageService.get(StorageTypes.USER) || null,
-  isAuthenticated: !!StorageService.get(StorageTypes.TOKEN),
+const defaultState = {
+  error: null,
+  token: null,
+  refreshToken: null,
+  user: null,
 };
+
+const newState = () =>
+  Object.assign(
+    { error: null },
+    defaultState,
+    StorageService.get(StorageTypes.AUTH) || {},
+  );
+
+const state = newState();
 
 const getters = {
   currentUser(state: any) {
     return state.user;
   },
   isAuthenticated(state: any) {
-    return state.isAuthenticated;
+    return state.token;
+  },
+  error(state: any) {
+    return state.error;
   },
 };
 
 const actions = {
-  [LOGIN](context: any, credentials: any) {
-    return new Promise(resolve => {
-      ApiService.post('users/login', credentials)
+  [LOGIN](context: any, { email, password, rememberMe }: any) {
+    return new Promise((resolve, reject) => {
+      ApiService.post('users/login', { email, password })
         .then((response: any) => {
           const token = get(response, 'headers.map.access_token[0]');
+          const refreshToken = get(response, 'headers.map.refresh_token[0]');
           const { user } = response.data;
-
-          context.commit(SET_AUTH, { token, user });
+          context.commit(SET_AUTH, {
+            token,
+            refreshToken,
+            user,
+            store: rememberMe,
+          });
           resolve(response.data);
         })
-        .catch((response: any) => {
-          context.commit(SET_ERROR, response.data.errors);
+        .catch((error: any) => {
+          const errorCode = get(error, 'body.error') || '';
+          context.commit(SET_ERROR, errorCode);
+          reject(error);
         });
     });
   },
-  [LOGOUT](context: any) {
-    context.commit(PURGE_AUTH);
+  [LOGOUT_ACCOUNT](context: any) {
+    return new Promise(resolve => {
+      context.commit(PURGE_AUTH);
+      resolve();
+    });
   },
   [REGISTER](context: any, credentials: any) {
     return new Promise((resolve, reject) => {
       ApiService.post('users', credentials)
         .then((response: any) => {
           const token = get(response, 'headers.map.access_token[0]');
+          const refreshToken = get(response, 'headers.map.refresh_token[0]');
           const { user } = response.data;
-          context.commit(SET_AUTH, { token, user });
+          context.commit(SET_AUTH, { token, refreshToken, user, store: true });
           resolve(response.data);
         })
-        .catch((response: any) => {
-          context.commit(SET_ERROR, response.data.errors);
+        .catch((error: any) => {
+          const errorCode = get(error, 'body.error') || '';
+          context.commit(SET_ERROR, errorCode);
+          reject(error);
         });
     });
   },
   [SET_AUTH_SOCIAL](context: any, { token, payload }: any) {
     return new Promise((resolve, reject) => {
-      context.commit(SET_AUTH, { token, user: payload.user });
+      context.commit(SET_AUTH, { token, user: payload.user, store: true });
       resolve();
     });
   },
@@ -74,35 +102,53 @@ const actions = {
       ApiService.post('users/social', { vendor }).then((response: any) => {
         const token = get(response, 'headers.map.access_token[0]');
         const { user } = response.data;
-        context.commit(SET_AUTH, { token, user });
+        context.commit(SET_AUTH, { token, user, store: true });
         resolve(response.data);
       });
     });
   },
+  [RESET_NEW_PASSWORD](context: any, payload: any) {
+    return new Promise((resolve, reject) => {
+      ApiService.post(
+        'users/new-password',
+        { password: payload.password },
+        {
+          headers: {
+            Authorization: `Basic ${payload.resetPasswordToken}`,
+          },
+        },
+      )
+        .then((response: any) => {
+          const token = get(response, 'headers.map.access_token[0]');
+          const { user } = response.data;
+          context.commit(SET_AUTH, { token, user, store: true });
+          resolve(response.data);
+        })
+        .catch((response: any) => {
+          context.commit(SET_ERROR, response.data.errors);
+        });
+    });
+  },
+  [CHANGE_PASSWORD](context: any, payload: any) {
+    return new Promise((resolve, reject) => {
+      ApiService.post('users/password', {
+        password: payload.password,
+        oldPassword: payload.oldPassword,
+      })
+        .then((response: any) => {
+          const token = get(response, 'headers.map.access_token[0]');
+          const { user } = response.data;
+          context.commit(SET_AUTH, { token, user, store: true });
+          resolve(response.data);
+        })
+        .catch((response: any) => {
+          context.commit(SET_ERROR, response.data.errors);
+        });
+    });
+  },
   [CHECK_AUTH](context: any) {
-    if (StorageService.get(StorageTypes.TOKEN)) {
-      ApiService.setHeader();
-
-      //   const publicPages: any = ['/login', '/register'];
-      //   const authRequired = !publicPages.includes(to.path);
-      //   const loggedIn = localStorage.getItem('user');
-
-      //   if (authRequired && !loggedIn) {
-      //     return next('/login');
-      //   }
-
-      //   next();
-      // });
-
-      // ApiService.get('user')
-      //   .then(({ data }) => {
-      //     context.commit(SET_AUTH, data.user);
-      //   })
-      //   .catch(({ response }) => {
-      //     context.commit(SET_ERROR, response.data.errors);
-      //   });
-    } else {
-      context.commit(PURGE_AUTH);
+    if (context.state.token) {
+      ApiService.setHeader(context.state.token);
     }
   },
   [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
@@ -119,7 +165,7 @@ const actions = {
         .then((response: any) => {
           const token = get(response, 'headers.map.access_token[0]');
           const { user } = response.data;
-          context.commit(SET_AUTH, { token, user });
+          context.commit(SET_AUTH, { token, user, store: true });
           resolve(response.data);
         })
         .catch((response: any) => {
@@ -147,21 +193,18 @@ const actions = {
 
 const mutations = {
   [SET_ERROR](state: any, error: any) {
-    state.errors = error;
+    state.error = error;
   },
-  [SET_AUTH](state: any, { token, user }: any) {
-    state.isAuthenticated = true;
+  [SET_AUTH](state: any, { token, refreshToken, user, store }: any) {
+    state.token = token;
+    state.refreshToken = refreshToken;
     state.user = user;
-    state.errors = null;
-    StorageService.save(StorageTypes.USER, state.user);
-    StorageService.save(StorageTypes.TOKEN, token);
+    state.error = null;
+    store && StorageService.save(StorageTypes.AUTH, state);
   },
   [PURGE_AUTH](state: any) {
-    state.isAuthenticated = false;
-    state.user = null;
-    state.errors = null;
-    StorageService.destroy(StorageTypes.USER);
-    StorageService.destroy(StorageTypes.TOKEN);
+    StorageService.destroy(StorageTypes.AUTH);
+    state = newState();
   },
 };
 

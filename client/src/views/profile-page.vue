@@ -22,9 +22,9 @@
             <v-list>
               <v-list-tile avatar>
                 <v-list-tile-avatar>
-                  <img v-if="currentUser.picture" :src="currentUser.picture">
-                  <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
-            </v-list-tile-avatar>
+                  <img v-if="currentUser.picture" :src="currentUser.picture" />
+                  <img v-else src="http://www.gravatar.com/avatar/?d=identicon" />
+                </v-list-tile-avatar>
 
                   <v-list-tile-content>
                     <v-list-tile-title>{{currentUser.name}}</v-list-tile-title>
@@ -71,6 +71,8 @@
               </v-list-tile>
             </v-list>
 
+            <router-link to="/password">Change Password</router-link>
+
             <v-card-actions>
               <v-spacer></v-spacer>
 
@@ -104,7 +106,7 @@ import ApiService from '@/shared/api.service';
 const Auth = namespace('auth');
 
 @Component({})
-export default class RegisterPage extends BaseComponent {
+export default class ProfilePage extends BaseComponent {
   @Auth.Getter('currentUser')
   currentUser: any;
   @Auth.Action(SET_AUTH_SOCIAL)

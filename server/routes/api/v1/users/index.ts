@@ -1,6 +1,16 @@
 import { Router } from 'express';
 
-import { register, login, confirmEmail, refreshToken, sendConfirm, resetPassword, newPassword, disconnectFromSocial } from '@libs/auth';
+import {
+  register,
+  login,
+  confirmEmail,
+  refreshToken,
+  sendConfirm,
+  resetPassword,
+  newPassword,
+  disconnectFromSocial,
+  changePassword
+} from '@libs/auth';
 
 const router = Router();
 
@@ -26,12 +36,17 @@ router.post('/confirmed', confirmEmail, (req, res, next) => {
   res.json(user.toJSON());
 });
 
-
 router.post('/reset-password', resetPassword, (req, res, next) => {
   res.sendStatus(200);
 });
 
 router.post('/new-password', newPassword, (req, res, next) => {
+  const { user } = req;
+
+  res.json(user.toJSON());
+});
+
+router.post('/password', changePassword, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());

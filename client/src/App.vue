@@ -111,7 +111,7 @@
 
                             <v-card-actions>
                                 <v-btn flat color="orange" to="/profile">Profile</v-btn>
-                                <v-btn flat color="orange">Log out</v-btn>
+                                <v-btn flat color="orange" @click="logout">Log out</v-btn>
                             </v-card-actions>
                         </v-card>
                 </v-menu>
@@ -137,6 +137,7 @@ import { State, Action, namespace } from 'vuex-class';
 import { bus, busConstants } from '@/modules/utils/eventBus';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import TimelineMax from 'gsap';
+import { LOGOUT_ACCOUNT } from '@/modules/auth';
 
 const auth = namespace('auth');
 
@@ -151,6 +152,9 @@ export default class App extends BaseComponent {
   isAuthenticated: any;
   @auth.Getter('currentUser')
   currentUser: any;
+
+  @auth.Action(LOGOUT_ACCOUNT)
+  logoutAccount: any;
 
   private showDialog = false;
   private errorMessage = '';
@@ -254,6 +258,11 @@ export default class App extends BaseComponent {
     console.log('value', value);
     console.log('errror here?');
     // el.showError(value);
+  }
+
+  logout() {
+
+      this.logoutAccount().then(() => this.$router.push('/'));
   }
 
   @Watch('$route')

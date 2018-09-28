@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import StorageService, { StorageTypes } from '@/shared/storage.service';
-// import { API_URL } from '@/common/config';
 import VueResource from 'vue-resource';
 
 const ApiService = {
@@ -9,10 +7,8 @@ const ApiService = {
     Vue.http.options.root = '/api/v1';
   },
 
-  setHeader() {
-    Vue.http.headers!.common![
-      'Authorization'
-    ] = `Bearer ${StorageService.get(StorageTypes.TOKEN)}`;
+  setHeader(token: string) {
+    Vue.http.headers!.common!['Authorization'] = `Bearer ${token}`;
   },
 
   query(resource: string, params: any) {

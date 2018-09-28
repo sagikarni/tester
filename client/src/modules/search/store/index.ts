@@ -1,7 +1,7 @@
 export * from './actions.type';
 export * from './mutations.type';
 
-export { store } from './search.module';
+// export { store } from './search.module';
 
 // import { Module } from 'vuex';
 // import {ISearchState} from './types';

@@ -1,20 +1,25 @@
+import SecureLS from 'secure-ls';
+
+const ls = new SecureLS({ encodingType: 'aes' });
+
 export enum StorageTypes {
-  TOKEN = 'teratoken',
-  USER = 'terauser',
+  AUTH = 'ta',
 }
 
 export default {
   get(key: string) {
-    const item = window.localStorage.getItem(key) as string;
-    if (!item) { return null; }
+    const item = ls.get(key) as string;
+    if (!item) {
+      return null;
+    }
     return JSON.parse(item);
   },
 
   save(key: string, item: any) {
-    window.localStorage.setItem(key, JSON.stringify(item));
+    ls.set(key, JSON.stringify(item));
   },
 
   destroy(key: string) {
-    window.localStorage.removeItem(key);
+    ls.remove(key);
   },
 };

@@ -18,7 +18,9 @@ import LoginPage from '@/views/login-page.vue';
 import RegisterPage from '@/views/register-page.vue';
 import ConfirmPage from '@/views/confirm-page.vue';
 import ProfilePage from '@/views/profile-page.vue';
-import ResetPasswordPage from '@/views/resert-password-page.vue';
+import ResetPasswordPage from '@/views/reset-password-page.vue';
+import NewPasswordPage from '@/views/new-password-page.vue';
+import ChangePasswordPage from '@/views/change-password-page.vue';
 
 Vue.use(Router);
 
@@ -101,6 +103,8 @@ export const router = new Router({
     { path: '/confirm', component: ConfirmPage },
     { path: '/profile', component: ProfilePage },
     { path: '/reset-password', component: ResetPasswordPage },
+    { path: '/new-password', component: NewPasswordPage },
+    { path: '/password', component: ChangePasswordPage },
 
   ],
 });

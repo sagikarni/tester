@@ -72,7 +72,7 @@ export function sendVerification({ emailTo, fullname }) {
 }
 
 export function sendResetPassword({ emailTo, token }) {
-  const tokenUrl = urlConfirmAccount + token;
+  const tokenUrl = urlResetPassword + token;
 
   const msg = {
     to: emailTo,
@@ -89,5 +89,25 @@ export function sendResetPassword({ emailTo, token }) {
   };
 
   console.log('sendResetPassword: ', msg);
+  send(msg);
+}
+
+export function sendPasswordChanged({ emailTo, password, fullname }) {
+  const msg = {
+    to: emailTo,
+    from: emailDefaultSender,
+    subject: `Your password has been changed`,
+    ...compile({
+      templateName: 'password-changed',
+      context: {
+        email: emailTo,
+        app,
+        password,
+        fullname
+      }
+    })
+  };
+
+  console.log('sendPasswordChanged: ', msg);
   send(msg);
 }

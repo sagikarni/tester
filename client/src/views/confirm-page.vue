@@ -23,7 +23,7 @@ import { CONFIRM_ACCOUNT } from '@/modules/auth';
 const Auth = namespace('auth');
 
 @Component({})
-export default class RegisterPage extends BaseComponent {
+export default class ConfirmPage extends BaseComponent {
   @Auth.Action(CONFIRM_ACCOUNT)
   confirmAccount: any;
 

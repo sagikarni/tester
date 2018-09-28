@@ -13,3 +13,4 @@ declare module "jquery";
 declare module "vue-lodash";
 declare module "lodash";
 
+declare module 'secure-ls';

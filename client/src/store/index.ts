@@ -23,4 +23,5 @@ export default new Vuex.Store({
 
   actions: app.actions,
   mutations: app.mutations,
+
 });

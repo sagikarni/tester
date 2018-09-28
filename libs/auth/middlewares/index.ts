@@ -3,7 +3,13 @@ import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
 import { async, asyncAll, AppHttpError } from '@libs/express-zone';
 import { get } from 'lodash';
-import { sendWelcome, sendVerify, sendVerification, sendResetPassword } from '../email';
+import {
+  sendWelcome,
+  sendVerify,
+  sendVerification,
+  sendResetPassword,
+  sendPasswordChanged
+} from '../email';
 
 export const register = asyncAll([
   createUser(req => req.body),
@@ -42,14 +48,56 @@ export const resetPassword = asyncAll([
 ]);
 
 export const newPassword = asyncAll([
-  validateToken({ headerKey: 'Bearer', grant: 'reset' })
+  validateToken({ headerKey: 'Basic', grant: 'reset' }),
+  setNewPassword({
+    getUser: req => req.user,
+    getPassword: req => req.body.password
+  }),
+  sendPasswordChangedEmail({
+    getUser: req => req.user,
+    getPassword: req => req.body.password
+  }),
+  token()
 ]);
 
 export const disconnectFromSocial = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  disconnectFrom({ getUser: req => req.user, getVendor: req => req.body.vendor }),
+  disconnectFrom({
+    getUser: req => req.user,
+    getVendor: req => req.body.vendor
+  }),
   token()
 ]);
+
+export const changePassword = asyncAll([
+  validateToken({ headerKey: 'Bearer', grant: 'access' }),
+  setUserPassword({
+    getUser: req => req.user,
+    getOldPassword: req => req.body.oldPassword,
+    getPassword: req => req.body.password
+  }),
+  sendPasswordChangedEmail({
+    getUser: req => req.user,
+    getPassword: req => req.body.password
+  }),
+  token()
+]);
+
+export function setNewPassword({ getUser, getPassword }) {
+  return async (req, res, next) => {
+    let user = getUser(req);
+    let password = getPassword(req);
+
+    user = await User.findOne({ _id: user.id });
+    if (!user) throw new AppHttpError(401, 'Unauthorized');
+
+    user.password = password;
+    user.save();
+
+    req.user = user;
+    next();
+  };
+}
 
 export function validateUser({ getUser }) {
   return async (req, res, next) => {
@@ -196,7 +244,7 @@ export function sendResetPasswordEmail({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
 
-    const token = user.getConfirmToken();
+    const token = user.getResetPasswordToken();
     console.log(`send email to ${user.email} token: ${token}`);
 
     sendResetPassword({ emailTo: user.email, token });
@@ -207,9 +255,12 @@ export function sendResetPasswordEmail({ getUser }) {
   };
 }
 
-export function testMiddleware(getAttributes) {
-  return async (req, res, next) => {
-    console.log('in middleware');
+export function sendPasswordChangedEmail({ getUser, getPassword }) {
+  return (req, res, next) => {
+    const user = getUser(req);
+    const password = getPassword(req);
+
+    sendPasswordChanged({ emailTo: user.email, password, fullname: user.name });
 
     next();
   };
@@ -221,9 +272,28 @@ export function disconnectFrom({ getUser, getVendor }) {
     let vendor = getVendor(req);
 
     user = await User.findOne({ _id: user.id });
-    
+
     console.log('remove socail from ', vendor);
     user[vendor] = null;
+    user.save();
+
+    req.user = user;
+    next();
+  };
+}
+
+export function setUserPassword({ getUser, getOldPassword, getPassword }) {
+  return async (req, res, next) => {
+    let user = getUser(req);
+    let oldPassword = getOldPassword(req);
+    let password = getPassword(req);
+
+    user = await User.findOne({ _id: user.id });
+
+    if (!user.comparePassword(oldPassword))
+      throw new AppHttpError(400, 'PASSWORD');
+
+    user.password = password;
     user.save();
 
     req.user = user;

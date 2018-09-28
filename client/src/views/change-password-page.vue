@@ -7,23 +7,19 @@
         <v-container>
           <v-card>
             <v-toolbar dark color="primary">
-              <v-toolbar-title>Forgot Password</v-toolbar-title>
+              <v-toolbar-title>Change Password</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
 
               <v-form v-model="valid" ref="form">
 
-                <v-text-field v-model="email" :rules="emailRules" label="Email" required type="email" prepend-icon="person"></v-text-field>
+                <v-text-field v-model="oldPassword" :rules="passwordRules" prepend-icon="lock" label="Old Password" type="password" required></v-text-field>
+                <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="Password" type="password" required></v-text-field>
               </v-form>
             </v-card-text>
             <v-card-actions class="pa-3">
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="submit">Reset</v-btn>
-
-              <v-divider></v-divider>
-
-              <router-link to="/register" class="btn btn-link">Register</router-link>
-              <router-link to="/login" class="btn btn-link">Login</router-link>
+              <v-btn color="primary" @click="submit">Change Password</v-btn>
 
             </v-card-actions>
 
@@ -40,21 +36,25 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { LOGIN, SET_AUTH_SOCIAL } from '@/modules/auth';
+import { LOGIN, SET_AUTH_SOCIAL, CHANGE_PASSWORD } from '@/modules/auth';
 import { connectWith } from '@/shared/social.service';
 import ApiService from '@/shared/api.service';
 
 const Auth = namespace('auth');
 
 @Component({})
-export default class RegisterPage extends BaseComponent {
+export default class ChanagePasswordPage extends BaseComponent {
   public valid = false;
 
-  public email = '';
+  @Auth.Action(CHANGE_PASSWORD)
+  changePassword: any;
 
-  public emailRules = [
-    (v: string) => !!v || 'E-mail is required',
-    (v: string) => /.+@.+/.test(v) || 'E-mail must be valid'
+  public password = '';
+  public oldPassword = '';
+
+  public passwordRules = [
+    (v: string) => !!v || 'Password is required',
+    (v: string) => v.length >= 8 || ''
   ];
 
   constructor() {
@@ -66,10 +66,10 @@ export default class RegisterPage extends BaseComponent {
 
     if (!form.validate()) return;
 
-    ApiService.post('users/reset-password', {
-      email: 'wizardnet972@gmail.com'
-    });
-    //.then(() => this.$router.push('/'));
+    this.changePassword({
+      oldPassword: this.oldPassword,
+      password: this.password
+    }).then(() => this.$router.push('/'));
   }
 }
 </script>
