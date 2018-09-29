@@ -16,7 +16,16 @@ import {
   UPDATE_FULL_SCREEN,
 } from './mutations.type';
 
-const actions = {
+export const state = {
+  systemLoading: null,
+  generalGerror: null,
+  errorPane: null,
+  reloadActivityDetails: null,
+  isHDMedia: null,
+  isFullScreen: null,
+};
+
+export const actions = {
   [LOADING](context: any, loadingInfo: any) {
     return new Promise(resolve => {
       context.commit(LOADING_STATE_CHANGED, loadingInfo);
@@ -55,7 +64,7 @@ const actions = {
   },
 };
 
-const mutations = {
+export const mutations = {
   [LOADING_STATE_CHANGED](state: any, payload: any) {
     state.systemLoading = payload;
   },
@@ -74,9 +83,4 @@ const mutations = {
   [UPDATE_FULL_SCREEN](state: any, payload: any) {
     state.isFullScreen = payload.isFullScreen;
   },
-};
-
-export const app = {
-  actions,
-  mutations,
 };

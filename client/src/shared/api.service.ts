@@ -7,14 +7,6 @@ const ApiService = {
     Vue.http.options.root = '/api/v1';
   },
 
-  setHeader(token: string) {
-    Vue.http.headers!.common!['Authorization'] = `Bearer ${token}`;
-  },
-
-  removeHeader() {
-    delete Vue.http.headers!.common!['Authorization'];
-  },
-
   query(resource: string, params: any) {
     console.log('in query');
     // return Vue.axios.get(resource, params).catch(error => {

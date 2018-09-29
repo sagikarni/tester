@@ -1,27 +1,22 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { auth } from '@/modules/auth';
+import { auth, StoreTokenInterceptorPlugin } from '@/modules/auth';
 import { activities } from '@/modules/activities';
-import { app } from './app.module';
+import { state, actions, mutations } from './app.module';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    systemLoading: null,
-    generalGerror: null,
-    errorPane: null,
-    reloadActivityDetails: null,
-    isHDMedia: null,
-    isFullScreen: null,
-  },
+export const store = new Vuex.Store({
+  state,
+
   modules: {
     auth,
     activities,
   } as any,
 
-  actions: app.actions,
-  mutations: app.mutations,
+  actions,
+  mutations,
 
+  plugins: [StoreTokenInterceptorPlugin],
 });

@@ -5,7 +5,7 @@ import VueIziToast from 'vue-izitoast';
 import './registerServiceWorker';
 import App from './App.vue';
 import { router } from './router';
-import store from '@/store';
+import { store } from '@/store';
 import { LocalePlugin, DirectionPlugin } from '@/plugins';
 import { httpClient } from '@/httpClient';
 import 'babel-polyfill';

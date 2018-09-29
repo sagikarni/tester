@@ -10,11 +10,11 @@
 
       <v-list>
         <v-list-tile>
-          <router-link to="/login">Do You Have an Account?</router-link>
+          <router-link to="/login">Already have an account?</router-link>
         </v-list-tile>
         <v-list-tile>
           <small>
-            By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email when provided.
+            By registering, you agree to Discord's Terms of Service and Privacy Policy.
           </small>
         </v-list-tile>
       </v-list>

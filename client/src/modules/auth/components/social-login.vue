@@ -19,8 +19,7 @@
 import { Component } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { namespace } from 'vuex-class';
-import { CONNECT_SOCIAL } from '@/modules/auth';
-import { connectWith } from '@/shared/social.service';
+import { CONNECT_SOCIAL, connectWith } from '@/modules/auth';
 
 const Auth = namespace('auth');
 

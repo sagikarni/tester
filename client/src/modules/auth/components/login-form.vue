@@ -20,7 +20,7 @@
         <router-link to="/reset-password">Forgot your password?</router-link>
       </v-list-tile>
       <v-list-tile>
-        <router-link to="/register">Don't have account?</router-link>
+        Need an account? &nbsp;<router-link to="/register">Register</router-link>
       </v-list-tile>
     </v-list>
 

@@ -36,8 +36,7 @@
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
 import { State, Action, Getter, namespace } from 'vuex-class';
-import { CHANGE_PASSWORD } from '@/modules/auth';
-import { connectWith } from '@/shared/social.service';
+import { CHANGE_PASSWORD, connectWith } from '@/modules/auth';
 import ApiService from '@/shared/api.service';
 
 const Auth = namespace('auth');

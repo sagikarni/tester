@@ -2,11 +2,9 @@
   <v-content>
     <v-alert dismissible :value="currentUser && !currentUser.verified" color="error" icon="new_releases">
       <div v-if="displayMessage">
-        Please confirm your account. confirming your account will give you
-        <b>full access</b> and all future notifications will be sent to this email address. Didn't receive the email? Please check your spam email folder,
-        <a @click="sendConfirmEmail">resubmit the request</a> or contact our support team.
+        You must verify your account <a @click="sendConfirmEmail">Resend Verification Email</a> or contact our support team.
       </div>
-      <div v-else>Please check your email.</div>
+      <div v-else>we have sent you a new verification email, please check both your inbox and spam folder.</div>
     </v-alert>
     <v-container>
       <transition name="page" mode="out-in">

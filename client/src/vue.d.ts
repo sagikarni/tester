@@ -34,6 +34,7 @@ declare module 'vue/types/vue' {
       patch: VueResource.$http | PromiseLike<VueResource.HttpResponse>;
       delete: VueResource.$http | PromiseLike<VueResource.HttpResponse>;
       jsonp: VueResource.$http | PromiseLike<VueResource.HttpResponse>;
+      interceptors: VueResource.$http | PromiseLike<VueResource.HttpInterceptor>;
     };
     resource: VueResource.$resource;
   }

@@ -24,11 +24,9 @@ const defaultState = {
 };
 
 const newState = () =>
-  Object.assign(
-    { error: null },
-    defaultState,
-    StorageService.get(StorageTypes.AUTH) || {},
-  );
+  Object.assign({}, defaultState, StorageService.get(StorageTypes.AUTH) || {}, {
+    error: null,
+  });
 
 const state = newState();
 
@@ -48,7 +46,9 @@ const actions = {
   [REGISTER](context: any, credentials: any) {
     return ApiService.post('users', credentials)
       .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      )
       .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
@@ -57,7 +57,14 @@ const actions = {
   [LOGIN](context: any, { email, password, rememberMe }: any) {
     return ApiService.post('users/login', { email, password })
       .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: rememberMe, token, refreshToken, user }))
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, {
+          store: rememberMe,
+          token,
+          refreshToken,
+          user,
+        }),
+      )
       .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
@@ -69,17 +76,21 @@ const actions = {
       { password },
       { headers: { Authorization: `Basic ${resetPasswordToken}` } },
     )
-    .then(extractAuthFromResponse)
-    .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
-    .catch((error: any) => {
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      )
+      .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
       });
   },
   [CHANGE_PASSWORD](context: any, { password, oldPassword }: any) {
     return ApiService.post('users/password', { password, oldPassword })
-    .then(extractAuthFromResponse)
-    .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .then(extractAuthFromResponse)
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      )
       .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
@@ -92,7 +103,9 @@ const actions = {
       { headers: { Authorization: `Basic ${confirmToken}` } },
     )
       .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      )
       .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
@@ -100,14 +113,21 @@ const actions = {
   },
   [CONNECT_SOCIAL](context: any, { token, refreshToken, payload }: any) {
     return new Promise((resolve, reject) => {
-      context.commit(SET_AUTH, { store: true, token, refreshToken, user: payload.user });
+      context.commit(SET_AUTH, {
+        store: true,
+        token,
+        refreshToken,
+        user: payload.user,
+      });
       resolve();
     });
   },
   [DISCONNECT_SOCIAL](context: any, vendor: any) {
-      return ApiService.post('users/social', { vendor })
+    return ApiService.post('users/social', { vendor })
       .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) => context.commit(SET_AUTH, { store: true, token, refreshToken, user }))
+      .then(({ token, refreshToken, user }: any) =>
+        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      )
       .catch((error: any) => {
         context.commit(SET_ERROR, error);
         throw error;
@@ -115,15 +135,15 @@ const actions = {
   },
   [LOGOUT_ACCOUNT](context: any) {
     context.commit(PURGE_AUTH);
-    ApiService.removeHeader();
+    // ApiService.removeHeader();
     return Promise.resolve();
   },
   [CHECK_AUTH](context: any) {
-    if (context.state.token) {
-      ApiService.setHeader(context.state.token);
-    } else {
-      ApiService.removeHeader();
-    }
+    // if (context.state.token) {
+    //   ApiService.setHeader(context.state.token);
+    // } else {
+    //   ApiService.removeHeader();
+    // }
   },
 };
 
