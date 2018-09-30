@@ -5,7 +5,7 @@
       <v-flex xs12 sm8 md6>
 
         <v-container>
-          <template v-if="!confirmed">
+          <template v-if="!verified">
             <v-card>
 
               <v-toolbar dark color="primary">
@@ -51,7 +51,7 @@ const Auth = namespace('auth');
 @Component({})
 export default class ChanagePasswordPage extends BaseComponent {
   submitted = false;
-  confirmed = false;
+  verified = false;
 
   public valid = false;
   public password = '';
@@ -66,7 +66,7 @@ export default class ChanagePasswordPage extends BaseComponent {
   @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
     if (val && this.submitted) {
-      this.confirmed = true;
+      this.verified = true;
       setTimeout(() => {
         this.$router.push('/');
       }, 3000);

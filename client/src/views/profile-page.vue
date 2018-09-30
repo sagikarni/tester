@@ -6,7 +6,7 @@
 
         <v-alert dismissible :value="currentUser && !currentUser.verified" color="error" icon="new_releases">
           <div v-if="displayMessage">
-            You must verify your account <a @click="sendConfirmEmail">Resend Verification Email</a> or contact our support team.
+            You must verify your account <a @click="sendVerifyEmail">Resend Verification Email</a> or contact our support team.
           </div>
           <div v-else>we have sent you a new verification email, please check both your inbox and spam folder.</div>
         </v-alert>
@@ -98,7 +98,7 @@ import {
   CONNECT_SOCIAL,
   DISCONNECT_SOCIAL,
   connectWith,
-  Auth,
+  Auth
   // SocialConnectComponent
 } from '@/modules/auth';
 import ApiService from '@/shared/api.service';
@@ -123,9 +123,9 @@ export default class ProfilePage extends BaseComponent {
 
   private displayMessage = true;
 
-  sendConfirmEmail() {
+  sendVerifyEmail() {
     this.displayMessage = false;
-    ApiService.post('users/notify-confirm', {}).then((response: any) => {
+    ApiService.post('users/notify-verify', {}).then((response: any) => {
       console.log('sent');
     });
   }
@@ -139,8 +139,8 @@ export default class ProfilePage extends BaseComponent {
 
     if (e) {
       connectWith('facebook', '/auth/facebook')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.facebookLoading = false;
@@ -156,8 +156,8 @@ export default class ProfilePage extends BaseComponent {
 
     if (e) {
       connectWith('twitter', '/auth/twitter')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.twitterLoading = false;
@@ -175,8 +175,8 @@ export default class ProfilePage extends BaseComponent {
 
     if (e) {
       connectWith('google', '/auth/google')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.googleLoading = false;
@@ -193,8 +193,8 @@ export default class ProfilePage extends BaseComponent {
 
     if (e) {
       connectWith('linkedin', '/auth/linkedin')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.linkedinLoading = false;

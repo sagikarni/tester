@@ -16,10 +16,10 @@ import { bus, busConstants } from '@/modules/utils/eventBus';
 
 import LoginPage from '@/views/login-page.vue';
 import RegisterPage from '@/views/register-page.vue';
-import ConfirmPage from '@/views/confirm-page.vue';
+import VerifyPage from '@/views/verify-page.vue';
 import ProfilePage from '@/views/profile-page.vue';
 import RecoverAccountPage from '@/views/recover-account-page.vue';
-import ConfirmPasswordPage from '@/views/confirm-password-page.vue';
+import VerifyPasswordPage from '@/views/verify-password-page.vue';
 import ChangePasswordPage from '@/views/change-password-page.vue';
 
 Vue.use(Router);
@@ -100,10 +100,10 @@ export const router = new Router({
     },
     { path: '/login', component: LoginPage },
     { path: '/register', component: RegisterPage },
-    { path: '/confirm', component: ConfirmPage },
+    { path: '/verify', component: VerifyPage },
     { path: '/profile', component: ProfilePage },
     { path: '/recover-account', component: RecoverAccountPage },
-    { path: '/confirm-password', component: ConfirmPasswordPage },
+    { path: '/verify-password', component: VerifyPasswordPage },
     { path: '/password', component: ChangePasswordPage },
 
   ],

@@ -14,22 +14,22 @@ import {
 export const register = asyncAll([
   createUser(req => req.body),
   sendWelcomeEmail({ getUser: req => req.user }),
-  sendEmailConfirmAccount({ getUser: req => req.user }),
+  sendEmailVerifyAccount({ getUser: req => req.user }),
   token()
 ]);
 
 export const login = asyncAll([authenticateUser(req => req.body), token()]);
 
-export const confirmAccount = asyncAll([
-  validateToken({ headerKey: 'Basic', grant: 'confirm' }),
-  confirmUser({ getUser: req => req.user }),
-  sendEmailConfirmVerification({ getUser: req => req.user }),
+export const verifyAccount = asyncAll([
+  validateToken({ headerKey: 'Basic', grant: 'verify' }),
+  verifyUser({ getUser: req => req.user }),
+  sendEmailVerification({ getUser: req => req.user }),
   token()
 ]);
 
-export const sendConfirmNotification = asyncAll([
+export const sendVerifyNotification = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  sendEmailConfirmAccount({ getUser: req => req.user })
+  sendEmailVerifyAccount({ getUser: req => req.user })
 ]);
 
 export const authenticate = asyncAll([
@@ -47,7 +47,7 @@ export const recoverAccount = asyncAll([
   sendResetPasswordEmail({ getUser: req => req.user })
 ]);
 
-export const confirmPassword = asyncAll([
+export const verifyPassword = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'reset' }),
   setNewPassword({
     getUser: req => req.user,
@@ -99,7 +99,7 @@ export function setNewPassword({ getUser, getPassword }) {
   };
 }
 
-export function confirmUser({ getUser }) {
+export function verifyUser({ getUser }) {
   return async (req, res, next) => {
     let user = getUser(req);
 
@@ -205,8 +205,6 @@ export function createUser(getAttributes) {
 
 export function sendWelcomeEmail({ getUser }) {
   return (req, res, next) => {
-    console.log('sendWelcomeEmail');
-
     const user = getUser(req);
     const { password } = req.body;
 
@@ -216,22 +214,21 @@ export function sendWelcomeEmail({ getUser }) {
   };
 }
 
-export function sendEmailConfirmAccount({ getUser }) {
+export function sendEmailVerifyAccount({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
     if (!user.verified) {
-      const token = user.getConfirmToken();
-      console.log(`send email to ${user.email} token: ${token}`);
+      const token = user.getVerifyToken();
 
       sendVerify({ emailTo: user.email, token });
 
-      res.setHeader('confirm_token', token);
+      res.setHeader('verify_token', token);
     }
     next();
   };
 }
 
-export function sendEmailConfirmVerification({ getUser }) {
+export function sendEmailVerification({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
     if (user.verified) {
@@ -246,7 +243,6 @@ export function sendResetPasswordEmail({ getUser }) {
     const user = getUser(req);
 
     const token = user.getResetPasswordToken();
-    console.log(`send email to ${user.email} token: ${token}`);
 
     sendResetPassword({ emailTo: user.email, token });
 
@@ -274,7 +270,6 @@ export function disconnectFrom({ getUser, getVendor }) {
 
     user = await User.findOne({ _id: user.id });
 
-    console.log('remove socail from ', vendor);
     user[vendor] = null;
     user.save();
 

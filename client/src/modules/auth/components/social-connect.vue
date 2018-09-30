@@ -71,8 +71,8 @@ export default class SocialConnectComponent extends BaseComponent {
 
     if (e) {
       connectWith('facebook', '/auth/facebook')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.facebookLoading = false;
@@ -88,8 +88,8 @@ export default class SocialConnectComponent extends BaseComponent {
 
     if (e) {
       connectWith('twitter', '/auth/twitter')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.twitterLoading = false;
@@ -107,8 +107,8 @@ export default class SocialConnectComponent extends BaseComponent {
 
     if (e) {
       connectWith('google', '/auth/google')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.googleLoading = false;
@@ -125,8 +125,8 @@ export default class SocialConnectComponent extends BaseComponent {
 
     if (e) {
       connectWith('linkedin', '/auth/linkedin')
-        .then(({ token, payload }: any) =>
-          this.connectSocial({ token, payload })
+        .then(({ accessToken, refreshToken, payload }: any) =>
+          this.connectSocial({ accessToken, refreshToken, payload })
         )
         .then(() => {
           this.linkedinLoading = false;

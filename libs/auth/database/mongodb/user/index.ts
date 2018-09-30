@@ -36,7 +36,7 @@ export interface IUserDocument extends Document {
 
 export interface IUser extends IUserDocument {
   comparePassword(password: string): boolean;
-  getConfirmToken(): string;
+  getVerifyToken(): string;
   getAccessToken(): string;
   getRefreshToken(): string;
   getResetPasswordToken(): string;
@@ -106,13 +106,13 @@ userSchema.method('comparePassword', function(password: string): boolean {
   return false;
 });
 
-userSchema.method('getConfirmToken', function(): string {
+userSchema.method('getVerifyToken', function(): string {
   const user = this;
   const token = jwt.sign(
-    { id: user._id, grant: 'confirm' },
+    { id: user._id, grant: 'verify' },
     process.env.SECRET_TOKEN,
     {
-      expiresIn: process.env.CONFIRM_TOKEN_EXPIRES_IN
+      expiresIn: process.env.VERIFY_TOKEN_EXPIRES_IN
     }
   );
   return token;
@@ -148,7 +148,7 @@ userSchema.method('getResetPasswordToken', function(): string {
     { id: user._id, grant: 'reset' },
     process.env.SECRET_TOKEN,
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN
+      expiresIn: process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN
     }
   );
   return token;
@@ -156,14 +156,16 @@ userSchema.method('getResetPasswordToken', function(): string {
 
 userSchema.method('toJSON', function(): any {
   const user = this.toObject();
-  
+
   delete user.password;
   delete user._id;
   delete user.__v;
   delete user._v;
 
-  ['facebook', 'twitter', 'linkedin', 'google'].forEach(i => { if (user[i]) user[i] = true; })
-  
+  ['facebook', 'twitter', 'linkedin', 'google'].forEach(i => {
+    if (user[i]) user[i] = true;
+  });
+
   console.log('user', user);
 
   return { user };

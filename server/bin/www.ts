@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
   db.connection.once('open', async () => {
     console.log('Connection database has been established successfully.');
 
-    await db.connection.db.dropDatabase();
+    // await db.connection.db.dropDatabase();
 
     const server = createServer(app);
 

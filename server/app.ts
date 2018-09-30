@@ -11,7 +11,12 @@ import { routes } from './routes';
 import { clientErrorHandler, errorHandler } from '@libs/express-zone';
 
 import { use, initialize, session } from 'passport';
-import { facebookStrategy, twitterStrategy, linkedinStrategy, googleStrategy } from '@libs/auth';
+import {
+  facebookStrategy,
+  twitterStrategy,
+  linkedinStrategy,
+  googleStrategy
+} from '@libs/auth';
 
 use(facebookStrategy);
 use(twitterStrategy);
@@ -29,11 +34,9 @@ app.use(methodOverride());
 
 app.use(helmet());
 
-// required for passport
-app.use(sessionExpress({ secret: 'SECRET' })); // session secret
+app.use(sessionExpress({ secret: 'SECRET' }));
 app.use(initialize());
-app.use(session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(session());
 
 app.use(routes);
 

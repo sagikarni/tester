@@ -7,15 +7,19 @@ import { EventEmitter } from 'events';
 import { routes } from '../../../server/routes';
 
 const credentials = {
-  consumerKey: process.env.LINKEDIN_AUTH_CLIENT_ID,
-  consumerSecret: process.env.LINKEDIN_AUTH_CLIENT_SECRET,
-  callbackURL: process.env.LINKEDIN_AUTH_CALLBACK_URL,
-  // graphApiVersion: 'v3.1',
-  // profileFields: ['email', 'displayName', 'picture'],
+  consumerKey: process.env.AUTH_LINKEDIN_CLIENT_ID,
+  consumerSecret: process.env.AUTH_LINKEDIN_CLIENT_SECRET,
+  callbackURL: process.env.AUTH_LINKEDIN_CALLBACK_URL,
   includeEmail: true,
   passReqToCallback: true,
-  profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'picture-url']
-
+  profileFields: [
+    'id',
+    'first-name',
+    'last-name',
+    'email-address',
+    'headline',
+    'picture-url'
+  ]
 };
 
 const strategy = async (
@@ -25,11 +29,6 @@ const strategy = async (
   profile,
   next
 ) => {
-  // console.log('req', req);
-  // console.log('twitterToken', twitterToken);
-  // console.log('twitterRefreshToken', twitterRefreshToken);
-  console.log('profile', profile);
-
   const email = get(profile, 'emails[0].value');
   const name = get(profile, 'displayName');
   const password = randomstring.generate(8);
@@ -37,12 +36,6 @@ const strategy = async (
   const id = get(profile, 'id');
   const picture = get(profile, '_json.pictureUrl');
   const _raw = get(profile, '_raw');
-
-  console.log('email ', email);
-  console.log('name ', name);
-  console.log('password ', password);
-  console.log('id ', id);
-  console.log('picture ', picture);
 
   let user = await User.findOne({ email });
 
@@ -78,13 +71,13 @@ const strategy = async (
   }
 
   response.on('end', async () => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
-    const token = response.get('access_token');
+    const accessToken = response.get('access_token');
+    const refreshToken = response.get('refresh_token');
 
     user = await User.findOne({ email });
 
     user.picture = user.picture || picture;
+    user.verified = true;
     user.linkedin.id = id;
     user.linkedin.token = linkedinToken;
     user.linkedin.refreshToken = linkedinRefreshToken;
@@ -94,7 +87,7 @@ const strategy = async (
 
     const payload = user;
 
-    next(null, { token, payload });
+    next(null, { accessToken, refreshToken, payload });
   });
 
   (<any>routes).handle(request, response);

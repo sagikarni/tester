@@ -6,9 +6,9 @@ import {
   LOGIN,
   LOGOUT_ACCOUNT,
   REGISTER,
-  CONFIRM_ACCOUNT,
+  VERIFY_ACCOUNT,
   DISCONNECT_SOCIAL,
-  CONFIRM_PASSWORD,
+  VERIFY_PASSWORD,
   CHANGE_PASSWORD,
   CONNECT_SOCIAL,
   LOGIN_SUCCESS,
@@ -68,9 +68,9 @@ const actions = {
   [LOGIN_FAILED](context: any, payload: any) {
     context.commit(SET_ERROR, get(payload, 'body.error') || 'GENERAL_ERROR');
   },
-  [CONFIRM_PASSWORD](context: any, { password, resetPasswordToken }: any) {
+  [VERIFY_PASSWORD](context: any, { password, resetPasswordToken }: any) {
     return ApiService.post(
-      'users/confirm-password',
+      'users/verify-password',
       { password },
       { headers: { Authorization: `Basic ${resetPasswordToken}` } },
     )
@@ -86,22 +86,22 @@ const actions = {
       )
       .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
-  [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
+  [VERIFY_ACCOUNT](context: any, verifyToken: string) {
     ApiService.post(
-      'users/confirm',
+      'users/verify',
       {},
-      { headers: { Authorization: `Basic ${confirmToken}` } },
+      { headers: { Authorization: `Basic ${verifyToken}` } },
     )
       .then((response: any) =>
         context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
       .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
-  [CONNECT_SOCIAL](context: any, { token, refreshToken, payload }: any) {
+  [CONNECT_SOCIAL](context: any, { accessToken, refreshToken, payload }: any) {
     return new Promise((resolve, reject) => {
       context.commit(SET_AUTH, {
         store: true,
-        token,
+        token: accessToken,
         refreshToken,
         user: payload.user,
       });

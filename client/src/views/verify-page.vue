@@ -5,8 +5,8 @@
       <v-flex xs12 sm8 md6>
 
         <v-container>
-          <div v-if="confirmed">your email has been successfully verified. we transfer you to the homepage...</div>
-          <div v-else>Confirm your account, Just a second...</div>
+          <div v-if="verified">your email has been successfully verified. we transfer you to the homepage...</div>
+          <div v-else>Verifies your account, Just a second...</div>
 
         </v-container>
       </v-flex>
@@ -18,15 +18,15 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { CONFIRM_ACCOUNT, Auth } from '@/modules/auth';
+import { VERIFY_ACCOUNT, Auth } from '@/modules/auth';
 
 @Component({})
-export default class ConfirmPage extends BaseComponent {
+export default class VerifyPage extends BaseComponent {
   submitted = false;
-  confirmed = false;
+  verified = false;
 
-  @Auth.Action(CONFIRM_ACCOUNT)
-  confirmAccount: any;
+  @Auth.Action(VERIFY_ACCOUNT)
+  verifyAccount: any;
 
   @Auth.Getter('isAuthenticated')
   public isAuthenticated: any;
@@ -34,7 +34,7 @@ export default class ConfirmPage extends BaseComponent {
   @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
     if (val && this.submitted) {
-      this.confirmed = true;
+      this.verified = true;
       setTimeout(() => {
         this.$router.push('/');
       }, 3000);
@@ -43,16 +43,16 @@ export default class ConfirmPage extends BaseComponent {
 
   @Watch('$route', { immediate: true, deep: true })
   on$routeChanged(val: any, oldVal: any) {
-    this.confirm(val.query.t);
+    this.verify(val.query.t);
   }
 
   constructor() {
     super();
   }
 
-  public confirm(token: string) {
+  public verify(token: string) {
     this.submitted = true;
-    this.confirmAccount(token);
+    this.verifyAccount(token);
   }
 }
 </script>

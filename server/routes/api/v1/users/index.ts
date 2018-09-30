@@ -3,11 +3,11 @@ import { Router } from 'express';
 import {
   register,
   login,
-  confirmAccount,
+  verifyAccount,
   refreshToken,
-  sendConfirmNotification,
+  sendVerifyNotification,
   recoverAccount,
-  confirmPassword,
+  verifyPassword,
   disconnectFromSocial,
   changePassword
 } from '@libs/auth';
@@ -26,13 +26,13 @@ router.post('/login', login, (req, res, next) => {
   res.json(user.toJSON());
 });
 
-router.post('/confirm', confirmAccount, (req, res, next) => {
+router.post('/verify', verifyAccount, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());
 });
 
-router.post('/notify-confirm', sendConfirmNotification, (req, res, next) => {
+router.post('/notify-verify', sendVerifyNotification, (req, res, next) => {
   res.sendStatus(200);
 });
 
@@ -40,7 +40,7 @@ router.post('/recover-account', recoverAccount, (req, res, next) => {
   res.sendStatus(200);
 });
 
-router.post('/confirm-password', confirmPassword, (req, res, next) => {
+router.post('/verify-password', verifyPassword, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());

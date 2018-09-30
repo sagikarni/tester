@@ -7,27 +7,20 @@ import { EventEmitter } from 'events';
 import { routes } from '../../../server/routes';
 
 const credentials = {
-  consumerKey: process.env.TWITTER_AUTH_CLIENT_ID,
-  consumerSecret: process.env.TWITTER_AUTH_CLIENT_SECRET,
-  callbackURL: process.env.TWITTER_AUTH_CALLBACK_URL,
-  // graphApiVersion: 'v3.1',
-  // profileFields: ['email', 'displayName', 'picture'],
+  consumerKey: process.env.AUTH_TWITTER_CLIENT_ID,
+  consumerSecret: process.env.AUTH_TWITTER_CLIENT_SECRET,
+  callbackURL: process.env.AUTH_TWITTER_CALLBACK_URL,
   includeEmail: true,
-  passReqToCallback: true,
+  passReqToCallback: true
 };
 
-const strategy = async(
+const strategy = async (
   req,
   twitterToken,
   twitterRefreshToken,
   profile,
   next
 ) => {
-  // console.log('req', req);
-  // console.log('twitterToken', twitterToken);
-  // console.log('twitterRefreshToken', twitterRefreshToken);
-  console.log('profile', profile);
-
   const email = get(profile, 'emails[0].value');
   const name = get(profile, 'displayName');
   const password = randomstring.generate(8);
@@ -36,13 +29,8 @@ const strategy = async(
   const picture = get(profile, 'photos[0].value');
   const _raw = get(profile, '_raw');
 
-
-  console.log('email ', email);
-  console.log('name ', name);
-  console.log('password ', password);
-  console.log('id ', id);
-  console.log('picture ', picture);
-
+  console.log('profile', profile);
+  
   let user = await User.findOne({ email });
 
   const response = httpMocks.createResponse({ eventEmitter: EventEmitter });
@@ -77,13 +65,17 @@ const strategy = async(
   }
 
   response.on('end', async () => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log('in res end');
+    const accessToken = response.get('access_token');
+    const refreshToken = response.get('refresh_token');
 
-    const token = response.get('access_token');
+    console.log('accessToken', accessToken);
+    console.log('refreshToken', refreshToken);
 
     user = await User.findOne({ email });
 
     user.picture = user.picture || picture;
+    user.verified = true;
     user.twitter.id = id;
     user.twitter.token = twitterToken;
     user.twitter.refreshToken = twitterRefreshToken;
@@ -93,7 +85,7 @@ const strategy = async(
 
     const payload = user;
 
-    next(null, { token, payload });
+    next(null, { accessToken, refreshToken, payload });
   });
 
   (<any>routes).handle(request, response);

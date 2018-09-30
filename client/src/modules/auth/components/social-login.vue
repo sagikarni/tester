@@ -34,7 +34,7 @@ export default class SocialLoginComponent extends BaseComponent {
 
   public loginWith(vendor: string, vendorUrl: string) {
     connectWith(vendor, vendorUrl)
-      .then(({ token, payload }: any) => this.connectSocial({ token, payload }))
+      .then(({ accessToken, refreshToken, payload }: any) => this.connectSocial({ accessToken, refreshToken, payload }))
       .then(() => this.$router.push('/'));
   }
 }

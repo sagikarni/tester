@@ -2,7 +2,7 @@
   <v-content>
     <v-alert dismissible :value="currentUser && !currentUser.verified" color="error" icon="new_releases">
       <div v-if="displayMessage">
-        You must verify your account <a @click="sendConfirmEmail">Resend Verification Email</a> or contact our support team.
+        You must verify your account <a @click="sendVerifyEmail">Resend Verification Email</a> or contact our support team.
       </div>
       <div v-else>we have sent you a new verification email, please check both your inbox and spam folder.</div>
     </v-alert>
@@ -30,9 +30,9 @@ export default class NormalView extends Vue {
 
   private displayMessage = true;
 
-  sendConfirmEmail() {
+  sendVerifyEmail() {
     this.displayMessage = false;
-    ApiService.post('users/notify-confirm', {}).then((response: any) => {
+    ApiService.post('users/notify-verify', {}).then((response: any) => {
       console.log('sent');
     });
   }

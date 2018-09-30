@@ -13,13 +13,18 @@ router.get('/facebook', (req, res, next) => {
 });
 
 router.get('/facebook/callback', (req, res, next) => {
-  authenticate('facebook', (err, { token, payload }) => {
+  authenticate('facebook', (err, strategyResponse) => {
+    if (err) { throw err }
+
+    const { accessToken, refreshToken, payload } = strategyResponse;
+
     res.writeHeader(200, { 'Content-Type': 'text/html' });
 
     var message = {
       message: 'facebookLogin',
       payload,
-      access_token: token
+      accessToken,
+      refreshToken
     };
 
     res.write(`
@@ -37,13 +42,18 @@ router.get('/twitter', (req, res, next) => {
 });
 
 router.get('/twitter/callback', (req, res, next) => {
-  authenticate('twitter', (err, { token, payload }) => {
+  authenticate('twitter', (err, strategyResponse) => {
+    if (err) { throw err }
+
+    const { accessToken, refreshToken, payload } = strategyResponse;
+
     res.writeHeader(200, { 'Content-Type': 'text/html' });
 
     var message = {
       message: 'twitterLogin',
       payload,
-      access_token: token
+      accessToken,
+      refreshToken
     };
 
     res.write(`
@@ -65,13 +75,18 @@ router.get('/linkedin', (req, res, next) => {
 });
 
 router.get('/linkedin/callback', (req, res, next) => {
-  authenticate('linkedin', (err, { token, payload }) => {
+  authenticate('linkedin', (err, strategyResponse) => {
+    if (err) { throw err }
+
+    const { accessToken, refreshToken, payload } = strategyResponse;
+
     res.writeHeader(200, { 'Content-Type': 'text/html' });
 
     var message = {
       message: 'linkedinLogin',
       payload,
-      access_token: token
+      accessToken,
+      refreshToken
     };
 
     res.write(`
@@ -89,13 +104,18 @@ router.get('/google', (req, res, next) => {
 });
 
 router.get('/google/callback', (req, res, next) => {
-  authenticate('google', (err, { token, payload }) => {
+  authenticate('google', (err,  strategyResponse) => {
+    if (err) { throw err }
+
+    const { accessToken, refreshToken, payload } = strategyResponse;
+    
     res.writeHeader(200, { 'Content-Type': 'text/html' });
 
     var message = {
       message: 'googleLogin',
       payload,
-      access_token: token
+      accessToken,
+      refreshToken
     };
 
     res.write(`

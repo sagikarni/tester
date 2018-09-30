@@ -12,7 +12,7 @@ const templates = [];
 const fs: any = promisifyAll(fsSync);
 
 async function load(directory) {
-  console.log(`Load email templates from ${directory}...`);
+  console.log(`Loading email templates from ${directory}...`);
 
   this.templates = await loadTemplates(directory);
 }

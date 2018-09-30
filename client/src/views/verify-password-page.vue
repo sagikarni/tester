@@ -6,7 +6,7 @@
 
         <v-container>
 
-          <template v-if="!confirmed">
+          <template v-if="!verified">
             <v-card>
               <v-toolbar dark color="primary">
                 <v-toolbar-title>Choose New Password</v-toolbar-title>
@@ -40,19 +40,19 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { CONFIRM_PASSWORD, Auth } from '@/modules/auth';
+import { VERIFY_PASSWORD, Auth } from '@/modules/auth';
 
 @Component({})
-export default class ConfirmPasswordPage extends BaseComponent {
+export default class VerifyPasswordPage extends BaseComponent {
   public valid = false;
   public submitted = false;
-  public confirmed = false;
+  public verified = false;
 
   public token = '';
   public password = '';
 
-  @Auth.Action(CONFIRM_PASSWORD)
-  confirmPassword: any;
+  @Auth.Action(VERIFY_PASSWORD)
+  verifyPassword: any;
 
   @Auth.Getter('isAuthenticated')
   public isAuthenticated: any;
@@ -60,7 +60,7 @@ export default class ConfirmPasswordPage extends BaseComponent {
   @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
     if (val && this.submitted) {
-      this.confirmed = true;
+      this.verified = true;
       setTimeout(() => {
         this.$router.push('/');
       }, 3000);
@@ -89,7 +89,7 @@ export default class ConfirmPasswordPage extends BaseComponent {
     if (!form.validate()) return;
     this.submitted = true;
 
-    this.confirmPassword({
+    this.verifyPassword({
       resetPasswordToken: this.token,
       password: this.password
     });

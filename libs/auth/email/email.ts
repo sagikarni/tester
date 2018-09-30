@@ -3,8 +3,8 @@ import { resolve } from 'path';
 import { load, compile, app, emailDefaultSender } from './template';
 
 const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
-const urlConfirmAccount = process.env.URL_CONFIRM_ACCOUNT;
-const urlConfirmPassword = process.env.URL_CONFIRM_PASSWORD;
+const urlVerifyAccount = process.env.URL_VERIFY_ACCOUNT;
+const urlVerifyPassword = process.env.URL_VERIFY_PASSWORD;
 
 setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
@@ -31,14 +31,14 @@ export function sendWelcome({ emailTo, fullname, password }) {
 }
 
 export function sendVerify({ emailTo, token }) {
-  const tokenUrl = urlConfirmAccount + token;
+  const tokenUrl = `${urlVerifyAccount}${token}`;
 
   const msg = {
     to: emailTo,
     from: emailDefaultSender,
-    subject: `Confirm your ${app} account`,
+    subject: `Verify your ${app} account`,
     ...compile({
-      templateName: 'confirm-your-account',
+      templateName: 'verify-your-account',
       context: {
         email: emailTo,
         app,
@@ -72,7 +72,7 @@ export function sendVerification({ emailTo, fullname }) {
 }
 
 export function sendResetPassword({ emailTo, token }) {
-  const tokenUrl = urlConfirmPassword + token;
+  const tokenUrl = `${urlVerifyPassword}${token}`;
 
   const msg = {
     to: emailTo,
