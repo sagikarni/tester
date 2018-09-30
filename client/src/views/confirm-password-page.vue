@@ -5,26 +5,24 @@
       <v-flex xs12 sm8 md6>
 
         <v-container>
+
           <template v-if="!confirmed">
             <v-card>
-
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Change Your Password</v-toolbar-title>
+                <v-toolbar-title>Choose New Password</v-toolbar-title>
               </v-toolbar>
 
               <v-card-text>
 
                 <v-form v-model="valid" ref="form">
 
-                  <v-text-field v-model="oldPassword" :rules="passwordRules" prepend-icon="lock" label="Old Password" type="password" required></v-text-field>
                   <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="Password" type="password" required></v-text-field>
                 </v-form>
-
               </v-card-text>
 
               <v-card-actions class="pa-3">
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="submit">Change Password</v-btn>
+                <v-btn color="primary" @click="submit">Next</v-btn>
               </v-card-actions>
 
             </v-card>
@@ -42,23 +40,19 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { State, Action, Getter, namespace } from 'vuex-class';
-import { CHANGE_PASSWORD, connectWith } from '@/modules/auth';
-import ApiService from '@/shared/api.service';
-
-const Auth = namespace('auth');
+import { CONFIRM_PASSWORD, Auth } from '@/modules/auth';
 
 @Component({})
-export default class ChanagePasswordPage extends BaseComponent {
-  submitted = false;
-  confirmed = false;
-
+export default class ConfirmPasswordPage extends BaseComponent {
   public valid = false;
-  public password = '';
-  public oldPassword = '';
+  public submitted = false;
+  public confirmed = false;
 
-  @Auth.Action(CHANGE_PASSWORD)
-  changePassword: any;
+  public token = '';
+  public password = '';
+
+  @Auth.Action(CONFIRM_PASSWORD)
+  confirmPassword: any;
 
   @Auth.Getter('isAuthenticated')
   public isAuthenticated: any;
@@ -71,6 +65,11 @@ export default class ChanagePasswordPage extends BaseComponent {
         this.$router.push('/');
       }, 3000);
     }
+  }
+
+  @Watch('$route', { immediate: true, deep: true })
+  on$routeChanged(val: any, oldVal: any) {
+    this.token = val.query.t;
   }
 
   public passwordRules = [
@@ -88,11 +87,10 @@ export default class ChanagePasswordPage extends BaseComponent {
     const { form }: any = this.$refs;
 
     if (!form.validate()) return;
-
     this.submitted = true;
-    
-    this.changePassword({
-      oldPassword: this.oldPassword,
+
+    this.confirmPassword({
+      resetPasswordToken: this.token,
       password: this.password
     });
   }

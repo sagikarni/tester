@@ -4,7 +4,7 @@ import { load, compile, app, emailDefaultSender } from './template';
 
 const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
 const urlConfirmAccount = process.env.URL_CONFIRM_ACCOUNT;
-const urlResetPassword = process.env.URL_RESET_PASSWORD;
+const urlConfirmPassword = process.env.URL_CONFIRM_PASSWORD;
 
 setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
@@ -72,7 +72,7 @@ export function sendVerification({ emailTo, fullname }) {
 }
 
 export function sendResetPassword({ emailTo, token }) {
-  const tokenUrl = urlResetPassword + token;
+  const tokenUrl = urlConfirmPassword + token;
 
   const msg = {
     to: emailTo,

@@ -1,5 +1,28 @@
 <template>
-  <div>
+  <v-card>
+    <v-toolbar dark color="primary">
+      <v-toolbar-title>Login</v-toolbar-title>
+    </v-toolbar>
+
+    <v-alert dismissible :value="error" color="error" icon="error">
+      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
+      <div v-else>Cannot login right now, try again later</div>
+    </v-alert>
+
+    <v-subheader>
+      With Your Social Account
+    </v-subheader>
+
+    <v-layout justify-space-around>
+      <social-login-component></social-login-component>
+    </v-layout>
+
+    <v-divider></v-divider>
+
+    <v-subheader>
+      Or
+    </v-subheader>
+
     <v-card-text>
       <v-form v-model="valid" ref="form">
 
@@ -7,37 +30,44 @@
         <v-text-field v-model="password" :rules="passwordRules" prepend-icon="lock" label="What's your password?" type="password" required></v-text-field>
 
       </v-form>
-    </v-card-text>
 
-    <v-list>
-      <v-list-tile>
-        <v-list-tile-action>
-          <v-switch v-model="rememberMe" color="purple"></v-switch>
-        </v-list-tile-action>
-        <v-list-tile-title>Remember Me</v-list-tile-title>
-      </v-list-tile>
-      <v-list-tile>
-        <router-link to="/reset-password">Forgot your password?</router-link>
-      </v-list-tile>
-      <v-list-tile>
-        Need an account? &nbsp;<router-link to="/register">Register</router-link>
-      </v-list-tile>
-    </v-list>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-switch v-model="rememberMe" color="purple"></v-switch>
+          </v-list-tile-action>
+          <v-list-tile-title>Remember Me</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile>
+          <router-link to="/recover-account">Forgot your password?</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          Need an account? &nbsp;<router-link to="/register">Register</router-link>
+        </v-list-tile>
+      </v-list>
+    </v-card-text>
 
     <v-card-actions class="pa-3">
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="submit">Login</v-btn>
 
     </v-card-actions>
-  </div>
+
+  </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
+import SocialLoginComponent from './social-login.vue';
 
-@Component({})
+@Component({
+  components: { SocialLoginComponent }
+})
 export default class LoginFormComponent extends BaseComponent {
+  @Prop()
+  error!: string;
+
   public valid = false;
   public rememberMe = true;
 

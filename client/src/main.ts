@@ -18,8 +18,8 @@ import VideoPlayer from 'vue-video-player';
 import 'video.js/dist/video-js.css';
 import 'vue-video-player/src/custom-theme.css';
 import VueLodash from 'vue-lodash';
-import { CHECK_AUTH } from '@/modules/auth';
 import ApiService from '@/shared/api.service';
+import { CLEAR_ERRORS } from './modules/auth';
 
 Vue.config.productionTip = false;
 
@@ -45,7 +45,7 @@ Vue.use(VideoPlayer);
 Vue.use(VueLodash, { name: 'lodash' });
 
 router.beforeEach((to, from, next) => {
-  return Promise.all([store.dispatch(`auth/${CHECK_AUTH}`)]).then(() => next());
+  Promise.all([ store.dispatch('auth/' + CLEAR_ERRORS)]).then(() => next());
 });
 
 new Vue({

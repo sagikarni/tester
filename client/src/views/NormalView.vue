@@ -32,7 +32,7 @@ export default class NormalView extends Vue {
 
   sendConfirmEmail() {
     this.displayMessage = false;
-    ApiService.post('users/confirm', {}).then((response: any) => {
+    ApiService.post('users/notify-confirm', {}).then((response: any) => {
       console.log('sent');
     });
   }

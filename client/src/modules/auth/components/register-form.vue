@@ -1,5 +1,29 @@
 <template>
-  <div>
+  <v-card>
+    <v-toolbar dark color="primary">
+      <v-toolbar-title>Register</v-toolbar-title>
+    </v-toolbar>
+
+    <v-alert dismissible :value="error" color="error" icon="error">
+      <div v-if="error === 'EMAIL_EXIST'">This email is already registered. Want to <router-link to="/login">login</router-link> or <router-link to="/recover-account">recover your password?</router-link>
+      </div>
+      <div v-else>Cannot register right now, try again later</div>
+    </v-alert>
+
+    <v-subheader>
+      With Your Social Account
+    </v-subheader>
+
+    <v-layout justify-space-around>
+      <social-login-component></social-login-component>
+    </v-layout>
+
+    <v-divider></v-divider>
+
+    <v-subheader>
+      Or
+    </v-subheader>
+    
     <v-card-text>
       <v-form v-model="valid" ref="form">
 
@@ -18,7 +42,6 @@
           </small>
         </v-list-tile>
       </v-list>
-
     </v-card-text>
 
     <v-card-actions class="pa-3">
@@ -26,15 +49,23 @@
       <v-btn color="primary" @click="submit">Register</v-btn>
 
     </v-card-actions>
-  </div>
+
+  </v-card>
+
 </template>
 
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
+import SocialLoginComponent from './social-login.vue';
 
-@Component({})
+@Component({
+  components: { SocialLoginComponent }
+})
 export default class RegisterFormComponent extends BaseComponent {
+  @Prop()
+  error!: string;
+
   public valid = false;
 
   public name = '';

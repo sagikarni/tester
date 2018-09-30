@@ -6,12 +6,14 @@ import {
   LOGIN,
   LOGOUT_ACCOUNT,
   REGISTER,
-  CHECK_AUTH,
   CONFIRM_ACCOUNT,
   DISCONNECT_SOCIAL,
-  RESET_NEW_PASSWORD,
+  CONFIRM_PASSWORD,
   CHANGE_PASSWORD,
   CONNECT_SOCIAL,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  CLEAR_ERRORS,
 } from './actions.type';
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type';
@@ -45,71 +47,55 @@ const getters = {
 const actions = {
   [REGISTER](context: any, credentials: any) {
     return ApiService.post('users', credentials)
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
   [LOGIN](context: any, { email, password, rememberMe }: any) {
     return ApiService.post('users/login', { email, password })
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, {
-          store: rememberMe,
-          token,
-          refreshToken,
-          user,
-        }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: rememberMe }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
-  [RESET_NEW_PASSWORD](context: any, { password, resetPasswordToken }: any) {
+  [LOGIN_SUCCESS](context: any, payload: any) {
+    context.commit(SET_AUTH, {
+      store: payload.store,
+      ...extractAuthFromResponse(payload.response),
+    });
+  },
+  [LOGIN_FAILED](context: any, payload: any) {
+    context.commit(SET_ERROR, get(payload, 'body.error') || 'GENERAL_ERROR');
+  },
+  [CONFIRM_PASSWORD](context: any, { password, resetPasswordToken }: any) {
     return ApiService.post(
-      'users/new-password',
+      'users/confirm-password',
       { password },
       { headers: { Authorization: `Basic ${resetPasswordToken}` } },
     )
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
   [CHANGE_PASSWORD](context: any, { password, oldPassword }: any) {
     return ApiService.post('users/password', { password, oldPassword })
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
   [CONFIRM_ACCOUNT](context: any, confirmToken: string) {
     ApiService.post(
-      'users/confirmed',
+      'users/confirm',
       {},
       { headers: { Authorization: `Basic ${confirmToken}` } },
     )
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
   [CONNECT_SOCIAL](context: any, { token, refreshToken, payload }: any) {
     return new Promise((resolve, reject) => {
@@ -124,32 +110,24 @@ const actions = {
   },
   [DISCONNECT_SOCIAL](context: any, vendor: any) {
     return ApiService.post('users/social', { vendor })
-      .then(extractAuthFromResponse)
-      .then(({ token, refreshToken, user }: any) =>
-        context.commit(SET_AUTH, { store: true, token, refreshToken, user }),
+      .then((response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       )
-      .catch((error: any) => {
-        context.commit(SET_ERROR, error);
-        throw error;
-      });
+      .catch((response: any) => context.dispatch(LOGIN_FAILED, response));
   },
   [LOGOUT_ACCOUNT](context: any) {
     context.commit(PURGE_AUTH);
-    // ApiService.removeHeader();
     return Promise.resolve();
   },
-  [CHECK_AUTH](context: any) {
-    // if (context.state.token) {
-    //   ApiService.setHeader(context.state.token);
-    // } else {
-    //   ApiService.removeHeader();
-    // }
+  [CLEAR_ERRORS](context: any) {
+    context.commit(SET_ERROR, null);
+    return Promise.resolve();
   },
 };
 
 const mutations = {
   [SET_ERROR](state: any, error: any) {
-    state.error = get(error, 'body.error') || 'GENERAL_ERROR';
+    state.error = error;
   },
   [SET_AUTH](state: any, { store, token, refreshToken, user }: any) {
     state.token = token;

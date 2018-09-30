@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 import { auth, StoreTokenInterceptorPlugin } from '@/modules/auth';
 import { activities } from '@/modules/activities';
-import { state, actions, mutations } from './app.module';
+import { state, actions, mutations } from './root';
 
 Vue.use(Vuex);
 

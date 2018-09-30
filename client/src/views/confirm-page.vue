@@ -5,7 +5,8 @@
       <v-flex xs12 sm8 md6>
 
         <v-container>
-          Confirm your account... just a sec..
+          <div v-if="confirmed">your email has been successfully verified. we transfer you to the homepage...</div>
+          <div v-else>Confirm your account, Just a second...</div>
 
         </v-container>
       </v-flex>
@@ -17,15 +18,28 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { State, Action, Getter, namespace } from 'vuex-class';
-import { CONFIRM_ACCOUNT } from '@/modules/auth';
-
-const Auth = namespace('auth');
+import { CONFIRM_ACCOUNT, Auth } from '@/modules/auth';
 
 @Component({})
 export default class ConfirmPage extends BaseComponent {
+  submitted = false;
+  confirmed = false;
+
   @Auth.Action(CONFIRM_ACCOUNT)
   confirmAccount: any;
+
+  @Auth.Getter('isAuthenticated')
+  public isAuthenticated: any;
+
+  @Watch('isAuthenticated', { immediate: true, deep: true })
+  onisAuthenticatedChanged(val: string, oldVal: string) {
+    if (val && this.submitted) {
+      this.confirmed = true;
+      setTimeout(() => {
+        this.$router.push('/');
+      }, 3000);
+    }
+  }
 
   @Watch('$route', { immediate: true, deep: true })
   on$routeChanged(val: any, oldVal: any) {
@@ -36,8 +50,9 @@ export default class ConfirmPage extends BaseComponent {
     super();
   }
 
-  confirm(token: string) {
-    this.confirmAccount(token).then(() => this.$router.push('/'));
+  public confirm(token: string) {
+    this.submitted = true;
+    this.confirmAccount(token);
   }
 }
 </script>

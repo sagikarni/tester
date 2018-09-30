@@ -3,6 +3,7 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
+
         <v-alert dismissible :value="currentUser && !currentUser.verified" color="error" icon="new_releases">
           <div v-if="displayMessage">
             You must verify your account <a @click="sendConfirmEmail">Resend Verification Email</a> or contact our support team.
@@ -92,20 +93,23 @@
 <script lang="ts">
 import { Component, Watch, Prop } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { State, Action, Getter, namespace } from 'vuex-class';
 import {
   REGISTER,
   CONNECT_SOCIAL,
-  DISCONNECT_SOCIAL, connectWith
+  DISCONNECT_SOCIAL,
+  connectWith,
+  Auth,
+  // SocialConnectComponent
 } from '@/modules/auth';
 import ApiService from '@/shared/api.service';
 
-const Auth = namespace('auth');
-
-@Component({})
+@Component({
+  // components: { SocialConnectComponent }
+})
 export default class ProfilePage extends BaseComponent {
   @Auth.Getter('currentUser')
   currentUser: any;
+
   @Auth.Action(CONNECT_SOCIAL)
   connectSocial: any;
 
@@ -121,7 +125,7 @@ export default class ProfilePage extends BaseComponent {
 
   sendConfirmEmail() {
     this.displayMessage = false;
-    ApiService.post('users/confirm', {}).then((response: any) => {
+    ApiService.post('users/notify-confirm', {}).then((response: any) => {
       console.log('sent');
     });
   }

@@ -5,34 +5,7 @@
       <v-flex xs12 sm8 md6>
 
         <v-container>
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-toolbar-title>Login</v-toolbar-title>
-            </v-toolbar>
-
-            <v-alert dismissible :value="error" color="error" icon="error">
-              <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
-              <div v-else>Cannot login right now, try again later</div>
-            </v-alert>
-
-            <v-card-text>
-              <v-subheader>
-                With Your Social Account
-              </v-subheader>
-
-              <v-layout justify-space-around>
-                <social-login-component></social-login-component>
-              </v-layout>
-
-              <v-divider></v-divider>
-
-              <v-subheader>
-                Or
-              </v-subheader>
-
-              <login-form-component @submit="submit"></login-form-component>
-            </v-card-text>
-          </v-card>
+          <login-form-component :error="error" @submit="submit"></login-form-component>
 
         </v-container>
       </v-flex>
@@ -42,30 +15,37 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import BaseComponent from '@/modules/common/components/baseComponent.vue';
-import { State, Action, Getter, namespace } from 'vuex-class';
-import { LOGIN } from '@/modules/auth';
-import { SocialLoginComponent, LoginFormComponent } from '@/modules/auth';
-
-const Auth = namespace('auth');
+import { LoginFormComponent, Auth, LOGIN } from '@/modules/auth';
 
 @Component({
-  components: { SocialLoginComponent, LoginFormComponent }
+  components: { LoginFormComponent }
 })
 export default class LoginPage extends BaseComponent {
+  submitted = false;
+
   @Auth.Action(LOGIN)
   login: any;
 
   @Auth.Getter('error')
   error: any;
 
+  @Auth.Getter('isAuthenticated')
+  public isAuthenticated: any;
+
+  @Watch('isAuthenticated', { immediate: true, deep: true })
+  onisAuthenticatedChanged(val: string, oldVal: string) {
+    if (val && this.submitted) this.$router.push('/');
+  }
+
   constructor() {
     super();
   }
 
   public submit(form: any) {
-    this.login(form).then(() => this.$router.push('/'));
+    this.submitted = true;
+    this.login(form);
   }
 }
 </script>

@@ -3,11 +3,11 @@ import { Router } from 'express';
 import {
   register,
   login,
-  confirmEmail,
+  confirmAccount,
   refreshToken,
-  sendConfirm,
-  resetPassword,
-  newPassword,
+  sendConfirmNotification,
+  recoverAccount,
+  confirmPassword,
   disconnectFromSocial,
   changePassword
 } from '@libs/auth';
@@ -26,21 +26,21 @@ router.post('/login', login, (req, res, next) => {
   res.json(user.toJSON());
 });
 
-router.post('/confirm', sendConfirm, (req, res, next) => {
-  res.sendStatus(200);
-});
-
-router.post('/confirmed', confirmEmail, (req, res, next) => {
+router.post('/confirm', confirmAccount, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());
 });
 
-router.post('/reset-password', resetPassword, (req, res, next) => {
+router.post('/notify-confirm', sendConfirmNotification, (req, res, next) => {
   res.sendStatus(200);
 });
 
-router.post('/new-password', newPassword, (req, res, next) => {
+router.post('/recover-account', recoverAccount, (req, res, next) => {
+  res.sendStatus(200);
+});
+
+router.post('/confirm-password', confirmPassword, (req, res, next) => {
   const { user } = req;
 
   res.json(user.toJSON());

@@ -14,22 +14,22 @@ import {
 export const register = asyncAll([
   createUser(req => req.body),
   sendWelcomeEmail({ getUser: req => req.user }),
-  sendVerifyEmail({ getUser: req => req.user }),
+  sendEmailConfirmAccount({ getUser: req => req.user }),
   token()
 ]);
 
 export const login = asyncAll([authenticateUser(req => req.body), token()]);
 
-export const confirmEmail = asyncAll([
+export const confirmAccount = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'confirm' }),
-  validateUser({ getUser: req => req.user }),
-  sendVerificationEmail({ getUser: req => req.user }),
+  confirmUser({ getUser: req => req.user }),
+  sendEmailConfirmVerification({ getUser: req => req.user }),
   token()
 ]);
 
-export const sendConfirm = asyncAll([
+export const sendConfirmNotification = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  sendVerifyEmail({ getUser: req => req.user })
+  sendEmailConfirmAccount({ getUser: req => req.user })
 ]);
 
 export const authenticate = asyncAll([
@@ -38,16 +38,16 @@ export const authenticate = asyncAll([
 ]);
 
 export const refreshToken = asyncAll([
-  validateToken({ headerKey: 'Bearer', grant: 'refresh' }),
+  validateToken({ headerKey: 'Basic', grant: 'refresh' }),
   token()
 ]);
 
-export const resetPassword = asyncAll([
+export const recoverAccount = asyncAll([
   findUser(req => req.body),
   sendResetPasswordEmail({ getUser: req => req.user })
 ]);
 
-export const newPassword = asyncAll([
+export const confirmPassword = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'reset' }),
   setNewPassword({
     getUser: req => req.user,
@@ -99,7 +99,7 @@ export function setNewPassword({ getUser, getPassword }) {
   };
 }
 
-export function validateUser({ getUser }) {
+export function confirmUser({ getUser }) {
   return async (req, res, next) => {
     let user = getUser(req);
 
@@ -117,21 +117,22 @@ export function validateUser({ getUser }) {
 export function validateToken({ headerKey, grant }) {
   return async (req, res, next) => {
     const authorization = get(req, 'headers.authorization');
-    if (!authorization) throw new AppHttpError(401, 'Unauthorized');
+    if (!authorization) next(new AppHttpError(401, 'Unauthorized')); //throw new AppHttpError(401, 'Unauthorized');
 
     var parts = authorization.split(' ');
     if (!(parts.length === 2 && parts[0] === headerKey))
-      throw new AppHttpError(401, 'Unauthorized');
+      next(new AppHttpError(401, 'Unauthorized')); //throw new AppHttpError(401, 'Unauthorized');
 
     jwt.verify(parts[1], process.env.SECRET_TOKEN, async (err, decoded) => {
       if (err) next(new AppHttpError(401, 'Unauthorized'));
 
       if (get(decoded, 'grant') !== grant)
-        throw new AppHttpError(401, 'Unauthorized');
+        next(new AppHttpError(401, 'Unauthorized'));
+      //throw new AppHttpError(401, 'Unauthorized');
 
       req.token = parts[1];
       req.user = await User.findOne({ _id: decoded.id });
-      if (!req.user) throw new AppHttpError(401, 'Unauthorized');
+      if (!req.user) next(new AppHttpError(401, 'Unauthorized')); //throw new AppHttpError(401, 'Unauthorized');
       next();
     });
   };
@@ -153,7 +154,6 @@ export function token() {
 
 export function authenticateUser(getAttributes) {
   return async (req, res, next) => {
-
     const { email, password } = pick(getAttributes(req), ['email', 'password']);
 
     const user = await User.findOne({ email });
@@ -216,7 +216,7 @@ export function sendWelcomeEmail({ getUser }) {
   };
 }
 
-export function sendVerifyEmail({ getUser }) {
+export function sendEmailConfirmAccount({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
     if (!user.verified) {
@@ -231,7 +231,7 @@ export function sendVerifyEmail({ getUser }) {
   };
 }
 
-export function sendVerificationEmail({ getUser }) {
+export function sendEmailConfirmVerification({ getUser }) {
   return (req, res, next) => {
     const user = getUser(req);
     if (user.verified) {

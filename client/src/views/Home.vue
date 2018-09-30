@@ -120,11 +120,15 @@ const auth = namespace('auth');
 
 @Component
 export default class Home extends Vue {
-  @auth.Getter('isAuthenticated') isAuthenticated: any;
-  @auth.Getter('currentUser') currentUser: any;
+  @auth.Getter('isAuthenticated')
+  isAuthenticated: any;
+  @auth.Getter('currentUser')
+  currentUser: any;
 
-  @Action('changeMediaQuality') public changeMediaQuality?: any;
-  @Action('changeFullScreen') public changeFullScreen?: any;
+  @Action('changeMediaQuality')
+  public changeMediaQuality?: any;
+  @Action('changeFullScreen')
+  public changeFullScreen?: any;
 
   public quality?: boolean = false;
   public isFullScreen?: boolean = false;
@@ -140,9 +144,14 @@ export default class Home extends Vue {
   }
 
   public secure() {
-    this.$http.get('/api/v1/secure').then(response => {
-      console.log('res: ', response);
-    });
+    (this.$http as any)
+      .get('/api/v1/secure')
+      .then((response: any) => {
+        console.log('res: ', response);
+      })
+      .catch((err: any) => {
+        console.log('err: ', err);
+      });
   }
 }
 </script>

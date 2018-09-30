@@ -1,4 +1,7 @@
+import { namespace } from 'vuex-class';
+
 export * from './store';
 export * from './components';
-export * from './social.service';
-export * from './store-token.interceptor';
+export * from './services';
+
+export const Auth = namespace('auth');
