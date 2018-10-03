@@ -1,18 +1,10 @@
 {
   "compilerOptions": {
-    //   "module": "commonjs",
-    //   "esModuleInterop": true,
-    //   "target": "es6",
-    //   "noImplicitAny": false,
-    //   "moduleResolution": "node",
-    //   "sourceMap": true,
-    //   "declaration": false,
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@libs/*": ["libs/*"],
-      "@server/*": ["server/*"],
-      "@/*": ["client/src/*"]
+      "@/*": ["./apps/web/src/*"],
+      "@libs/*": ["./libs/*"]
     }
   }
 }

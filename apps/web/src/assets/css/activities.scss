@@ -1,0 +1,167 @@
+
+.acrivities {
+  background-color: black!important;
+}
+.ex-activity-details-component{
+  opacity: 0;
+  .ex-back-arrow-icon{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-image: url(~/assets/css/icons/arrow-down.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+  .ex-share-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(~/assets/css/icons/share.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-pin-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(~/assets/css/icons/pin-50.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-unpin-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-image: url(~/assets/css/icons/unpin-50.png);
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .ex-activity-main-details{
+    @media screen and (max-width: 800px) and (min-width: 600px) {
+      flex-direction: column;
+      .ex-fixed-image-scope{
+        flex: initial!important;
+        margin-bottom: 15px;
+        margin-right: 0!important;
+      }
+    }
+    .ex-fixed-image-scope{
+      flex: 0 0 400px;
+      .ex-cover-image-wrapper{
+        height: 250px;
+        img{
+          object-fit: cover;
+        }
+      }
+    }
+    .ex-main-info-wrapper{
+      height: 100%;
+      .ex-play-video{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(~/assets/css/icons/videoPlay.png);
+        -webkit-background-size: contain;
+        background-size: contain;
+      }
+      .ex-landscape{
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background-image: url(~/assets/css/icons/landscape.png);
+        -webkit-background-size: contain;
+        background-size: contain;
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
+  }
+  .ex-session-info{
+    text-align: center;
+    h5{
+      font-weight: 400;
+    }
+    .btn-toggle{
+      button{
+        text-transform: unset;
+        height: initial;
+        padding: 5px 25px!important;
+        @media (max-width: 600px) {
+          padding-left: 25px!important;
+          padding-right: 25px!important;
+
+        }
+        .btn__content{
+          flex-direction: row;
+          font-size: 12px;
+          @media screen and (max-width: 600px) {
+            flex-direction: column;
+          }
+          p{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .close_button{
+    .btn__content{
+      font-size: 35px;
+      width: 35px;
+    }
+  }
+}
+
+.ex-social-menu{
+  a.list__tile{
+    i{
+      width: 30px;
+      font-size: 20px;
+      align-self: center;
+    }
+  }
+}
+
+.Witp-globalClass .dialog__content__active{
+  background: black;
+  display: table!important;
+}
+.Witp-globalClass .dialog:not(.dialog--fullscreen){
+  height: 100%;
+  max-height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.Witp-globalClass .back_what_in_picture .btn__content{
+  padding: 0;
+  justify-content: left;
+  text-transform: none;
+
+}
+.Witp-globalClass .back_what_in_picture .btn__content i{
+  margin-right: 12px;
+  font-size: 20px;
+
+}
+.Witp-globalClass .back_what_in_picture .btn__content:before{
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .object-fit_contain{
+    width: 100%;
+  }
+  .Witp-globalClass .dialog__content__active{
+    display: block!important;
+  }
+  .Witp-globalClass .dialog:not(.dialog--fullscreen){
+    height: auto;
+    max-height: 90%;
+    display: block;
+    margin: 45px 0 0 0;
+  }
+
+}
