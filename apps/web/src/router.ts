@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import * as NProgress from 'nprogress';
 
-import ActivityDetails from '@/views/activityDetails.vue';
+// import ActivityDetails from '@/views/activityDetails.vue';
 
 import LoginPage from '@/views/login-page.vue';
 import RegisterPage from '@/views/register-page.vue';
@@ -23,7 +23,7 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      children: [{ path: '/activity-details', component: ActivityDetails }],
+      // children: [{ path: '/activity-details', component: ActivityDetails }],
     },
     {
       path: '/about',
