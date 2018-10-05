@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import * as NProgress from 'nprogress';
 
-// import ActivityDetails from '@/views/activityDetails.vue';
+import ActivityDetails from '@/views/activityDetails.vue';
 
 import LoginPage from '@/views/login-page.vue';
 import RegisterPage from '@/views/register-page.vue';
@@ -23,7 +23,6 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      // children: [{ path: '/activity-details', component: ActivityDetails }],
     },
     {
       path: '/about',
@@ -34,6 +33,9 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
+    { path: '/activity-details', component: ActivityDetails },
+    { path: '/activity-details/:activityId', component: ActivityDetails },
+
     { path: '/login', component: LoginPage },
     { path: '/register', component: RegisterPage },
     { path: '/verify', component: VerifyPage },

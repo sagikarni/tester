@@ -24,6 +24,9 @@ const getters = {
   activityState(state: any) {
     return state.activity;
   },
+  currentActivity(state: any) {
+    return state.activity;
+  },
 };
 
 const actions = {

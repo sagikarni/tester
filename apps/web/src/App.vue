@@ -2,9 +2,13 @@
   <div id="app" class="theme-dark">
     <v-app>
       <Header></Header>
-
-      <router-view />
-
+      <v-content>
+        <v-container fluid>
+          <transition name="page" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </v-container>
+      </v-content>
     </v-app>
   </div>
 </template>
@@ -25,5 +29,4 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import './assets/css/styles.scss';
-
 </style>

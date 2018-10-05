@@ -112,11 +112,11 @@ const actions = {
   },
   [LOGOUT_ACCOUNT](context: any) {
     context.commit(PURGE_AUTH);
-    return Promise.resolve();
+    // return Promise.resolve();
   },
   [CLEAR_ERRORS](context: any) {
     context.commit(SET_ERROR, null);
-    return Promise.resolve();
+   // return Promise.resolve();
   }
 };
 

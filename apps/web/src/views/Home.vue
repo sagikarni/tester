@@ -25,7 +25,7 @@
       </v-card-title>
 
       <v-card-actions>
-        <v-btn flat color="orange" to="activity-details/1">Start</v-btn>
+        <v-btn flat color="orange" to="/activity-details/1">Start</v-btn>
       </v-card-actions>
     </v-card>
 

@@ -65,6 +65,10 @@
         <v-toolbar app fixed clipped-left color="primary">
 
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            
+            <v-btn flat icon color="dark" class="ml-0">
+                <v-icon dark>fa fa-chevron-left</v-icon>
+            </v-btn>
 
             <v-menu offset-y content-class="ex-header-menu">
                 <v-toolbar-title slot="activator" class="toolbarTitle">locale.general.menuActivities</v-toolbar-title>

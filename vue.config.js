@@ -5,28 +5,33 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const apiUrl = 'http://localhost:3000';
 
 const copies = [
-  { from: path.join(__dirname + '/apps/web/public/assets'), to: 'assets' }
+  { from: path.join(__dirname + '/apps/web/public'),  ignore: ['index.html', '.DS_Store'] }
 ];
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
 
 module.exports = {
   outputDir: './dist/public',
   chainWebpack: config => {
     config.plugin('html').tap(([options]) => [
       Object.assign(options, {
-        template: path.resolve('apps/web/public/index.html')
+        template: resolve('apps/web/public/index.html')
       })
     ]);
     config.set('entry', ['./src/main.ts']);
-    config.set('context', path.join(__dirname + '/apps/web'));
-    config.resolve.alias.set('@', path.join(__dirname + '/apps/web/src'));
-    config.resolve.alias.set('@libs', path.join(__dirname + '/libs'));
+    config.set('context', resolve('/apps/web'));
+    config.resolve.alias.set('@', resolve('apps/web/src'));
+    config.resolve.alias.set('@libs', resolve('libs'));
+   
   },
   configureWebpack: config => {
     return {
       stats: 'verbose',
       devtool: 'source-map',
       plugins: [
-        new CopyWebpackPlugin([...copies]),
+         new CopyWebpackPlugin([...copies]),
         new webpack.NormalModuleReplacementPlugin(
           /environments\/environment/gi,
           result =>
@@ -39,6 +44,9 @@ module.exports = {
     };
   },
   devServer: {
+    // publicPath: './apps/web/public',
+
+    // publicPath: 'C:\\code\\tera\\apps\\web\\public',
     proxy: {
       '/api': {
         target: apiUrl,
