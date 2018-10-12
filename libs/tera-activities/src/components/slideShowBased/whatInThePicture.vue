@@ -73,7 +73,7 @@
                     </div>
                     <div class="closeButtonDialog">
                         <v-btn @click="fllipAllOpenCards" class="btnDialogClose">
-                            {{ $locale.general.close }}
+                             $locale.general.close 
                         </v-btn>
                     </div>
 
@@ -105,7 +105,7 @@
 
 
         public created() {
-            this.switchQuestions = this.$locale.activities.switchQuestions;
+            this.switchQuestions = 'this.$locale.activities.switchQuestions';
             timeLineMax.set("body", {className: "+=Witp-globalClass"});
 
 

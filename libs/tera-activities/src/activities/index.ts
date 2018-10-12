@@ -1,1 +1,3 @@
-export * from './activity-1';
+
+export const activitiesMetadata = require('./activities.json');
+

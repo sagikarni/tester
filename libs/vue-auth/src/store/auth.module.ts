@@ -25,10 +25,20 @@ const defaultState = {
   user: null
 };
 
-const newState = () =>
-  Object.assign({}, defaultState, StorageService.get(StorageTypes.AUTH) || {}, {
-    error: null
-  });
+// const newState = () =>
+//   Object.assign({}, defaultState, StorageService.get(StorageTypes.AUTH) || {}, {
+//     error: null
+//   });
+
+const newState = () => ({
+  ...defaultState,
+  ...(StorageService.get(StorageTypes.AUTH) || {}),
+  ...{ error: null }
+});
+
+// Object.assign({}, defaultState, StorageService.get(StorageTypes.AUTH) || {}, {
+//   error: null
+// });
 
 const state = newState();
 
@@ -47,8 +57,9 @@ const getters = {
 const actions = {
   [REGISTER](context: any, credentials: any) {
     return ApiService.post('users', credentials).then(
-      (response: any) => context.dispatch(LOGIN_SUCCESS, { response, store: true }),
-      (reason:any) => context.dispatch(LOGIN_FAILED, reason)
+      (response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
+      (reason: any) => context.dispatch(LOGIN_FAILED, reason)
     );
   },
   [LOGIN](context: any, { email, password, rememberMe }: any) {
@@ -73,13 +84,15 @@ const actions = {
       { password },
       { headers: { Authorization: `Basic ${resetPasswordToken}` } }
     ).then(
-      (response: any) => context.dispatch(LOGIN_SUCCESS, { response, store: true }),
+      (response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       (reason: any) => context.dispatch(LOGIN_FAILED, reason)
     );
   },
   [CHANGE_PASSWORD](context: any, { password, oldPassword }: any) {
     return ApiService.post('users/password', { password, oldPassword }).then(
-      (response: any) => context.dispatch(LOGIN_SUCCESS, { response, store: true }),
+      (response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       (reason: any) => context.dispatch(LOGIN_FAILED, reason)
     );
   },
@@ -89,7 +102,8 @@ const actions = {
       {},
       { headers: { Authorization: `Basic ${verifyToken}` } }
     ).then(
-      (response: any) => context.dispatch(LOGIN_SUCCESS, { response, store: true }),
+      (response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       (reason: any) => context.dispatch(LOGIN_FAILED, reason)
     );
   },
@@ -106,7 +120,8 @@ const actions = {
   },
   [DISCONNECT_SOCIAL](context: any, vendor: any) {
     return ApiService.post('users/social', { vendor }).then(
-      (response: any) => context.dispatch(LOGIN_SUCCESS, { response, store: true }),
+      (response: any) =>
+        context.dispatch(LOGIN_SUCCESS, { response, store: true }),
       (reason: any) => context.dispatch(LOGIN_FAILED, reason)
     );
   },
@@ -116,7 +131,7 @@ const actions = {
   },
   [CLEAR_ERRORS](context: any) {
     context.commit(SET_ERROR, null);
-   // return Promise.resolve();
+    // return Promise.resolve();
   }
 };
 

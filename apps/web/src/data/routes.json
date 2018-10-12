@@ -1,0 +1,12 @@
+[
+  {
+    "page": "getting-started/QuickStart",
+    "route": "getting-started/quick-start"
+  },
+
+  {
+    "page": "general/404",
+    "route": "*",
+    "fullscreen": true
+  }
+]

@@ -12,24 +12,28 @@ export interface IUserDocument extends Document {
     id: string;
     token: string;
     refreshToken: string;
+    code: string;
     _raw: string;
   };
   twitter: {
     id: string;
     token: string;
     refreshToken: string;
+    code: string;
     _raw: string;
   };
   linkedin: {
     id: string;
     token: string;
     refreshToken: string;
+    code: string;
     _raw: string;
   };
   google: {
     id: string;
     token: string;
     refreshToken: string;
+    code: string;
     _raw: string;
   };
 }
@@ -57,24 +61,28 @@ export const userSchema: Schema = new Schema({
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
+    code: { type: String },
     _raw: { type: String }
   },
   twitter: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
+    code: { type: String },
     _raw: { type: String }
   },
   linkedin: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
+    code: { type: String },
     _raw: { type: String }
   },
   google: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
+    code: { type: String },
     _raw: { type: String }
   }
 });
@@ -178,7 +186,7 @@ userSchema.method('toJSON', function(): any {
 userSchema.static(
   'hashPassword',
   (password: string): string => {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   }
 );
 

@@ -24,7 +24,6 @@ module.exports = {
     config.set('context', resolve('/apps/web'));
     config.resolve.alias.set('@', resolve('apps/web/src'));
     config.resolve.alias.set('@libs', resolve('libs'));
-   
   },
   configureWebpack: config => {
     return {

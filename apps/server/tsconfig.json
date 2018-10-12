@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "lib": ["es2017", "dom"],
     "module": "commonjs",
-    "target": "es2017",
+    "esModuleInterop": true,
+    "target": "es6",
+
+    "lib": ["es2017", "dom"],
     "moduleResolution": "node",
     "baseUrl": ".",
+    "sourceMap": true,
     "paths": {
       "@libs/*": ["../../libs/*"],
       "@server/*": ["*"]
-    }
+    }    
   }
 }

@@ -1,13 +1,15 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 // import { authenticate } from "@libs/auth-node";
 
-import { activity1 } from "@libs/tera-activities";
+import { activitiesMetadata } from '@libs/tera-activities';
 
 const router = Router();
 
-router.get("/", (req, res, next) => {
-  res.json(activity1);
+router.get('/', (req, res, next) => {
+  console.log('activitiesMetadata', activitiesMetadata);
+
+  res.json(activitiesMetadata['single-photo']);
 });
 
 export { router as activity };

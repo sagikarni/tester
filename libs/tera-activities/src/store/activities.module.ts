@@ -42,7 +42,7 @@ const actions = {
         context.commit(UPDATE_ACTIVITY_IS_PINNED, { isPinned: pin }); // TODO here we need to add response from backend
         return response;
       })
-      .catch(reject => {
+      .catch((reject: any) => {
         return reject;
       });
   },

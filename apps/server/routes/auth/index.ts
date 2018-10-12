@@ -2,58 +2,129 @@ import { Router } from 'express';
 
 import { authenticate } from 'passport';
 
+import expressConditionalMiddleware from 'express-conditional-middleware';
+import * as randomstring from 'randomstring';
+
+import {
+  authenticateUser,
+  createUser,
+  sendWelcomeEmail,
+  token,
+  updateUserFromSocial,
+  User,
+} from '@libs/auth-node';
+
+import { asyncAll } from '@libs/express-zone';
+import { get } from 'lodash';
+
+const registerWithSocial = combineMiddleware([
+  ...asyncAll([
+    createUser(req => req.body),
+    sendWelcomeEmail({ getUser: req => req.user }),
+    updateUserFromSocial({
+      getUser: req => req.user,
+      getSocialResponse: req => req.social,
+    }),
+    token(),
+  ]),
+]);
+
+const loginWithSocial = combineMiddleware([
+  ...asyncAll([
+    authenticateUser(req => req.body),
+    updateUserFromSocial({
+      getUser: req => req.user,
+      getSocialResponse: req => req.social,
+    }),
+    token(),
+  ]),
+]);
+
 const router = Router();
-// router.get(/(facebook|twitter)/, ...);
-// router.get(/(facebook|twitter)\/callback/, ...);
 
-router.get('/facebook', (req, res, next) => {
-  authenticate('facebook', {
-    scope: ['email']
-  })(req, res);
-});
+const options = {
+  facebook: { session: false, scope: ['email'], authType: 'rerequest' },
+};
 
-router.get('/facebook/callback', (req, res, next) => {
-  authenticate('facebook', (err, strategyResponse) => {
-    if (err) { throw err }
+router.get('/:social', (req, res, next) =>
+  authenticate(req.params.social, options[req.params.social])(req, res, next),
+);
 
-    const { accessToken, refreshToken, payload } = strategyResponse;
+router.get(
+  '/:social/callback',
+  (req, res, next) =>
+    authenticate(req.params.social, async (err, strategyResponse) => {
+      console.log('in here');
 
-    res.writeHeader(200, { 'Content-Type': 'text/html' });
+      console.log({ err, strategyResponse });
 
-    var message = {
-      message: 'facebookLogin',
-      payload,
-      accessToken,
-      refreshToken
+      (req as any).social = strategyResponse;
+
+      const email = get(req, 'social.profile.emails[0].value');
+      const name = get(req, 'social.profile.displayName');
+      const password = randomstring.generate(8);
+
+      if (!email) {
+        res.end('SOCIAL_EMAIL_MISSING');
+        return;
+      }
+
+      const user = await User.findOne({ email });
+
+      req.body = user
+        ? { password: user.password, email: user.email }
+        : { email, name, password };
+
+      (req as any).userExist = !!user;
+
+      next();
+    })(req, res, next),
+  expressConditionalMiddleware(
+    (req, res, next) => !req.userExist,
+    registerWithSocial,
+    loginWithSocial,
+  ),
+  (req, res, next) => {
+    console.log('after all');
+
+    const { user } = req as any;
+
+    res.json(user.toJSON());
+  },
+);
+
+function combineMiddleware(mids) {
+  return mids.reduce((a, b) => {
+    return (req, res, next) => {
+      a(req, res, (err: any) => {
+        if (err) {
+          return next(err);
+        }
+        b(req, res, next);
+      });
     };
-
-    res.write(`
-    <script>
-       window.opener.postMessage(${JSON.stringify(message)}, "*"); 
-       window.close();
-    </script>`);
-
-    res.end();
-  })(req, res, next);
-});
+  });
+}
 
 router.get('/twitter', (req, res, next) => {
   authenticate('twitter')(req, res, next);
 });
 
-router.get('/twitter/callback', (req, res, next) => {
+router.get('/twitter/return', (req, res, next) => {
   authenticate('twitter', (err, strategyResponse) => {
-    if (err) { throw err }
+    if (err) {
+      throw err;
+    }
 
     const { accessToken, refreshToken, payload } = strategyResponse;
 
-    res.writeHeader(200, { 'Content-Type': 'text/html' });
+    res.writeHead(200, { 'Content-Type': 'text/html' });
 
-    var message = {
-      message: 'twitterLogin',
-      payload,
+    const message = {
       accessToken,
-      refreshToken
+      payload,
+      refreshToken,
+      message: 'twitterLogin',
     };
 
     res.write(`
@@ -70,23 +141,25 @@ router.get('/linkedin', (req, res, next) => {
   authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] })(
     req,
     res,
-    next
+    next,
   );
 });
 
-router.get('/linkedin/callback', (req, res, next) => {
+router.get('/linkedin/return', (req, res, next) => {
   authenticate('linkedin', (err, strategyResponse) => {
-    if (err) { throw err }
+    if (err) {
+      throw err;
+    }
 
     const { accessToken, refreshToken, payload } = strategyResponse;
 
-    res.writeHeader(200, { 'Content-Type': 'text/html' });
+    res.writeHead(200, { 'Content-Type': 'text/html' });
 
-    var message = {
-      message: 'linkedinLogin',
+    const message = {
       payload,
       accessToken,
-      refreshToken
+      refreshToken,
+      message: 'linkedinLogin',
     };
 
     res.write(`
@@ -103,19 +176,21 @@ router.get('/google', (req, res, next) => {
   authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
 });
 
-router.get('/google/callback', (req, res, next) => {
-  authenticate('google', (err,  strategyResponse) => {
-    if (err) { throw err }
+router.get('/google/return', (req, res, next) => {
+  authenticate('google', (err, strategyResponse) => {
+    if (err) {
+      throw err;
+    }
 
     const { accessToken, refreshToken, payload } = strategyResponse;
-    
-    res.writeHeader(200, { 'Content-Type': 'text/html' });
 
-    var message = {
-      message: 'googleLogin',
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+
+    const message = {
       payload,
       accessToken,
-      refreshToken
+      refreshToken,
+      message: 'googleLogin',
     };
 
     res.write(`
@@ -129,3 +204,17 @@ router.get('/google/callback', (req, res, next) => {
 });
 
 export { router as auth };
+
+export function testA(getAttributes) {
+  return async (req, res, next) => {
+    console.log('in test a');
+    next();
+  };
+}
+
+export function testB(getAttributes) {
+  return async (req, res, next) => {
+    console.log('in test B');
+    next();
+  };
+}

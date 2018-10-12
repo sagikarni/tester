@@ -20,3 +20,13 @@ declare module 'gsap/Draggable.js';
 declare module "jquery";
 declare module "vue-lodash";
 declare module "lodash";
+
+declare module '@/lang/en';
+declare module '@/lang';
+
+
+
+declare module "*.json" {
+  const value: any;
+  export default value;
+}

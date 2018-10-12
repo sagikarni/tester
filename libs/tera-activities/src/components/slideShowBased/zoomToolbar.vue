@@ -5,10 +5,10 @@
             <v-card tile>
                 <v-list class="grey_transparent">
                     <div class="text-xs-center">
-                        <v-btn @click="moveShapes">{{$locale.activities.moveShapes}}</v-btn>
-                        <v-btn @click="addShape"> +{{$locale.activities.addShape}}</v-btn>
-                        <v-btn @click="enlargeShape"> +{{$locale.activities.enlargeShape}}</v-btn>
-                        <v-btn @click="revealPhoto"> {{$locale.activities.revealPhoto}}</v-btn>
+                        <v-btn @click="moveShapes">$locale.activities.moveShapes</v-btn>
+                        <v-btn @click="addShape"> +$locale.activities.addShape</v-btn>
+                        <v-btn @click="enlargeShape"> +$locale.activities.enlargeShape</v-btn>
+                        <v-btn @click="revealPhoto"> $locale.activities.revealPhoto</v-btn>
                         <v-btn
                                 @click="buttonSheet = false"
                                 flat color="white"
@@ -64,7 +64,7 @@
             background-color: rgba(158, 158, 158, 0.3);
         }
         .button-lamp{
-            background-image: url("../../../../../public/assets/img/icons/lamp_icon.png");
+            background-image: url("~/src/assets/icons/lamp_icon.png");
             background-size: cover;
             background-color: transparent!important;
             box-shadow: none!important;

@@ -4,7 +4,7 @@
 
         <v-expansion-panel expand v-if="!$vuetify.breakpoint.xsOnly">
             <v-expansion-panel-content>
-                <div slot="header">{{ $locale.general.sessionLengthText }}</div>
+                <div slot="header">$locale.general.sessionLengthText </div>
                 <v-card class="ex-session-card">
                     <v-card-text>
                         <v-container fluid>

@@ -14,7 +14,7 @@
 
     <br><br><br><br>
 
-    <v-card>
+    <v-card  v-for="(activity, index) in activities" :key="index">
       <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
 
       <v-card-title primary-title>
@@ -25,7 +25,7 @@
       </v-card-title>
 
       <v-card-actions>
-        <v-btn flat color="orange" to="/activity-details/1">Start</v-btn>
+        <v-btn flat color="orange" :to="`/activity/${activity.name}`">Start</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -43,6 +43,10 @@ export default class Home extends Vue {
   isAuthenticated: any;
   @Auth.Getter('currentUser')
   currentUser: any;
+
+  public activities = [
+    { name: 'single-photo' }
+  ]
 
   public secure() {
     this.$http.get('/api/v1/secure').then(

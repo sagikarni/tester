@@ -1,0 +1,57 @@
+<template>
+    <div ref="loadingOverlay" v-if ='isLoading' class = "tera-overlay"></div>
+</template>
+
+<script lang="ts">
+    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import {ISystemLoading} from "../../store/types";
+    import {State, Action, Getter} from 'vuex-class';
+    import TimelineMax from 'gsap';
+    const timelineMax = TimelineMax as any;
+
+    @Component
+    export default class Loading extends Vue {
+        public isLoading: boolean = false;
+        @State(state => state.systemLoading) public loadingInfo?: ISystemLoading;
+
+
+        @Watch('loadingInfo')
+        public onPropertyChanged(value: ISystemLoading, oldValue: ISystemLoading) {
+             value.isLoading ?  this.show() : this.close();
+        }
+
+        public close() {
+            setTimeout(() => {
+              timelineMax.to('.tera-overlay', 1, {opacity : 0 , onComplete: () => {
+                    this.isLoading = false;
+                } });
+            } , 21);
+        }
+        public show(): void {
+            this.isLoading = true;
+            setTimeout(() => {
+                  timelineMax.to('.tera-overlay', 1, {opacity : 0.5 });
+             } , 20);
+        }
+
+
+
+    }
+</script>
+
+<style scoped lang="scss">
+
+    .tera-overlay
+{
+        opacity: 0;
+        position: fixed; /* Sit on top of the page content */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: black;
+        z-index: 2000;
+    }
+</style>

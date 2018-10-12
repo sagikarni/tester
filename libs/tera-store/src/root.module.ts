@@ -4,7 +4,7 @@ import {
   ERROR_PANE_ACTION,
   CHANGE_RELOAD_ACTIVITY_DETAILS,
   CHANGE_MEDIA_QUALITY,
-  CHANGE_FULLSCREEN,
+  CHANGE_FULLSCREEN
 } from './actions.type';
 
 import {
@@ -14,18 +14,24 @@ import {
   UPDATE_RELOAD_ACTIVITY_DETAILS,
   UPDATE_MEDIA_QUALITY,
   UPDATE_FULL_SCREEN,
+  FULLSCREEN,
+  LOAD_LANG
 } from './mutations.type';
 
-export const state = {
+const state = {
   systemLoading: null,
   generalGerror: null,
   errorPane: null,
   reloadActivityDetails: null,
   isHDMedia: null,
   isFullScreen: null,
+  /**NEW */
+  appToolbar: null,
+  loadedLangs: [],
+  isFullscreen: false
 };
 
-export const actions = {
+const actions = {
   [LOADING](context: any, loadingInfo: any) {
     return new Promise(resolve => {
       context.commit(LOADING_STATE_CHANGED, loadingInfo);
@@ -61,10 +67,10 @@ export const actions = {
       context.commit(UPDATE_FULL_SCREEN, item);
       resolve();
     });
-  },
+  }
 };
 
-export const mutations = {
+const mutations = {
   [LOADING_STATE_CHANGED](state: any, payload: any) {
     state.systemLoading = payload;
   },
@@ -83,4 +89,30 @@ export const mutations = {
   [UPDATE_FULL_SCREEN](state: any, payload: any) {
     state.isFullScreen = payload.isFullScreen;
   },
+  [FULLSCREEN](state: any, payload: any) {
+    state.isFullscreen = payload;
+    // state.stateless = payload
+    // state.appDrawer = !payload && null
+    state.appToolbar = !payload;
+  },
+  [LOAD_LANG](state: any, payload: any) {
+    state.loadedLangs.push(payload)
+  },
+};
+
+const getters = {
+  isFullscreen: (state: any) => {
+    return state.isFullscreen;
+  },
+  loadedLangs: (state: any) => {
+    return state.loadedLangs;
+  }
+};
+
+export const app = {
+  namespaced: true,
+  getters,
+  state,
+  actions,
+  mutations
 };

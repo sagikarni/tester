@@ -131,7 +131,7 @@ export function validateToken({ headerKey, grant }) {
 
       req.token = parts[1];
       req.user = await User.findOne({ _id: decoded.id });
-      
+
       if (!req.user) next(new AppHttpError(401, 'Unauthorized'));
 
       next();
@@ -200,6 +200,29 @@ export function createUser(getAttributes) {
 
     req.user = await new User({ name, email, password, verified }).save();
 
+    next();
+  };
+}
+
+export function updateUserFromSocial({ getUser, getSocialResponse }) {
+  return async (req, res, next) => {
+    const user = getUser(req);
+    const socialResponse = getSocialResponse(req);
+    const { code } = req.query;
+
+    user.picture =
+      user.picture || get(socialResponse, 'profile.photos[0].value');
+
+    const provider = user[get(socialResponse, 'provider')];
+
+    provider.id = get(socialResponse, 'profile.id');
+    provider._raw = get(socialResponse, 'profile._raw');
+    provider.token = get(socialResponse, 'accessToken');
+    provider.refreshToken = get(socialResponse, 'refreshToken');
+    provider.code = code;
+    user.verified = true;
+
+    user.save();
     next();
   };
 }

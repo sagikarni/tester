@@ -1,7 +1,8 @@
 import * as fsSync from 'fs';
 import * as path from 'path';
 import { all, promisifyAll } from 'bluebird';
-import * as handlebars from 'handlebars';
+// import * as handlebars from 'handlebars';
+import handlebars from 'handlebars/dist/cjs/handlebars';
 
 const emailDefaultSender = process.env.EMAIL_DEFAULT_SENDER;
 const app = process.env.EMAIL_APP;
