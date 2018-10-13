@@ -1,7 +1,10 @@
 <template>
   <div>
-    <span>in view!!!</span>
-    <router-view />
+    in overview!
+
+    list of all collection activities:
+
+
   </div>
 </template>
 
@@ -9,9 +12,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class ViewComponent extends Vue {
+export default class OverViewPage extends Vue {
   constructor() {
     super();
   }
+
 }
 </script>
+
+

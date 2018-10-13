@@ -6,3 +6,5 @@ export const UPDATE_MEDIA_QUALITY = 'updateMediaQuality';
 export const UPDATE_FULL_SCREEN = 'updateFullScreen';
 export const FULLSCREEN = 'FULLSCREEN';
 export const LOAD_LANG = 'LOAD_LANG';
+export const DRAWER_TOGGLE = 'DRAWER_TOGGLE';
+export const DRAWER = 'DRAWER';

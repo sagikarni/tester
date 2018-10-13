@@ -1,3 +1,5 @@
+// import components from '../../../apps/web/src/data/components';
+
 import {
   LOADING,
   ERROR_MODAL_DIALOG,
@@ -15,7 +17,9 @@ import {
   UPDATE_MEDIA_QUALITY,
   UPDATE_FULL_SCREEN,
   FULLSCREEN,
-  LOAD_LANG
+  LOAD_LANG,
+  DRAWER_TOGGLE,
+  DRAWER
 } from './mutations.type';
 
 const state = {
@@ -28,7 +32,10 @@ const state = {
   /**NEW */
   appToolbar: null,
   loadedLangs: [],
-  isFullscreen: false
+  isFullscreen: false,
+  appDrawer: null,
+  stateless: null,
+  // components
 };
 
 const actions = {
@@ -67,6 +74,12 @@ const actions = {
       context.commit(UPDATE_FULL_SCREEN, item);
       resolve();
     });
+  },
+  [DRAWER_TOGGLE](context: any, item: any) {
+    context.commit(DRAWER_TOGGLE, null);
+  },
+  [DRAWER](context: any, payload: any) {
+    context.commit(DRAWER, payload);
   }
 };
 
@@ -91,13 +104,19 @@ const mutations = {
   },
   [FULLSCREEN](state: any, payload: any) {
     state.isFullscreen = payload;
-    // state.stateless = payload
-    // state.appDrawer = !payload && null
+    state.stateless = payload;
+    state.appDrawer = !payload && null;
     state.appToolbar = !payload;
   },
   [LOAD_LANG](state: any, payload: any) {
-    state.loadedLangs.push(payload)
+    state.loadedLangs.push(payload);
   },
+  [DRAWER_TOGGLE](state: any, payload: any) {
+    state.appDrawer = !state.appDrawer;
+  },
+  [DRAWER](state: any, payload: any) {
+    state.appDrawer = payload;
+  }
 };
 
 const getters = {
@@ -106,6 +125,12 @@ const getters = {
   },
   loadedLangs: (state: any) => {
     return state.loadedLangs;
+  },
+  appDrawer: (state: any) => {
+    return state.appDrawer;
+  },
+  stateless: (state: any) => {
+    return state.stateless;
   }
 };
 

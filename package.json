@@ -4,7 +4,7 @@
   "private": true,
   "nodemonConfig": {
     "ignore": [
-      "public/*"
+      "apps/web/*"
     ]
   },
   "scripts": {

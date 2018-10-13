@@ -5,6 +5,12 @@
   },
 
   {
+    "page": "collection/OverView",
+    "route": "collection/over-view"
+  },
+
+
+  {
     "page": "general/404",
     "route": "*",
     "fullscreen": true

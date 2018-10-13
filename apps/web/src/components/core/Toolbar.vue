@@ -1,152 +1,87 @@
 <template>
-    <div>
-        <v-navigation-drawer clipped temporary v-model="drawer" app color="red" @transitionend="menuStateChanged">
-            <v-list dense>
-                <v-list-tile class="hidden menuItem">
-                    <v-list-tile-action>
-                        <v-icon>dashboard</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/">
-                            <v-list-tile-title>Home</v-list-tile-title>
-                        </router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="hidden menuItem">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/activity/1">
-                            <v-list-tile-title>Activity Details</v-list-tile-title>
-                        </router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="hidden menuItem">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/about">
-                            <v-list-tile-title>About</v-list-tile-title>
-                        </router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="hidden menuItem">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/Search">
-                            <v-list-tile-title>Search</v-list-tile-title>
-                        </router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="hidden menuItem">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <router-link to="/slideshow">
-                            <v-list-tile-title>SlideShow</v-list-tile-title>
-                        </router-link>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile class="hidden menuItem" v-for="(item, i) in items" :key="i" v-if="$vuetify.breakpoint.xsOnly">
-                    <v-list-tile-action>
-                        <v-icon>local_activity</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-        </v-navigation-drawer>
-        <v-toolbar app fixed clipped-right dark height="58" color="primary">
 
-            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+  <v-toolbar app clipped-right color="primary" dark fixed height="58" extension-height="48" :flat="isHome()" :manual-scroll="isManualScrolled()" ref="toolbar">
 
-            <v-btn flat icon color="dark" class="ml-0">
-                <v-icon dark>fa fa-chevron-left</v-icon>
-            </v-btn>
+    <v-toolbar-side-icon @click="toggle" v-show="!stateless"></v-toolbar-side-icon>
 
-            <v-menu offset-y content-class="ex-header-menu">
-                <v-toolbar-title slot="activator" class="toolbarTitle">locale.general.menuActivities</v-toolbar-title>
+    <router-link :to="logoLink()">
+      <img src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/46.0.0/web/web_32x32.png" height="38px" width="38px" />
+    </router-link>
 
-                <v-list v-for="(item, i) in items" :key="i">
-                    <v-list-tile>
-                        <v-list-tile-title class="bottomColor">
-                            <strong>{{ item.title }}</strong>
-                        </v-list-tile-title>
-                    </v-list-tile>
-                    <v-list-tile class="activitiesList" v-for="(item1, i) in item.data" :key="i">
-                        <v-list-tile-title>{{ item1.title }}</v-list-tile-title>
-                    </v-list-tile>
-                </v-list>
+    <v-fade-transition mode="out-in">
+      <v-toolbar-title class="pb-1.hidden-xs-only">Tera</v-toolbar-title>
+    </v-fade-transition>
 
-            </v-menu>
+    <v-spacer />
 
-            <v-spacer></v-spacer>
+    <v-toolbar-items>
 
-            <v-toolbar-items class="hidden-sm-and-down">
-                <v-menu bottom offset-y left attach>
-                    <v-btn slot="activator" flat style="min-width: 48px">
-                        <img :src="`https://cdn.vuetifyjs.com/images/flags/${currentLanguage.country}.png`" width="26px">
-                    </v-btn>
-                    <v-list light>
-                        <v-list-tile avatar v-for="language in languages" :key="language.locale" @click="translateI18n(language.locale)">
-                            <v-list-tile-avatar tile size="24px">
-                                <img :src="`https://cdn.vuetifyjs.com/images/flags/${language.country}.png`" width="24px" />
+      <v-menu bottom offset-y left attach>
+        <v-btn slot="activator" flat style="min-width: 48px">
+          <img :src="`https://cdn.vuetifyjs.com/images/flags/${currentLanguage.country}.png`" width="26px">
+        </v-btn>
+        <v-list light>
+          <v-list-tile avatar v-for="language in languages" :key="language.locale" @click="translateI18n(language.locale)">
+            <v-list-tile-avatar tile size="24px">
+              <img :src="`https://cdn.vuetifyjs.com/images/flags/${language.country}.png`" width="24px" />
 
-                            </v-list-tile-avatar>
-                            <v-list-tile-title>{{language.name}}</v-list-tile-title>
-                        </v-list-tile>
+            </v-list-tile-avatar>
+            <v-list-tile-title>{{language.name}}</v-list-tile-title>
+          </v-list-tile>
 
-                    </v-list>
-                </v-menu>
+        </v-list>
+      </v-menu>
 
-                <template v-if="!isAuthenticated">
-                    <v-btn v-if="!isAuthenticated" flat to="/login">Login</v-btn>
-                    <v-btn v-if="!isAuthenticated" flat to="/register">Register</v-btn>
-                </template>
+      <template v-if="!isAuthenticated">
+        <v-btn v-if="!isAuthenticated" flat to="/login">Login</v-btn>
+        <v-btn v-if="!isAuthenticated" flat to="/register">Register</v-btn>
+      </template>
 
-                <v-menu v-else :close-on-content-click="false" :nudge-width="200" offset-y>
-                    <v-avatar slot="activator" class="ml-4" size="40">
+      <v-menu v-else :close-on-content-click="false" :nudge-width="200" offset-y>
+        <v-avatar slot="activator" class="ml-4" size="40">
 
-                        <img v-if="currentUser.picture" :src="currentUser.picture">
-                        <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
-                    </v-avatar>
-                    <v-card>
-                        <img v-if="currentUser.picture" :src="currentUser.picture" height="250px" aspect-ratio="2.5">
-                        <img v-else height="250px" aspect-ratio="2.5" src="http://www.gravatar.com/avatar/?d=identicon">
+          <img v-if="currentUser.picture" :src="currentUser.picture">
+          <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
+        </v-avatar>
+        <v-card>
+          <img v-if="currentUser.picture" :src="currentUser.picture" height="250px" aspect-ratio="2.5">
+          <img v-else height="250px" aspect-ratio="2.5" src="http://www.gravatar.com/avatar/?d=identicon">
 
-                        <v-card-title primary-title>
-                            <div>
-                                <h3 class="headline mb-0">{{currentUser.name}}</h3>
-                                <div v-if="currentUser && currentUser.verified">verified</div>
-                                <div v-else>not verified</div>
-                            </div>
-                        </v-card-title>
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">{{currentUser.name}}</h3>
+              <div v-if="currentUser && currentUser.verified">verified</div>
+              <div v-else>not verified</div>
+            </div>
+          </v-card-title>
 
-                        <v-card-actions>
-                            <v-btn flat color="orange" to="/profile">Profile</v-btn>
-                            <v-btn flat color="orange" @click="logout">Log out</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-menu>
-            </v-toolbar-items>
+          <v-card-actions>
+            <v-btn flat color="orange" to="/profile">Profile</v-btn>
+            <v-btn flat color="orange" @click="logout">Log out</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
+    </v-toolbar-items>
 
-        </v-toolbar>
-    </div>
+  </v-toolbar>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Auth } from '@libs/vue-auth';
 import { TweenMax, Expo } from 'gsap';
+import { App, DRAWER_TOGGLE } from '@libs/tera-store';
 
 @Component({})
 export default class Toolbar extends Vue {
+  @App.Getter('stateless')
+  stateless: any;
+  @App.Getter('isFullscreen')
+  isFullscreen: any;
+
+  @App.Action(DRAWER_TOGGLE)
+  drawerToggle: any;
+
   public languages = [
     {
       name: 'English',
@@ -185,16 +120,19 @@ export default class Toolbar extends Vue {
     }
   ];
 
-get currentLanguage() {
+  get currentLanguage() {
     return this.languages.find(l => l.locale === this.$i18n.locale);
-}
-//    currentLanguage () {
-        // return this.languages.find(l => l.locale === this.$i18n.locale)
-    //   },
+  }
+  //    currentLanguage () {
+  // return this.languages.find(l => l.locale === this.$i18n.locale)
+  //   },
 
   translateI18n(lang: any) {
     this.$router.replace({ params: { lang } });
-    document.cookie = `currentLanguage=${lang};path=/;max-age=${60 * 60 * 24 * 7}` // expires in 7 days
+    document.cookie = `currentLanguage=${lang};path=/;max-age=${60 *
+      60 *
+      24 *
+      7}`; // expires in 7 days
   }
 
   public drawer: boolean = false;
@@ -202,52 +140,11 @@ get currentLanguage() {
   @Auth.Getter('isAuthenticated')
   isAuthenticated: any;
 
-  public items: any = [
-    {
-      title: 'Collections',
-      data: [
-        {
-          title: 'Premium Collection'
-        },
-        {
-          title: 'Point of View'
-        }
-      ]
-    },
-    {
-      title: 'Communication',
-      data: [
-        {
-          title: 'Good Story'
-        },
-        {
-          title: 'WH Questions'
-        }
-      ]
-    },
-    {
-      title: 'Cognition',
-      data: [
-        {
-          title: 'Puzzle'
-        },
-        {
-          title: 'Zoom'
-        },
-        {
-          title: 'Categorization'
-        }
-      ]
-    },
-    {
-      title: 'Speech',
-      data: [
-        {
-          title: 'Articulation'
-        }
-      ]
-    }
-  ];
+  logoLink() {
+    return this.isHome
+      ? { name: 'getting-started/QuickStart' }
+      : { name: 'home/Home' };
+  }
 
   public menuStateChanged($event: any) {
     if ($event.propertyName === 'transform') {
@@ -272,6 +169,20 @@ get currentLanguage() {
 
   constructor() {
     super();
+  }
+
+  toggle() {
+    this.drawerToggle();
+    //$store.commit('app/DRAWER_TOGGLE')
+  }
+
+  isHome() {
+    return true;
+    // return this.route.name === 'home/Home';
+  }
+
+  isManualScrolled() {
+    return !this.isHome && this.isFullscreen;
   }
 }
 </script>

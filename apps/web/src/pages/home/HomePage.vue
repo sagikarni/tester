@@ -10,6 +10,8 @@
 
     <v-btn to="/getting-started/quick-start">go</v-btn>
 
+    <v-btn to="/activities/premium-collection">Primuim collection</v-btn>
+
     <v-btn @click="fuck">http</v-btn>
 
   </div>
