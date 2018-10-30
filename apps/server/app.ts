@@ -16,12 +16,12 @@ import {
   linkedinStrategy,
   twitterStrategy,
 } from '@libs/auth-node';
-import { initialize, session, use } from 'passport';
+import passport from 'passport';
 
-use(facebookStrategy);
-use(twitterStrategy);
-use(linkedinStrategy);
-use(googleStrategy);
+passport.use(facebookStrategy);
+passport.use(twitterStrategy);
+passport.use(linkedinStrategy);
+passport.use(googleStrategy);
 
 const app = express();
 
@@ -35,8 +35,8 @@ app.use(methodOverride());
 app.use(helmet());
 
 app.use(expressSession({ secret: 'SECRET' }));
-app.use(initialize());
-app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(routes);
 

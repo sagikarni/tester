@@ -30,3 +30,16 @@ declare module "*.json" {
   const value: any;
   export default value;
 }
+
+
+// declare namespace __WebpackModuleApi {
+//   interface RequireFunction {
+
+//   }
+// }
+
+declare namespace __WebpackModuleApi {
+  interface RequireFunction {
+    context(path: string, deep?: boolean, filter?: RegExp, method?: string): RequireContext;
+  }
+}

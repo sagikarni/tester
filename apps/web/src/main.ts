@@ -31,7 +31,7 @@ Vue.use(Vuetify);
 Vue.use(VueAwesomeSwiper);
 
 const i18n = createI18n(null);
-const router = createRouter(store);
+const router = createRouter(store) as any;
 
 router.then((router: any) => {
   sync(store, router);
@@ -43,3 +43,11 @@ router.then((router: any) => {
     render: (h) => h(App),
   }).$mount('#app');
 });
+
+
+// async function main() {
+//   const {kettle} = await import('./kettle.mjs') // succeeds!
+
+//   console.log(kettle)
+//  }
+//  main()

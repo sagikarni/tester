@@ -1,3 +1,5 @@
+console.log(`x: ${process.env.DEBUG_ENV}`);
+
 import './polyfills';
 
 import { db } from '@libs/auth-node';

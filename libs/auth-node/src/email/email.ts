@@ -1,4 +1,4 @@
-import { setApiKey, send } from '@sendgrid/mail';
+import sendgrid from '@sendgrid/mail';
 import { resolve } from 'path';
 import { load, compile, app, emailDefaultSender } from './template';
 
@@ -6,7 +6,7 @@ const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
 const urlVerifyAccount = process.env.URL_VERIFY_ACCOUNT;
 const urlVerifyPassword = process.env.URL_VERIFY_PASSWORD;
 
-setApiKey(process.env.EMAIL_SENDGRID_KEY);
+sendgrid.setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
 load(resolve(__dirname, process.env.EMAIL_TEMPLATES_PATH));
 
@@ -27,7 +27,7 @@ export function sendWelcome({ emailTo, fullname, password }) {
   };
 
   console.log('sendWelcome: ', msg);
-  send(msg);
+  sendgrid.send(msg);
 }
 
 export function sendVerify({ emailTo, token }) {
@@ -49,7 +49,7 @@ export function sendVerify({ emailTo, token }) {
   };
 
   console.log('sendVerify: ', msg);
-  send(msg);
+  sendgrid.send(msg);
 }
 
 export function sendVerification({ emailTo, fullname }) {
@@ -68,7 +68,7 @@ export function sendVerification({ emailTo, fullname }) {
   };
 
   console.log('sendVerification: ', msg);
-  send(msg);
+  sendgrid.send(msg);
 }
 
 export function sendResetPassword({ emailTo, token }) {
@@ -89,7 +89,7 @@ export function sendResetPassword({ emailTo, token }) {
   };
 
   console.log('sendResetPassword: ', msg);
-  send(msg);
+  sendgrid.send(msg);
 }
 
 export function sendPasswordChanged({ emailTo, password, fullname }) {
@@ -109,5 +109,5 @@ export function sendPasswordChanged({ emailTo, password, fullname }) {
   };
 
   console.log('sendPasswordChanged: ', msg);
-  send(msg);
+  sendgrid.send(msg);
 }

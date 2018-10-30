@@ -1,8 +1,8 @@
-import { Document, Schema, Model, model } from 'mongoose';
+import mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
-export interface IUserDocument extends Document {
+export interface IUserDocument extends mongoose.Document {
   email: string;
   name: string;
   password: string;
@@ -47,11 +47,11 @@ export interface IUser extends IUserDocument {
   toJSON(): any;
 }
 
-export interface IUserModel extends Model<IUser> {
+export interface IUserModel extends mongoose.Model<IUser> {
   hashPassword(password: string): boolean;
 }
 
-export const userSchema: Schema = new Schema({
+export const userSchema: mongoose.Schema = new mongoose.Schema({
   email: { type: String, index: { unique: true }, required: true },
   name: { type: String, index: { unique: true }, required: true },
   password: { type: String, required: true },
@@ -190,6 +190,9 @@ userSchema.static(
   }
 );
 
-export const User: IUserModel = model<IUser, IUserModel>('User', userSchema);
+export const User: IUserModel = mongoose.model<IUser, IUserModel>(
+  'User',
+  userSchema
+);
 
 export default User;

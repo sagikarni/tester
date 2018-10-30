@@ -20,10 +20,8 @@ function getLanguageCookie() {
 }
 
 export async function createRouter(store: any, applications = []) {
-  const ro = await routes();
 
-
-  const children = Object.values(ro).sort((a: any, b: any) => {
+  const children = Object.values(await routes).sort((a: any, b: any) => {
     if (!a.priority || !b.priority) {
       return 0;
     }

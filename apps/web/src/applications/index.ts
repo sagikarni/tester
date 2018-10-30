@@ -1,20 +1,15 @@
-// import('./routes')
-// const requireApplicationRoutes = require.context('./', true, /routes.js$/);
+const requireApplicationRoutes = require.context('./', true, /routes.ts$/, 'lazy');
+// const requireApplicationStore = require.context('./', true, /vuex.js$/, 'lazy');
 
-const requireApplicationRoutes = import('./home/routes');
-// const requireApplicationStore = require.context('./', true, /vuex.ts$/);
+const routes = Promise.all(
+  requireApplicationRoutes.keys().map((fileName: string) => requireApplicationRoutes(fileName).then((module: any) => module.default)),
+).then(([ modules ]) => modules);
 
-let routes: any = [];
-
-// const fileName = requireApplicationRoutes;
-
-routes = () => requireApplicationRoutes.then((r: any) => r.default); // routes.concat(fileName.default);
-
-// keys().forEach((fileName) => {
-//   routes = routes.concat(requireApplicationRoutes(fileName).default);
+// requireApplicationRoutes.keys().forEach(async (fileName: any) => {
+//   routes = routes.concat( await requireApplicationRoutes(fileName).then((route: any) => route.default));
+//   debugger;
+//   // routes = routes.concat(.default);
 // });
-
-// debugger;
 
 const stores: any = [];
 

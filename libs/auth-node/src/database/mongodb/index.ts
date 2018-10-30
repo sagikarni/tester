@@ -1,8 +1,8 @@
-import { connect, connection } from 'mongoose';
+import mongoose from 'mongoose';
 
 export const db = {
-  connect: () => connect(process.env.MONGODB_URI),
-  connection,
+  connect: () => mongoose.connect(process.env.MONGODB_URI),
+  connection: mongoose.connection,
   
 };
 
