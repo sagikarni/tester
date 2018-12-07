@@ -6,7 +6,6 @@
           <h1>this is activity page, {{ $route.params.id }}</h1>
 
           <v-btn :to="{ name: 'start' }">start!</v-btn>
-          <router-view></router-view>
         </v-container>
       </v-flex>
     </v-layout>

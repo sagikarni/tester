@@ -19,8 +19,6 @@
               <v-btn flat color="orange" :to="{ name: 'activity', params: { id: 123 }}">detail</v-btn>
             </v-card-actions>
           </v-card>
-
-          <router-view></router-view>
         </v-container>
       </v-flex>
     </v-layout>

@@ -42,47 +42,23 @@ export default new Router({
         },
         {
           path: ':overview',
-          component: {
-            template: '<router-view />'
-          },
-          children: [
-            {
-              path: '',
-              name: 'overview',
-              component: () => import(/* webpackChunkName: "overview" */ '@libs/activity/components/overview.vue')
-            },
-            {
-              path: ':category',
-              component: {
-                template: '<router-view />'
-              },
-              children: [
-                {
-                  path: '',
-                  name: 'category',
-                  component: () => import(/* webpackChunkName: "category" */ '@libs/activity/components/category.vue')
-                },
-                {
-                  path: ':id',
-                  component: {
-                    template: '<router-view />'
-                  },
-                  children: [
-                    {
-                      path: '',
-                      name: 'activity',
-                      component: () => import(/* webpackChunkName: "activity" */ '@libs/activity/components/activity.vue')
-                    },
-                    {
-                      path: 'start',
-                      name: 'start',
-                      component: () => import(/* webpackChunkName: "start" */ '@libs/whats-in-the-picture-activity/components/start.vue')
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          name: 'overview',
+          component: () => import(/* webpackChunkName: "overview" */ '@libs/activity/components/overview.vue')
+        },
+        {
+          path: ':overview/:category',
+          name: 'category',
+          component: () => import(/* webpackChunkName: "category" */ '@libs/activity/components/category.vue')
+        },
+        {
+          path: ':overview/:category/:id',
+          name: 'activity',
+          component: () => import(/* webpackChunkName: "activity" */ '@libs/activity/components/activity.vue')
+        },
+        {
+          path: ':overview/:category/:id/start',
+          name: 'start',
+          component: () => import(/* webpackChunkName: "start" */ '@libs/whats-in-the-picture-activity/components/start.vue')
         }
       ]
     },

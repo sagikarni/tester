@@ -23,8 +23,6 @@
               >activties</v-btn>
             </v-card-actions>
           </v-card>
-
-          <router-view></router-view>
         </v-container>
       </v-flex>
     </v-layout>
