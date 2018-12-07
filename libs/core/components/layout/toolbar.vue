@@ -17,7 +17,7 @@
 
     <v-fade-transition mode="out-in">
       <v-toolbar-title class="pb-1.hidden-xs-only">Tera
-        <div v-text="$t('Vuetify.Home.getStarted')"></div>
+        <div v-text="$t('announcementBanner')"></div>
       </v-toolbar-title>
     </v-fade-transition>
 
