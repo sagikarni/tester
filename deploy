@@ -1,4 +1,0 @@
-open "wizardnet972.net"
-put www.js /home/ubuntu/tera/ -delete
-put www.js.map /home/ubuntu/tera/ -delete
-exit

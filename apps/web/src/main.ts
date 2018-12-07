@@ -1,53 +1,17 @@
-import 'vuetify/dist/vuetify.min.css';
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
-import 'swiper/dist/css/swiper.min.css';
-
-// Packages
 import Vue from 'vue';
-import Vuetify from 'vuetify';
-import VueAwesomeSwiper from 'vue-awesome-swiper';
-
-// Bootstrap
-import '@/components';
-// import '@/plugins';
-// import { createStore } from '@/store';
+import './plugins/vuetify';
+import './plugins/axios';
+import App from '@/App.vue';
+import router from './router';
 import store from './store';
-
-import { createRouter } from '@/router';
-import { createI18n } from '@/i18n';
-import { sync } from 'vuex-router-sync';
-
-// Application
-import App from './App.vue';
-
-// import '@/components';
-
 import './registerServiceWorker';
+import { i18n } from '@libs/core/i18n';
 
 Vue.config.productionTip = false;
-Vue.config.performance = process.env.NODE_ENV === 'development';
 
-Vue.use(Vuetify);
-Vue.use(VueAwesomeSwiper);
-
-const i18n = createI18n(null);
-const router = createRouter(store) as any;
-
-router.then((router: any) => {
-  sync(store, router);
-
-  new Vue({
-    router,
-    store,
-    i18n,
-    render: (h) => h(App),
-  }).$mount('#app');
-});
-
-
-// async function main() {
-//   const {kettle} = await import('./kettle.mjs') // succeeds!
-
-//   console.log(kettle)
-//  }
-//  main()
+new Vue({
+  router,
+  store,
+  i18n,
+  render: h => h(App)
+}).$mount('#app');

@@ -1,62 +1,37 @@
 <template>
-  <div class="home">
+  <v-container fluid fill-height>
+    <v-layout align-center justify-center>
+      <v-flex xs12 sm8 md6>
+        <v-container>
+          <h1>home page!</h1>
 
-    {{ currentUser }}
+          <v-card>
+            <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
 
-    <div v-if="!isAuthenticated">
-      <router-link to="/login" class="btn btn-link">Login</router-link>
-    </div>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">Cognition</h3>
+                <div>Cognition...</div>
+              </div>
+            </v-card-title>
 
-    <br><br>
-    <router-link to="/register" class="btn btn-link">Register</router-link>
-
-    <v-btn @click="secure">Secure</v-btn>
-
-    <br><br><br><br>
-
-    <v-card  v-for="(activity, index) in activities" :key="index">
-      <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
-
-      <v-card-title primary-title>
-        <div>
-          <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-          <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
-          </div>
-      </v-card-title>
-
-      <v-card-actions>
-        <v-btn flat color="orange" :to="`/activity/${activity.name}`">Start</v-btn>
-      </v-card-actions>
-    </v-card>
-
-  </div>
+            <v-card-actions>
+              <v-btn
+                flat
+                color="orange"
+                :to="{ name: 'overview', params: { overview: 'cognition' }}"
+              >See all activites</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-container>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import { Auth } from '@libs/vue-auth';
+import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class Home extends Vue {
-  @Auth.Getter('isAuthenticated')
-  isAuthenticated: any;
-  @Auth.Getter('currentUser')
-  currentUser: any;
-
-  public activities = [
-    { name: 'single-photo' }
-  ]
-
-  public secure() {
-    this.$http.get('/api/v1/secure').then(
-      (response: any) => {
-        console.log('res: ', response);
-      },
-      (err: any) => {
-        console.log('err: ', err);
-      }
-    );
-  }
-}
+export default class Home extends Vue {}
 </script>

@@ -1,76 +1,97 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { Trans } from '@libs/core/translation';
 
-import { routes } from '@/applications';
-import View from '@/components/core/View.vue';
+import Shell from '@libs/core/shell.vue';
 
 Vue.use(Router);
 
-const languageRegex = /^\/([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,3})(?:\/.*)?$/;
-
-const release = process.env.RELEASE;
-
-function getLanguageCookie() {
-  if (typeof document === 'undefined') {
-    return;
-  }
-  return new Map(document.cookie.split('; ').map((c: any) => c.split('='))).get(
-    'currentLanguage',
-  );
-}
-
-export async function createRouter(store: any, applications = []) {
-
-  const children = Object.values(await routes).sort((a: any, b: any) => {
-    if (!a.priority || !b.priority) {
-      return 0;
-    }
-    if (a.priority > b.priority) {
-      return -1;
-    }
-    if (a.priority < b.priority) {
-      return 1;
-    }
-    return 0;
-  });
-
-  const router = new Router({
-    base: release ? `/releases/${release}` : __dirname,
-    mode: release ? 'hash' : 'history',
-    // scrollBehavior,
-    routes: [
-      {
-        path: '/:lang([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,3})',
-        component: View,
-        props: (route: any) => ({ lang: route.params.lang }),
-        children,
-      },
-      {
-        path: '*',
-        redirect: (to: any) => {
-          let lang = getLanguageCookie() || 'en';
-          if (!languageRegex.test('/' + lang)) {
-            lang = 'en';
-          }
-          return `/${lang}${to.path}`;
+export default new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: '/:lang([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,3})',
+      component: Shell,
+      beforeEnter: Trans.routeMiddleware,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: () => import(/* webpackChunkName: "home" */ './views/home.vue')
         },
-      },
-    ],
-  } as any);
-
-  // Vue.use(VueAnalytics, {
-  //   id: 'UA-75262397-3',
-  //   router,
-  //   autoTracking: {
-  //     page: process.env.NODE_ENV !== 'development',
-  //     pageviewOnLoad: false
-  //   },
-  //   debug: process.env.DEBUG ? {
-  //     enabled: true,
-  //     trace: false,
-  //     sendHitTask: true
-  //   } : false
-  // })
-
-  return router;
-}
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import(/* webpackChunkName: "login" */ '@libs/auth/components/login.vue')
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: () => import(/* webpackChunkName: "register" */ '@libs/auth/components/register.vue')
+        },
+        {
+          path: 'recover-account',
+          name: 'recover-account',
+          component: () => import(/* webpackChunkName: "recover-account" */ '@libs/auth/components/recover-account.vue')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import(/* webpackChunkName: "profile" */ '@libs/auth/components/profile.vue')
+        },
+        {
+          path: ':overview',
+          component: {
+            template: '<router-view />'
+          },
+          children: [
+            {
+              path: '',
+              name: 'overview',
+              component: () => import(/* webpackChunkName: "overview" */ '@libs/activity/components/overview.vue')
+            },
+            {
+              path: ':category',
+              component: {
+                template: '<router-view />'
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'category',
+                  component: () => import(/* webpackChunkName: "category" */ '@libs/activity/components/category.vue')
+                },
+                {
+                  path: ':id',
+                  component: {
+                    template: '<router-view />'
+                  },
+                  children: [
+                    {
+                      path: '',
+                      name: 'activity',
+                      component: () => import(/* webpackChunkName: "activity" */ '@libs/activity/components/activity.vue')
+                    },
+                    {
+                      path: 'start',
+                      name: 'start',
+                      component: () => import(/* webpackChunkName: "start" */ '@libs/whats-in-the-picture-activity/components/start.vue')
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '*',
+      redirect: (to: any) => {
+        const lang = Trans.currentLanguage || 'en';
+        return `/${lang}${to.path}`;
+      }
+    }
+  ]
+});
