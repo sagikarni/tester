@@ -18,11 +18,18 @@ module.exports = {
   },
   configureWebpack: config => {
     return {
+      mode: 'development',
       stats: 'verbose',
       devtool: 'source-map',
       plugins: [new CopyWebpackPlugin([...copies])]
+      // optimization: {
+      //   splitChunks: {
+      //     chunks: 'all'
+      //   }
+      // }
     };
   },
+
   devServer: {
     proxy: {
       '/api': {
