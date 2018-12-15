@@ -38,7 +38,7 @@ export default class Overview extends Vue {
   items = [
     { title: 'Categorization', group: 'categorization' },
     { title: 'PhotoAssembly', group: 'photoassembly' },
-    { title: "What's in the Picture", group: 'whatsinthepicture' },
+    { title: 'Whats in the Picture', group: 'whatsinthepicture' },
     { title: 'SpotTheDifference', group: 'spotthedifference' },
     { title: 'SoundOfLfePhoto', group: 'soundoflfephoto' },
     { title: 'SoundOfLfeSound', group: 'soundoflfesound' },
