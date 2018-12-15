@@ -1,16 +1,11 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const {
-  CheckerPlugin,
-  TsConfigPathsPlugin
-} = require('awesome-typescript-loader');
+const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 const configFileName = path.resolve(__dirname, './apps/server/tsconfig.json');
 
-const copies = [
-  { from: path.join(__dirname, './apps/server/assets'), to: 'assets' }
-];
+const copies = [{ from: path.join(__dirname, './apps/server/assets'), to: 'assets' }];
 
 module.exports = {
   externals: [nodeExternals()],
@@ -26,6 +21,10 @@ module.exports = {
   },
 
   plugins: [new CopyWebpackPlugin([...copies]), new CheckerPlugin()],
+
+  node: {
+    __dirname: false
+  },
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -43,12 +42,7 @@ module.exports = {
           useBabel: true,
           babelOptions: {
             babelrc: false,
-            presets: [
-              [
-                '@babel/preset-env',
-                { targets: { node: true, esmodules: true }, modules: false }
-              ]
-            ]
+            presets: [['@babel/preset-env', { targets: { node: true, esmodules: true }, modules: false }]]
           },
           babelCore: '@babel/core'
         }

@@ -64,7 +64,6 @@ export const actions: ActionTree<State, any> = {
     );
   },
   [LOGIN_SUCCESS]({ commit }, { store, response }) {
-    debugger;
     commit(SET_AUTH, {
       store,
       ...extractAuthFromResponse(response)

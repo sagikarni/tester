@@ -9,13 +9,17 @@ const app = process.env.EMAIL_APP;
 
 export { load, compile, emailDefaultSender, app };
 
-const templates = [];
+export let templates = [];
+
+function setTemplates(newTemplates: any) {
+  templates = newTemplates;
+}
+
 const fs: any = promisifyAll(fsSync);
 
 async function load(directory) {
   console.log(`Loading email templates from ${directory}...`);
-
-  this.templates = await loadTemplates(directory);
+  setTemplates(await loadTemplates(directory));
 }
 
 async function loadTemplates(directory) {
@@ -49,9 +53,9 @@ async function readTemplateFolder(directory, folder) {
 }
 
 function compile({ templateName, context }) {
-  const template = this.templates.find(
-    t => t.name === templateName.toLowerCase()
-  );
+  console.log({ templateName });
+
+  const template = templates.find(t => t.name === templateName.toLowerCase());
   return {
     html: template.html(context),
     text: template.text(context)
