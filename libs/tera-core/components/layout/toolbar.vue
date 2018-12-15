@@ -11,7 +11,7 @@
     <v-toolbar-side-icon @click="toggle" v-show="!stateless"></v-toolbar-side-icon>
 
     <router-link :to="{ name: 'home' }">
-      <img :src="require('@/assets/logo.png')" height="38px" width="38px">
+      <img :src="require('@/assets/logo.svg')" height="38px" width="38px">
     </router-link>
 
     <v-fade-transition mode="out-in">
