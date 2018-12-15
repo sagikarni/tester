@@ -2,17 +2,17 @@ export default [
   {
     path: ':overview',
     name: 'overview',
-    component: () => import(/* webpackChunkName: "overview" */ './components/overview.vue')
+    component: () => import(/* webpackChunkName: "overview" */ './components/layout/overview.vue')
   },
   {
     path: ':overview/:category',
     name: 'category',
-    component: () => import(/* webpackChunkName: "category" */ './components/category.vue')
+    component: () => import(/* webpackChunkName: "category" */ './components/layout/category.vue')
   },
   {
     path: ':overview/:category/:id',
     name: 'activity',
-    component: () => import(/* webpackChunkName: "activity" */ './components/activity.vue')
+    component: () => import(/* webpackChunkName: "activity" */ './components/layout/activity.vue')
   },
   {
     path: ':overview/:category/:id/start',
