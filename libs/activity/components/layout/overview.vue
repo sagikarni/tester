@@ -43,7 +43,10 @@ export default class Overview extends Vue {
     { title: 'SoundOfLfePhoto', group: 'soundoflfephoto' },
     { title: 'SoundOfLfeSound', group: 'soundoflfesound' },
     { title: 'Memory Cards', group: 'memorycards' },
-    { title: 'Commonality', group: 'Commonality' }
+    { title: 'Commonality', group: 'commonality' }
   ];
 }
 </script>
+
+
+
