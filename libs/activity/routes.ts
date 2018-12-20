@@ -1,3 +1,16 @@
+function activityRoutes() {
+  function requireAll(requireContext) {
+    return requireContext.keys().map(requireContext);
+  }
+
+  const modules = requireAll(require.context('@libs', true, /.*-activity\/routes$/));
+  let routes = [];
+
+  modules.forEach(m => (routes = routes.concat(m.default)));
+
+  return routes;
+}
+
 export default [
   {
     path: ':overview',
@@ -14,9 +27,5 @@ export default [
     name: 'activity',
     component: () => import(/* webpackChunkName: "activity" */ './components/layout/activity.vue')
   },
-  {
-    path: ':overview/:category/:id/start',
-    name: 'start',
-    component: () => import(/* webpackChunkName: "start" */ '@libs/learning-activity/components/start.vue')
-  }
+  ...activityRoutes()
 ];
