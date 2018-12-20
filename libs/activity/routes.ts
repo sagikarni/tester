@@ -17,6 +17,6 @@ export default [
   {
     path: ':overview/:category/:id/start',
     name: 'start',
-    component: () => import(/* webpackChunkName: "start" */ '@libs/whats-in-the-picture-activity/components/start.vue')
+    component: () => import(/* webpackChunkName: "start" */ '@libs/learning-activity/components/start.vue')
   }
 ];

@@ -25,7 +25,6 @@
 
     <div class="text-xs-center">
       <v-dialog v-model="dialog" width="500">
-
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>What in this activity</v-card-title>
 
