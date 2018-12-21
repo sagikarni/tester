@@ -20,7 +20,7 @@
               <v-btn
                 flat
                 color="orange"
-                :to="{ name: 'category', params: { category: feature.group }}"
+                :to="{ name: 'category', params: { category: feature.name }}"
               >See all activites</v-btn>
             </v-card-actions>
           </v-card>
@@ -32,19 +32,24 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
+import { DrawerItems } from '@libs/tera-core';
+import dasherize from 'dasherize';
 
 @Component({})
 export default class Overview extends Vue {
-  items = [
-    { title: 'Categorization', group: 'categorization' },
-    { title: 'PhotoAssembly', group: 'photoassembly' },
-    { title: 'Whats in the Picture', group: 'whatsinthepicture' },
-    { title: 'SpotTheDifference', group: 'spotthedifference' },
-    { title: 'SoundOfLfePhoto', group: 'soundoflfephoto' },
-    { title: 'SoundOfLfeSound', group: 'soundoflfesound' },
-    { title: 'Memory Cards', group: 'memorycards' },
-    { title: 'Commonality', group: 'commonality' }
-  ];
+  items = [];
+
+  constructor() {
+    super();
+  }
+
+  mounted() {
+    const { overview } = this.$route.params;
+    const x = DrawerItems.find(d => d.name === overview);
+    if (x) {
+      this.items = x.items.filter(n => !n.default).map(n => ({ ...n, name: dasherize(n.name) }));
+    }
+  }
 }
 </script>
 

@@ -2,7 +2,7 @@
   <section id="activity">
     <Cta/>
 
-    <v-btn :to="{ name: 'start' }">start!</v-btn>
+    <v-btn :to="{ name: routeName }">start!</v-btn>
 
     <gallery/>
   </section>
@@ -10,6 +10,8 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
+import { DrawerItems } from '@libs/tera-core';
+import dasherize from 'dasherize';
 
 @Component({
   components: {
@@ -18,5 +20,17 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
       import(/* webpackChunkName: "gallery" */ '../helpers/gallery.vue')
   }
 })
-export default class Activity extends Vue {}
+export default class Activity extends Vue {
+  routeName = '';
+
+  constructor() {
+    super();
+  }
+
+  mounted() {
+    const { category } = this.$route.params;
+
+    this.routeName = `${category}/start`;
+  }
+}
 </script>

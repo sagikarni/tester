@@ -20,7 +20,7 @@
               <v-btn
                 flat
                 color="orange"
-                :to="{ name: 'overview', params: { overview: feature.group }}"
+                :to="{ name: 'overview', params: { overview: feature.name }}"
               >See all activites</v-btn>
             </v-card-actions>
           </v-card>
@@ -32,10 +32,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import appDrawerItems from '../../data/app-drawer-items';
+import { DrawerItems } from '@libs/tera-core';
+import dasherize from 'dasherize';
 
 @Component({})
 export default class Hero extends Vue {
-  items = appDrawerItems.filter(r => !!r.title);
+   items = [];
+
+  constructor() {
+    super();
+  }
+
+  mounted() {
+    const x = DrawerItems.filter(d => d.name);
+    this.items = x;
+  }
 }
 </script>

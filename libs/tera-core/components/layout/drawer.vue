@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer app v-model="inputValue" :stateless="isFullscreen">
     <v-list dense expand>
-      <template v-for="item in items">
+      <template v-for="(item, ii) in items">
         <v-list-group
           v-if="item.items"
           :group="item.group"
@@ -14,24 +14,32 @@
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
           <template v-for="(subItem, i) in item.items">
             <!--sub group-->
-            <v-list-group v-if="subItem.items" :group="subItem.group" sub-group :key="subItem">
+            <v-list-group
+              v-if="subItem.items"
+              :group="subItem.group"
+              sub-group
+              :key="subItem.title"
+            >
               <v-list-tile slot="activator" ripple="ripple">
                 <v-list-tile-content>
                   <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
+
               <v-list-tile
                 v-for="(grand, i) in subItem.items"
                 :key="i"
-                :to="genChildTarget(item, grand)"
+                :to="genChildTarget(item, subItem, grand)"
                 :href="grand.href"
                 ripple
               >
                 <v-list-tile-content>
                   <v-list-tile-title>{{ grand.title }}</v-list-tile-title>
                 </v-list-tile-content>
+
                 <v-chip
                   class="white--text pa-0 v-chip--x-small"
                   v-if="grand.badge"
@@ -40,6 +48,7 @@
                 >{{ grand.badge }}</v-chip>
               </v-list-tile>
             </v-list-group>
+
             <!--child item-->
             <v-list-tile
               v-else
@@ -66,8 +75,11 @@
             </v-list-tile>
           </template>
         </v-list-group>
+
         <v-subheader class="grey--text" v-else-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-        <v-divider v-else-if="item.divider" :key="item"></v-divider>
+
+        <v-divider v-else-if="item.divider" :key="ii"></v-divider>
+
         <!--top-level link-->
         <v-list-tile
           v-else
@@ -111,6 +123,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import appDrawerItems from '../../data/app-drawer-items';
 import { camelCase } from 'lodash';
 import { TeraStore, DRAWER_TOGGLE, DRAWER } from '../../store';
+import dasherize from 'dasherize';
 
 @Component({})
 export default class Toolbar extends Vue {
@@ -131,24 +144,35 @@ export default class Toolbar extends Vue {
     super();
   }
 
-  genChildTarget(item: any, subItem: any) {
-    if (subItem.href) {
-      return;
-    }
-    if (
-      item.component &&
-      // Quick and dirty fix
-      subItem.name !== 'api-explorer'
-    ) {
+  genChildTarget(item, subItem, grand) {
+    if (!grand) {
       return {
-        name: item.component,
+        name: item.group,
         params: {
-          section: item.group,
-          component: subItem.name
+          overview: `${dasherize(item.name)}`,
+          category: `${dasherize(subItem.name)}`
         }
       };
     }
-    return { name: `${item.group}/${camelCase(subItem.name)}` };
+
+    if (grand.default) {
+      return {
+        name: subItem.group,
+        params: {
+          overview: `${dasherize(item.name)}`,
+          category: `${dasherize(subItem.name)}`
+        }
+      };
+    }
+
+    return {
+      name: grand.group,
+      params: {
+        overview: `${dasherize(item.name)}`,
+        category: `${dasherize(subItem.name)}`,
+        id: `${dasherize(grand.name)}`
+      }
+    };
   }
 }
 </script>
