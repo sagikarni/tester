@@ -2,8 +2,11 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "watch": "lerna run watch -- --paraell",
-    "build:server": "lerna run build --scope tera.com-server --stream"
+    "bootstrap": "lerna bootstrap --hoist",
+    "watch": "lerna run watch --stream",
+    "build:server": "lerna run build --scope tera.com-server --stream",
+    "clean": "",
+    "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {
     "@types/node": "^10.12.18",

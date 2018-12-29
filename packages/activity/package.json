@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "vue-cli-service build --modern --target lib --dest lib ./src/index.ts",
-    "watch": "tsc -w"
+    "builder": "vue-cli-service build --modern --target lib --dest lib ./src/index.ts",
+    "watcher": "tsc -w"
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",

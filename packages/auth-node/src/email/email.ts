@@ -1,4 +1,4 @@
-import { setApiKey, send } from '@sendgrid/mail';
+import * as mail from '@sendgrid/mail';
 import { resolve } from 'path';
 import { load, compile, app, emailDefaultSender } from './template';
 
@@ -6,7 +6,7 @@ const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
 const urlVerifyAccount = process.env.URL_VERIFY_ACCOUNT;
 const urlVerifyPassword = process.env.URL_VERIFY_PASSWORD;
 
-setApiKey(process.env.EMAIL_SENDGRID_KEY);
+mail.setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
 load(resolve(process.cwd(), process.env.EMAIL_TEMPLATES_PATH));
 
@@ -26,8 +26,8 @@ export function sendWelcome({ emailTo, fullname, password }) {
     })
   };
 
-  console.log('sendWelcome: ', msg);
-  send(msg);
+  console.log({ sendWelcome: { msg } });
+  mail.send(msg);
 }
 
 export function sendVerify({ emailTo, token }) {
@@ -48,8 +48,8 @@ export function sendVerify({ emailTo, token }) {
     })
   };
 
-  console.log('sendVerify: ', msg);
-  send(msg);
+  console.log({ sendVerify: { msg } });
+  mail.send(msg);
 }
 
 export function sendVerification({ emailTo, fullname }) {
@@ -67,8 +67,8 @@ export function sendVerification({ emailTo, fullname }) {
     })
   };
 
-  console.log('sendVerification: ', msg);
-  send(msg);
+  console.log({ sendVerification: { msg } });
+  mail.send(msg);
 }
 
 export function sendResetPassword({ emailTo, token }) {
@@ -88,8 +88,8 @@ export function sendResetPassword({ emailTo, token }) {
     })
   };
 
-  console.log('sendResetPassword: ', msg);
-  send(msg);
+  console.log({ sendResetPassword: { msg } });
+  mail.send(msg);
 }
 
 export function sendPasswordChanged({ emailTo, password, fullname }) {
@@ -108,6 +108,6 @@ export function sendPasswordChanged({ emailTo, password, fullname }) {
     })
   };
 
-  console.log('sendPasswordChanged: ', msg);
-  send(msg);
+  console.log({ sendPasswordChanged: { msg } });
+  mail.send(msg);
 }

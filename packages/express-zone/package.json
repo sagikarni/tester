@@ -14,8 +14,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "builder": "tsc",
+    "watcher": "tsc -w",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {

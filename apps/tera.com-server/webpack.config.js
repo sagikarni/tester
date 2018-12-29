@@ -8,7 +8,11 @@ const configFileName = path.resolve(__dirname, './tsconfig.json');
 const copies = [{ from: path.join(__dirname, './assets'), to: 'assets' }];
 
 module.exports = {
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      whitelist: ['express-zone', 'auth-node']
+    })
+  ],
   target: 'node',
   devtool: 'source-map',
   entry: {
@@ -20,9 +24,7 @@ module.exports = {
     filename: '[name].js'
   },
 
-  plugins: [
-      new CopyWebpackPlugin([...copies]), 
-      new CheckerPlugin()],
+  plugins: [new CopyWebpackPlugin([...copies]), new CheckerPlugin()],
 
   node: {
     __dirname: false
