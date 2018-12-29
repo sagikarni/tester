@@ -2,7 +2,7 @@
   <section id="overview" class="mb-5">
     <v-container grid-list-xl="grid-list-xl">
       <h2 class="text-xs-center headline mb-5 grey--text">
-        <span>{{ $t("Home.domains") }}</span>
+        <span>activities based on {{ name }}</span>
       </h2>
       <v-layout wrap="wrap">
         <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
@@ -35,13 +35,15 @@ import dasherize from 'dasherize';
 @Component({})
 export default class Category extends Vue {
   items = [];
+  name = '';
 
   constructor() {
     super();
   }
 
   mounted() {
-    const { overview, category } = (this as any).$route.params;
+    const { overview, category } = this.$route.params;
+    this.name = category;
     const x = DrawerItems.find(d => d.name === overview);
     if (x) {
       const d = x.items.filter(n => !n.default).map(n => ({ ...n, name: dasherize(n.name) }));

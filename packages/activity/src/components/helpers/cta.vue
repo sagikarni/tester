@@ -3,7 +3,7 @@
     <v-layout fill-height wrap>
       <v-flex md6 xs12>
         <v-card flat height="100%" tile>
-          <v-img height="100%" :src="`/activities/learning-photo/cover-s.jpg`"/>
+          <v-img height="100%" :src="`/activities/${item.name}/cover-s.jpg`"/>
         </v-card>
       </v-flex>
 
@@ -19,13 +19,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from 'vue-property-decorator';
+import { Component, Watch, Vue, Prop } from "vue-property-decorator";
 
 @Component({})
 export default class Cta extends Vue {
-  item = {
-    title: 'hands',
-    description: 'this is activvity of what in the picture...'
-  };
+  
+  @Prop() item;
 }
 </script>

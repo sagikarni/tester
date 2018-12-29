@@ -26,7 +26,7 @@ import { Trans } from '../../translation';
 @Component({})
 export default class LanguageSwitcher extends Vue {
   get currentLanguage() {
-    return this.languages.find(l => l.locale === (this as any).$i18n.locale);
+    return this.languages.find(l => l.locale === this.$i18n.locale);
   }
 
   languages = Trans.supportedLanguages;
@@ -36,9 +36,9 @@ export default class LanguageSwitcher extends Vue {
   }
 
   translateI18n(lang: any) {
-    const to = (this as any).$router.resolve({ params: { lang } });
+    const to = this.$router.resolve({ params: { lang } });
     return Trans.changeLanguage(lang).then(() => {
-      (this as any).$router.push(to.location);
+      this.$router.push(to.location);
     });
   }
 }

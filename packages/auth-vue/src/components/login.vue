@@ -28,7 +28,7 @@ export default class Login extends Vue {
   @Watch("isAuthenticated", { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
     if (val && this.submitted) {
-      (this as any).$router.push("/");
+      this.$router.push("/");
     }
   }
 

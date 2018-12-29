@@ -34,7 +34,7 @@ export default class SocialLoginComponent extends Vue {
       .then(({ accessToken, refreshToken, payload }: any) =>
         this.connectSocial({ accessToken, refreshToken, payload })
       )
-      .then(() => (this as any).$router.push('/'));
+      .then(() => this.$router.push('/'));
   }
 }
 </script>

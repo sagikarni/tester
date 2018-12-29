@@ -31,7 +31,7 @@ export default class RegisterPage extends Vue {
 
   @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
-    if (val && this.submitted) { (this as any).$router.push('/'); }
+    if (val && this.submitted) { this.$router.push('/'); }
   }
 
   public submit(form: any) {
