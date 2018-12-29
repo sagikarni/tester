@@ -58,14 +58,18 @@ export default class Gallery extends Vue {
 
   constructor() {
     super();
-    this.items = [];
+    this.items =    
+    ['istock-488951890', 'istock-532348674', 'istock-664350152'].map(i => ({
+      pic: `/activities/learning-photo/thumbnails/${i}-l.jpg`,
+      lazy: `/activities/learning-photo/thumbnails/${i}-m.jpg`
+    }));
 
-    for (let i = 0; i < 9; i++) {
-      this.items.push({
-        pic: `https://picsum.photos/500/300?image=${i * 5 + 10}`,
-        lazy: `https://picsum.photos/10/6?image=${i * 5 + 10}`
-      });
-    }
+    // for (let i = 0; i < 9; i++) {
+    //   this.items.push({
+    //     pic: `/activities/learning-photo/cover-l.jpg https://picsum.photos/500/300?image=${i * 5 + 10}`,
+    //     lazy: `https://picsum.photos/10/6?image=${i * 5 + 10}`
+    //   });
+    // }
   }
 }
 </script>

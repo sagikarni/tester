@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode development",
-    "watch": "concurrently --kill-others \"webpack --mode development --watch\" \"nodemon dist\\www.js\""
+    "watch": "concurrently --kill-others \"webpack --mode development --watch\" \"nodemon ..\\..\\dist\\tera.com\\www.js\""
   },
   "keywords": [],
   "author": "Shlomi Levi <wizardnet972@gmail.com>",

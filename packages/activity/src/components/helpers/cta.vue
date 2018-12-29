@@ -3,7 +3,7 @@
     <v-layout fill-height wrap>
       <v-flex md6 xs12>
         <v-card flat height="100%" tile>
-          <v-img height="100%" :src="`//picsum.photos/700/334`"/>
+          <v-img height="100%" :src="`/activities/learning-photo/cover-s.jpg`"/>
         </v-card>
       </v-flex>
 

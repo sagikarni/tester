@@ -35,7 +35,10 @@ app.use(passport.session());
 
 app.use(routes);
 
+console.log('xxxxxxxxxxx', path.resolve(__dirname, './assets'));
+
 app.use(express.static(path.resolve(__dirname, './public')));
+app.use(express.static(path.resolve(__dirname, './assets')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/index.html'));

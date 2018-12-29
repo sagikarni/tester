@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "watch": "lerna run watch --stream",
     "build:server": "lerna run build --scope tera.com-server --stream",
-    "clean": "",
+    "watchs": "",
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {

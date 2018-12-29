@@ -7,7 +7,7 @@ const apiUrl = 'http://localhost:3000';
 
 module.exports = {
 //   runtimeCompiler: true,
-//   outputDir: './dist/public',
+   outputDir: '../../dist/tera.com/public',
 //   chainWebpack: config => {
 //     const resolve = dir => path.join(__dirname, dir);
 //     const template = resolve('apps/web/public/index.html');
@@ -38,6 +38,11 @@ module.exports = {
         changeOrigin: true
       },
       '/auth': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true
+      },
+      '/assets': {
         target: apiUrl,
         ws: true,
         changeOrigin: true
