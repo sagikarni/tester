@@ -1,0 +1,51 @@
+{
+  "name": "tera.com-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode development",
+    "watch": "concurrently --kill-others \"nodemon dist\\www.js\" \"webpack --mode development --watch\""
+  },
+  "keywords": [],
+  "author": "Shlomi Levi <wizardnet972@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.18",
+    "@types/webpack-env": "^1.13.6",
+    "auth-node": "^0.0.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "cookie-parser": "^1.4.3",
+    "copy-webpack-plugin": "^4.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-conditional-middleware": "^2.1.1",
+    "express-session": "^1.15.6",
+    "express-zone": "^0.0.0",
+    "helmet": "^3.15.0",
+    "jest": "^23.6.0",
+    "lodash": "^4.17.11",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.4.0",
+    "passport": "^0.4.0",
+    "randomstring": "^1.1.5",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-env": "^0.8.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.2.3",
+    "babel-core": "^6.26.3",
+    "typescript": "^3.2.2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["webpack-env", "jest", "node"],
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["*"],
+      "@packages/*": ["../../packages/*"]
+    }
+  }
+}
