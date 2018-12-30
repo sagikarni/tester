@@ -22,6 +22,7 @@ import dasherize from "dasherize";
 })
 export default class Activity extends Vue {
   routeName = "";
+  name = "";
 
   item = {
     name: "learning-photo",
@@ -32,8 +33,8 @@ export default class Activity extends Vue {
 
   get thumbnails() {
     return this.item.thumbnails.map(i => ({
-      pic: `/activities/learning-photo/thumbnails/${i}-l.jpg`,
-      lazy: `/activities/learning-photo/thumbnails/${i}-m.jpg`
+      pic: `/activities/${this.name}/thumbnails/${i}-l.jpg`,
+      lazy: `/activities/${this.name}/thumbnails/${i}-m.jpg`
     }));
   }
 
@@ -43,6 +44,7 @@ export default class Activity extends Vue {
 
   mounted() {
     const { category } = this.$route.params;
+    this.name = category;
 
     this.routeName = `${category}/start`;
   }
