@@ -13,6 +13,8 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 import { DrawerItems } from "tera-core";
 import dasherize from "dasherize";
 
+import { activities } from "tera-core";
+
 @Component({
   components: {
     Cta: () => import(/* webpackChunkName: "cta" */ "../helpers/cta.vue"),
@@ -22,20 +24,17 @@ import dasherize from "dasherize";
 })
 export default class Activity extends Vue {
   routeName = "";
-  name = "";
-
-  item = {
-    name: "learning-photo",
-    title: "learning photo activity",
-    description: "this is activvity of what in the picture...",
-    thumbnails: ["istock-488951890", "istock-532348674", "istock-664350152"]
-  };
+  item = null;
 
   get thumbnails() {
-    return this.item.thumbnails.map(i => ({
-      pic: `/activities/${this.name}/thumbnails/${i}-l.jpg`,
-      lazy: `/activities/${this.name}/thumbnails/${i}-m.jpg`
-    }));
+    return (
+      (this.item &&
+        this.item.thumbnails.map(thumbnail => ({
+          pic: `/activities/${this.item.name}/thumbnails/${thumbnail}-l.jpg`,
+          lazy: `/activities/${this.item.name}/thumbnails/${thumbnail}-m.jpg`
+        }))) ||
+      []
+    );
   }
 
   constructor() {
@@ -43,9 +42,8 @@ export default class Activity extends Vue {
   }
 
   mounted() {
-    const { category } = this.$route.params;
-    this.name = category;
-
+    const { category, id } = this.$route.params;
+    this.item = activities.find(i => i.name === id);
     this.routeName = `${category}/start`;
   }
 }
