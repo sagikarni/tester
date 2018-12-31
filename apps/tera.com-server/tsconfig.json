@@ -9,8 +9,7 @@
     "baseUrl": ".",
     "sourceMap": true,
     "paths": {
-      "@/*": ["*"],
-      "@packages/*": ["../../packages/*"]
+      "@/*": ["*"]
     }
   }
 }

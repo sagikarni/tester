@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode development",
-    "watch": "concurrently --kill-others \"webpack --mode development --watch\" \"nodemon ..\\..\\dist\\tera.com\\www.js\""
+    "watch": "webpack --mode development --watch"
   },
   "keywords": [],
   "author": "Shlomi Levi <wizardnet972@gmail.com>",
@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.2.3",
     "babel-core": "^6.26.3",
+    "nodemon-webpack-plugin": "^4.0.7",
     "typescript": "^3.2.2"
   }
 }

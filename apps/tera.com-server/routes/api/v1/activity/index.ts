@@ -6,9 +6,15 @@ import { authenticate } from 'auth-node';
 
 const router = Router();
 
-router.get('/', (req, res, next) => {
-  // console.log('activitiesMetadata', activitiesMetadata);
-  // res.json(activitiesMetadata['single-photo']);
-});
+router.get('/:id', (req, res, next) => {
+  const activity = {
+    name: 'learning-photo',
+    title: 'learning photo activity',
+    description: 'this is activvity of what in the picture...',
+    thumbnails: ['istock-488951890', 'istock-532348674', 'istock-664350152'],
+    type: 'plain-slides'
+  };
 
+  res.json(activity);
+});
 export { router as activity };

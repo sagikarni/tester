@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
-    "watch": "lerna run watch --stream",
+    "watch": "lerna run --parallel --stream watch",
     "build:server": "lerna run build --scope tera.com-server --stream",
     "watchs": "",
     "//": "lerna run watch --paraell --stream"
