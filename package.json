@@ -6,12 +6,12 @@
     "watch": "lerna run --parallel --stream watch",
     "build:server": "lerna run build --scope tera.com-server --stream",
     "watchs": "",
+    "format": "prettier --write \"{app,__{tests,mocks}__}/**/*.js\"",
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {
-    "@types/node": "^10.12.18",
-    "lerna": "^3.8.0",
-    "typescript": "^3.2.2"
+    "lerna": "^3.8.1",
+    "prettier": "^1.15.3"
   },
   "postcss": {
     "plugins": {

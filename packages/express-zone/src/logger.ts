@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 import * as path from 'path';
-import * as uuid from 'node-uuid';
+import * as uuid from 'uuid';
 import * as fs from 'fs';
 
 const { combine, timestamp, label, printf, prettyPrint, splat, json } = format;
