@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 9090",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "watch": "vue-cli-service serve",
+    "//watch": "vue-cli-service serve --port 9090",
     "dev": "npm run build -- --mode development"
   },
   "dependencies": {

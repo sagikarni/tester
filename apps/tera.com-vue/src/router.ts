@@ -4,11 +4,11 @@ import Router from 'vue-router';
 import { Trans, Shell, routes as coreRoutes } from 'tera-core';
 import { routes as authRoutes } from 'auth-vue';
 import { routes as activityRoutes } from 'activity';
-import { routes as plainSlidesActivityRoutes } from 'plain-slides-activity';
+import { routes as plainActivityRoutes } from 'plain-activity';
 
 Vue.use(Router);
 
-const children = [...coreRoutes, ...authRoutes, ...activityRoutes, ...plainSlidesActivityRoutes];
+const children = [...coreRoutes, ...authRoutes, ...activityRoutes, ...plainActivityRoutes];
 
 export default new Router({
   mode: 'history',
