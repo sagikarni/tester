@@ -1,15 +1,16 @@
 import Vue from 'vue';
 
-// import 'normalize.css';
+import 'normalize.css';
 import ElementUI from 'element-ui';
 import SvgIcon from 'vue-svgicon';
+import '@/styles/index.scss';
+import '@/icons';
+import '@/permission';
 
-// import './plugins/vuetify';
-// import './plugins/axios';
 import App from '@/App.vue';
-import router from './router';
-import store from './store';
-// import './registerServiceWorker';
+import router from '@/router';
+import store from '@/store';
+import '@/registerServiceWorker';
 
 Vue.use(ElementUI);
 Vue.use(SvgIcon, {
@@ -20,12 +21,8 @@ Vue.use(SvgIcon, {
 
 Vue.config.productionTip = false;
 
-async function createApp() {
-  await new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app');
-}
-
-createApp();
+new Vue({
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount('#app');

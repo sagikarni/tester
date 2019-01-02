@@ -7,7 +7,7 @@ const apiUrl = 'http://localhost:3000';
 
 module.exports = {
 //   runtimeCompiler: true,
-   outputDir: '../../dist/tera.com/public',
+   outputDir: '../../dist/tera-admin/public',
 //   chainWebpack: config => {
 //     const resolve = dir => path.join(__dirname, dir);
 //     const template = resolve('apps/web/public/index.html');

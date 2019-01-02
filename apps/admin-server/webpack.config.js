@@ -17,7 +17,7 @@ module.exports = {
   },
 
   output: {
-    path: path.join(__dirname, '../../dist/tera.com'),
+    path: path.join(__dirname, '../../dist/tera-admin'),
     filename: '[name].js'
   },
 
