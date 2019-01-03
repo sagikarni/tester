@@ -3,9 +3,11 @@ import { Message, MessageBox } from 'element-ui';
 import { getToken } from '@/utils/auth';
 import { UserModule } from '@/store/modules/user';
 
+const VUE_APP_MOCK_API = `https://easy-mock.com/mock/5950a2419adc231f356a6636/vue-admin`;
+
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_MOCK_API,
+  baseURL: VUE_APP_MOCK_API,
   timeout: 5000,
 });
 
@@ -20,7 +22,7 @@ service.interceptors.request.use(
   (error) => {
     // Handle request error here
     Promise.reject(error);
-  },
+  }
 );
 
 // respone 拦截器
@@ -48,7 +50,7 @@ service.interceptors.response.use(
             confirmButtonText: '重新登录',
             cancelButtonText: '取消',
             type: 'warning',
-          },
+          }
         ).then(() => {
           UserModule.FedLogOut().then(() => {
             location.reload(); // 为了重新实例化vue-router对象 避免bug
@@ -67,7 +69,7 @@ service.interceptors.response.use(
       duration: 5 * 1000,
     });
     return Promise.reject(error);
-  },
+  }
 );
 
 export default service;
