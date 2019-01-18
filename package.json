@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
+    "postinstall": "npm run bootstrap",
     "watch": "lerna run --parallel --stream watch",
+    "watch:admin": "lerna run --parallel --stream --scope admin-server watch",
     "build:server": "lerna run build --scope tera.com-server --stream",
     "watchs": "",
     "format": "prettier --write \"{app,__{tests,mocks}__}/**/*.js\"",
