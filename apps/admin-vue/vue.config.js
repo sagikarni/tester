@@ -1,52 +1,27 @@
 const path = require('path');
 const webpack = require('webpack');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const apiUrl = 'http://localhost:3000';
-// const copies = [{ from: path.join(__dirname + '/apps/web/public'), ignore: ['index.html', '.DS_Store'] }];
+const apiUrl = `http://localhost:${process.env.ADMIN_SERVER_PORT}`;
 
 module.exports = {
-//   runtimeCompiler: true,
-   outputDir: '../../dist/tera-admin/public',
-//   chainWebpack: config => {
-//     const resolve = dir => path.join(__dirname, dir);
-//     const template = resolve('apps/web/public/index.html');
-
-//     config.plugin('html').tap(([options]) => [{ ...options, template }]);
-//     config.set('entry', ['./src/main.ts']).set('context', resolve('/apps/web'));
-//     config.resolve.alias.set('@', resolve('apps/web/src')).set('@libs', resolve('libs'));
-//   },
-//   configureWebpack: config => {
-//     return {
-//       mode: 'development',
-//       stats: 'verbose',
-//       devtool: 'source-map',
-//       plugins: [new CopyWebpackPlugin([...copies])]
-//       // optimization: {
-//       //   splitChunks: {
-//       //     chunks: 'all'
-//       //   }
-//       // }
-//     };
-//   },
-
+  outputDir: '../../dist/tera-admin/public',
   devServer: {
     proxy: {
       '/api': {
         target: apiUrl,
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       },
       '/auth': {
         target: apiUrl,
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       },
       '/assets': {
         target: apiUrl,
         ws: true,
-        changeOrigin: true
-      }
-    }
-  }
+        changeOrigin: true,
+      },
+    },
+  },
 };

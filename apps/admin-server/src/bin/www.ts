@@ -6,7 +6,7 @@ import http from 'http';
 
 import app from '../app';
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.ADMIN_SERVER_PORT || 3001;
 
 async function createServer() {
   // db.connection.once('open', async () => {
