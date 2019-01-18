@@ -8,7 +8,7 @@ const urlVerifyPassword = process.env.URL_VERIFY_PASSWORD;
 
 mail.setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
-load(resolve(process.cwd(), process.env.EMAIL_TEMPLATES_PATH));
+load(resolve(__dirname, process.env.EMAIL_TEMPLATES_PATH));
 
 export function sendWelcome({ emailTo, fullname, password }) {
   const msg = {

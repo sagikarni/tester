@@ -6,14 +6,14 @@ const NodemonPlugin = require('nodemon-webpack-plugin');
 
 const configFileName = path.resolve(__dirname, './tsconfig.json');
 
-const copies = [{ from: path.join(__dirname, './assets'), to: 'assets' }];
+const copies = [{ from: path.join(__dirname, './src/assets'), to: 'assets' }];
 
 module.exports = {
   externals: [nodeExternals({ modulesDir: '../../node_modules' }), nodeExternals({ whitelist: ['express-zone', 'auth-node'] })],
   target: 'node',
   devtool: 'source-map',
   entry: {
-    www: './bin/www.ts'
+    www: './src/bin/www.ts'
   },
 
   output: {

@@ -1,4 +1,4 @@
-import './env';
+import './entrypoint';
 
 import { db } from 'auth-node';
 import { logger } from 'express-zone';
@@ -6,7 +6,7 @@ import http from 'http';
 
 import app from '../app';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.SERVER_PORT || 3000;
 
 async function createServer() {
   db.connection.once('open', async () => {

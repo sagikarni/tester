@@ -22,11 +22,9 @@ const app = express();
 
 app.use(json());
 app.use(urlencoded({ extended: true }));
-
 app.use(cookieParser());
 app.use(compression());
 app.use(methodOverride());
-
 app.use(helmet());
 
 app.use(expressSession({ secret: 'SECRET' }));

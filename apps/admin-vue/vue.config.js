@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const apiUrl = `http://localhost:${process.env.ADMIN_SERVER_PORT}`;
+const apiUrl = `http://localhost:${process.env.SERVER_PORT}`;
 
 module.exports = {
   outputDir: '../../dist/tera-admin/public',
