@@ -1,3 +1,5 @@
+// #!/usr/bin/env node
+
 import './entrypoint';
 
 import { db } from 'auth-node';

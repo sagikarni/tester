@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { authenticate } from 'passport';
+import passport from 'passport';
 
 import expressConditionalMiddleware from 'express-conditional-middleware';
 import * as randomstring from 'randomstring';
@@ -39,12 +39,14 @@ const options = {
   facebook: { session: false, scope: ['email'], authType: 'rerequest' }
 };
 
-router.get('/:social', (req, res, next) => authenticate(req.params.social, options[req.params.social])(req, res, next));
+router.get('/:social', (req, res, next) => {
+  passport.authenticate(req.params.social, options[req.params.social])(req, res, next);
+});
 
 router.get(
   '/:social/callback',
   (req, res, next) =>
-    authenticate(req.params.social, async (err, strategyResponse) => {
+  passport.authenticate(req.params.social, async (err, strategyResponse) => {
       console.log('in here');
 
       console.log({ err, strategyResponse });
@@ -92,11 +94,11 @@ function combineMiddleware(mids) {
 }
 
 router.get('/twitter', (req, res, next) => {
-  authenticate('twitter')(req, res, next);
+  passport.authenticate('twitter')(req, res, next);
 });
 
 router.get('/twitter/return', (req, res, next) => {
-  authenticate('twitter', (err, strategyResponse) => {
+  passport.authenticate('twitter', (err, strategyResponse) => {
     if (err) {
       throw err;
     }
@@ -123,11 +125,11 @@ router.get('/twitter/return', (req, res, next) => {
 });
 
 router.get('/linkedin', (req, res, next) => {
-  authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] })(req, res, next);
+  passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] })(req, res, next);
 });
 
 router.get('/linkedin/return', (req, res, next) => {
-  authenticate('linkedin', (err, strategyResponse) => {
+  passport.authenticate('linkedin', (err, strategyResponse) => {
     if (err) {
       throw err;
     }
@@ -154,11 +156,11 @@ router.get('/linkedin/return', (req, res, next) => {
 });
 
 router.get('/google', (req, res, next) => {
-  authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
 });
 
 router.get('/google/return', (req, res, next) => {
-  authenticate('google', (err, strategyResponse) => {
+  passport.authenticate('google', (err, strategyResponse) => {
     if (err) {
       throw err;
     }

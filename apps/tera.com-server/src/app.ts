@@ -9,9 +9,10 @@ import path from 'path';
 
 import { clientErrorHandler, errorHandler } from 'express-zone';
 import { routes } from './routes';
-import { facebookStrategy, googleStrategy, linkedinStrategy, twitterStrategy } from 'auth-node';
 
 import passport from 'passport';
+
+import { facebookStrategy, googleStrategy, linkedinStrategy, twitterStrategy } from 'auth-node';
 
 passport.use(facebookStrategy);
 passport.use(twitterStrategy);
@@ -27,9 +28,9 @@ app.use(compression());
 app.use(methodOverride());
 app.use(helmet());
 
-app.use(expressSession({ secret: 'SECRET' }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(expressSession({ secret: 'SECRET' }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(routes);
 
