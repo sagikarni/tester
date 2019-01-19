@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const apiUrl = `http://localhost:${process.env.SERVER_PORT}`;
 
 module.exports = {
-  outputDir: '../../dist/tera-admin/public',
+  outputDir: '../../dist/tera.com/public',
   devServer: {
     proxy: {
       '/api': {

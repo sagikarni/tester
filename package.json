@@ -8,6 +8,8 @@
     "watch:admin": "lerna run --parallel --stream --scope admin-* watch",
     "watch:tera": "lerna run --parallel --stream --scope tera.com-* watch",
     "build:server": "lerna run build --scope tera.com-server --stream",
+    "build:admin": "lerna run build --scope admin-* --stream",
+    "build:tera": "lerna run build --scope tera.com-* --stream",
     "watchs": "",
     "format": "prettier --write \"{app,__{tests,mocks}__}/**/*.js\"",
     "//": "lerna run watch --paraell --stream"
