@@ -13,6 +13,8 @@ node dep.js
 
 docker-compose -f .docker/docker-compose.ecr.yml build
 
+docker-compose -f .docker/docker-compose.ecr.yml push
+
 # ecs-cli compose compose -f .docker/docker-compose.aws.yml --cluster ${ECS_CLUSTER} down
 
 

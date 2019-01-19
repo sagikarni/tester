@@ -35,6 +35,5 @@ if (
 }
 
 console.log({ path });
-console.log('cwd', process.cwd());
 
 dotenv.config({ path });

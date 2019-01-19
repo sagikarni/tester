@@ -2,7 +2,9 @@ FROM node:latest
 
 WORKDIR /usr/src/app
 
-COPY ./dist/tera-com .
+COPY ./dist/tera.com .
+
+COPY ./apps/tera.com-server/.env .
 
 RUN npm install
 
