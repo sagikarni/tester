@@ -24,34 +24,22 @@ router.get(
   '/:social/callback',
   (req, res, next) =>
     passport.authenticate(req.params.social, async (err, strategyResponse) => {
-      console.log('in authenticate');
-
-      console.log({ err, strategyResponse });
-
-      console.log('hhhhh');
 
       if (!strategyResponse) {
-        console.log('hhhhh3');
         res.writeHead(200, { 'Content-Type': 'text/html' });
         return res.end(`<script>window.close();</script>`);
       }
 
-      console.log('hhhhh2');
-
       if (err) {
-        console.log('hhhhh5');
         res.writeHead(200, { 'Content-Type': 'text/html' });
         return res.end(
           `<script>window.opener.postMessage('ERROR', "*");window.close();</script>`
         );
       }
 
-      console.log('after err');
       const email = get(strategyResponse, 'profile.emails[0].value');
       const name = get(strategyResponse, 'profile.displayName');
       const password = randomstring.generate(8);
-
-      console.log({ email, name, password });
 
       if (!email) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -68,7 +56,6 @@ router.get(
         ? { password: user.password, email: user.email }
         : { email, name, password };
 
-      console.log('next!');
       next();
     })(req, res, next),
   IfElseMiddleware(
@@ -77,8 +64,6 @@ router.get(
     loginWithSocial
   ),
   (req, res, next) => {
-    console.log('after all');
-
     const { user } = req;
 
     const message = {
@@ -88,7 +73,6 @@ router.get(
       message: `${req.strategyResponse.provider}Login`,
     };
 
-    console.log({ message });
     res.writeHead(200, { 'Content-Type': 'text/html' });
 
     return res.end(
