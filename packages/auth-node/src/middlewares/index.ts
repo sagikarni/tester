@@ -1,86 +1,109 @@
 import { pick } from 'lodash';
 import { User } from '../database';
 import * as jwt from 'jsonwebtoken';
-import { async, asyncAll, AppHttpError } from 'express-zone';
+import { compose, async, asyncAll, AppHttpError } from 'express-zone';
 import { get } from 'lodash';
 import {
   sendWelcome,
   sendVerify,
   sendVerification,
   sendResetPassword,
-  sendPasswordChanged
+  sendPasswordChanged,
 } from '../email';
 
 export const register = asyncAll([
-  createUser(req => req.body),
-  sendWelcomeEmail({ getUser: req => req.user }),
-  sendEmailVerifyAccount({ getUser: req => req.user }),
-  token()
+  createUser((req) => req.body),
+  sendWelcomeEmail({ getUser: (req) => req.user }),
+  sendEmailVerifyAccount({ getUser: (req) => req.user }),
+  token(),
 ]);
 
-export const login = asyncAll([authenticateUser(req => req.body), token()]);
+export const login = asyncAll([authenticateUser((req) => req.body), token()]);
 
 export const verifyAccount = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'verify' }),
-  verifyUser({ getUser: req => req.user }),
-  sendEmailVerification({ getUser: req => req.user }),
-  token()
+  verifyUser({ getUser: (req) => req.user }),
+  sendEmailVerification({ getUser: (req) => req.user }),
+  token(),
 ]);
 
 export const sendVerifyNotification = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  sendEmailVerifyAccount({ getUser: req => req.user })
+  sendEmailVerifyAccount({ getUser: (req) => req.user }),
 ]);
 
 export const authenticate = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
-  token()
+  token(),
 ]);
 
 export const refreshToken = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'refresh' }),
-  token()
+  token(),
 ]);
 
 export const recoverAccount = asyncAll([
-  findUser(req => req.body),
-  sendResetPasswordEmail({ getUser: req => req.user })
+  findUser((req) => req.body),
+  sendResetPasswordEmail({ getUser: (req) => req.user }),
 ]);
 
 export const verifyPassword = asyncAll([
   validateToken({ headerKey: 'Basic', grant: 'reset' }),
   setNewPassword({
-    getUser: req => req.user,
-    getPassword: req => req.body.password
+    getUser: (req) => req.user,
+    getPassword: (req) => req.body.password,
   }),
   sendPasswordChangedEmail({
-    getUser: req => req.user,
-    getPassword: req => req.body.password
+    getUser: (req) => req.user,
+    getPassword: (req) => req.body.password,
   }),
-  token()
+  token(),
 ]);
 
 export const disconnectFromSocial = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
   disconnectFrom({
-    getUser: req => req.user,
-    getVendor: req => req.body.vendor
+    getUser: (req) => req.user,
+    getVendor: (req) => req.body.vendor,
   }),
-  token()
+  token(),
 ]);
 
 export const changePassword = asyncAll([
   validateToken({ headerKey: 'Bearer', grant: 'access' }),
   setUserPassword({
-    getUser: req => req.user,
-    getOldPassword: req => req.body.oldPassword,
-    getPassword: req => req.body.password
+    getUser: (req) => req.user,
+    getOldPassword: (req) => req.body.oldPassword,
+    getPassword: (req) => req.body.password,
   }),
   sendPasswordChangedEmail({
-    getUser: req => req.user,
-    getPassword: req => req.body.password
+    getUser: (req) => req.user,
+    getPassword: (req) => req.body.password,
   }),
-  token()
+  token(),
+]);
+
+export const registerWithSocial = compose([
+  ...asyncAll([
+    createUser((req) => req.body),
+    sendWelcomeEmail({ getUser: (req) => req.user }),
+    updateUserFromSocial({
+      getUser: (req) => req.user,
+      getSocialResponse: (req) => req.strategyResponse,
+    }),
+    token(),
+  ]),
+]);
+
+export const loginWithSocial = compose([
+  ...asyncAll([
+    authenticateUser((req) => req.body),
+    updateUserFromSocial({
+      getUser: (req) => req.user,
+      getSocialResponse: (req) => req.strategyResponse,
+    }),
+    token(),
+  ]),
 ]);
 
 export function setNewPassword({ getUser, getPassword }) {
@@ -190,7 +213,7 @@ export function createUser(getAttributes) {
       'name',
       'email',
       'password',
-      'verified'
+      'verified',
     ]);
 
     let user = await User.findOne({ email });

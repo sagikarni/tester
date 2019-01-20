@@ -91,6 +91,7 @@ export const actions: ActionTree<State, any> = {
     );
   },
   [CONNECT_SOCIAL]({ commit }, { accessToken, refreshToken, payload }) {
+    console.log({ payload });
     return new Promise((resolve, reject) => {
       commit(SET_AUTH, {
         store: true,
@@ -120,6 +121,7 @@ export const mutations: MutationTree<State> = {
     state.error = error;
   },
   [SET_AUTH](state: State, { store, token, refreshToken, user }) {
+    console.log({ user, store});
     state.token = token;
     state.refreshToken = refreshToken;
     state.user = user;
