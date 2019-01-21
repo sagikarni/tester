@@ -87,9 +87,9 @@ export const registerWithSocial = compose([
   ...asyncAll([
     createUser((req) => req.body),
     sendWelcomeEmail({ getUser: (req) => req.user }),
-    updateUserFromSocial({
+    updateUserFromStrategy({
       getUser: (req) => req.user,
-      getSocialResponse: (req) => req.strategyResponse,
+      getStrategy: (req) => req.fromStrategy,
     }),
     token(),
   ]),
@@ -98,9 +98,9 @@ export const registerWithSocial = compose([
 export const loginWithSocial = compose([
   ...asyncAll([
     authenticateUser((req) => req.body),
-    updateUserFromSocial({
+    updateUserFromStrategy({
       getUser: (req) => req.user,
-      getSocialResponse: (req) => req.strategyResponse,
+      getStrategy: (req) => req.fromStrategy,
     }),
     token(),
   ]),
@@ -227,22 +227,23 @@ export function createUser(getAttributes) {
   };
 }
 
-export function updateUserFromSocial({ getUser, getSocialResponse }) {
+export function updateUserFromStrategy({ getUser, getStrategy }) {
   return async (req, res, next) => {
     const user = getUser(req);
-    const socialResponse = getSocialResponse(req);
+    const fromStrategy = getStrategy(req);
     const { code } = req.query;
 
-    user.picture =
-      user.picture || get(socialResponse, 'profile.photos[0].value');
+    const { userStrategy, provider } = fromStrategy;
 
-    const provider = user[get(socialResponse, 'provider')];
+    user.picture = user.picture || userStrategy.picture;
 
-    provider.id = get(socialResponse, 'profile.id');
-    provider._raw = get(socialResponse, 'profile._raw');
-    provider.token = get(socialResponse, 'accessToken');
-    provider.refreshToken = get(socialResponse, 'refreshToken');
-    provider.code = code;
+    const vendor = user[provider];
+
+    vendor.id = get(userStrategy, '_raw.profile.id');
+    vendor._raw = get(userStrategy, '_raw.profile._raw');
+    vendor.token = fromStrategy.accessToken;
+    vendor.refreshToken = fromStrategy.refreshToken;
+    vendor.code = code;
     user.verified = true;
 
     user.save();

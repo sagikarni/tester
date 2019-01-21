@@ -5,10 +5,10 @@ services:
   #   image: 879624705037.dkr.ecr.us-east-2.amazonaws.com/tera-admin:latest
   #   build:
   #     context: ../
-  #     dockerfile: ./.docker/Dockerfile-tera-admin
+  #     dockerfile: ./.docker/Dockerfile_tera-admin
 
   tera-www:
     image: 879624705037.dkr.ecr.us-east-2.amazonaws.com/tera-www:latest
     build:
       context: ../
-      dockerfile: ./.docker/Dockerfile-tera-www
+      dockerfile: ./.docker/Dockerfile_tera-www

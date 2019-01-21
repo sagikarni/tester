@@ -1,6 +1,6 @@
 declare namespace Express {
   export interface Request {
-    strategyResponse?: any;
+    fromStrategy?: any;
     userExist?: boolean;
     user?: any;
   }

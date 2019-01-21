@@ -8,6 +8,7 @@ import { registerWithSocial, loginWithSocial, User } from 'auth-node';
 
 const providers = {
   facebook: { session: false, scope: ['email'], authType: 'rerequest' },
+  twitter: { session: false, scope: ['email'], authType: 'rerequest' },
 };
 
 const router = Router();
@@ -21,11 +22,10 @@ router.get('/:social', (req, res, next) =>
 );
 
 router.get(
-  '/:social/callback',
+  '/:social/return',
   (req, res, next) =>
-    passport.authenticate(req.params.social, async (err, strategyResponse) => {
-
-      if (!strategyResponse) {
+    passport.authenticate(req.params.social, async (err, fromStrategy) => {
+      if (!fromStrategy) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         return res.end(`<script>window.close();</script>`);
       }
@@ -37,9 +37,8 @@ router.get(
         );
       }
 
-      const email = get(strategyResponse, 'profile.emails[0].value');
-      const name = get(strategyResponse, 'profile.displayName');
-      const password = randomstring.generate(8);
+      const { userStrategy } = fromStrategy;
+      const { email, name } = userStrategy;
 
       if (!email) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -51,10 +50,10 @@ router.get(
       const user = await User.findOne({ email });
 
       req.userExist = !!user;
-      req.strategyResponse = strategyResponse;
+      req.fromStrategy = fromStrategy;
       req.body = req.userExist
         ? { password: user.password, email: user.email }
-        : { email, name, password };
+        : { email, name, password: randomstring.generate(8) };
 
       next();
     })(req, res, next),
@@ -70,7 +69,7 @@ router.get(
       accessToken: res.getHeader('access_token'),
       refreshToken: res.getHeader('refresh_token'),
       payload: user.toJSON(),
-      message: `${req.strategyResponse.provider}Login`,
+      message: `${req.fromStrategy.provider}Login`,
     };
 
     res.writeHead(200, { 'Content-Type': 'text/html' });
