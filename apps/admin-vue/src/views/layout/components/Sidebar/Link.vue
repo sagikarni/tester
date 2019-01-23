@@ -1,22 +1,39 @@
+
 <template>
-  <a v-if="isExternalLink(to)" :href="to" target="_blank" rel="noopener">
+  <!-- eslint-disable vue/require-component-is-->
+  <component v-bind="linkProps(to)">
     <slot/>
-  </a>
-  <router-link v-else :to="to">
-    <slot/>
-  </router-link>
+  </component>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { isExternal } from '@/utils/validate';
+<script>
+import { isExternal } from '@/utils'
 
-@Component
-export default class Link extends Vue {
-  @Prop({ required: true }) to!: string;
-
-  isExternalLink(routePath: string) {
-    return isExternal(routePath);
+export default {
+  props: {
+    to: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    isExternalLink(routePath) {
+      return isExternal(routePath)
+    },
+    linkProps(url) {
+      if (this.isExternalLink(url)) {
+        return {
+          is: 'a',
+          href: url,
+          target: '_blank',
+          rel: 'noopener'
+        }
+      }
+      return {
+        is: 'router-link',
+        to: url
+      }
+    }
   }
 }
 </script>

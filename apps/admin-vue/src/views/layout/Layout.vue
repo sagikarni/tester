@@ -1,46 +1,54 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar class="sidebar-container"/>
     <div class="main-container">
       <navbar/>
+      <tags-view/>
       <app-main/>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Navbar, AppMain, Sidebar } from './components';
-import ResizeMixin from './mixin/ResizeHandler';
-import { Component, Vue } from 'vue-property-decorator';
-import { mixins } from 'vue-class-component';
-import { DeviceType, AppModule } from '@/store/modules/app';
+<script>
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
+import ResizeMixin from './mixin/ResizeHandler'
 
-@Component({
+export default {
+  name: 'Layout',
   components: {
     Navbar,
     Sidebar,
     AppMain,
+    TagsView
   },
-})
-export default class Layout extends mixins(ResizeMixin) {
-  get classObj() {
-    return {
-      hideSidebar: !this.sidebar.opened,
-      openSidebar: this.sidebar.opened,
-      withoutAnimation: this.sidebar.withoutAnimation,
-      mobile: this.device === DeviceType.Mobile,
-    };
-  }
-
-  handleClickOutside() {
-    AppModule.CloseSideBar(false);
+  mixins: [ResizeMixin],
+  computed: {
+    sidebar() {
+      return this.$store.state.app.sidebar
+    },
+    device() {
+      return this.$store.state.app.device
+    },
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === 'mobile'
+      }
+    }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('closeSideBar', { withoutAnimation: false })
+    }
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "src/styles/mixin.scss";
+  @import "~@/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;
     position: relative;

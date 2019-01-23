@@ -1,16 +1,29 @@
-<template>
-  <div>
-    <svg-icon v-if="icon" :name="icon"/>
-    <span v-if="title" slot="title">{{title}}</span>
-  </div>
-</template>
+<script>
+export default {
+  name: 'MenuItem',
+  functional: true,
+  props: {
+    icon: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: ''
+    }
+  },
+  render(h, context) {
+    const { icon, title } = context.props
+    const vnodes = []
 
-<script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+    if (icon) {
+      vnodes.push(<svg-icon icon-class={icon}/>)
+    }
 
-@Component
-export default class MenuItem extends Vue {
-  @Prop({ default: '' }) icon!: string;
-  @Prop({ default: '' }) title!: string;
+    if (title) {
+      vnodes.push(<span slot='title'>{(title)}</span>)
+    }
+    return vnodes
+  }
 }
 </script>
