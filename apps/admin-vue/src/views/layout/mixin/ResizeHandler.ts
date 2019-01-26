@@ -1,40 +1,50 @@
-import store from '@/store'
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { DeviceType, AppModule } from '@/store/modules/app';
 
-const { body } = document
-const WIDTH = 1024
-const RATIO = 3
+const { body } = document;
+const WIDTH = 1024;
+const RATIO = 3;
 
-export default {
-  watch: {
-    $route(route) {
-      if (this.device === 'mobile' && this.sidebar.opened) {
-        store.dispatch('closeSideBar', { withoutAnimation: false })
-      }
+@Component
+export default class ResizeHandlerMixin extends Vue {
+  get device() {
+    return AppModule.device;
+  }
+
+  get sidebar() {
+    return AppModule.sidebar;
+  }
+
+  @Watch('$route')
+  private OnRouteChange() {
+    if (this.device === DeviceType.Mobile && this.sidebar.opened) {
+      AppModule.CloseSideBar(false);
     }
-  },
-  beforeMount() {
-    window.addEventListener('resize', this.resizeHandler)
-  },
-  mounted() {
-    const isMobile = this.isMobile()
+  }
+
+  private beforeMount() {
+    window.addEventListener('resize', this.resizeHandler);
+  }
+
+  private mounted() {
+    const isMobile = this.isMobile();
     if (isMobile) {
-      store.dispatch('toggleDevice', 'mobile')
-      store.dispatch('closeSideBar', { withoutAnimation: true })
+      AppModule.ToggleDevice(DeviceType.Mobile);
+      AppModule.CloseSideBar(true);
     }
-  },
-  methods: {
-    isMobile() {
-      const rect = body.getBoundingClientRect()
-      return rect.width - RATIO < WIDTH
-    },
-    resizeHandler() {
-      if (!document.hidden) {
-        const isMobile = this.isMobile()
-        store.dispatch('toggleDevice', isMobile ? 'mobile' : 'desktop')
+  }
 
-        if (isMobile) {
-          store.dispatch('closeSideBar', { withoutAnimation: true })
-        }
+  private isMobile() {
+    const rect = body.getBoundingClientRect();
+    return rect.width - RATIO < WIDTH;
+  }
+
+  private resizeHandler() {
+    if (!document.hidden) {
+      const isMobile = this.isMobile();
+      AppModule.ToggleDevice(isMobile ? DeviceType.Mobile : DeviceType.Desktop);
+      if (isMobile) {
+        AppModule.CloseSideBar(true);
       }
     }
   }

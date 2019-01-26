@@ -5,7 +5,8 @@
 export $(grep -v '^#' .env | xargs -d '\n')
 
 # docker build -t testapp -f .docker/Dockerfile-tera-admin
-# npm run build:admin
+
+npm run build:admin
 
 npm run build:tera
 

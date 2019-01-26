@@ -1,54 +1,46 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar class="sidebar-container"/>
     <div class="main-container">
       <navbar/>
-      <tags-view/>
       <app-main/>
     </div>
   </div>
 </template>
 
-<script>
-import { Navbar, Sidebar, AppMain, TagsView } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
+<script lang="ts">
+import { Navbar, AppMain, Sidebar } from './components';
+import ResizeMixin from './mixin/ResizeHandler';
+import { Component, Vue } from 'vue-property-decorator';
+import { mixins } from 'vue-class-component';
+import { DeviceType, AppModule } from '@/store/modules/app';
 
-export default {
-  name: 'Layout',
+@Component({
   components: {
     Navbar,
     Sidebar,
     AppMain,
-    TagsView
   },
-  mixins: [ResizeMixin],
-  computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar
-    },
-    device() {
-      return this.$store.state.app.device
-    },
-    classObj() {
-      return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
-      }
-    }
-  },
-  methods: {
-    handleClickOutside() {
-      this.$store.dispatch('closeSideBar', { withoutAnimation: false })
-    }
+})
+export default class Layout extends mixins(ResizeMixin) {
+  get classObj() {
+    return {
+      hideSidebar: !this.sidebar.opened,
+      openSidebar: this.sidebar.opened,
+      withoutAnimation: this.sidebar.withoutAnimation,
+      mobile: this.device === DeviceType.Mobile,
+    };
+  }
+
+  private handleClickOutside() {
+    AppModule.CloseSideBar(false);
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "~@/styles/mixin.scss";
+  @import "src/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;
     position: relative;

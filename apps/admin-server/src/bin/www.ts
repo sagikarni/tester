@@ -3,13 +3,14 @@ import './entrypoint';
 // import { db } from 'auth-node';
 import { logger } from 'express-zone';
 import http from 'http';
+import { connect, connection } from 'mongoose';
 
 import app from '../app';
 
 const PORT = process.env.SERVER_PORT || 3000;
 
 async function createServer() {
-  // db.connection.once('open', async () => {
+  connection.once('open', async () => {
     logger.log('Connection database has been established successfully.');
 
     // await db.connection.db.dropDatabase();
@@ -19,9 +20,9 @@ async function createServer() {
     server.listen(PORT, () => {
       logger.log(`app listening on port ${PORT}!`);
     });
-  // });
+  });
 
-  // await db.connect();
+  await connect(process.env.MONGODB_URI);
 }
 
 createServer();
