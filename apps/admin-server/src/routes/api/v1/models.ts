@@ -60,5 +60,8 @@ export const Activity = mongoose.model(
     subCategory: { type: mongoose.Types.ObjectId, ref: 'SubCategory' },
     status: { type: String, enum: types.status },
     audience: { type: String, enum: types.audience },
+    slides: [{
+      media: [String]
+    }]
   })
 );

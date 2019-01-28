@@ -5,6 +5,7 @@ const apiUrl = `http://localhost:${process.env.SERVER_PORT}`;
 
 module.exports = {
   outputDir: '../../dist/tera-admin/public',
+  runtimeCompiler: true,
   devServer: {
     proxy: {
       '/api': {

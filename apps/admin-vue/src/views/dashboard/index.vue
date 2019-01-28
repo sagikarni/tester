@@ -96,9 +96,10 @@
               <el-row style="box-shadow:-1px -1px 5px #ccc;">
                 <el-col :span="24" style="padding:10px 20px;background:#F7F7F7">
                   <el-input
-                    placeholder="Type something"
+                    placeholder="Search by Name, Description, Image ID or Activity ID"
                     prefix-icon="el-icon-search"
                     v-model="input21"
+                    clearable
                   ></el-input>
                 </el-col>
               </el-row>
@@ -121,8 +122,8 @@
                     >
                       <h5>{{item.name}}</h5>
                       <div>
-                        <el-tag size="mini">{{item.type.name}}</el-tag>|
-                        <el-tag size="mini">{{item._id}}</el-tag>
+                        <el-tag color="#f5f5f5" size="mini">{{item.type.name}}</el-tag>
+                        <el-tag color="#f5f5f5" size="mini">{{item._id}}</el-tag>
                       </div>
                     </router-link>
 
@@ -150,9 +151,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { UserModule } from '@/store/modules/user';
+// import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
-
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -314,13 +314,13 @@ export default class Dashboard extends Vue {
     super();
   }
 
-  get name() {
-    return UserModule.name;
-  }
+  // get name() {
+  //   return UserModule.name;
+  // }
 
-  get roles() {
-    return UserModule.roles;
-  }
+  // get roles() {
+  //   return UserModule.roles;
+  // }
 }
 </script>
 
@@ -341,6 +341,7 @@ export default class Dashboard extends Vue {
 .activity-item {
   padding: 10px 50px 10px;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  background:#eee;
 }
 
 .activity-item.router-link-active {
@@ -374,10 +375,12 @@ export default class Dashboard extends Vue {
 
 h5 {
   color: #54626d;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 600;
   margin: 10px 0 20px;
 }
+.el-tag {margin-right:10px;color:#777;}
+
 // .el-row {
 //   margin-bottom: 20px;
 //   &:last-child {

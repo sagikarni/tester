@@ -2,9 +2,9 @@ import router from './router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { Message } from 'element-ui';
-import { getToken } from '@/utils/auth';
+import { getToken } from './utils/auth';
 import { Route } from 'vue-router';
-import { UserModule } from '@/store/modules/user';
+import { UserModule } from './store/modules/user';
 
 const whiteList = ['/login'];
 

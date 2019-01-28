@@ -3,14 +3,16 @@ import Vue from 'vue';
 import 'normalize.css';
 import ElementUI from 'element-ui';
 import SvgIcon from 'vue-svgicon';
-import '@/styles/index.scss';
-import '@/icons';
-import '@/permission';
+import './styles/index.scss';
+import './icons';
+import './permission';
 
-import App from '@/App.vue';
-import router from '@/router';
-import store from '@/store';
-import '@/registerServiceWorker';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import './registerServiceWorker';
 
 Vue.use(ElementUI);
 Vue.use(SvgIcon, {

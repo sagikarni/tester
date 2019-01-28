@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" v-if="activity">
-    <el-form-item label="Activity zone" prop="region">
-      <el-select v-model="activity.type" placeholder="Activity zone" value-key="_id">
+    <el-form-item label="Activity Type">
+      <el-select v-model="activity.type" placeholder="Activity Type" value-key="_id">
         <el-option-group v-for="group in domains" :key="group.name" :label="group.name">
           <el-option v-for="item in group.types" :key="item._id" :label="item.name" :value="item"></el-option>
         </el-option-group>
@@ -83,14 +83,6 @@
       </el-select>
     </el-form-item>
 
-    <!-- <el-form-item label="Activity options">
-      <el-checkbox-group v-model="activity.options">
-        <el-checkbox label="Free" name="type"></el-checkbox>
-        <el-checkbox label="Printable" name="type"></el-checkbox>
-        <el-checkbox label="Editorial" name="type"></el-checkbox>
-        <el-checkbox label="Isolate" name="type"></el-checkbox>
-      </el-checkbox-group>
-    </el-form-item>-->
     <el-form-item label="Properties">
       <el-checkbox v-model="activity.free">Free</el-checkbox>
       <el-checkbox v-model="activity.printable">Printable</el-checkbox>
@@ -101,20 +93,67 @@
     <el-form-item label="Notes">
       <el-input type="textarea" v-model="activity.notes"></el-input>
     </el-form-item>
+    {{activity.slides}}
+    <el-form-item label="Slides">
+      <div style="border:1px dotted #ccc">
+        <draggable v-model="myArray" @start="drag=true" @end="drag=false">
+          <div
+            v-for="(slide, index) in activity.slides"
+            :key="slide.id"
+            style="border:1px solid #ccc;"
+          >
+            {{slide.media}}
+            <dropper v-model="slide.media"></dropper>
+
+            <component :is="'WhatsInThePicture'" v-model="slide.phrases"></component>
+
+            <component :is="'SpotTheDifference'" v-model="slide.mediaIndex"></component>
+
+            <component :is="'PhotoAssembly'" v-model="slide.size"></component>
+
+            <a @click="removeSlide(index)">Remove Slide</a>
+          </div>
+        </draggable>
+      </div>
+      <a @click="addSlide">Add Slide</a>
+    </el-form-item>
+
+    
   </el-form>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 // import request from '../../../utils/request';
-
+import draggable from 'vuedraggable';
+// import {VueTransmit} from 'vue-transmit';
+import dropper from './dropper.vue';
 // Component.registerHooks([
 //   'beforeRouteEnter',
 //   'beforeRouteLeave',
 //   'beforeRouteUpdate', // for vue-router 2.2+
 // ]);
+import WhatsInThePicture from './WhatsInThePicture.vue';
+import SpotTheDifference from './SpotTheDifference.vue';
+import PhotoAssembly from './PhotoAssembly.vue';
 
-@Component({})
+
+@Component({
+  components: {
+    draggable,
+
+    // "vue-transmit": VueTransmit
+    dropper,
+SpotTheDifference,
+PhotoAssembly,
+    WhatsInThePicture //() => import('./WhatsInThePicture.vue').then(d => d.default),
+  },
+  filters: {
+    json(value) {
+      return JSON.stringify(value, null, 2);
+    },
+  },
+})
 export default class Modely extends Vue {
   @Prop() activity;
 
@@ -124,12 +163,56 @@ export default class Modely extends Vue {
 
   @Prop() domains;
 
+  slides = [];
+  myArray = [];
+
+  // mounted() {
+
+  // }
+
+  removeSlide(index) {
+    this.activity.slides.splice(index, 1);
+  }
+
+  some() {
+    // const files = this.$refs.myVueDropzone[0].getQueuedFiles();
+
+    // console.log({ files });
+
+    const img = new Image();
+    // img.src = 'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+    // const mockFile = {
+    //   id: 'bla',
+    //   uploaded: true,
+    //   path: '',
+    //   size: 0,
+    // };
+    var file = { size: 123, name: 'Icon', type: 'image/png' };
+    var url =
+      'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+
+    // var f = new File([""], "filename.png", { type: 'image/png' });
+
+    const fileUrl = img.src;
+    this.$refs.myVueDropzone[0].manuallyAddFile(file, url, null, null, {
+      dontSubtractMaxFiles: false,
+      addToFiles: true,
+    });
+  }
+  d = 1;
+
   get filterX() {
     console.log('xxaa', this.activity.category);
     console.log('subs', this.subcategories);
     return this.subcategories.filter(
       (xx) => xx.category === this.activity.category._id
     );
+  }
+
+  addSlide() {
+    //this.slides.push({ id: this.d, name: `name ${this.d}` });
+    this.activity.slides.push({ media: [], phrases: ['value1', 'value2'], mediaIndex: "", size: '3' });
+    this.d++;
   }
   // activity2 = null;
 
