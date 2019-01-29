@@ -1,18 +1,34 @@
 import mongoose from 'mongoose';
 const types = {
-    orientation: ['horizontal', 'vertical'],
-    status: ['NotStarted', 'JustStarted', 'AlmostDone', 'WaitingPronunciation', 'Reviewed', 'Ready', 'Published'],
-    audience: ['All', 'Kids', 'Elderly'],
-    mediaType: ['Photo', 'Video']
-  };
+  orientation: ['horizontal', 'vertical'],
+  status: [
+    'NotStarted',
+    'JustStarted',
+    'AlmostDone',
+    'WaitingPronunciation',
+    'Reviewed',
+    'Ready',
+    'Published',
+  ],
+  audience: ['Any', 'Kids', 'Elderly'],
+  mediaType: ['Photo', 'Video'],
+  level: ['Basic', 'Intermediate', 'Advanced'],
+};
 
 const domains = {
-    Learning: ['Plain', 'Facts'],
-    Cognition: ['WhatsInThePicture', 'SpotTheDifference', 'SoundOfLifePhoto', 'MemoryCards', 'Commonality', 'HowToMake'],
-    Speech: ['ArticulationWord', 'ArticulationPhrase', 'ArticulationSentense'],
-    Communication: ['Meaning', 'WHQuestions', 'GoodStory']
+  Learning: ['Plain', 'Facts'],
+  Cognition: [
+    'WhatsInThePicture',
+    'SpotTheDifference',
+    'SoundOfLifePhoto',
+    'MemoryCards',
+    'Commonality',
+    'HowToMake',
+  ],
+  Speech: ['ArticulationWord', 'ArticulationPhrase', 'ArticulationSentense'],
+  Communication: ['Meaning', 'WHQuestions', 'GoodStory'],
 };
-  
+
 export const Category = mongoose.model(
   'Category',
   new mongoose.Schema({
@@ -52,7 +68,7 @@ export const Activity = mongoose.model(
     free: { type: Boolean },
     printable: { type: Boolean },
     editorial: { type: Boolean },
-    isolate: { type: Boolean },
+    level: { type: String, enum: types.level },
     notes: { type: String },
     orientation: { type: String, enum: types.orientation },
     mediaType: { type: String, enum: types.mediaType },
@@ -60,8 +76,18 @@ export const Activity = mongoose.model(
     subCategory: { type: mongoose.Types.ObjectId, ref: 'SubCategory' },
     status: { type: String, enum: types.status },
     audience: { type: String, enum: types.audience },
-    slides: [{
-      media: [String]
-    }]
+    model: {
+      slideCategories: [String],
+      slides: [
+        {
+          media: [String],
+          phrases: [String],
+          category: { type: String },
+          size: { type: String },
+          audio: [String],
+          mediaIndex: { type: String },
+        },
+      ],
+    },
   })
 );

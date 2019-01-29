@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Model :activity="activity" :categories="categories" :subcategories="subcategories" :domains="domains"/>
+    <Model :add="false" :activity="activity" :categories="categories" :subcategories="subcategories" :domains="domains"/>
 
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button>Cancel</el-button>

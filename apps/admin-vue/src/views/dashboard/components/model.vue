@@ -1,7 +1,12 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" v-if="activity">
     <el-form-item label="Activity Type">
-      <el-select v-model="activity.type" placeholder="Activity Type" value-key="_id">
+      <el-select
+        :disabled="!add"
+        v-model="activity.type"
+        placeholder="Activity Type"
+        value-key="_id"
+      >
         <el-option-group v-for="group in domains" :key="group.name" :label="group.name">
           <el-option v-for="item in group.types" :key="item._id" :label="item.name" :value="item"></el-option>
         </el-option-group>
@@ -83,6 +88,14 @@
       </el-select>
     </el-form-item>
 
+    <el-form-item label="Level">
+      <el-select v-model="activity.level" placeholder="please select your zone">
+        <el-option label="Basic" value="Basic"/>
+        <el-option label="Intermediate" value="Intermediate"/>
+        <el-option label="Advanced" value="Advanced"/>
+      </el-select>
+    </el-form-item>
+
     <el-form-item label="Properties">
       <el-checkbox v-model="activity.free">Free</el-checkbox>
       <el-checkbox v-model="activity.printable">Printable</el-checkbox>
@@ -93,32 +106,12 @@
     <el-form-item label="Notes">
       <el-input type="textarea" v-model="activity.notes"></el-input>
     </el-form-item>
-    {{activity.slides}}
-    <el-form-item label="Slides">
-      <div style="border:1px dotted #ccc">
-        <draggable v-model="myArray" @start="drag=true" @end="drag=false">
-          <div
-            v-for="(slide, index) in activity.slides"
-            :key="slide.id"
-            style="border:1px solid #ccc;"
-          >
-            {{slide.media}}
-            <dropper v-model="slide.media"></dropper>
 
-            <component :is="'WhatsInThePicture'" v-model="slide.phrases"></component>
-
-            <component :is="'SpotTheDifference'" v-model="slide.mediaIndex"></component>
-
-            <component :is="'PhotoAssembly'" v-model="slide.size"></component>
-
-            <a @click="removeSlide(index)">Remove Slide</a>
-          </div>
-        </draggable>
-      </div>
-      <a @click="addSlide">Add Slide</a>
-    </el-form-item>
-
-    
+    <component
+      v-if="activity.type && activity.type.name"
+      :is="activity.type.name"
+      v-model="activity.model"
+    ></component>
   </el-form>
 </template>
 
@@ -133,20 +126,44 @@ import dropper from './dropper.vue';
 //   'beforeRouteLeave',
 //   'beforeRouteUpdate', // for vue-router 2.2+
 // ]);
-import WhatsInThePicture from './WhatsInThePicture.vue';
-import SpotTheDifference from './SpotTheDifference.vue';
+import Plain from './Plain.vue';
+import Facts from './Facts.vue';
+import Questions from './Questions.vue';
+import Categorization from './Categorization.vue';
 import PhotoAssembly from './PhotoAssembly.vue';
-
+import WhatsInThePicture from './WhatsInThePicture.vue';
+import MemoryCards from './MemoryCards.vue';
+import WhatIsWrong from './WhatIsWrong.vue';
+import Zoom from './Zoom.vue';
+import SpotTheDifference from './SpotTheDifference.vue';
+import ISee from './ISee.vue';
+import Meaning from './Meaning.vue';
+import WHQuestions from './WHQuestions.vue';
+import GoodStory from './GoodStory.vue';
+import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
+// import conf from './c.json';
 
 @Component({
   components: {
     draggable,
-
     // "vue-transmit": VueTransmit
     dropper,
-SpotTheDifference,
-PhotoAssembly,
-    WhatsInThePicture //() => import('./WhatsInThePicture.vue').then(d => d.default),
+    Plain,
+    Facts,
+    Questions,
+    Categorization,
+    PhotoAssembly,
+    WhatsInThePicture,
+    MemoryCards,
+    WhatIsWrong,
+    Zoom,
+    SpotTheDifference,
+    ISee,
+    Meaning,
+    WHQuestions,
+    GoodStory,
+    SoundOfLifePhoto,
+    // WhatsInThePicture //() => import('./WhatsInThePicture.vue').then(d => d.default),
   },
   filters: {
     json(value) {
@@ -162,6 +179,14 @@ export default class Modely extends Vue {
   @Prop() subcategories;
 
   @Prop() domains;
+
+  @Prop() add;
+
+  conf = {
+    WhatsInThePicture: ['phrases'],
+    SpotTheDifference: ['mediaIndex'],
+    PhotoAssembly: ['picker'],
+  };
 
   slides = [];
   myArray = [];
@@ -211,7 +236,16 @@ export default class Modely extends Vue {
 
   addSlide() {
     //this.slides.push({ id: this.d, name: `name ${this.d}` });
-    this.activity.slides.push({ media: [], phrases: ['value1', 'value2'], mediaIndex: "", size: '3' });
+    this.activity.slides.push({
+      media: [],
+      model: {
+        phrases: ['value1', 'value2'],
+        mediaIndex: '3',
+        size: '3',
+        audio: [],
+        categoryIndex: '',
+      },
+    });
     this.d++;
   }
   // activity2 = null;

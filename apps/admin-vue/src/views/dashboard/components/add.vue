@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Model :activity="activity" :categories="categories" :subcategories="subcategories" :domains="domains"/>
+    <Model :add="true" :activity="activity" :categories="categories" :subcategories="subcategories" :domains="domains"/>
     
     <el-button type="primary" @click="onSubmit">Create</el-button>
     <el-button>Cancel</el-button>
@@ -25,7 +25,14 @@ Component.registerHooks([
 })
 export default class Add extends Vue {
   activity = {
-    category: {},
+     category: {},
+     model: {
+       slideCategories: [],
+       slides: []
+     }
+
+    // slides: [],
+    // slideCategories: []
     // category: '5c4abb2c73f44944f87de496'
   };
   region = '';
@@ -35,7 +42,6 @@ export default class Add extends Vue {
   categories = [];
 
   get subcategories() {
-    console.log('xxxx', this.categories);
     if (!this.categories) return [];
     if (this.categories.length === 0) return [];
 

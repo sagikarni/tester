@@ -1,45 +1,20 @@
 <template>
-  <div>
-   <el-radio-group v-model="radio3" @change="onchange">
-      <el-radio-button label="1"></el-radio-button>
-      <el-radio-button label="2"></el-radio-button>
-      <el-radio-button label="3"></el-radio-button>
-      <el-radio-button label="4"></el-radio-button>
-    </el-radio-group>
-  </div>
+  <Slides v-model="value.slides">
+    <template slot-scope="slotProps">
+      <mediaIndex v-model="slotProps.slide.mediaIndex"/>
+    </template>
+  </Slides>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
+import Slides from './slides.vue';
+import mediaIndex from './mediaIndex.vue';
 
-@Component({})
+@Component({
+  components: { mediaIndex, Slides },
+})
 export default class SpotTheDifference extends Vue {
   @Prop() value;
-
-radio3 = '';
-
-mounted() {
-  this.radio3 = this.value;
-}
-
-onchange() {
-  
-    this.$emit('input', this.radio3);
-
-}
-
-  // phrases = [];
-
-  // mounted() {
-  //   if (this.value && this.value.length)
-  //     this.phrases = this.value.map((p) => ({ value: p }));
-  // }
-
-  // add() {
-  //   this.phrases.push({ value: '' });
-  // }
-  // dosome() {
-  //   this.$emit('input', this.phrases.map((p) => p.value));
-  // }
 }
 </script>

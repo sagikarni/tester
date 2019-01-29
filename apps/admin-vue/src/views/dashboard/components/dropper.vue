@@ -51,10 +51,11 @@ this.$emit('input', this.files);
    if (!this.value) return;
    if (!this.value.length) return;
 
+console.log('xxxxxx', this.value);
    this.value.forEach(v => {
     var file = { size: 0, name: v, type: 'image/png' };
     var url =
-      'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+      'https://via.placeholder.com/150';
 
     // var f = new File([""], "filename.png", { type: 'image/png' });
 

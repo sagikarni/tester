@@ -44,10 +44,11 @@
             ></el-option>
           </el-select>
 
-          <el-select placeholder="Stock" v-model="form.stock">
-            <el-option label="All Stock" :value="null"/>
-            <el-option label="Istock" value="istock"/>
-            <el-option label="ShutterStock" value="shutterStock"/>
+          <el-select placeholder="Level" v-model="form.level">
+            <el-option label="All Level" :value="null"/>
+            <el-option label="Basic" value="Basic"/>
+            <el-option label="Intermediate" value="Intermediate"/>
+            <el-option label="Advanced" value="Advanced"/>
           </el-select>
 
           <el-select placeholder="Audience" v-model="form.audience">
@@ -98,7 +99,7 @@
                   <el-input
                     placeholder="Search by Name, Description, Image ID or Activity ID"
                     prefix-icon="el-icon-search"
-                    v-model="input21"
+                    v-model="form.text"
                     clearable
                   ></el-input>
                 </el-col>
@@ -165,7 +166,6 @@ Component.registerHooks([
     limitArray: (arr, form) => {
       let f = arr;
 
-      console.log({ form });
       if (form.domain) {
         f = f.filter((a) => a.type.domain.name === form.domain);
       }
@@ -181,8 +181,8 @@ Component.registerHooks([
       if (form.subcategory) {
         f = f.filter((a) => a.subCategory.name === form.subcategory);
       }
-      if (form.stock) {
-        f = f.filter((a) => a.stock === form.stock);
+      if (form.level) {
+        f = f.filter((a) => a.level === form.level);
       }
       if (form.audience) {
         f = f.filter((a) => a.audience === form.audience);
@@ -199,6 +199,11 @@ Component.registerHooks([
       if (form.editorial != null) {
         f = f.filter((a) => a.editorial === form.editorial);
       }
+      if (form.text) {
+        f = f.filter(
+          (a) => a._id.startsWith(form.text) || a.name.startsWith(form.text)
+        );
+      }
       return f;
     },
   },
@@ -207,7 +212,6 @@ export default class Dashboard extends Vue {
   categories = [];
 
   get subcategories() {
-    console.log('xxxx', this.categories);
     if (!this.categories) return [];
     if (this.categories.length === 0) return [];
 
@@ -226,59 +230,62 @@ export default class Dashboard extends Vue {
     mediaType: null,
     category: null,
     subcategory: null,
-    stock: null,
+    level: null,
     audience: null,
     status: null,
     printable: null,
     free: null,
     editorial: null,
+    text: null,
   };
 
   get domains() {
     const domains = {
-      Learning: ['Plain', 'Facts'],
+      Learning: ['Plain', 'Facts', 'Questions'],
       Cognition: [
+        'Categorization',
+        'PhotoAssembly',
         'WhatsInThePicture',
-        'SpotTheDifference',
-        'SoundOfLifePhoto',
         'MemoryCards',
-        'Commonality',
-        'HowToMake',
+        'WhatIsWrong',
+        'Zoom',
+        'SpotTheDifference',
+        'ISee',
       ],
-      Speech: [
-        'ArticulationWord',
-        'ArticulationPhrase',
-        'ArticulationSentense',
+      Communication: [
+        'Meaning',
+        'WHQuestions',
+        'GoodStory',
+        'SoundOfLifePhoto',
       ],
-      Communication: ['Meaning', 'WHQuestions', 'GoodStory'],
     };
-
     return Object.keys(domains);
   }
 
   get types() {
     const domains = {
-      Learning: ['Plain', 'Facts'],
+      Learning: ['Plain', 'Facts', 'Questions'],
       Cognition: [
+        'Categorization',
+        'PhotoAssembly',
         'WhatsInThePicture',
-        'SpotTheDifference',
-        'SoundOfLifePhoto',
         'MemoryCards',
-        'Commonality',
-        'HowToMake',
+        'WhatIsWrong',
+        'Zoom',
+        'SpotTheDifference',
+        'ISee',
       ],
-      Speech: [
-        'ArticulationWord',
-        'ArticulationPhrase',
-        'ArticulationSentense',
+      Communication: [
+        'Meaning',
+        'WHQuestions',
+        'GoodStory',
+        'SoundOfLifePhoto',
       ],
-      Communication: ['Meaning', 'WHQuestions', 'GoodStory'],
     };
 
     const list = [
       ...domains.Learning,
       ...domains.Cognition,
-      ...domains.Speech,
       ...domains.Communication,
     ];
     return list;
@@ -288,8 +295,6 @@ export default class Dashboard extends Vue {
   input21 = '';
 
   async beforeRouteEnter(to, from, next) {
-    console.log('beforeRouteEnter..');
-
     const res = await request({
       url: '/api/v1/activities',
       method: 'get',
@@ -341,7 +346,7 @@ export default class Dashboard extends Vue {
 .activity-item {
   padding: 10px 50px 10px;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  background:#eee;
+  background: #eee;
 }
 
 .activity-item.router-link-active {
@@ -379,7 +384,10 @@ h5 {
   font-weight: 600;
   margin: 10px 0 20px;
 }
-.el-tag {margin-right:10px;color:#777;}
+.el-tag {
+  margin-right: 10px;
+  color: #777;
+}
 
 // .el-row {
 //   margin-bottom: 20px;

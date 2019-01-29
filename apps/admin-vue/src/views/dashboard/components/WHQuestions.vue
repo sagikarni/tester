@@ -14,7 +14,7 @@ import Phrases from './phrases.vue';
 @Component({
   components: { Slides, Phrases },
 })
-export default class WhatsInThePicture extends Vue {
+export default class WHQuestions extends Vue {
   @Prop() value;
 }
 </script>
