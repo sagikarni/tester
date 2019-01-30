@@ -270,15 +270,21 @@ domains = [];
   }
 
   async onDelete() {
-    const res = await request({
+     this.$confirm('This will permanently delete the activity. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(async() => {
+    
+             const res = await request({
       url: `/api/v1/activities/${this.activity._id}`,
       method: 'delete',
       baseURL: '',
       data: { activity: this.activity },
     });
 
-    Message({
-      message: 'Deleted',
+    this.$message({
+      message: 'Delete completed',
       type: 'success',
       duration: 5 * 1000,
     });
@@ -286,6 +292,15 @@ domains = [];
     console.log('done');
 
   this.$router.push(`/dashboard`);
+  
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+
+ 
 
   }
 }

@@ -12,7 +12,7 @@
 
     <draggable v-model="items" @end="dosome">
       <transition-group>
-        <div v-for="(slide,index) in items" :key="slide.id">
+        <div v-for="(slide,index) in items" :key="slide.id" style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px">
           <dropper v-model="slide.media"></dropper>
           <slot v-bind:slide="slide"></slot>
           <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>

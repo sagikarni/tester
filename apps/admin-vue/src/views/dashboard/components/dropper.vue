@@ -2,7 +2,7 @@
   <vue-dropzone
     ref="myVueDropzone"
     id="dropzone"
-    style="margin:10px 0;"
+    style="margin:0 0 10px 0;"
     :options="dropzoneOptions"
     @vdropzone-file-added="onadd"
     @vdropzone-files-added="onadd"
