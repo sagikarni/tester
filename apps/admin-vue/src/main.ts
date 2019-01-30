@@ -13,6 +13,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
+import vDragDrop from 'v-drag-drop';
+Vue.use(vDragDrop);
 
 Vue.use(ElementUI);
 Vue.use(SvgIcon, {

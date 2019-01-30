@@ -1,12 +1,10 @@
 <template>
-  <div>
-   <el-radio-group v-model="radio3" @change="onchange">
-      <el-radio-button label="1"></el-radio-button>
-      <el-radio-button label="2"></el-radio-button>
-      <el-radio-button label="3"></el-radio-button>
-      <el-radio-button label="4"></el-radio-button>
-    </el-radio-group>
-  </div>
+  <el-radio-group v-model="radio3" @change="onchange" style="width:100%">
+    <el-radio-button label="1"></el-radio-button>
+    <el-radio-button label="2"></el-radio-button>
+    <el-radio-button label="3"></el-radio-button>
+    <el-radio-button label="4"></el-radio-button>
+  </el-radio-group>
 </template>
 
 <script lang="ts">
@@ -16,17 +14,15 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 export default class MediaIndex extends Vue {
   @Prop() val;
 
-radio3 = '';
+  radio3 = '';
 
-mounted() {
-  this.radio3 = this.val;
-}
+  mounted() {
+    this.radio3 = this.val;
+  }
 
-onchange() {
-  
+  onchange() {
     this.$emit('input', this.radio3);
-
-}
+  }
 
   // phrases = [];
 

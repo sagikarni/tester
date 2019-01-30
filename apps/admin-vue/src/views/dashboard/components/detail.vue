@@ -4,6 +4,8 @@
 
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button>Cancel</el-button>
+    
+    <el-button @click="onDelete">Delete</el-button>
   </div>
 
   <!-- <el-form ref="form" :model="form" label-width="120px" v-if="activity">
@@ -97,6 +99,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
+import { Message, MessageBox } from 'element-ui';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -256,7 +259,34 @@ domains = [];
       data: { activity: this.activity },
     });
 
+
+    Message({
+      message: 'saved',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+
     console.log('done');
+  }
+
+  async onDelete() {
+    const res = await request({
+      url: `/api/v1/activities/${this.activity._id}`,
+      method: 'delete',
+      baseURL: '',
+      data: { activity: this.activity },
+    });
+
+    Message({
+      message: 'Deleted',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+
+    console.log('done');
+
+  this.$router.push(`/dashboard`);
+
   }
 }
 </script>

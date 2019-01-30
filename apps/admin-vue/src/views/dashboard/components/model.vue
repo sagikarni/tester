@@ -227,8 +227,6 @@ export default class Modely extends Vue {
   d = 1;
 
   get filterX() {
-    console.log('xxaa', this.activity.category);
-    console.log('subs', this.subcategories);
     return this.subcategories.filter(
       (xx) => xx.category === this.activity.category._id
     );

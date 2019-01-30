@@ -63,5 +63,8 @@
     "*.vue": [
       "git add"
     ]
+  },
+  "dependencies": {
+    "vue-draggable-nested-tree": "^2.2.4"
   }
 }

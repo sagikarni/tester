@@ -87,4 +87,13 @@ router.post('/activities/:id', async (req, res, next) => {
   res.json({ up, code: 20000 });
 });
 
+router.delete('/activities/:id', async (req, res, next) => {
+  const activity = await Activity.findByIdAndRemove(req.params.id);
+console.log('in del');
+  console.log({ activity });
+  res.json({ activity, code: 20000 });
+
+
+});
+
 export { router as v1 };

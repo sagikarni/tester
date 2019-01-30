@@ -1,7 +1,9 @@
 <template>
   <Slides v-model="value.slides">
     <template slot-scope="slotProps">
-      <mediaIndex v-model="slotProps.slide.mediaIndex"/>
+      <el-form-item label="Parts:">
+        <mediaIndex v-model="slotProps.slide.mediaIndex"/>
+      </el-form-item>
     </template>
   </Slides>
 </template>

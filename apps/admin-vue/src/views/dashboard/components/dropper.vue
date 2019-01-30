@@ -2,6 +2,7 @@
   <vue-dropzone
     ref="myVueDropzone"
     id="dropzone"
+    style="margin:10px 0;"
     :options="dropzoneOptions"
     @vdropzone-file-added="onadd"
     @vdropzone-files-added="onadd"
@@ -50,7 +51,8 @@ this.$emit('input', this.files);
  vmounted() {
    if (!this.value) return;
    if (!this.value.length) return;
-
+  if (!this.$refs.myVueDropzone) return;
+  
 console.log('xxxxxx', this.value);
    this.value.forEach(v => {
     var file = { size: 0, name: v, type: 'image/png' };
@@ -59,7 +61,7 @@ console.log('xxxxxx', this.value);
 
     // var f = new File([""], "filename.png", { type: 'image/png' });
 
-    this.$refs.myVueDropzone.manuallyAddFile(file, url, null, null, {
+    (this.$refs.myVueDropzone as any).manuallyAddFile(file, url, null, null, {
       dontSubtractMaxFiles: false,
       addToFiles: true,
     });

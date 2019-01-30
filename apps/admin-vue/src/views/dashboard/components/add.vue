@@ -11,6 +11,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
+import { Message, MessageBox } from 'element-ui';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -25,6 +26,7 @@ Component.registerHooks([
 })
 export default class Add extends Vue {
   activity = {
+     status: 'NotStarted',
      category: {},
      model: {
        slideCategories: [],
@@ -73,6 +75,12 @@ export default class Add extends Vue {
       method: 'post',
       baseURL: '',
       data: { activity: this.activity },
+    });
+
+ Message({
+      message: 'saved',
+      type: 'success',
+      duration: 5 * 1000,
     });
 
 console.log(`---> ${res.up[0]._id}`);

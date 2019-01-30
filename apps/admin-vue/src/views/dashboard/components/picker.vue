@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <el-select v-model="radio3" placeholder="Select" @change="onchange">
-      <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
-    </el-select>
-  </div>
+  <el-select v-model="radio3" placeholder="Select" @change="onchange" style="width:98%">
+    <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
+  </el-select>
 </template>
 
 <script lang="ts">

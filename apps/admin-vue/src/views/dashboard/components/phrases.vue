@@ -1,9 +1,13 @@
 <template>
   <div style="border:1px dotted #999;margin-bottom:10px;padding:5px;">
-    <div v-for="(phrase, index) in phrases" :key="phrase.id">
-      <el-input placeholder="Please input" v-model="phrase.value" @change="dosome"></el-input>
-      <el-button @click="removePhrase(index)" type="text">Remove Phrase</el-button>
-    </div>
+    <el-row type="flex" justify="space-between" v-for="(phrase, index) in phrases" :key="phrase.id" style="margin-bottom:5px;">
+      <el-col :span="21">
+        <el-input style="width:100%" placeholder="Please input" v-model="phrase.value" @change="dosome"></el-input>
+      </el-col>
+      <el-col :span="2">
+        <el-button size="mini" @click="removePhrase(index)" type="danger" icon="el-icon-delete" circle></el-button>
+      </el-col>
+    </el-row>
     <el-button @click="addPhrase" type="text">Add Phrase</el-button>
   </div>
 </template>

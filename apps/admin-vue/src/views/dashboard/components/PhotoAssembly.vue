@@ -1,7 +1,9 @@
 <template>
   <Slides v-model="value.slides">
     <template slot-scope="slotProps">
-      <picker v-model="slotProps.slide.size" :options="[2,3,4]"/>
+      <el-form-item label="Parts:">
+        <picker v-model="slotProps.slide.size" :options="[2,3,4]"/>
+      </el-form-item>
     </template>
   </Slides>
 </template>

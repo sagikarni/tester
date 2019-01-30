@@ -6,7 +6,9 @@
 
     <Slides v-model="value.slides">
       <template slot-scope="slotProps">
-        <picker v-model="slotProps.slide.category" :options="value.slideCategories"/>
+        <el-form-item label="Select Category">
+          <picker v-model="slotProps.slide.category" :options="['N/A', ...value.slideCategories]"/>
+        </el-form-item>
       </template>
     </Slides>
   </div>
