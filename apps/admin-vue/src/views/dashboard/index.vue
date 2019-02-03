@@ -41,12 +41,6 @@
             ></el-option>
           </el-select>
 
-          <el-select placeholder="Level" v-model="form.level" clearable multiple collapse-tags style="flex-grow: 0;flex-shrink: 0;flex-basis: 13%;">
-            <el-option label="Basic" value="Basic"/>
-            <el-option label="Intermediate" value="Intermediate"/>
-            <el-option label="Advanced" value="Advanced"/>
-          </el-select>
-
           <el-select placeholder="Audience" v-model="form.audience" clearable>
             <el-option label="Any" value="All"/>
             <el-option label="Kids" value="Kids"/>
@@ -76,6 +70,19 @@
           <el-select placeholder="Editorial" v-model="form.editorial" clearable>
             <el-option label="Yes" :value="true"/>
             <el-option label="No" :value="false"/>
+          </el-select>
+
+          <el-select
+            placeholder="Level"
+            v-model="form.level"
+            clearable
+            multiple
+            collapse-tags
+            style="flex-grow: 0;flex-shrink: 0;flex-basis: 13%;"
+          >
+            <el-option label="Basic" value="Basic"/>
+            <el-option label="Intermediate" value="Intermediate"/>
+            <el-option label="Advanced" value="Advanced"/>
           </el-select>
         </el-col>
       </el-row>
