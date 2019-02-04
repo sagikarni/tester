@@ -1,26 +1,32 @@
 <template>
-<div>
-  
-  <el-form-item label="Slides">
-  
-    <div
-      id="map-Antananarivo"
-      @dragover.prevent
-      @drop="onDrop"
-      style="border:1px dotted #ccc;background:#efefef;height:60px;margin-bottom:10px;line-height:60px;font-weight:bold;text-align:center"
-    >Drop here all media</div>
+  <div>
+    <el-form-item label="Slides">
+      <div
+        id="map-Antananarivo"
+        @dragover.prevent
+        @drop="onDrop"
+        style="border:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:center;"
+      >
+        <span
+          style="display:block;border:2px dashed #aaa;height:60px;line-height:60px;color:#777;"
+        >Drop here all media</span>
+      </div>
 
-    <draggable v-model="items" @end="dosome">
-      <transition-group>
-        <div v-for="(slide,index) in items" :key="slide.id" style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px">
-          <dropper v-model="slide.media"></dropper>
-          <slot v-bind:slide="slide"></slot>
-          <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>
-        </div>
-      </transition-group>
-    </draggable>
-    <el-button @click="addSlide" type="text">Add Slide</el-button>
-  </el-form-item>
+      <draggable v-model="items" @end="dosome">
+        <transition-group>
+          <div
+            v-for="(slide,index) in items"
+            :key="slide.id"
+            style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px"
+          >
+            <dropper v-model="slide.media" :blobs="slide._blobs"></dropper>
+            <slot v-bind:slide="slide"></slot>
+            <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>
+          </div>
+        </transition-group>
+      </draggable>
+      <el-button @click="addSlide" type="text">Add Slide</el-button>
+    </el-form-item>
   </div>
 </template>
 
@@ -29,6 +35,7 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 import dropper from './dropper.vue';
 import draggable from 'vuedraggable';
 import vue2Dropzone from 'vue2-dropzone';
+import { uniqBy } from 'lodash';
 
 @Component({
   components: { dropper, draggable, vueDropzone: vue2Dropzone },
@@ -59,8 +66,6 @@ export default class Slides extends Vue {
   }
 
   dosome() {
-    console.log('in dosome', this.items);
-
     this.$emit('input', this.items);
   }
 
@@ -74,23 +79,27 @@ export default class Slides extends Vue {
   onDrop(e) {
     e.stopPropagation();
     e.preventDefault();
-    console.log('ffffffff', e.dataTransfer.files);
     if (!e.dataTransfer.files) return;
     if (!e.dataTransfer.files.length) return;
 
-    for (let uu = 0; uu < e.dataTransfer.files.length; uu++) {
-      const f = e.dataTransfer.files[uu];
+    const added = [];
 
+    [...e.dataTransfer.files].forEach((f, i) => {
+      const filename = f.name.replace(/(-l|-m|-xs)\./g, '.');
+
+      if (added.includes(filename)) return; 
+      added.push(filename);
+
+      const img = window.URL.createObjectURL(f);
       this.items.push({
-        media: [`${f.name}`],
-        id: this.ii,
+        media: [`${filename}`],
+        _blobs: [img],
+        id: i
       });
-      this.ii++;
-    }
+    });
 
     this.$emit('input', this.items);
   }
-
 }
 </script>
 
