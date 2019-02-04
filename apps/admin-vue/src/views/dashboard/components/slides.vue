@@ -85,7 +85,7 @@ export default class Slides extends Vue {
     const added = [];
 
     [...e.dataTransfer.files].forEach((f, i) => {
-      const filename = f.name.replace(/(-l|-m|-xs)\./g, '.');
+      const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
 
       if (added.includes(filename)) return; 
       added.push(filename);

@@ -2,11 +2,10 @@ import mongoose from 'mongoose';
 const types = {
   orientation: ['horizontal', 'vertical'],
   status: [
-    'NotStarted',
-    'JustStarted',
-    'AlmostDone',
-    'WaitingPronunciation',
-    'Reviewed',
+    'Started',
+    'WaitingForReview',
+    'TechnicalWriterPending',
+    'TechnicalWriterApproved',
     'Ready',
     'Published',
   ],

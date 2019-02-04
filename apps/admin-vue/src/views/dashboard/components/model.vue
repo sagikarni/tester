@@ -38,11 +38,10 @@
 
     <el-form-item label="Status">
       <el-select v-model="activity.status" placeholder="please select your zone">
-        <el-option label="NotStarted" value="NotStarted"></el-option>
-        <el-option label="JustStarted" value="JustStarted"></el-option>
-        <el-option label="AlmostDone" value="AlmostDone"></el-option>
-        <el-option label="WaitingPronunciation" value="WaitingPronunciation"></el-option>
-        <el-option label="Reviewed" value="Reviewed"></el-option>
+        <el-option label="Started" value="Started"></el-option>
+        <el-option label="WaitingForReview" value="WaitingForReview"></el-option>
+        <el-option label="TechnicalWriterPending" value="TechnicalWriterPending"></el-option>
+        <el-option label="TechnicalWriterApproved" value="TechnicalWriterApproved"></el-option>
         <el-option label="Ready" value="Ready"></el-option>
         <el-option label="Published" value="Published"></el-option>
       </el-select>

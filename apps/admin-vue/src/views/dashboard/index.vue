@@ -48,13 +48,12 @@
           </el-select>
 
           <el-select placeholder="Status" v-model="form.status" clearable>
-            <el-option label="Not Started" value="NotStarted"/>
-            <el-option label="Just Started" value="JustStarted"/>
-            <el-option label="Almost Done" value="AlmostDone"/>
-            <el-option label="Waiting Pronunciation" value="WaitingPronunciation"/>
-            <el-option label="Reviewed" value="Reviewed"/>
-            <el-option label="Ready" value="Ready"/>
-            <el-option label="Published" value="Published"/>
+            <el-option label="Started" value="Started"></el-option>
+            <el-option label="Waiting For Review" value="WaitingForReview"></el-option>
+            <el-option label="Technical Writer Pending" value="TechnicalWriterPending"></el-option>
+            <el-option label="Technical Writer Approved" value="TechnicalWriterApproved"></el-option>
+            <el-option label="Ready" value="Ready"></el-option>
+            <el-option label="Published" value="Published"></el-option>
           </el-select>
 
           <el-select placeholder="Printable" v-model="form.printable" clearable>
