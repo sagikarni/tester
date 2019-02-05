@@ -37,7 +37,7 @@ class User extends VuexModule implements IUserState {
     if (token === undefined) {
       throw Error('GetInfo: token is undefined!');
     }
-    const { data } = { data: { roles: [{ }], name: 'user', avatar: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50' } }; // await getInfo(token);
+    const { data } = { data: { roles: [{ }], name: 'user', avatar: 'http://www.gravatar.com/avatar/?d=identicon' } }; // await getInfo(token);
     if (data.roles && data.roles.length > 0) {
       return {
         roles: data.roles,

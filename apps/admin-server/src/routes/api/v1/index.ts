@@ -89,11 +89,33 @@ router.post('/activities/:id', async (req, res, next) => {
 
 router.delete('/activities/:id', async (req, res, next) => {
   const activity = await Activity.findByIdAndRemove(req.params.id);
-console.log('in del');
+  console.log('in del');
   console.log({ activity });
   res.json({ activity, code: 20000 });
+});
 
+router.get('/s3', (req, res, next) => {
+  try {
+    const fileKey = req.query['fileKey'];
+    console.log('Trying to download file', fileKey);
+    const AWS = require('aws-sdk');
+    AWS.config.update({
+      accessKeyId: 'AKIAI54TZXRSE6JGWPCQ',
+      secretAccessKey: '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',
+      // region: 'ap-southeast-1',
+    });
+    const s3 = new AWS.S3();
+    const options = {
+      Bucket: 'sagi-tera-files',
+      Key: fileKey,
+    };
 
+    res.attachment(fileKey);
+    const fileStream = s3.getObject(options).createReadStream();
+    fileStream.pipe(res);
+  } catch (ex) {
+    console.log({ ex });
+  }
 });
 
 export { router as v1 };

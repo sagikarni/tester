@@ -54,7 +54,7 @@ export default class Dropper extends Vue {
 
     this.value.forEach((v, i) => {
       var file = { size: 0, name: v, type: 'image/png' };
-      var url = 'https://via.placeholder.com/150';
+      var url = `/api/v1/s3?fileKey=Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
 
       if (this.blobs) {
         url = this.blobs[i];

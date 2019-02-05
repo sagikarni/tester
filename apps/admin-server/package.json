@@ -13,6 +13,7 @@
   "author": "Shlomi Levi <wizardnet972@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.396.0",
     "auth-node": "^0.0.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-plugin-module-resolver": "^3.1.1",

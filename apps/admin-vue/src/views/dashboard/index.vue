@@ -157,6 +157,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
+import { ActivitiesModule } from '@/store/modules/activities';
+import { flatten} from 'lodash';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -219,19 +221,12 @@ Component.registerHooks([
   },
 })
 export default class Dashboard extends Vue {
-  categories = [];
+  get categories() {
+    return ActivitiesModule.categories;
+  }
 
   get subcategories() {
-    if (!this.categories) return [];
-    if (this.categories.length === 0) return [];
-
-    let r = [];
-
-    this.categories.forEach((a) => {
-      r = [...r, ...a.subcategory];
-    });
-
-    return r;
+    return ActivitiesModule.subcategories;
   }
 
   form = {
@@ -250,92 +245,30 @@ export default class Dashboard extends Vue {
   };
 
   get domains() {
-    const domains = {
-      Learning: ['Plain', 'Facts', 'Questions'],
-      Cognition: [
-        'Categorization',
-        'PhotoAssembly',
-        'WhatsInThePicture',
-        'MemoryCards',
-        'WhatIsWrong',
-        'Zoom',
-        'SpotTheDifference',
-        'ISee',
-      ],
-      Communication: [
-        'Meaning',
-        'WHQuestions',
-        'GoodStory',
-        'SoundOfLifePhoto',
-      ],
-    };
-    return Object.keys(domains);
+    return Object.keys(ActivitiesModule.domains);
   }
 
   get types() {
-    const domains = {
-      Learning: ['Plain', 'Facts', 'Questions'],
-      Cognition: [
-        'Categorization',
-        'PhotoAssembly',
-        'WhatsInThePicture',
-        'MemoryCards',
-        'WhatIsWrong',
-        'Zoom',
-        'SpotTheDifference',
-        'ISee',
-      ],
-      Communication: [
-        'Meaning',
-        'WHQuestions',
-        'GoodStory',
-        'SoundOfLifePhoto',
-      ],
-    };
-
-    const list = [
-      ...domains.Learning,
-      ...domains.Cognition,
-      ...domains.Communication,
-    ];
-    return list;
+    return ActivitiesModule.types;
   }
 
-  items = [];
-  input21 = '';
+  get items() {
+    return ActivitiesModule.activities;
+  }
 
   async beforeRouteEnter(to, from, next) {
-    const res = await request({
-      url: '/api/v1/activities',
-      method: 'get',
-      baseURL: '',
-    });
+    await Promise.all([
+      ActivitiesModule.LoadActivities(),
+      ActivitiesModule.LoadCategories(),
+    ]);
 
-    const res2 = await request({
-      url: `/api/v1/categories`,
-      method: 'get',
-      baseURL: '',
-    });
-
-    next((vm) => {
-      // debugger;this.items = r.activities;
-      vm.items = (res as any).activities;
-
-      vm.categories = (res2 as any).categories;
-    });
+    next();
   }
 
   constructor() {
     super();
   }
 
-  // get name() {
-  //   return UserModule.name;
-  // }
-
-  // get roles() {
-  //   return UserModule.roles;
-  // }
 }
 </script>
 
