@@ -12,4 +12,4 @@ import Slides from './slides.vue';
 export default class Plain extends Vue {
   @Prop() value;
 }
-</script>
+</script>F

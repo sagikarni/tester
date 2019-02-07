@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Model :add="true" :activity="activity" :categories="categories" :subcategories="subcategories" :domains="domains"/>
-    
+    <Model :add="true" :activity="activity"/>
+
     <el-button type="primary" @click="onSubmit">Create</el-button>
     <el-button>Cancel</el-button>
   </div>
@@ -12,6 +12,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
+import { ActivitiesModule } from '@/store/modules/activities';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -26,35 +27,15 @@ Component.registerHooks([
 })
 export default class Add extends Vue {
   activity = {
-     status: 'NotStarted',
-     category: {},
-     model: {
-       slideCategories: [],
-       slides: []
-     }
-
-    // slides: [],
-    // slideCategories: []
-    // category: '5c4abb2c73f44944f87de496'
+    status: 'NotStarted',
+    category: {},
+    model: {
+      slideCategories: [],
+      slides: [],
+    },
   };
+
   region = '';
-
-  domains = [];
-
-  categories = [];
-
-  get subcategories() {
-    if (!this.categories) return [];
-    if (this.categories.length === 0) return [];
-
-    let r = [];
-
-    this.categories.forEach((a) => {
-      r = [...r, ...a.subcategory];
-    });
-
-    return r;
-  }
 
   form = {
     name: '',
@@ -77,13 +58,13 @@ export default class Add extends Vue {
       data: { activity: this.activity },
     });
 
- Message({
+    Message({
       message: 'saved',
       type: 'success',
       duration: 5 * 1000,
     });
 
-console.log(`---> ${res.up[0]._id}`);
+    console.log(`---> ${res.up[0]._id}`);
     this.$router.push(`/dashboard/${res.up[0]._id}`);
     // res.up[0]._id;
 
@@ -98,7 +79,7 @@ console.log(`---> ${res.up[0]._id}`);
       method: 'get',
       baseURL: '',
     });
-    
+
     const res3 = await request({
       url: `/api/v1/domains`,
       method: 'get',
@@ -110,7 +91,6 @@ console.log(`---> ${res.up[0]._id}`);
 
       vm.categories = (res2 as any).categories;
       vm.domains = (res3 as any).domains;
-
 
       //  options3: [{
       //     label: 'Popular cities',
@@ -137,8 +117,6 @@ console.log(`---> ${res.up[0]._id}`);
       //       label: 'Dalian'
       //     }]
       //   }],
-
-
     });
   }
 }

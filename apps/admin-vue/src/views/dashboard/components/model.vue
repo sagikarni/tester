@@ -1,5 +1,6 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" v-if="activity">
+
     <el-form-item label="Activity Type">
       <el-select
         :disabled="!add"
@@ -141,6 +142,7 @@ import WHQuestions from './WHQuestions.vue';
 import GoodStory from './GoodStory.vue';
 import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 // import conf from './c.json';
+import { ActivitiesModule } from '@/store/modules/activities';
 
 @Component({
   components: {
@@ -173,13 +175,19 @@ import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 export default class Modely extends Vue {
   @Prop() activity;
 
-  @Prop() categories;
-
-  @Prop() subcategories;
-
-  @Prop() domains;
-
   @Prop() add;
+
+  get categories() {
+    return ActivitiesModule.categories;
+  }
+
+  get subcategories() {
+    return ActivitiesModule.subcategories;
+  }
+
+  get domains() {
+    return ActivitiesModule.domains;
+  }
 
   conf = {
     WhatsInThePicture: ['phrases'],

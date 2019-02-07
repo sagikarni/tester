@@ -19,7 +19,7 @@
             :key="slide.id"
             style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px"
           >
-            <dropper v-model="slide.media" :blobs="slide._blobs"></dropper>
+            <dropper v-model="slide.media" :blobs="slide._blobs" :path="slide.path"></dropper>
             <slot v-bind:slide="slide"></slot>
             <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>
           </div>
@@ -87,14 +87,14 @@ export default class Slides extends Vue {
     [...e.dataTransfer.files].forEach((f, i) => {
       const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
 
-      if (added.includes(filename)) return; 
+      if (added.includes(filename)) return;
       added.push(filename);
 
       const img = window.URL.createObjectURL(f);
       this.items.push({
         media: [`${filename}`],
         _blobs: [img],
-        id: i
+        id: i,
       });
     });
 

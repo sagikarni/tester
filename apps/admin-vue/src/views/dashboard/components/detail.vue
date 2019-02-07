@@ -1,12 +1,6 @@
 <template>
   <div>
-    <Model
-      :add="false"
-      :activity="activity"
-      :categories="categories"
-      :subcategories="subcategories"
-      :domains="domains"
-    />
+    <Model :add="false" :activity="activity"/>
 
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button>Cancel</el-button>
@@ -21,6 +15,7 @@ import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
 import { ActivitiesModule } from '@/store/modules/activities';
+import lodash from 'lodash';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -29,28 +24,12 @@ Component.registerHooks([
 ]);
 
 @Component({
-  // beforeRouteEnter(to, from, next) {
-  //   console.log('beforeRouteEnter');
-  //   next();
-  // }
   components: {
     Model,
   },
 })
 export default class Detail extends Vue {
   activity = null;
-
-  get categories() {
-    return ActivitiesModule.categories;
-  }
-
-  get subcategories() {
-    return ActivitiesModule.subcategories;
-  }
-
-  get domains() {
-    return ActivitiesModule.domains;
-  }
 
   async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
@@ -85,6 +64,23 @@ export default class Detail extends Vue {
       if (vm.activity.editorial) vm.activity.options.push('Editorial');
       if (vm.activity.isolate) vm.activity.options.push('Isolate');
 
+      // debugger;
+      //       const d = lodash.filter(vm.activity.model.slides, { media: [ ]});
+      // debugger;
+
+      // vm.activity.media = [];
+      if (vm.activity.model.slides.length > 0) {
+        vm.activity.model.slides.forEach((s) => {
+          s.path = `${vm.activity.type.name}/${vm.activity._id}`;
+          // if (s.media.length > 0){
+          //   // s.media.paths = ''
+          // }
+        });
+      }
+
+      // const mm = lodash.filter(vm.activity, { submodules: [ { id: 2 } ]});
+
+      // debugger;
       console.log('x', vm.categories);
       console.log(vm.activity);
     });

@@ -8,7 +8,6 @@
     @vdropzone-files-added="onadd"
     @vdropzone-removed-file="vremoved"
     @vdropzone-mounted="vmounted"
-    
   ></vue-dropzone>
 </template>
 
@@ -25,6 +24,8 @@ export default class Dropper extends Vue {
   @Prop() value;
 
   @Prop() blobs;
+
+  @Prop() path;
 
   files = [];
 
@@ -51,10 +52,15 @@ export default class Dropper extends Vue {
     if (!this.value) return;
     if (!this.value.length) return;
     if (!this.$refs.myVueDropzone) return;
+    const path = this.path;
 
     this.value.forEach((v, i) => {
       var file = { size: 0, name: v, type: 'image/png' };
-      var url = `/api/v1/s3?fileKey=Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
+      debugger;
+      // var url = `/api/v1/s3?fileKey=${this.path}Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
+      var url = `/api/v1/s3?fileKey=${path}/thumbnails/${v.replace('.', '-m.')}`; //'https://via.placeholder.com/150';
+
+      console.log({ url });
 
       if (this.blobs) {
         url = this.blobs[i];

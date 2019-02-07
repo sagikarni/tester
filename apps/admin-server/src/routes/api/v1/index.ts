@@ -94,16 +94,18 @@ router.delete('/activities/:id', async (req, res, next) => {
   res.json({ activity, code: 20000 });
 });
 
+const AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: 'AKIAI54TZXRSE6JGWPCQ',
+  secretAccessKey: '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',
+  // region: 'ap-southeast-1',
+});
+
 router.get('/s3', (req, res, next) => {
   try {
     const fileKey = req.query['fileKey'];
     console.log('Trying to download file', fileKey);
-    const AWS = require('aws-sdk');
-    AWS.config.update({
-      accessKeyId: 'AKIAI54TZXRSE6JGWPCQ',
-      secretAccessKey: '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',
-      // region: 'ap-southeast-1',
-    });
+
     const s3 = new AWS.S3();
     const options = {
       Bucket: 'sagi-tera-files',
@@ -111,10 +113,15 @@ router.get('/s3', (req, res, next) => {
     };
 
     res.attachment(fileKey);
-    const fileStream = s3.getObject(options).createReadStream();
+    const fileStream = s3.getObject(options).createReadStream().on('error', (err) => {
+      console.log('download failed');
+      // retry download ?
+    });
     fileStream.pipe(res);
   } catch (ex) {
     console.log({ ex });
+
+    res.sendStatus(404);
   }
 });
 
