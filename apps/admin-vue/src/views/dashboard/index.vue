@@ -42,7 +42,7 @@
           </el-select>
 
           <el-select placeholder="Audience" v-model="form.audience" clearable>
-            <el-option label="Any" value="All"/>
+            <el-option label="All" value="All"/>
             <el-option label="Kids" value="Kids"/>
             <el-option label="Elderly" value="Elderly"/>
           </el-select>

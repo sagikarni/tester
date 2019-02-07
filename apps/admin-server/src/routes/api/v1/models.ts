@@ -9,7 +9,7 @@ const types = {
     'Ready',
     'Published',
   ],
-  audience: ['Any', 'Kids', 'Elderly'],
+  audience: ['All', 'Kids', 'Elderly'],
   mediaType: ['Photo', 'Video'],
   level: ['Basic', 'Intermediate', 'Advanced'],
 };
