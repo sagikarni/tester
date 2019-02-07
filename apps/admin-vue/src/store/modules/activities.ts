@@ -9,6 +9,7 @@ import {
 import { login, logout, getInfo } from '@/api/login';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import store from '@/store';
+import {flatten} from 'lodash';
 
 import request from '../../utils/request';
 
@@ -24,26 +25,13 @@ class Activities extends VuexModule implements IActivitiesState {
   public subcategories = [];
   public activities = [];
 
-  public domains = {
-    Learning: ['Plain', 'Facts', 'Questions'],
-    Cognition: [
-      'Categorization',
-      'PhotoAssembly',
-      'WhatsInThePicture',
-      'MemoryCards',
-      'WhatIsWrong',
-      'Zoom',
-      'SpotTheDifference',
-      'ISee',
-    ],
-    Communication: ['Meaning', 'WHQuestions', 'GoodStory', 'SoundOfLifePhoto'],
-  };
+  public domains = [];
 
   public get types() {
-    const { Learning, Cognition, Communication } = this.domains;
-
-    const list = [...Learning, ...Cognition, ...Communication];
-    return list;
+    // const { Learning, Cognition, Communication } = this.domains;
+    const list = flatten(this.domains.map(d => d.types));
+    // const list = [...Learning, ...Cognition, ...Communication];
+    return list.map(d => d.name);
   }
 
   @Action({ commit: 'SET_CATEGORIES' })
@@ -68,9 +56,25 @@ class Activities extends VuexModule implements IActivitiesState {
     return (res as any).activities;
   }
 
+  @Action({ commit: 'SET_DOMAINS' })
+  public async LoadDomains() {
+    const res = await request({
+      url: '/api/v1/domains',
+      method: 'get',
+      baseURL: '',
+    });
+
+    return (res as any).domains;
+  }
+
   @Mutation
   private SET_CATEGORIES(categories: any) {
     this.categories = categories;
+  }
+
+  @Mutation
+  private SET_DOMAINS(domains: any) {
+    this.domains = domains;
   }
 
   @Mutation

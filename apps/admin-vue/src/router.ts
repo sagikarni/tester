@@ -33,18 +33,15 @@ export default new Router({
     {
       path: '/',
       component: Layout,
-      redirect: '/dashboard',
-      name: 'Dashboard',
-      meta: { hidden: true },
+      redirect: '/activities',
+      name: 'Activities',
+      meta: { title: 'Activities', icon: 'example' },
       children: [
         {
           path: 'dashboard',
           component: () =>
             import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
-          beforeEnter(to, from, next) {
-            console.log('in beforeEnter dashboard');
-            next();
-          },
+          meta: { hidden: true },
           children: [
             {
               path: '',
@@ -68,114 +65,7 @@ export default new Router({
         },
       ],
     },
-    {
-      path: '/example',
-      component: Layout,
-      redirect: '/example/table',
-      name: 'Example',
-      meta: { title: 'Example', icon: 'example' },
-      children: [
-        {
-          path: 'table',
-          name: 'Table',
-          component: () =>
-            import(/* webpackChunkName: "table" */ '@/views/table/index.vue'),
-          meta: { title: 'Table', icon: 'table' },
-        },
-        {
-          path: 'tree',
-          name: 'Tree',
-          component: () =>
-            import(/* webpackChunkName: "tree" */ '@/views/tree/index.vue'),
-          meta: { title: 'Tree', icon: 'tree' },
-        },
-      ],
-    },
-    {
-      path: '/form',
-      component: Layout,
-      children: [
-        {
-          path: 'index',
-          name: 'Form',
-          component: () =>
-            import(/* webpackChunkName: "form" */ '@/views/form/index.vue'),
-          meta: { title: 'Form', icon: 'form' },
-        },
-      ],
-    },
-    {
-      path: '/nested',
-      component: Layout,
-      redirect: '/nested/menu1',
-      name: 'Nested',
-      meta: { title: 'Nested', icon: 'nested' },
-      children: [
-        {
-          path: 'menu1',
-          component: () =>
-            import(/* webpackChunkName: "menu1" */ '@/views/nested/menu1/index.vue'),
-          name: 'Menu1',
-          meta: { title: 'menu1' },
-          children: [
-            {
-              path: 'menu1-1',
-              component: () =>
-                import(/* webpackChunkName: "menu1-1" */ '@/views/nested/menu1/menu1-1/index.vue'),
-              name: 'Menu1-1',
-              meta: { title: 'menu1-1' },
-            },
-            {
-              path: 'menu1-2',
-              component: () =>
-                import(/* webpackChunkName: "menu1-2" */ '@/views/nested/menu1/menu1-2/index.vue'),
-              name: 'Menu1-2',
-              meta: { title: 'menu1-2' },
-              children: [
-                {
-                  path: 'menu1-2-1',
-                  component: () =>
-                    import(/* webpackChunkName: "menu1-2-1" */ '@/views/nested/menu1/menu1-2/menu1-2-1/index.vue'),
-                  name: 'Menu1-2-1',
-                  meta: { title: 'menu1-2-1' },
-                },
-                {
-                  path: 'menu1-2-2',
-                  component: () =>
-                    import(/* webpackChunkName: "menu1-2-2" */ '@/views/nested/menu1/menu1-2/menu1-2-2/index.vue'),
-                  name: 'Menu1-2-2',
-                  meta: { title: 'menu1-2-2' },
-                },
-              ],
-            },
-            {
-              path: 'menu1-3',
-              component: () =>
-                import(/* webpackChunkName: "menu1-3" */ '@/views/nested/menu1/menu1-3/index.vue'),
-              name: 'Menu1-3',
-              meta: { title: 'menu1-3' },
-            },
-          ],
-        },
-        {
-          path: 'menu2',
-          component: () =>
-            import(/* webpackChunkName: "menu2" */ '@/views/nested/menu2/index.vue'),
-          name: 'Menu2',
-          meta: { title: 'menu2' },
-        },
-      ],
-    },
-    {
-      path: 'external-link',
-      component: Layout,
-      children: [
-        {
-          path: 'https://github.com/Armour/vue-typescript-admin-template',
-          meta: { title: 'ExternalLink', icon: 'link' },
-        },
-      ],
-    },
+
     { path: '*', redirect: '/404' },
   ],
 });

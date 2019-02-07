@@ -245,7 +245,7 @@ export default class Dashboard extends Vue {
   };
 
   get domains() {
-    return Object.keys(ActivitiesModule.domains);
+    return ActivitiesModule.domains.map(d => d.name);
   }
 
   get types() {
@@ -260,6 +260,7 @@ export default class Dashboard extends Vue {
     await Promise.all([
       ActivitiesModule.LoadActivities(),
       ActivitiesModule.LoadCategories(),
+      ActivitiesModule.LoadDomains(),
     ]);
 
     next();
