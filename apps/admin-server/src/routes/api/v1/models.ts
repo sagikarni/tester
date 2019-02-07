@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const types = {
-  orientation: ['horizontal', 'vertical'],
+  orientation: ['Landscape', 'Portrait'],
   status: [
     'Started',
     'WaitingForReview',

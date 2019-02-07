@@ -82,8 +82,8 @@
 
     <el-form-item label="Orientation">
       <el-select v-model="activity.orientation" placeholder="please select your zone">
-        <el-option label="horizontal" value="horizontal"></el-option>
-        <el-option label="vertical" value="vertical"></el-option>
+        <el-option label="Landscape" value="Landscape"></el-option>
+        <el-option label="Portrait" value="Portrait"></el-option>
       </el-select>
     </el-form-item>
 
