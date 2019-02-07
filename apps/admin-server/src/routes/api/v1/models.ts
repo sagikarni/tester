@@ -67,7 +67,7 @@ export const Activity = mongoose.model(
     free: { type: Boolean },
     printable: { type: Boolean },
     editorial: { type: Boolean },
-    level: { type: String, enum: types.level },
+    level: { type: [String], enum: types.level },
     notes: { type: String },
     orientation: { type: String, enum: types.orientation },
     mediaType: { type: String, enum: types.mediaType },

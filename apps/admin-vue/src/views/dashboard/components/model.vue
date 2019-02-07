@@ -1,6 +1,5 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" v-if="activity">
-
     <el-form-item label="Activity Type">
       <el-select
         :disabled="!add"
@@ -89,7 +88,7 @@
     </el-form-item>
 
     <el-form-item label="Level">
-      <el-select v-model="activity.level" placeholder="please select your zone">
+      <el-select v-model="activity.level" placeholder="please select your zone" multiple>
         <el-option label="Basic" value="Basic"/>
         <el-option label="Intermediate" value="Intermediate"/>
         <el-option label="Advanced" value="Advanced"/>
