@@ -28,9 +28,9 @@ Component.registerHooks([
 export default class Add extends Vue {
   activity = {
     mediaType: 'Photo',
-    Audience: 'All',
-    Level: ['Basic'],
-    status: 'NotStarted',
+    audience: 'All',
+    level: ['Basic'],
+    status: 'Started',
     orientation: 'Landscape',
     category: {},
     model: {
