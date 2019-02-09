@@ -12,11 +12,11 @@
         </el-col>
         <el-col :span="18" style="display:flex;">
           <el-select placeholder="All Domain" v-model="form.domain" clearable>
-            <el-option v-for="domain in domains" :label="domain" :value="domain" :key="domain"/>
+            <el-option v-for="domain in domainNames" :label="domain" :value="domain" :key="domain"/>
           </el-select>
 
           <el-select placeholder="Activity Type" v-model="form.type" clearable>
-            <el-option v-for="type in types" :label="type" :value="type" :key="type"/>
+            <el-option v-for="type in types" :label="type.name" :value="type.name" :key="type._id"/>
           </el-select>
 
           <el-select placeholder="Media" v-model="form.mediaType" clearable>
@@ -123,11 +123,10 @@
                       class="activity-item"
                     >
                       <div class="name">{{item.name}}</div>
-                      <div
-                        style="min-height:36px;margin-top: 5px;width: 100%;color: #999999; padding: 0px 10px 0px 0px;"
-                      >
-                        <el-tag color="#f5f5f5" size="mini">{{item.type.name}}</el-tag>
-                        <el-tag color="#f5f5f5" size="mini">{{item._id}}</el-tag>
+
+                      <div class="tags">
+                        <span>{{item.type.name}}</span>
+                        <span>{{item._id}}</span>
                       </div>
                     </router-link>
 
@@ -158,7 +157,7 @@ import { Component, Vue } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
 import { ActivitiesModule } from '@/store/modules/activities';
-import { flatten} from 'lodash';
+import { flatten } from 'lodash';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -244,8 +243,8 @@ export default class Dashboard extends Vue {
     text: null,
   };
 
-  get domains() {
-    return ActivitiesModule.domains.map(d => d.name);
+  get domainNames() {
+    return Object.keys(ActivitiesModule.domains);
   }
 
   get types() {
@@ -269,7 +268,6 @@ export default class Dashboard extends Vue {
   constructor() {
     super();
   }
-
 }
 </script>
 
@@ -374,5 +372,23 @@ h1 {
   padding: 0;
   font-family: Montserrat;
   font-weight: normal;
+}
+
+.tags {
+  min-height: 36px;
+  margin-top: 5px;
+  width: 100%;
+  color: #999999;
+  padding: 0px 10px 0px 0px;
+  span {
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    background: #eee;
+    padding: 3px;
+    display: inline-block;
+    color: #999;
+    font-size: 0.7rem;
+    margin: 0 7px 0 0;
+  }
 }
 </style>

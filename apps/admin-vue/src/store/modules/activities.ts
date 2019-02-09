@@ -9,14 +9,14 @@ import {
 import { login, logout, getInfo } from '@/api/login';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import store from '@/store';
-import {flatten} from 'lodash';
+import { flatten, values } from 'lodash';
 
 import request from '../../utils/request';
 
 export interface IActivitiesState {
   categories: any[];
   activities: any[];
-  domains: any;
+  domains: any[];
 }
 
 @Module({ dynamic: true, store, name: 'activities' })
@@ -24,16 +24,31 @@ class Activities extends VuexModule implements IActivitiesState {
   public categories = [];
   public subcategories = [];
   public activities = [];
-
   public domains = [];
 
-  public get types() {
-    // const { Learning, Cognition, Communication } = this.domains;
-    const list = flatten(this.domains.map(d => d.types));
-    // const list = [...Learning, ...Cognition, ...Communication];
-    return list.map(d => d.name);
+  public get domainsKeys() {
+    return Object.keys(this.domains);
   }
 
+  public get types() {
+    return flatten(this.domainsKeys.map((k) => this.domains[k]));
+  }
+
+  @Action({ commit: 'REMOVE_ACTIVITY' })
+  public async RemoveActivity(id) {
+    return id;
+  }
+
+  @Action({ commit: 'ADD_ACTIVITY' })
+  public async AddActivity(activity) {
+    return activity;
+  }
+
+  @Action({ commit: 'UPDATE_ACTIVITY' })
+  public async UpdateActivity(activity) {
+    return activity;
+  }
+  
   @Action({ commit: 'SET_CATEGORIES' })
   public async LoadCategories() {
     const res2 = await request({
@@ -68,6 +83,18 @@ class Activities extends VuexModule implements IActivitiesState {
   }
 
   @Mutation
+  private ADD_ACTIVITY(activity: any) {
+    this.activities.push(activity);
+  }
+
+  @Mutation
+  private UPDATE_ACTIVITY(activity: any) {
+    const i = this.activities.findIndex(s => s._id === activity._id);
+    this.activities[i] = activity;
+    // this.activities.push(activity);
+  }  
+
+  @Mutation
   private SET_CATEGORIES(categories: any) {
     this.categories = categories;
   }
@@ -75,6 +102,11 @@ class Activities extends VuexModule implements IActivitiesState {
   @Mutation
   private SET_DOMAINS(domains: any) {
     this.domains = domains;
+  }
+
+  @Mutation
+  private REMOVE_ACTIVITY(id: any) {
+    this.activities = this.activities.filter((f) => f._id !== id);
   }
 
   @Mutation

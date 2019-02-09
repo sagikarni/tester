@@ -2,14 +2,15 @@
   <div>
     <el-form-item label="Slides">
       <div
-        id="map-Antananarivo"
-        @dragover.prevent
+        id="dropper-slides"
+        @dragleave="endDrag"
+        @dragend="endDrag"
+        @dragover="onDrag"
+        :class="{ 'drag': hover }"
         @drop="onDrop"
-        style="border:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:center;"
+        style
       >
-        <span
-          style="display:block;border:2px dashed #aaa;height:60px;line-height:60px;color:#777;"
-        >Drop here all media</span>
+        <span>Drop here all media</span>
       </div>
 
       <draggable v-model="items" @end="dosome">
@@ -45,6 +46,12 @@ export default class Slides extends Vue {
   items = [];
   ii = 0;
 
+  @Watch('items') onItems(n, o) {
+    console.log('somehap');
+    this.$emit('input', this.items);
+
+  }
+
   mounted() {
     if (this.value && this.value.length > 0) {
       this.items = this.value.map((v, i) => ({ ...v, id: i }));
@@ -55,10 +62,12 @@ export default class Slides extends Vue {
     this.items.splice(index, 1);
     this.$emit('input', this.items);
   }
+
   addSlide() {
+    
     this.items.push({
       media: [],
-      id: this.ii,
+      id: this.items.length //this.ii,
     });
     this.ii++;
 
@@ -76,7 +85,25 @@ export default class Slides extends Vue {
     autoQueue: false,
   };
 
+  onDrag(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log('in drop');
+    this.hover = true;
+  }
+  endDrag(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log('in drop');
+    this.hover = false;
+  }
+
+  hover = false;
+
   onDrop(e) {
+    this.hover = false;
     e.stopPropagation();
     e.preventDefault();
     if (!e.dataTransfer.files) return;
@@ -104,23 +131,40 @@ export default class Slides extends Vue {
 </script>
 
 <style lang="scss">
-#drop_zone {
-  border: 5px solid blue;
-  width: 200px;
-  height: 100px;
+#dropzone {
+  border: 2px dashed #888;
+  padding: 1.2em;
+  min-height: 80px;
+  color: #aaa;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  &.dz-drag-hover {
+    border: 2px solid #888;
+  }
+
+  .dz-message {
+    margin: 0;
+  }
 }
 
-.dropzone {
-  padding: 10px;
-  min-height: 80px;
+#dropper-slides {
   margin-bottom: 10px;
-}
-.dropzone .dz-message {
-  margin: 1em 0;
-}
-.draggabley {
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 1px dotted #ccc;
+  span {
+    display: block;
+    border: 2px dashed #888;
+    border-radius: 4px;
+    color: #aaa;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 1.2em;
+    background: #eee;
+  }
+  &.drag {
+    span {
+      border: 2px solid #888;
+    }
+  }
 }
 </style>

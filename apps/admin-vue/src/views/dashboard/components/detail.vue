@@ -33,14 +33,24 @@ export default class Detail extends Vue {
 
   async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
+    this.activity = ActivitiesModule.activities.find(
+      (r) => r._id === to.params.activity
+    );
+    if (this.activity.model.slides.length > 0) {
+      this.activity.model.slides.forEach((s) => {
+        s.path = `/storage/${this.activity.type.domain.name}/${
+          this.activity.type.name
+        }/${this.activity._id}/thumbnails/__FILE__`;
+      });
+    }
 
-    const res = await request({
-      url: `/api/v1/activities/${to.params.activity}`,
-      method: 'get',
-      baseURL: '',
-    });
+    // const res = await request({
+    //   url: `/api/v1/activities/${to.params.activity}`,
+    //   method: 'get',
+    //   baseURL: '',
+    // });
 
-    this.activity = (res as any).activity;
+    // this.activity = (res as any).activity;
 
     next();
   }
@@ -48,21 +58,28 @@ export default class Detail extends Vue {
   async beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter..');
 
-    const res = await request({
-      url: `/api/v1/activities/${to.params.activity}`,
-      method: 'get',
-      baseURL: '',
-    });
+    const activity = ActivitiesModule.activities.find(
+      (r) => r._id === to.params.activity
+    );
+
+    if (!activity) {
+      debugger;
+    }
+    // const res = await request({
+    //   url: `/api/v1/activities/${to.params.activity}`,
+    //   method: 'get',
+    //   baseURL: '',
+    // });
 
     next((vm) => {
       // debugger;
-      vm.activity = (res as any).activity;
+      vm.activity = activity;
 
-      vm.activity.options = [];
-      if (vm.activity.free) vm.activity.options.push('Free');
-      if (vm.activity.printable) vm.activity.options.push('Printable');
-      if (vm.activity.editorial) vm.activity.options.push('Editorial');
-      if (vm.activity.isolate) vm.activity.options.push('Isolate');
+      // vm.activity.options = [];
+      // if (vm.activity.free) vm.activity.options.push('Free');
+      // if (vm.activity.printable) vm.activity.options.push('Printable');
+      // if (vm.activity.editorial) vm.activity.options.push('Editorial');
+      // if (vm.activity.isolate) vm.activity.options.push('Isolate');
 
       // debugger;
       //       const d = lodash.filter(vm.activity.model.slides, { media: [ ]});
@@ -71,18 +88,11 @@ export default class Detail extends Vue {
       // vm.activity.media = [];
       if (vm.activity.model.slides.length > 0) {
         vm.activity.model.slides.forEach((s) => {
-          s.path = `${vm.activity.type.name}/${vm.activity._id}`;
-          // if (s.media.length > 0){
-          //   // s.media.paths = ''
-          // }
+          s.path = `/storage/${vm.activity.type.domain.name}/${
+            vm.activity.type.name
+          }/${vm.activity._id}/thumbnails/__FILE__`;
         });
       }
-
-      // const mm = lodash.filter(vm.activity, { submodules: [ { id: 2 } ]});
-
-      // debugger;
-      console.log('x', vm.categories);
-      console.log(vm.activity);
     });
 
     // this.activity.options = [];
@@ -106,8 +116,8 @@ export default class Detail extends Vue {
   async onSubmit() {
     console.log('submit!', this.activity);
 
-    const res = await request({
-      url: `/api/v1/activities/${this.activity._id}`,
+    const res: any = await request({
+      url: `/api/v1/activities`,
       method: 'post',
       baseURL: '',
       data: { activity: this.activity },
@@ -118,6 +128,8 @@ export default class Detail extends Vue {
       type: 'success',
       duration: 5 * 1000,
     });
+
+    ActivitiesModule.UpdateActivity(res.activity);
 
     console.log('done');
   }
@@ -145,6 +157,8 @@ export default class Detail extends Vue {
           type: 'success',
           duration: 5 * 1000,
         });
+
+        ActivitiesModule.RemoveActivity(this.activity._id);
 
         console.log('done');
 

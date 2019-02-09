@@ -32,10 +32,11 @@ export default class Phrases extends Vue {
 
   removePhrase(index) {
     this.phrases.splice(index, 1);
+    this.$emit('input', this.phrases.filter(p => !!p.value).map((p) => p.value));
   }
 
   dosome() {
-    this.$emit('input', this.phrases.map((p) => p.value));
+    this.$emit('input', this.phrases.filter(p => !!p.value).map((p) => p.value));
   }
 }
 </script>

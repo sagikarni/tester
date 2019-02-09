@@ -18,7 +18,7 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
-      '/assets': {
+      '/storage': {
         target: apiUrl,
         ws: true,
         changeOrigin: true,

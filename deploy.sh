@@ -8,7 +8,7 @@ export $(grep -v '^#' .env | xargs -d '\n')
 
 npm run build:admin
 
-npm run build:tera
+# npm run build:tera
 
 node dep.js
 

@@ -33,7 +33,7 @@ export default new Router({
     {
       path: '/',
       component: Layout,
-      redirect: '/activities',
+      redirect: '/dashboard',
       name: 'Activities',
       meta: { title: 'Activities', icon: 'example' },
       children: [
@@ -65,7 +65,22 @@ export default new Router({
         },
       ],
     },
-
+    {
+      path: '/recommendations',
+      component: Layout,
+      // redirect: '/categories/menu1',
+      name: 'Recommendations',
+      meta: { title: '', icon: 'nested' },
+      children: [
+        {
+          path: '',
+          component: () =>
+            import(/* webpackChunkName: "recommendations" */ '@/views/recommendations/index.vue'),
+          name: 'Recommendations',
+          meta: { title: 'Recommendations' },
+        },
+      ],
+    },
     { path: '*', redirect: '/404' },
   ],
 });

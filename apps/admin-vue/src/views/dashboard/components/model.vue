@@ -7,10 +7,14 @@
         placeholder="Activity Type"
         value-key="_id"
       >
-        <el-option-group v-for="group in domains" :key="group.name" :label="group.name">
-          <el-option v-for="item in group.types" :key="item._id" :label="item.name" :value="item"></el-option>
+        <el-option-group v-for="group in domainsKeys" :key="group" :label="group">
+          <el-option v-for="item in domains[group]" :key="item._id" :label="item.name" :value="item"></el-option>
         </el-option-group>
       </el-select>
+    </el-form-item>
+
+    <el-form-item label="Storage" v-if="activity.type">
+      <span>{{ storageUrl }}</span>
     </el-form-item>
 
     <el-form-item label="Activity Name">
@@ -184,8 +188,20 @@ export default class Modely extends Vue {
     return ActivitiesModule.subcategories;
   }
 
+  get domainsKeys() {
+    return ActivitiesModule.domainsKeys;
+  }
+
   get domains() {
     return ActivitiesModule.domains;
+  }
+
+  get types() {
+    return ActivitiesModule.types;
+  }
+
+  get storageUrl() {
+    return `E:/sagi-tera-files/${this.activity.type.domain.name}/${this.activity.type.name}/${this.activity._id}`;
   }
 
   conf = {

@@ -14,6 +14,13 @@ import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
 import { ActivitiesModule } from '@/store/modules/activities';
 
+const ObjectId = (
+  m = Math,
+  d = Date,
+  h = 16,
+  s = (s) => m.floor(s).toString(h)
+) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
+
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -27,6 +34,7 @@ Component.registerHooks([
 })
 export default class Add extends Vue {
   activity = {
+    _id: ObjectId(),
     mediaType: 'Photo',
     audience: 'All',
     level: ['Basic'],
@@ -56,7 +64,7 @@ export default class Add extends Vue {
     console.log('submit!', this.activity);
 
     const res: any = await request({
-      url: `/api/v1/activities/add`,
+      url: `/api/v1/activities`,
       method: 'post',
       baseURL: '',
       data: { activity: this.activity },
@@ -68,60 +76,13 @@ export default class Add extends Vue {
       duration: 5 * 1000,
     });
 
-    console.log(`---> ${res.up[0]._id}`);
-    this.$router.push(`/dashboard/${res.up[0]._id}`);
+    await ActivitiesModule.AddActivity(res.activity);
+
+    
+    this.$router.push(`/dashboard/${res.activity._id}`);
     // res.up[0]._id;
 
     console.log('done');
-  }
-
-  async beforeRouteEnter(to, from, next) {
-    console.log('beforeRouteEnter..');
-
-    const res2 = await request({
-      url: `/api/v1/categories`,
-      method: 'get',
-      baseURL: '',
-    });
-
-    const res3 = await request({
-      url: `/api/v1/domains`,
-      method: 'get',
-      baseURL: '',
-    });
-
-    next((vm) => {
-      // debugger;this.items = r.activities;
-
-      vm.categories = (res2 as any).categories;
-      vm.domains = (res3 as any).domains;
-
-      //  options3: [{
-      //     label: 'Popular cities',
-      //     options: [{
-      //       value: 'Shanghai',
-      //       label: 'Shanghai'
-      //     }, {
-      //       value: 'Beijing',
-      //       label: 'Beijing'
-      //     }]
-      //   }, {
-      //     label: 'City name',
-      //     options: [{
-      //       value: 'Chengdu',
-      //       label: 'Chengdu'
-      //     }, {
-      //       value: 'Shenzhen',
-      //       label: 'Shenzhen'
-      //     }, {
-      //       value: 'Guangzhou',
-      //       label: 'Guangzhou'
-      //     }, {
-      //       value: 'Dalian',
-      //       label: 'Dalian'
-      //     }]
-      //   }],
-    });
   }
 }
 </script>
