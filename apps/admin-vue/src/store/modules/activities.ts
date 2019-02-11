@@ -97,6 +97,15 @@ class Activities extends VuexModule implements IActivitiesState {
   @Mutation
   private SET_CATEGORIES(categories: any) {
     this.categories = categories;
+    
+    let r = [];
+
+    this.categories.forEach((a) => {
+      r = [...r, ...a.subcategory];
+    });
+
+    console.log({ r });
+    this.subcategories = r;
   }
 
   @Mutation
@@ -112,14 +121,6 @@ class Activities extends VuexModule implements IActivitiesState {
   @Mutation
   private SET_ACTIVITIES(activities: any) {
     this.activities = activities;
-
-    let r = [];
-
-    this.categories.forEach((a) => {
-      r = [...r, ...a.subcategory];
-    });
-
-    this.subcategories = r;
   }
 }
 
