@@ -1,14 +1,31 @@
 <template>
-  <vue-dropzone
-    ref="myVueDropzone"
-    id="dropzone"
-    style="margin:0 0 10px 0;"
-    :options="dropzoneOptions"
-    @vdropzone-file-added="onadd"
-    @vdropzone-files-added="onadd"
-    @vdropzone-removed-file="vremoved"
-    @vdropzone-mounted="vmounted"
-  ></vue-dropzone>
+  <div
+    id="dropper"
+    :class="{ 'drag': hover }"
+    @dragleave="endDrag"
+    @dragend="endDrag"
+    @dragover="onDrag"
+    @drop="onDrop"
+    style="position:relative;"
+  >
+    <span id="dropper-text" style="text-align:center;display:block;">{{placeholder}}</span>
+
+    <div style="display:flex;flex-wrap:wrap;">
+      <el-card
+        v-for="item in value"
+        :key="item.image"
+        :body-style="{ padding: '0px' }"
+        style="width:200px;"
+      >
+        <img :src="getImage(item)" class="image">
+
+        <div style="padding: 10px;display: flex;justify-content: space-between;">
+          <span>{{item.name}}</span>
+          <el-button type="text" @click="remove(item)" icon="el-icon-delete"></el-button>
+        </div>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -22,78 +39,185 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 })
 export default class Dropper extends Vue {
   @Prop() value;
-
-  @Prop() blobs;
-
   @Prop() path;
+  @Prop() placeholder;
 
-  files = [];
+  hover = false;
+  items = [];
 
-  onadd(file) {
-    //debugger;
-    // const files = this.$refs.myVueDropzone.getQueuedFiles();
+  getImage(item) {
+    if (!item) return;
+    if (item.blob) {
+      return item.blob;
+    }
 
-    this.files.push(file.name);
-    this.files = this.files.filter((f) => !!f);
-    // file: file.name
-
-    // console.log({ files });
-    this.$emit('input', this.files);
-
-    // this.slides[0]
+    if (this.path) {
+      return this.path.replace('__FILE__', item.name);
+    }
+    return item.name;
   }
 
-  vremoved(file, error, xhr) {
-    this.files = this.files.filter((f) => f !== file.name);
-    this.$emit('input', this.files);
+  onDrag(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log('in drop');
+    this.hover = true;
   }
 
-  vmounted() {
-    if (!this.value) return;
-    if (!this.value.length) return;
-    if (!this.$refs.myVueDropzone) return;
-    const path = this.path;
+  endDrag(e) {
+    e.stopPropagation();
+    e.preventDefault();
 
-    this.value.forEach((v, i) => {
-      var file = { size: 0, name: v, type: 'image/png' };
-      // debugger;
-      // var url = `/api/v1/s3?fileKey=${this.path}Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
-      var url = 'https://via.placeholder.com/150';
+    console.log('in drop');
+    this.hover = false;
+  }
 
-      if (this.path) {
-        url = `${this.path.replace('__FILE__', v.replace('.', '-m.'))}`;
-        console.log({ v });
-      }
-      // var url = `/api/v1/s3?fileKey=${path}/thumbnails/${v.replace('.', '-m.')}`; //'https://via.placeholder.com/150';
+  remove(item) {
+    console.log({ item });
+    var i = this.items.indexOf(item);
+    this.items.splice(i, 1);
 
-      console.log({ url });
+    this.$emit('input', this.items);
+  }
 
-      if (this.blobs) {
-        url = this.blobs[i];
-      }
+  onDrop(e) {
+    this.hover = false;
+    e.stopPropagation();
+    e.preventDefault();
 
-      // var f = new File([""], "filename.png", { type: 'image/png' });
+    this.add(e);
+  }
 
-      (this.$refs.myVueDropzone as any).manuallyAddFile(file, url, null, null, {
-        dontSubtractMaxFiles: false,
-        addToFiles: true,
+  add(e) {
+    if (!e.dataTransfer.files) return;
+    if (!e.dataTransfer.files.length) return;
+
+    const added = [];
+
+    [...e.dataTransfer.files].forEach((f, i) => {
+      const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
+
+      if (added.includes(filename)) return;
+      added.push(filename);
+
+      const img = window.URL.createObjectURL(f);
+
+      this.items.push({
+        name: filename,
+        blob: img,
       });
     });
 
-    console.log(this.value);
+    this.$emit('input', this.items);
   }
 
-  dropzoneOptions = {
-    addRemoveLinks: true,
-    url: '/',
-    autoProcessQueue: false,
-    //duplicateCheck: true
-    // accept: (e, done) => {
-    //   debugger;
-    //   done('fick');
-    //   // debugger;
-
-    // }
-  };
+  // @Prop() value;
+  // @Prop() blobs;
+  // @Prop() path;
+  // files = [];
+  // onadd(file) {
+  //   //debugger;
+  //   // const files = this.$refs.myVueDropzone.getQueuedFiles();
+  //   this.files.push(file.name);
+  //   this.files = this.files.filter((f) => !!f);
+  //   // file: file.name
+  //   // console.log({ files });
+  //   this.$emit('input', this.files);
+  //   // this.slides[0]
+  // }
+  // vremoved(file, error, xhr) {
+  //   this.files = this.files.filter((f) => f !== file.name);
+  //   this.$emit('input', this.files);
+  // }
+  // vmounted() {
+  //   if (!this.value) return;
+  //   if (!this.value.length) return;
+  //   if (!this.$refs.myVueDropzone) return;
+  //   const path = this.path;
+  //   this.value.forEach((v, i) => {
+  //     var file = { size: 0, name: v, type: 'image/png' };
+  //     // debugger;
+  //     // var url = `/api/v1/s3?fileKey=${this.path}Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
+  //     var url = 'https://via.placeholder.com/150';
+  //     if (this.path) {
+  //       url = `${this.path.replace('__FILE__', v.replace('.', '-m.'))}`;
+  //       console.log({ v });
+  //     }
+  //     // var url = `/api/v1/s3?fileKey=${path}/thumbnails/${v.replace('.', '-m.')}`; //'https://via.placeholder.com/150';
+  //     console.log({ url });
+  //     if (this.blobs) {
+  //       url = this.blobs[i];
+  //     }
+  //     // var f = new File([""], "filename.png", { type: 'image/png' });
+  //     (this.$refs.myVueDropzone as any).manuallyAddFile(file, url, null, null, {
+  //       dontSubtractMaxFiles: false,
+  //       addToFiles: true,
+  //     });
+  //   });
+  //   console.log(this.value);
+  // }
+  // dropzoneOptions = {
+  //   addRemoveLinks: true,
+  //   url: '/',
+  //   autoProcessQueue: false,
+  //   //duplicateCheck: true
+  //   // accept: (e, done) => {
+  //   //   debugger;
+  //   //   done('fick');
+  //   //   // debugger;
+  //   // }
+  // };
 }
 </script>
+<style lang="scss" scoped>
+.time {
+  font-size: 13px;
+  color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: '';
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+#dropper {
+  display: block;
+  border: 2px dashed #aaa;
+  border-radius: 4px;
+  min-height: 100px;
+  background: #eee;
+
+  #dropper-text {
+    color: #aaa;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 1.2em;
+  }
+
+  &.drag {
+    border: 2px solid #aaa;
+  }
+}
+</style>

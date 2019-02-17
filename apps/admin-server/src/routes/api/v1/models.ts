@@ -79,11 +79,11 @@ export const Activity = mongoose.model(
       slideCategories: [String],
       slides: [
         {
-          media: [String],
+          media: [{ name: { type: String } }],
           phrases: [String],
           category: { type: String },
           size: { type: String },
-          audio: [String],
+          audio: [{ name: { type: String } }],
           mediaIndex: { type: String },
         },
       ],

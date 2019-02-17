@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { Activity, SubCategory, Category, Type, Domain } from './models';
 import { values, groupBy, entries, toPairs } from 'lodash';
-
 const router = Router();
 
 router.get('/activities', async (req, res, next) => {

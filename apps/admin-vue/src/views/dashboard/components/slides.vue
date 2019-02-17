@@ -8,7 +8,6 @@
         @dragover="onDrag"
         :class="{ 'drag': hover }"
         @drop="onDrop"
-        style
       >
         <span>Drop here all media</span>
       </div>
@@ -20,7 +19,9 @@
             :key="slide.id"
             style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px"
           >
-            <dropper v-model="slide.media" :blobs="slide._blobs" :path="slide.path"></dropper>
+            <dropper v-model="slide.media" :path="slide.path" placeholder="Drop here images" style="margin-bottom:10px;"></dropper>
+
+            <!-- <dropper v-model="slide.media" :blobs="slide._blobs" :path="slide.path"></dropper> -->
             <slot v-bind:slide="slide"></slot>
             <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>
           </div>
@@ -46,10 +47,22 @@ export default class Slides extends Vue {
   items = [];
   ii = 0;
 
+  @Watch('value') onValue(n, o) {
+    console.log('value!!!', n);
+
+    if (n !== this.items) {
+      console.log('need update');
+      this.items = n.map((v, i) => ({ ...v, id: i }));
+    } else {
+      console.log('do need');
+    }
+    // this.items = this.value.map((v, i) => ({ ...v, id: i }));
+    // this.$emit('input', this.items);
+  }
+
   @Watch('items') onItems(n, o) {
     console.log('somehap');
     this.$emit('input', this.items);
-
   }
 
   mounted() {
@@ -64,10 +77,9 @@ export default class Slides extends Vue {
   }
 
   addSlide() {
-    
     this.items.push({
       media: [],
-      id: this.items.length //this.ii,
+      id: this.items.length, //this.ii,
     });
     this.ii++;
 
@@ -106,21 +118,29 @@ export default class Slides extends Vue {
     this.hover = false;
     e.stopPropagation();
     e.preventDefault();
+
+    this.add(e);
+  }
+
+  add(e) {
     if (!e.dataTransfer.files) return;
     if (!e.dataTransfer.files.length) return;
 
     const added = [];
-
     [...e.dataTransfer.files].forEach((f, i) => {
       const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
-
       if (added.includes(filename)) return;
       added.push(filename);
 
       const img = window.URL.createObjectURL(f);
+
       this.items.push({
-        media: [`${filename}`],
-        _blobs: [img],
+        media: [
+          {
+            name: filename,
+            blob: img,
+          },
+        ],
         id: i,
       });
     });
@@ -159,7 +179,7 @@ export default class Slides extends Vue {
     font-size: 20px;
     font-weight: bold;
     padding: 1.2em;
-    background: #eee;
+    background: beige;
   }
   &.drag {
     span {

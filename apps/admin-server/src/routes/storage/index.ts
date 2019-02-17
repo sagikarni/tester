@@ -31,7 +31,8 @@ router.get('/*', (req, res, next) => {
       .on('error', (err) => {
         console.log('download failed');
         res.sendStatus(404);
-        res.end();
+        return;
+        // res.end();
       });
     fileStream.pipe(res);
   } catch (ex) {

@@ -2,10 +2,10 @@
   <Slides v-model="value.slides">
     <template slot-scope="slotProps">
       <el-form-item label="Correct Image:">
-        <mediaIndex v-model="slotProps.slide.mediaIndex"/>
+        <mediaIndex v-model="slotProps.slide.mediaIndex" style="margin-bottom:10px;"/>
       </el-form-item>
       <el-form-item label="Audio:">
-        <dropper v-model="slotProps.slide.audio"></dropper>
+        <dropper v-model="slotProps.slide.audio" placeholder="Drop here audio files"></dropper>
       </el-form-item>
     </template>
   </Slides>
