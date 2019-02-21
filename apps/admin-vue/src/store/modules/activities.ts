@@ -48,13 +48,61 @@ class Activities extends VuexModule implements IActivitiesState {
   public async UpdateActivity(activity) {
     return activity;
   }
-  
+
   @Action({ commit: 'SET_CATEGORIES' })
   public async LoadCategories() {
     const res2 = await request({
       url: `/api/v1/categories`,
       method: 'get',
       baseURL: '',
+    });
+
+    return (res2 as any).categories;
+  }
+
+  @Action({ commit: 'SET_CATEGORIES' })
+  public async AddCategory({ category }) {
+    const res2 = await request({
+      url: `/api/v1/categories`,
+      method: 'post',
+      baseURL: '',
+      data: { category },
+    });
+
+    return (res2 as any).categories;
+  }
+
+  @Action({ commit: 'SET_CATEGORIES' })
+  public async RemoveCategory({ name }) {
+    const res2 = await request({
+      url: `/api/v1/categories`,
+      method: 'delete',
+      baseURL: '',
+      data: { name },
+    });
+
+    return (res2 as any).categories;
+  }
+
+  @Action({ commit: 'SET_CATEGORIES' })
+  public async RemoveSubCategory({ name }) {
+    const res2 = await request({
+      url: `/api/v1/categories/sub`,
+      method: 'delete',
+      baseURL: '',
+      data: { name },
+    });
+
+    return (res2 as any).categories;
+  }
+
+  @Action({ commit: 'SET_CATEGORIES' })
+  public async AddSubCategory({ name, category }) {
+    const res2 = await request({
+      url: `/api/v1/categories/sub`,
+      method: 'post',
+      baseURL: '',
+      data: { name, category },
     });
 
     return (res2 as any).categories;
@@ -89,15 +137,15 @@ class Activities extends VuexModule implements IActivitiesState {
 
   @Mutation
   private UPDATE_ACTIVITY(activity: any) {
-    const i = this.activities.findIndex(s => s._id === activity._id);
+    const i = this.activities.findIndex((s) => s._id === activity._id);
     this.activities[i] = activity;
     // this.activities.push(activity);
-  }  
+  }
 
   @Mutation
   private SET_CATEGORIES(categories: any) {
     this.categories = categories;
-    
+
     let r = [];
 
     this.categories.forEach((a) => {

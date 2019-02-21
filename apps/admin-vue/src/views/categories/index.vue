@@ -1,154 +1,48 @@
 <template>
-  <div class="dashboard-container" style="position:relative">
-    <div style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;">
-      <el-row type="flex" justify="space-between">
-        <el-col :span="4">
-          <el-button
-            style="width:100%;margin-left:10px;"
-            type="success"
-            @click="$router.push('/dashboard/add')"
-            icon="el-icon-plus"
-          >New Activity</el-button>
-        </el-col>
-        <el-col :span="18" style="display:flex;">
-          <el-select placeholder="All Domain" v-model="form.domain" clearable>
-            <el-option v-for="domain in domainNames" :label="domain" :value="domain" :key="domain"/>
-          </el-select>
+  <div class="dashboard-container" style="position:relative;padding:20px;">
+    <el-form :inline="true" :model="formCategory" class="demo-form-inline">
+      <el-form-item label="Category:">
+        <el-input v-model="formCategory.name" placeholder="name"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="addCategory">Add</el-button>
+      </el-form-item>
+    </el-form>
 
-          <el-select placeholder="Activity Type" v-model="form.type" clearable>
-            <el-option v-for="type in types" :label="type.name" :value="type.name" :key="type._id"/>
-          </el-select>
+    <el-form :inline="true" :model="formSubcategory" class="demo-form-inline">
+      <el-form-item label="Subcategory:">
+        <el-input v-model="formSubcategory.name" placeholder="name"></el-input>
+      </el-form-item>
+      <el-form-item label="In Category:">
+        <el-select placeholder="Category" v-model="formSubcategory.category" clearable>
+          <el-option
+            :key="category.name"
+            :label="category.name"
+            :value="category.name"
+            v-for="category in categories"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="addSubcategory">Add</el-button>
+      </el-form-item>
+    </el-form>
 
-          <el-select placeholder="Media" v-model="form.mediaType" clearable>
-            <el-option label="Video" value="Video"/>
-            <el-option label="Photo" value="Photo"/>
-          </el-select>
-
-          <el-select placeholder="Category" v-model="form.category" clearable>
-            <el-option
-              :key="category.name"
-              :label="category.name"
-              :value="category.name"
-              v-for="category in categories"
-            ></el-option>
-          </el-select>
-          <el-select placeholder="Sub Category" v-model="form.subcategory" clearable>
-            <el-option
-              :key="category._id"
-              :label="category.name"
-              :value="category.name"
-              v-for="category in subcategories"
-            ></el-option>
-          </el-select>
-
-          <el-select placeholder="Audience" v-model="form.audience" clearable>
-            <el-option label="All" value="All"/>
-            <el-option label="Kids" value="Kids"/>
-            <el-option label="Elderly" value="Elderly"/>
-          </el-select>
-
-          <el-select placeholder="Status" v-model="form.status" clearable>
-            <el-option label="Started" value="Started"></el-option>
-            <el-option label="Waiting For Review" value="WaitingForReview"></el-option>
-            <el-option label="Technical Writer Pending" value="TechnicalWriterPending"></el-option>
-            <el-option label="Technical Writer Approved" value="TechnicalWriterApproved"></el-option>
-            <el-option label="Ready" value="Ready"></el-option>
-            <el-option label="Published" value="Published"></el-option>
-          </el-select>
-
-          <el-select placeholder="Printable" v-model="form.printable" clearable>
-            <el-option label="Yes" :value="true"/>
-            <el-option label="No" :value="false"/>
-          </el-select>
-
-          <el-select placeholder="License" v-model="form.free" clearable>
-            <el-option label="Free" :value="true"/>
-            <el-option label="Paid" :value="false"/>
-          </el-select>
-
-          <el-select placeholder="Editorial" v-model="form.editorial" clearable>
-            <el-option label="Yes" :value="true"/>
-            <el-option label="No" :value="false"/>
-          </el-select>
-
-          <el-select
-            placeholder="Level"
-            v-model="form.level"
-            clearable
-            multiple
-            collapse-tags
-            style="flex-grow: 0;flex-shrink: 0;flex-basis: 13%;"
-          >
-            <el-option label="Basic" value="Basic"/>
-            <el-option label="Intermediate" value="Intermediate"/>
-            <el-option label="Advanced" value="Advanced"/>
-          </el-select>
-        </el-col>
-      </el-row>
-    </div>
-
-    <div style>
-      <div style>
-        <el-row>
-          <el-col :span="6">
-            <div>
-              <el-row style>
-                <el-col :span="24" style="padding:10px 20px;background:#F7F7F7">
-                  <el-input
-                    placeholder="Search by Name, Description, Image ID or Activity ID"
-                    prefix-icon="el-icon-search"
-                    v-model="form.text"
-                    clearable
-                  ></el-input>
-                  <div
-                    style="font-size:13px;border:1px dotted #ccc;color:#444;font-weight:normal;padding:10px;"
-                  >{{ $options.filters.limitArray(items, form).length }} Activities Founds</div>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-scrollbar
-                    wrap-class="list"
-                    view-class="view-box"
-                    :native="false"
-                    class="colscrol-first"
-                  >
-                    <!-- <div style="height:calc(100vh - 50px);overflow-y:auto;display:inline-block;width:50%;"> -->
-                    <!-- <div style="height:3000px;background:red;">bla</div> -->
-                    <router-link
-                      style="display:block;"
-                      :to="`/dashboard/${item._id}`"
-                      v-for="(item) in $options.filters.limitArray(items, form)"
-                      :key="item._id"
-                      class="activity-item"
-                    >
-                      <div class="name">{{item.name}}</div>
-
-                      <div class="tags">
-                        <span>{{item.type.name}}</span>
-                        <span>{{item._id}}</span>
-                      </div>
-                    </router-link>
-
-                    <!-- </div> -->
-                  </el-scrollbar>
-                </el-col>
-              </el-row>
-            </div>
-          </el-col>
-          <el-col :span="18">
-            <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
-              <!-- <div style="height:2000px;background:blue;">lllbla</div> -->
-              <div
-                style="background:white;display:flex;justify-content:center;align-items:center;min-height:100%;padding:20px;"
-              >
-                <router-view/>
-              </div>
-            </el-scrollbar>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
+    <el-tree
+      :data="datab"
+      :props="defaultProps"
+      @node-click="handleNodeClick"
+      node-key="label"
+      default-expand-all
+      :expand-on-click-node="false"
+    >
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span style="margin:0 20px;">
+          <el-button type="text" size="mini" @click="() => remove(node, data)">Delete</el-button>
+        </span>
+      </span>
+    </el-tree>
   </div>
 </template>
 
@@ -156,8 +50,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
-import { ActivitiesModule } from '@/store/modules/activities';
+import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
+import { Message } from 'element-ui';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -165,60 +60,7 @@ Component.registerHooks([
   'beforeRouteUpdate', // for vue-router 2.2+
 ]);
 
-@Component({
-  filters: {
-    limitArray: (arr, form) => {
-      let f = arr;
-
-      if (form.domain) {
-        f = f.filter((a) => a.type.domain.name === form.domain);
-      }
-      if (form.type) {
-        f = f.filter((a) => a.type.name === form.type);
-      }
-      if (form.mediaType) {
-        f = f.filter((a) => a.mediaType === form.mediaType);
-      }
-      if (form.category) {
-        f = f.filter((a) => a.category.name === form.category);
-      }
-      if (form.subcategory) {
-        f = f.filter((a) => a.subCategory.name === form.subcategory);
-      }
-      if (form.level && form.level.length > 0) {
-        f = f.filter((a) => form.level.includes(a.level));
-      }
-      if (form.audience) {
-        f = f.filter((a) => a.audience === form.audience);
-      }
-      if (form.status) {
-        f = f.filter((a) => a.status === form.status);
-      }
-      if (form.printable != null) {
-        f = f.filter((a) => a.printable === form.printable);
-      }
-      if (form.free != null) {
-        f = f.filter((a) => a.free === form.free);
-      }
-      if (form.editorial != null) {
-        f = f.filter((a) => a.editorial === form.editorial);
-      }
-      if (form.text) {
-        f = f.filter((obj) =>
-          Object.keys(obj).some(
-            (key) =>
-              typeof obj[key] === 'string' &&
-              obj[key]
-                .toString()
-                .toLowerCase()
-                .includes(form.text.toString().toLowerCase())
-          )
-        );
-      }
-      return f;
-    },
-  },
-})
+@Component({})
 export default class Categories extends Vue {
   get categories() {
     return ActivitiesModule.categories;
@@ -226,6 +68,79 @@ export default class Categories extends Vue {
 
   get subcategories() {
     return ActivitiesModule.subcategories;
+  }
+
+  get datab() {
+    if (!this.categories) return;
+    return this.categories.map((x) => ({
+      id: x.name,
+      label: x.name,
+      children: x.subcategory.map((v) => ({ label: v.name, id: v.name })),
+    }));
+  }
+
+  addSubcategory() {
+    ActivitiesModule.AddSubCategory({
+      name: this.formSubcategory.name,
+      category: this.formSubcategory.category,
+    });
+
+    Message({
+      message: 'sub category saved',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+  }
+
+  addCategory() {
+    ActivitiesModule.AddCategory({ category: this.formCategory.name });
+
+    Message({
+      message: 'category saved!',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+  }
+
+  input2 = '';
+  formCategory = { name: '' };
+  formSubcategory = { name: '', category: null };
+
+  handleNodeClick(data) {
+    console.log(data);
+  }
+
+  add() {}
+
+  onSubmit() {}
+
+  defaultProps = {
+    children: 'children',
+    label: 'label',
+  };
+
+  remove(node, data) {
+    if (node.level === 1) {
+      ActivitiesModule.RemoveCategory({
+        name: data.label,
+      });
+    }
+
+    if (node.level === 2) {
+      ActivitiesModule.RemoveSubCategory({
+        name: data.label,
+      });
+    }
+
+    Message({
+      message: 'removed!',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+    // const parent = node.parent;
+    // const children = parent.data.children || parent.data;
+    // const index = children.findIndex((d) => d.id === data.id);
+    // children.splice(index, 1);
   }
 
   form = {
@@ -281,6 +196,11 @@ export default class Categories extends Vue {
     font-size: 30px;
     line-height: 46px;
   }
+}
+
+.demo-input-label {
+  display: inline-block;
+  width: 130px;
 }
 </style>
 

@@ -81,6 +81,22 @@ export default new Router({
         },
       ],
     },
+    {
+      path: '/categories',
+      component: Layout,
+      // redirect: '/categories/menu1',
+      name: 'Categories',
+      meta: { title: '', icon: 'nested' },
+      children: [
+        {
+          path: '',
+          component: () =>
+            import(/* webpackChunkName: "categories" */ '@/views/categories/index.vue'),
+          name: 'Categories',
+          meta: { title: 'Categories' },
+        },
+      ],
+    },
     { path: '*', redirect: '/404' },
   ],
 });

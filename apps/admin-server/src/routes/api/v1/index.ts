@@ -38,6 +38,101 @@ router.get('/categories', async (req, res, next) => {
   res.json({ categories, code: 20000 });
 });
 
+router.post('/categories', async (req, res, next) => {
+  const category = (req as any).body.category;
+
+  console.log({ category });
+
+  await new Category({ name: category }).save();
+
+  // const categories = await Category.find({});
+  const categories = await Category.aggregate([
+    // stage 1: join subcategories
+    {
+      $lookup: {
+        from: 'subcategories', // collection to join
+        localField: '_id', // field from categories collection
+        foreignField: 'category', // field from subcategories collection
+        as: 'subcategory',
+      },
+    },
+  ]);
+
+  res.json({ categories, code: 20000 });
+});
+
+router.post('/categories/sub', async (req, res, next) => {
+  const name = (req as any).body.name;
+  const category = (req as any).body.category;
+
+  console.log({ category });
+
+  const cat = await Category.findOne({ name: category });
+
+  await new SubCategory({ name, category: cat }).save();
+
+  // const categories = await Category.find({});
+  const categories = await Category.aggregate([
+    // stage 1: join subcategories
+    {
+      $lookup: {
+        from: 'subcategories', // collection to join
+        localField: '_id', // field from categories collection
+        foreignField: 'category', // field from subcategories collection
+        as: 'subcategory',
+      },
+    },
+  ]);
+
+  res.json({ categories, code: 20000 });
+});
+
+router.delete('/categories/sub', async (req, res, next) => {
+  const name = (req as any).body.name;
+
+  console.log({ name });
+
+  await SubCategory.findOneAndRemove({ name });
+
+  // const categories = await Category.find({});
+  const categories = await Category.aggregate([
+    // stage 1: join subcategories
+    {
+      $lookup: {
+        from: 'subcategories', // collection to join
+        localField: '_id', // field from categories collection
+        foreignField: 'category', // field from subcategories collection
+        as: 'subcategory',
+      },
+    },
+  ]);
+
+  res.json({ categories, code: 20000 });
+});
+
+router.delete('/categories', async (req, res, next) => {
+  const name = (req as any).body.name;
+
+  console.log({ name });
+
+  await Category.findOneAndRemove({ name });
+
+  // const categories = await Category.find({});
+  const categories = await Category.aggregate([
+    // stage 1: join subcategories
+    {
+      $lookup: {
+        from: 'subcategories', // collection to join
+        localField: '_id', // field from categories collection
+        foreignField: 'category', // field from subcategories collection
+        as: 'subcategory',
+      },
+    },
+  ]);
+
+  res.json({ categories, code: 20000 });
+});
+
 router.get('/domains', async (req, res, next) => {
   const types = await Type.find({}).populate('domain');
 
