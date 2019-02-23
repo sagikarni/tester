@@ -39,7 +39,7 @@ export const SubCategory = mongoose.model(
   'SubCategory',
   new mongoose.Schema({
     name: { type: String },
-    category: { type: mongoose.Types.ObjectId, ref: 'Category' },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
   })
 );
 
@@ -54,7 +54,20 @@ export const Type = mongoose.model(
   'Activity-Type',
   new mongoose.Schema({
     name: { type: String },
-    domain: { type: mongoose.Types.ObjectId, ref: 'Activity-Domain' },
+    domain: { type: mongoose.Schema.Types.ObjectId, ref: 'Activity-Domain' },
+  })
+);
+
+export const ActivityCollection = mongoose.model(
+  'Activity-Collection',
+  new mongoose.Schema({
+    name: { type: String },
+    items: [
+      {
+        name: { type: String },
+        activities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Activity' }],
+      },
+    ],
   })
 );
 
@@ -62,7 +75,7 @@ export const Activity = mongoose.model(
   'Activity',
   new mongoose.Schema({
     name: { type: String },
-    type: { type: mongoose.Types.ObjectId, ref: 'Activity-Type' },
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Activity-Type' },
     description: { type: String },
     free: { type: Boolean },
     printable: { type: Boolean },
@@ -71,8 +84,8 @@ export const Activity = mongoose.model(
     notes: { type: String },
     orientation: { type: String, enum: types.orientation },
     mediaType: { type: String, enum: types.mediaType },
-    category: { type: mongoose.Types.ObjectId, ref: 'Category' },
-    subCategory: { type: mongoose.Types.ObjectId, ref: 'SubCategory' },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'SubCategory' },
     status: { type: String, enum: types.status },
     audience: { type: String, enum: types.audience },
     model: {

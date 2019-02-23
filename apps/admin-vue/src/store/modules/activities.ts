@@ -25,6 +25,7 @@ class Activities extends VuexModule implements IActivitiesState {
   public subcategories = [];
   public activities = [];
   public domains = [];
+  public collections = [];
 
   public get domainsKeys() {
     return Object.keys(this.domains);
@@ -32,6 +33,17 @@ class Activities extends VuexModule implements IActivitiesState {
 
   public get types() {
     return flatten(this.domainsKeys.map((k) => this.domains[k]));
+  }
+
+  @Action({ commit: 'SET_COLLECTIONS' })
+  public async LoadCollections() {
+    const res = await request({
+      url: '/api/v1/collections',
+      method: 'get',
+      baseURL: '',
+    });
+
+    return (res as any).collections;
   }
 
   @Action({ commit: 'REMOVE_ACTIVITY' })
@@ -169,6 +181,11 @@ class Activities extends VuexModule implements IActivitiesState {
   @Mutation
   private SET_ACTIVITIES(activities: any) {
     this.activities = activities;
+  }
+
+  @Mutation
+  private SET_COLLECTIONS(collections: any) {
+    this.collections = collections;
   }
 }
 

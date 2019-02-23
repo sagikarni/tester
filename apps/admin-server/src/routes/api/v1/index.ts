@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { Activity, SubCategory, Category, Type, Domain } from './models';
+import {
+  Activity,
+  SubCategory,
+  Category,
+  Type,
+  Domain,
+  ActivityCollection,
+} from './models';
 import { values, groupBy, entries, toPairs } from 'lodash';
 const router = Router();
 
@@ -183,6 +190,44 @@ router.delete('/activities/:id', async (req, res, next) => {
   console.log('in del');
   console.log({ activity });
   res.json({ activity, code: 20000 });
+});
+
+router.post('/collection', async (req, res, next) => {
+  const collectionsReq = (req as any).body.collections;
+
+  console.log({ collectionsReq });
+
+  for (let col of collectionsReq) {
+    console.log({ col });
+    if (col._id) {
+      const activity = await ActivityCollection.findOneAndUpdate(
+        { _id: col._id },
+        col,
+        {
+          upsert: true,
+          new: true,
+          setDefaultsOnInsert: true,
+        }
+      );
+    } else {
+      await ActivityCollection.insertMany([col]);
+    }
+  }
+  console.log('done');
+  // await ActivityCollection.insertMany(collectionsReq);
+  // await ActivityCollection.findOneAndUpdate(collectionsReq, { });
+
+  const collections = await ActivityCollection.find({});
+
+  console.log({ collections });
+  res.json({ collections, code: 20000 });
+});
+
+router.get('/collections', async (req, res, next) => {
+  const collections = await ActivityCollection.find({});
+
+  console.log({ collections });
+  res.json({ collections, code: 20000 });
 });
 
 export { router as v1 };

@@ -1,42 +1,42 @@
 <template>
   <div class="dashboard-container" style="position:relative;padding:20px;">
-    <el-card class="box-card" v-for="collection in collections" :key="collection.name">
-      <el-form ref="form" :model="form" label-width="120px">
+    <div class="box-card" v-for="collection in collections" :key="collection._id">
+      <el-form ref="form" :model="form" label-width="150px">
         <el-form-item label="Collection name">
           <el-input v-model="collection.name"></el-input>
         </el-form-item>
 
-        <el-form-item v-for="item in collection.items" :key="item.name">
+        <el-form-item v-for="(item) in collection.items" :key="item._id">
           <el-form-item label="List name">
             <el-input v-model="item.name"></el-input>
-          </el-form-item>
 
-          <el-form-item label="Activities">
-            <el-tag
-              :key="tag"
-              v-for="tag in item.activities"
-              closable
-              :disable-transitions="false"
-              @close="handleClose(tag)"
-            >{{tag.ref}}</el-tag>
-            <el-input
-              class="input-new-tag"
-              v-if="inputVisible"
-              v-model="inputValue"
-              ref="saveTagInput"
-              size="mini"
-              @keyup.enter.native="handleInputConfirm"
-              @blur="handleInputConfirm"
-            ></el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Add Activity</el-button>
+            <el-form-item label="Activities">
+              <ActivityTags v-model="item.activities"/>
+            </el-form-item>
+            <el-button
+              @click="removeList(collection.items, item)"
+              type="text"
+            >Delete {{item.name}} list</el-button>
           </el-form-item>
         </el-form-item>
 
-        <el-button @click="addList(collection.items)" type="text">Add List</el-button>
-      </el-form>
-    </el-card>
+        <el-form-item>
+          <el-button
+            @click="addList(collection.items)"
+            type="text"
+          >Add new {{ collection.name }} list</el-button>
+        </el-form-item>
 
-    <el-button @click="addCollection" type="text">Add Collection</el-button>
+         <el-form-item>
+          <el-button @click="removeCollection(collection)" type="text">Remove {{ collection.name }} collection</el-button>
+        </el-form-item>
+      </el-form>
+     
+    </div>
+
+    <el-button @click="addCollection" type="text">Add New Collection</el-button>
+    <br>
+    <el-button @click="save" type="text">Save All</el-button>
   </div>
 </template>
 
@@ -46,6 +46,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../utils/request';
 import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
+import { Message, MessageBox } from 'element-ui';
+import ActivityTags from './activity-tags.vue';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -54,6 +56,7 @@ Component.registerHooks([
 ]);
 
 @Component({
+  components: { ActivityTags },
   filters: {
     limitArray: (arr, form) => {
       let f = arr;
@@ -110,20 +113,46 @@ Component.registerHooks([
 export default class Recommendations extends Vue {
   form = { name: '' };
 
-  collections = [
-    {
-      name: 'homepage',
-      items: [
-        {
-          name: 'most-popular',
-          activities: [{ name: 'Animals 1', ref: '5c6c0170b6ecb4637383af20' }],
-        },
-      ],
-    },
-  ];
+  get collections() {
+    return ActivitiesModule.collections;
+  }
+
+  getActivity(id) {
+    return ActivitiesModule.activities.find((a) => a._id === id);
+  }
+
+  async save() {
+    console.log('submit!', this.collections);
+
+    const res: any = await request({
+      url: `/api/v1/collection`,
+      method: 'post',
+      baseURL: '',
+      data: { collections: this.collections },
+    });
+
+    Message({
+      message: 'saved',
+      type: 'success',
+      duration: 5 * 1000,
+    });
+
+    // await ActivitiesModule.AddActivity(res.activity);
+
+    console.log('done');
+  }
+
+  removeCollection(collection) {
+    this.collections.splice(this.collections.indexOf(collection), 1);
+
+  }
 
   addList(items) {
     items.push({ name: '', activities: [] });
+  }
+
+  removeList(items, item) {
+    items.splice(items.indexOf(item), 1);
   }
 
   addCollection() {
@@ -141,11 +170,15 @@ export default class Recommendations extends Vue {
     this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
   }
 
-  showInput() {
-    this.inputVisible = true;
-    this.$nextTick(() => {
-      this.$refs.saveTagInput.$refs.input.focus();
-    });
+  showInput(item) {
+    // // debugger;
+    debugger;
+    item.edit = true;
+    // this.inputVisible = true;
+    // this.$nextTick(() => {
+    //   debugger;
+    //   this.$refs.saveTagInput[index].$refs.input.focus();
+    // });
   }
 
   handleInputConfirm() {
@@ -182,6 +215,7 @@ export default class Recommendations extends Vue {
       ActivitiesModule.LoadActivities(),
       ActivitiesModule.LoadCategories(),
       ActivitiesModule.LoadDomains(),
+      ActivitiesModule.LoadCollections(),
     ]);
 
     next();
