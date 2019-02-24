@@ -40,7 +40,7 @@ export default class Add extends Vue {
     level: ['Basic'],
     status: 'Started',
     orientation: 'Landscape',
-    category: {},
+    // category: {},
     model: {
       slideCategories: [],
       slides: [],
