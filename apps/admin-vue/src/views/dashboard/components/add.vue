@@ -3,7 +3,7 @@
     <Model :add="true" :activity="activity"/>
 
     <el-button type="primary" @click="onSubmit">Create</el-button>
-    <el-button>Cancel</el-button>
+    <el-button @click="onCancel">Cancel</el-button>
   </div>
 </template>
 
@@ -47,6 +47,10 @@ export default class Add extends Vue {
     },
   };
 
+  onCancel() {
+    this.$router.push(`/dashboard`);
+  }
+
   region = '';
 
   form = {
@@ -78,7 +82,6 @@ export default class Add extends Vue {
 
     await ActivitiesModule.AddActivity(res.activity);
 
-    
     this.$router.push(`/dashboard/${res.activity._id}`);
     // res.up[0]._id;
 

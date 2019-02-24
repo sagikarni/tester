@@ -205,14 +205,9 @@ Component.registerHooks([
       }
       if (form.text) {
         f = f.filter((obj) =>
-          Object.keys(obj).some(
-            (key) =>
-              typeof obj[key] === 'string' &&
-              obj[key]
-                .toString()
-                .toLowerCase()
-                .includes(form.text.toString().toLowerCase())
-          )
+          JSON.stringify(obj)
+            .toLowerCase()
+            .includes(form.text.toLowerCase())
         );
       }
       return f;

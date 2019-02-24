@@ -3,7 +3,7 @@
     <Model :add="false" :activity="activity"/>
 
     <el-button type="primary" @click="onSubmit">Save</el-button>
-    <el-button>Cancel</el-button>
+    <el-button @click="onCancel">Cancel</el-button>
 
     <el-button @click="onDelete">Delete</el-button>
   </div>
@@ -30,6 +30,10 @@ Component.registerHooks([
 })
 export default class Detail extends Vue {
   activity = null;
+
+  onCancel() {
+    this.$router.push(`/dashboard`);
+  }
 
   async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
