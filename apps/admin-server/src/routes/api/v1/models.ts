@@ -73,33 +73,36 @@ export const ActivityCollection = mongoose.model(
 
 export const Activity = mongoose.model(
   'Activity',
-  new mongoose.Schema({
-    name: { type: String },
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Activity-Type' },
-    description: { type: String },
-    free: { type: Boolean },
-    printable: { type: Boolean },
-    editorial: { type: Boolean },
-    level: { type: [String], enum: types.level },
-    notes: { type: String },
-    orientation: { type: String, enum: types.orientation },
-    mediaType: { type: String, enum: types.mediaType },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
-    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'SubCategory' },
-    status: { type: String, enum: types.status },
-    audience: { type: String, enum: types.audience },
-    model: {
-      slideCategories: [String],
-      slides: [
-        {
-          media: [{ name: { type: String } }],
-          phrases: [String],
-          category: { type: String },
-          size: { type: String },
-          audio: [{ name: { type: String } }],
-          mediaIndex: { type: String },
-        },
-      ],
+  new mongoose.Schema(
+    {
+      name: { type: String },
+      type: { type: mongoose.Schema.Types.ObjectId, ref: 'Activity-Type' },
+      description: { type: String },
+      free: { type: Boolean },
+      printable: { type: Boolean },
+      editorial: { type: Boolean },
+      level: { type: [String], enum: types.level },
+      notes: { type: String },
+      orientation: { type: String, enum: types.orientation },
+      mediaType: { type: String, enum: types.mediaType },
+      category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+      subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'SubCategory' },
+      status: { type: String, enum: types.status },
+      audience: { type: String, enum: types.audience },
+      model: {
+        slideCategories: [String],
+        slides: [
+          {
+            media: [{ name: { type: String } }],
+            phrases: [String],
+            category: { type: String },
+            size: { type: String },
+            audio: [{ name: { type: String } }],
+            mediaIndex: { type: String },
+          },
+        ],
+      },
     },
-  })
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
+  )
 );
