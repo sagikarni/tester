@@ -120,6 +120,17 @@ export default class Categories extends Vue {
   };
 
   remove(node, data) {
+    this.$confirm(
+      'This will permanently delete this item. Continue?',
+      'Warning',
+      {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }
+    )
+      .then(async () => {
+
     if (node.level === 1) {
       ActivitiesModule.RemoveCategory({
         name: data.label,
@@ -137,6 +148,8 @@ export default class Categories extends Vue {
       type: 'success',
       duration: 5 * 1000,
     });
+      });
+
     // const parent = node.parent;
     // const children = parent.data.children || parent.data;
     // const index = children.findIndex((d) => d.id === data.id);
