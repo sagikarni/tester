@@ -57,6 +57,7 @@
           v-model="activity.category"
           placeholder="please select your zone"
           value-key="_id"
+          clearable
         >
           <el-option
             :key="category._id"
@@ -73,6 +74,7 @@
           v-model="activity.subCategory"
           value-key="_id"
           placeholder="please select your zone"
+          clearable
         >
           <el-option
             :key="subCategory._id"

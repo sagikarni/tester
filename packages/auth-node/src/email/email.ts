@@ -78,14 +78,14 @@ export function sendResetPassword({ emailTo, token }) {
     to: emailTo,
     from: emailDefaultSender,
     subject: `You told us you forgot your password`,
-    ...compile({
+    body: compile({
       templateName: 'reset-password',
       context: {
         email: emailTo,
         app,
         tokenUrl
       }
-    })
+    }).html
   };
 
   console.log({ sendResetPassword: { msg } });
