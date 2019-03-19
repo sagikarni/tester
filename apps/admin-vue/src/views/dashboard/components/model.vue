@@ -17,6 +17,10 @@
       <span>{{ storageUrl }}</span>
     </el-form-item>
 
+    <el-form-item label="Cover" v-if="activity.type">
+      <img width="150px" height="100px" :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`">
+    </el-form-item>
+
     <el-form-item label="Activity Name">
       <el-input v-model="activity.name"></el-input>
     </el-form-item>
