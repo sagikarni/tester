@@ -7,7 +7,7 @@
         </el-form-item>
 
         <el-form-item v-for="(item) in collection.items" :key="item._id">
-          <el-form-item label="List name">
+          <el-form-item label="List name" style="border:1px solid #ddd;padding:20px">
             <el-input v-model="item.name"></el-input>
 
             <el-form-item label="Activities">
@@ -237,4 +237,6 @@ export default class Recommendations extends Vue {
   margin-left: 10px;
   vertical-align: bottom;
 }
+
+.box-card { border-bottom:3px dotted #ccc; margin-bottom:30px;}
 </style>
