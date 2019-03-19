@@ -39,7 +39,12 @@
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span style="margin:0 20px;">
-          <el-button type="text" size="mini" @click="() => remove(node, data)">Delete</el-button>
+          <el-button
+            type="text"
+            size="mini"
+            :disabled="data.used"
+            @click="() => remove(node, data)"
+          >Delete</el-button>
         </span>
       </span>
     </el-tree>
@@ -62,6 +67,10 @@ Component.registerHooks([
 
 @Component({})
 export default class Categories extends Vue {
+  get activities() {
+    return ActivitiesModule.activities;
+  }
+
   get categories() {
     return ActivitiesModule.categories;
   }
@@ -72,11 +81,20 @@ export default class Categories extends Vue {
 
   get datab() {
     if (!this.categories) return;
-    return this.categories.map((x) => ({
+    if (!this.activities) return;
+
+    var x = this.categories.map((x) => ({
       id: x.name,
       label: x.name,
-      children: x.subcategory.map((v) => ({ label: v.name, id: v.name })),
+      used: this.activities.some((aa) => aa.category && aa.category.name === x.name),
+      children: x.subcategory.map((v) => ({
+        label: v.name,
+        id: v.name,
+        used: this.activities.some((aa) => aa.subCategory && aa.subCategory.name === v.name),
+      })),
     }));
+
+    return x;
   }
 
   addSubcategory() {
@@ -128,27 +146,25 @@ export default class Categories extends Vue {
         cancelButtonText: 'Cancel',
         type: 'warning',
       }
-    )
-      .then(async () => {
+    ).then(async () => {
+      if (node.level === 1) {
+        ActivitiesModule.RemoveCategory({
+          name: data.label,
+        });
+      }
 
-    if (node.level === 1) {
-      ActivitiesModule.RemoveCategory({
-        name: data.label,
+      if (node.level === 2) {
+        ActivitiesModule.RemoveSubCategory({
+          name: data.label,
+        });
+      }
+
+      Message({
+        message: 'removed!',
+        type: 'success',
+        duration: 5 * 1000,
       });
-    }
-
-    if (node.level === 2) {
-      ActivitiesModule.RemoveSubCategory({
-        name: data.label,
-      });
-    }
-
-    Message({
-      message: 'removed!',
-      type: 'success',
-      duration: 5 * 1000,
     });
-      });
 
     // const parent = node.parent;
     // const children = parent.data.children || parent.data;
