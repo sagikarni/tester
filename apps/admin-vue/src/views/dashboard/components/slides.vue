@@ -153,7 +153,7 @@ export default class Slides extends Vue {
 <style lang="scss">
 #dropzone {
   border: 2px dashed #888;
-  padding: 1.2em;
+  padding: 3.2em;
   min-height: 80px;
   color: #aaa;
   text-align: center;
@@ -178,7 +178,7 @@ export default class Slides extends Vue {
     text-align: center;
     font-size: 20px;
     font-weight: bold;
-    padding: 1.2em;
+    padding: 3.2em;
     background: beige;
   }
   &.drag {
