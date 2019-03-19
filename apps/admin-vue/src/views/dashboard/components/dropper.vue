@@ -52,7 +52,14 @@ export default class Dropper extends Vue {
     }
 
     if (this.path) {
-      return this.path.replace('__FILE__', item.name);
+      let name = item.name;
+      const validImageTypes = ['gif', 'jpeg', 'png', 'jpg'];
+
+      if (!validImageTypes.some((a) => item.name.endsWith(a))) {
+        name = item.name + '.jpg';
+      }
+
+      return this.path.replace('__FILE__', name);
     }
     return item.name;
   }
