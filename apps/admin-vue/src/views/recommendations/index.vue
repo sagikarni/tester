@@ -26,12 +26,7 @@
             type="text"
           >Add new {{ collection.name }} list</el-button>
         </el-form-item>
-
-         <el-form-item>
-          <el-button @click="removeCollection(collection)" type="text">Remove {{ collection.name }} collection</el-button>
-        </el-form-item>
       </el-form>
-     
     </div>
 
     <el-button @click="addCollection" type="text">Add New Collection</el-button>
@@ -144,7 +139,6 @@ export default class Recommendations extends Vue {
 
   removeCollection(collection) {
     this.collections.splice(this.collections.indexOf(collection), 1);
-
   }
 
   addList(items) {
