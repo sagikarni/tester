@@ -1,14 +1,18 @@
 <template>
   <div>
-    <el-tag
-      :key="tag"
-      v-for="tag in value"
-      closable
-      :disable-transitions="false"
-      @close="handleClose(tag)"
-    >
-      <a target="_blank" :href="`/dashboard/${tag}`">{{tag}}</a>
-    </el-tag>
+    <draggable v-model="items" @end="dosome">
+      <transition-group>
+        <el-tag
+          :key="tag"
+          v-for="tag in items"
+          closable
+          :disable-transitions="false"
+          @close="handleClose(tag)"
+        >
+          <a target="_blank" :href="`/dashboard/${tag}`">{{tag}}</a>
+        </el-tag>
+      </transition-group>
+    </draggable>
     <el-input
       class="input-new-tag"
       v-if="edit"
@@ -25,19 +29,47 @@
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 import { ActivitiesModule } from '../../store/modules/activities';
+import draggable from 'vuedraggable';
 
-@Component({})
+@Component({
+  components: { draggable },
+})
 export default class ActivityTags extends Vue {
   @Prop() value;
   @Prop() options;
+  items = [];
+  dosome() {
+    this.$emit('input', this.items);
+  }
+
+  @Watch('value') onValue(n, o) {
+    console.log('value!!!', n);
+
+    // if (n !== this.items) {
+    //   console.log('need update');
+    //   this.items = n.map((v, i) => ({ ...v, id: i }));
+    // } else {
+    //   console.log('do need');
+    // }
+    // this.items = this.value.map((v, i) => ({ ...v, id: i }));
+    // this.$emit('input', this.items);
+  }
+
+  @Watch('items') onItems(n, o) {
+    console.log('somehap');
+    this.$emit('input', this.items);
+  }
+
+  mounted() {
+    if (this.value && this.value.length > 0) {
+      this.items = this.value;//.map((v, i) => ({ ...v, id: i }));
+    }
+  }
 
   edit = false;
   radio3 = '';
 
-  mounted() {
-    this.radio3 = this.value;
-  }
-
+  
   onchange() {
     this.$emit('input', this.radio3);
   }
@@ -63,9 +95,10 @@ export default class ActivityTags extends Vue {
 
   handleInputConfirm() {
     console.log({ inputValue: this.inputValue });
-    if (!this.value.includes(this.inputValue)) {
+    if (!this.items.includes(this.inputValue)) {
       if (ActivitiesModule.activities.find((a) => a._id === this.inputValue)) {
-        this.value.push(this.inputValue);
+        this.items.push(this.inputValue);
+        this.$emit('input', this.radio3);
       }
     }
     // this.$emit('input', );
