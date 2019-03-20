@@ -6,6 +6,7 @@
 
     <Slides v-model="value.slides">
       <template slot-scope="slotProps">
+        {{some}}
         <el-form-item label="Select Category">
           <picker v-model="slotProps.slide.category" :options="some"/>
         </el-form-item>
@@ -28,7 +29,7 @@ import Slides from './slides.vue';
 })
 export default class Categorization extends Vue {
   @Prop() value;
-  some = ['N/A'];
+  some = ['N/A', ...this.value.slideCategories];
 
   @Watch('value.slideCategories') onChange(n, o) {
     this.some = ['N/A', ...this.value.slideCategories];

@@ -3,7 +3,7 @@
     <div class="box-card" v-for="collection in collections" :key="collection._id">
       <el-form ref="form" :model="form" label-width="150px">
         <el-form-item label="Collection name">
-          <el-input v-model="collection.name"></el-input>
+          <el-input :disabled="!collection.new" v-model="collection.name"></el-input>
         </el-form-item>
 
         <el-form-item v-for="(item) in collection.items" :key="item._id">
@@ -133,7 +133,10 @@ export default class Recommendations extends Vue {
     });
 
     // await ActivitiesModule.AddActivity(res.activity);
-
+    // this.collections = this.collections.map(c => ({...c, new: false }));
+    this.collections.forEach((c) => {
+      if (c.new) c.new = false;
+    });
     console.log('done');
   }
 
@@ -151,6 +154,7 @@ export default class Recommendations extends Vue {
 
   addCollection() {
     this.collections.push({
+      new: true,
       name: '',
       items: [{ name: '', activities: [] }],
     });
@@ -238,5 +242,8 @@ export default class Recommendations extends Vue {
   vertical-align: bottom;
 }
 
-.box-card { border-bottom:3px dotted #ccc; margin-bottom:30px;}
+.box-card {
+  border-bottom: 3px dotted #ccc;
+  margin-bottom: 30px;
+}
 </style>

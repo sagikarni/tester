@@ -33,15 +33,21 @@ export default new Router({
     {
       path: '/',
       component: Layout,
-      redirect: '/dashboard',
+      // redirect: '/dashboard',
       name: 'Activities',
-      meta: { title: 'Activities', icon: 'example' },
+      meta: { title: 'Activities', icon: 'nested' },
       children: [
         {
+          meta: {
+           // title: 'Activities',
+            children: false,
+            hidden: true,
+          },
+          name: 'dashboard',
           path: 'dashboard',
           component: () =>
             import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
-          meta: { hidden: true },
+          // meta: { hidden: true },
           children: [
             {
               path: '',
@@ -68,7 +74,6 @@ export default new Router({
     {
       path: '/recommendations',
       component: Layout,
-      // redirect: '/categories/menu1',
       name: 'Recommendations',
       meta: { title: '', icon: 'nested' },
       children: [
