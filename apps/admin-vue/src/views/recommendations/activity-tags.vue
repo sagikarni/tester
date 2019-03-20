@@ -6,7 +6,9 @@
       closable
       :disable-transitions="false"
       @close="handleClose(tag)"
-    >{{tag}}</el-tag>
+    >
+      <a target="_blank" :href="`/dashboard/${tag}`">{{tag}}</a>
+    </el-tag>
     <el-input
       class="input-new-tag"
       v-if="edit"
