@@ -13,15 +13,17 @@
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator';
 import RecoverAccountFormComponent from './recover-account-form.vue';
-import { Auth } from '../store';
+import { AuthModule } from '../store';
 
 @Component({
-  components: { RecoverAccountFormComponent }
+  components: { RecoverAccountFormComponent },
 })
 export default class RecoverAccountPage extends Vue {
   submitted = false;
 
-  @Auth.Getter('error') error;
+  get error() {
+    return AuthModule.error;
+  }
 
   constructor() {
     super();

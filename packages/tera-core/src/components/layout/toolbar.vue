@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { TeraStore, DRAWER_TOGGLE } from '../../store';
+import { TeraStoreModule } from '../../store';
 
 @Component({
   components: {
@@ -44,14 +44,13 @@ import { TeraStore, DRAWER_TOGGLE } from '../../store';
 })
 export default class Toolbar extends Vue {
   stateless = false;
-  @TeraStore.Action(DRAWER_TOGGLE) drawerToggle;
 
   constructor() {
     super();
   }
 
   toggle() {
-    this.drawerToggle();
+    TeraStoreModule.drawerToggle();
   }
 }
 </script>

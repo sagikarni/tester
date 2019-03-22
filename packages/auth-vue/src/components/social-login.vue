@@ -17,14 +17,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Auth, CONNECT_SOCIAL } from '../store';
+import { AuthModule } from '../store';
 import { connectWith } from '../services';
 
 @Component({})
 export default class SocialLoginComponent extends Vue {
-  @Auth.Action(CONNECT_SOCIAL)
-  connectSocial: any;
-
   constructor() {
     super();
   }
@@ -32,7 +29,7 @@ export default class SocialLoginComponent extends Vue {
   public loginWith(vendor: string, vendorUrl: string) {
     connectWith(vendor, vendorUrl)
       .then(({ accessToken, refreshToken, payload }: any) =>
-        this.connectSocial({ accessToken, refreshToken, payload })
+        AuthModule.connectSocial({ accessToken, refreshToken, payload })
       )
       .then(() => this.$router.push('/'));
   }

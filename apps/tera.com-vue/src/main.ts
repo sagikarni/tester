@@ -3,7 +3,8 @@ import './plugins/vuetify';
 import './plugins/axios';
 import App from '@/App.vue';
 import router from './router';
-import store from './store';
+import {Store as store } from 'vuex-store';
+
 import './registerServiceWorker';
 import { i18n } from 'tera-core';
 

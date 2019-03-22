@@ -11,30 +11,34 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from "vue-property-decorator";
-import { Auth, LOGIN } from "../store";
-import LoginFormComponent from "./login-form.vue";
+import { Component, Watch, Vue } from 'vue-property-decorator';
+import { AuthModule } from '../store';
+import { getModule } from 'vuex-module-decorators';
+
+import LoginFormComponent from './login-form.vue';
 
 @Component({ components: { LoginFormComponent } })
 export default class Login extends Vue {
   submitted = false;
 
-  @Auth.Action(LOGIN) login;
+  get error() {
+    return AuthModule.error;
+  }
 
-  @Auth.Getter("error") error;
+  get isAuthenticated() {
+    return !!AuthModule.token;
+  }
 
-  @Auth.Getter("isAuthenticated") isAuthenticated;
-
-  @Watch("isAuthenticated", { immediate: true, deep: true })
+  @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
     if (val && this.submitted) {
-      this.$router.push("/");
+      this.$router.push('/');
     }
   }
 
   public submit(form: any) {
     this.submitted = true;
-    this.login(form);
+    AuthModule.login(form);
   }
 }
 </script>

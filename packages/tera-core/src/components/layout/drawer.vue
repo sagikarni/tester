@@ -122,7 +122,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import appDrawerItems from '../../data/app-drawer-items';
 import { camelCase } from 'lodash';
-import { TeraStore, DRAWER_TOGGLE, DRAWER } from '../../store';
+import { TeraStoreModule } from '../../store';
 import dasherize from 'dasherize';
 
 @Component({})
@@ -132,11 +132,16 @@ export default class Toolbar extends Vue {
   }
 
   set inputValue(val) {
-    this.drawer(val);
+    TeraStoreModule.drawer(val);
   }
-  @TeraStore.Getter('appDrawer') appDrawer;
-  @TeraStore.Getter('isFullscreen') isFullscreen;
-  @TeraStore.Action(DRAWER) drawer;
+
+  get appDrawer() {
+    return TeraStoreModule.appDrawer;
+  }
+
+  get isFullscreen() {
+    return TeraStoreModule.isFullscreen;
+  }
 
   items = appDrawerItems;
 

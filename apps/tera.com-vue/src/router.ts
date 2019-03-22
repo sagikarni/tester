@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
 import { Trans, Shell, routes as coreRoutes } from 'tera-core';
 import { routes as authRoutes } from 'auth-vue';
 import { routes as activityRoutes } from 'activity';
@@ -25,7 +24,7 @@ export default new Router({
       redirect: (to: any) => {
         const lang = Trans.currentLanguage || 'en';
         return `/${lang}${to.path}`;
-      }
-    }
-  ]
+      },
+    },
+  ],
 });

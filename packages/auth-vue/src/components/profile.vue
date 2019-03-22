@@ -124,26 +124,16 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator';
-import {
-  REGISTER,
-  CONNECT_SOCIAL,
-  DISCONNECT_SOCIAL,
-  Auth
-} from '../store';
+import { AuthModule } from '../store';
 import { connectWith, ApiService } from '../services';
 
 @Component({
   // components: { SocialConnectComponent }
 })
 export default class ProfilePage extends Vue {
-  @Auth.Getter('currentUser')
-  currentUser: any;
-
-  @Auth.Action(CONNECT_SOCIAL)
-  connectSocial: any;
-
-  @Auth.Action(DISCONNECT_SOCIAL)
-  disconnectSocial: any;
+  get currentUser() {
+    return AuthModule.user;
+  }
 
   facebookLoading = false;
   twitterLoading = false;
@@ -164,76 +154,72 @@ export default class ProfilePage extends Vue {
   }
 
   facebookChange(e: any) {
-    this.facebookLoading = true;
-
-    if (e) {
-      connectWith('facebook', '/auth/facebook')
-        .then(({ accessToken, refreshToken, payload }: any) =>
-          this.connectSocial({ accessToken, refreshToken, payload })
-        )
-        .then(() => {
-          this.facebookLoading = false;
-        });
-    } else {
-      this.disconnectSocial('facebook')
-        .then((this.facebookLoading = false))
-        .catch((error: any) => (this.facebookLoading = false));
-    }
+    // this.facebookLoading = true;
+    // if (e) {
+    //   connectWith('facebook', '/auth/facebook')
+    //     .then(({ accessToken, refreshToken, payload }: any) =>
+    //       AuthModule.connectSocial({ accessToken, refreshToken, payload })
+    //     )
+    //     .then(() => {
+    //       this.facebookLoading = false;
+    //     });
+    // } else {
+    //   AuthModule.disconnectSocial('facebook')
+    //     .then((this.facebookLoading = false))
+    //     .catch((error: any) => (this.facebookLoading = false));
+    // }
   }
   twitterChange(e: boolean) {
-    this.twitterLoading = true;
-
-    if (e) {
-      connectWith('twitter', '/auth/twitter')
-        .then(({ accessToken, refreshToken, payload }: any) =>
-          this.connectSocial({ accessToken, refreshToken, payload })
-        )
-        .then(() => {
-          this.twitterLoading = false;
-        });
-    } else {
-      this.disconnectSocial('twitter')
-        .then((this.twitterLoading = false))
-        .catch((error: any) => (this.twitterLoading = false));
-    }
-    console.log('in twitterChange', e);
+    // this.twitterLoading = true;
+    // if (e) {
+    //   connectWith('twitter', '/auth/twitter')
+    //     .then(({ accessToken, refreshToken, payload }: any) =>
+    //       AuthModule.connectSocial({ accessToken, refreshToken, payload })
+    //     )
+    //     .then(() => {
+    //       this.twitterLoading = false;
+    //     });
+    // } else {
+    //   AuthModule.disconnectSocial('twitter')
+    //     .then((this.twitterLoading = false))
+    //     .catch((error: any) => (this.twitterLoading = false));
+    // }
+    // console.log('in twitterChange', e);
   }
 
   googleChange(e: boolean) {
-    this.googleLoading = true;
-
-    if (e) {
-      connectWith('google', '/auth/google')
-        .then(({ accessToken, refreshToken, payload }: any) =>
-          this.connectSocial({ accessToken, refreshToken, payload })
-        )
-        .then(() => {
-          this.googleLoading = false;
-        });
-    } else {
-      this.disconnectSocial('google')
-        .then((this.googleLoading = false))
-        .catch((error: any) => (this.googleLoading = false));
-    }
-    console.log('in googleChange', e);
+    // this.googleLoading = true;
+    // if (e) {
+    //   connectWith('google', '/auth/google')
+    //     .then(({ accessToken, refreshToken, payload }: any) =>
+    //       AuthModule.connectSocial({ accessToken, refreshToken, payload })
+    //     )
+    //     .then(() => {
+    //       this.googleLoading = false;
+    //     });
+    // } else {
+    //   AuthModule.disconnectSocial('google')
+    //     .then((this.googleLoading = false))
+    //     .catch((error: any) => (this.googleLoading = false));
+    // }
+    // console.log('in googleChange', e);
   }
   linkedinChange(e: boolean) {
-    this.linkedinLoading = true;
-
-    if (e) {
-      connectWith('linkedin', '/auth/linkedin')
-        .then(({ accessToken, refreshToken, payload }: any) =>
-          this.connectSocial({ accessToken, refreshToken, payload })
-        )
-        .then(() => {
-          this.linkedinLoading = false;
-        });
-    } else {
-      this.disconnectSocial('linkedin')
-        .then((this.linkedinLoading = false))
-        .catch((error: any) => (this.linkedinLoading = false));
-    }
-    console.log('in linkedinChange', e);
+    // this.linkedinLoading = true;
+    // if (e) {
+    //   connectWith('linkedin', '/auth/linkedin')
+    //     .then(({ accessToken, refreshToken, payload }: any) =>
+    //       AuthModule.connectSocial({ accessToken, refreshToken, payload })
+    //     )
+    //     .then(() => {
+    //       this.linkedinLoading = false;
+    //     });
+    // } else {
+    //   AuthModule.disconnectSocial('linkedin')
+    //     .then((this.linkedinLoading = false))
+    //     .catch((error: any) => (this.linkedinLoading = false));
+    // }
+    // console.log('in linkedinChange', e);
   }
 }
 </script>

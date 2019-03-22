@@ -12,18 +12,25 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { Auth, REGISTER } from '../store';
+import { AuthModule } from '../store';
 import RegisterFormComponent from './register-form.vue';
 
 @Component({
-  components: { RegisterFormComponent }
+  components: { RegisterFormComponent },
 })
 export default class RegisterPage extends Vue {
   submitted = false;
 
-  @Auth.Action(REGISTER) register;
-  @Auth.Getter('error') error;
-  @Auth.Getter('isAuthenticated') isAuthenticated;
+  get error() {
+    return AuthModule.error;
+  }
+
+  get isAuthenticated() {
+    return !!AuthModule.token;
+  }
+  // @Auth.Action(REGISTER) register;
+  // @Auth.Getter('error') error;
+  // @Auth.Getter('isAuthenticated') isAuthenticated;
 
   constructor() {
     super();
@@ -31,14 +38,15 @@ export default class RegisterPage extends Vue {
 
   @Watch('isAuthenticated', { immediate: true, deep: true })
   onisAuthenticatedChanged(val: string, oldVal: string) {
-    if (val && this.submitted) { this.$router.push('/'); }
+    if (val && this.submitted) {
+      this.$router.push('/');
+    }
   }
 
   public submit(form: any) {
     this.submitted = true;
-    this.register(form);
+    AuthModule.register(form);
   }
-
 }
 </script>
 

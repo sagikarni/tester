@@ -35,22 +35,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { Auth, LOGOUT_ACCOUNT } from "auth-vue";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { AuthModule } from 'auth-vue';
 
 @Component({})
 export default class LoginStatus extends Vue {
-  @Auth.Action(LOGOUT_ACCOUNT) logoutAccount;
+  get currentUser() {
+    return AuthModule.user;
+  }
 
-  @Auth.Getter("isAuthenticated") isAuthenticated;
-  @Auth.Getter("currentUser") currentUser;
+  get isAuthenticated() {
+    return !!AuthModule.token;
+  }
 
   constructor() {
     super();
   }
 
   logout() {
-    this.logoutAccount();
+    AuthModule.logout();
   }
 }
 </script>
