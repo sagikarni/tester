@@ -4,9 +4,9 @@ import './plugins/axios';
 import App from '@/App.vue';
 import router from './router';
 import {Store as store } from 'vuex-store';
+import { i18n } from 'tera-core';
 
 import './registerServiceWorker';
-import { i18n } from 'tera-core';
 
 Vue.config.productionTip = false;
 
