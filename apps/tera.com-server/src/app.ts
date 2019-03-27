@@ -2,6 +2,7 @@ import { json, urlencoded } from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import graphqlHTTP from 'express-graphql';
 import expressSession from 'express-session';
 import helmet from 'helmet';
 import methodOverride from 'method-override';
@@ -13,6 +14,9 @@ import { routes } from './routes';
 import passport from 'passport';
 
 import { facebookStrategy, googleStrategy, linkedinStrategy, twitterStrategy } from 'auth-node';
+
+import schema from './graphql/schema';
+
 
 passport.use(facebookStrategy);
 passport.use(twitterStrategy);
@@ -31,6 +35,12 @@ app.use(helmet());
 // app.use(expressSession({ secret: 'SECRET' }));
 // app.use(passport.initialize());
 // app.use(passport.session());
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  // rootValue: root,
+  graphiql: true,
+}));
 
 app.use(routes);
 

@@ -2,7 +2,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
-const NodemonPlugin = require('nodemon-webpack-plugin');
+const NodemonWebpackPlugin = require('nodemon-webpack-plugin');
 
 const configFileName = path.resolve(__dirname, './tsconfig.json');
 
@@ -21,7 +21,7 @@ module.exports = {
     filename: '[name].js'
   },
 
-  plugins: [new CopyWebpackPlugin([...copies]), new CheckerPlugin(), new NodemonPlugin()],
+  plugins: [new CopyWebpackPlugin([...copies]), new CheckerPlugin(), new NodemonWebpackPlugin({ nodeArgs: ['--inspect']})],
 
   node: {
     __dirname: false
