@@ -1,4 +1,4 @@
-# tera.com-vue
+# tera
 
 ## Project setup
 ```

@@ -156,7 +156,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
-import { ActivitiesModule } from '@/store/modules/activities';
+import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
 
 Component.registerHooks([

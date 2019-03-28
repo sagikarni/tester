@@ -14,7 +14,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '@/store/modules/activities';
+import { ActivitiesModule } from '../../../store/modules/activities';
 import lodash from 'lodash';
 
 Component.registerHooks([

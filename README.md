@@ -1,1 +1,0 @@
-λ lerna add activity --scope tera.com-vue
