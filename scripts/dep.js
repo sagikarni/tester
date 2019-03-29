@@ -13,7 +13,11 @@ function pack({ path, target }) {
     .pipe(fs.createWriteStream(target));
 }
 
+const projectDir = path.join(__dirname, '..');
+
 function main(input, output) {
+  console.log({ input });
+
   const packageJson = require(`${input}/package.json`);
   const LsCommand = require('@lerna/list');
 
@@ -39,7 +43,7 @@ function main(input, output) {
   filteredPackages.then((r) => {
     const dependencies = packageJson['dependencies'];
 
-    fse.ensureDirSync(path.join(__dirname, `${output}/packages`));
+    fse.ensureDirSync(`${output}/packages`);
 
     // path.join(__dirname, 'dist/tera-admin/packages'
 
@@ -47,26 +51,27 @@ function main(input, output) {
     Object.keys(dependencies).forEach((name) => {
       r.forEach((rr) => {
         if (rr.name === name) {
-          console.log(name);
+          console.log({ name });
           packageJson['dependencies'][name] = `file:packages/${name}.tar`;
-          pack({
-            path: path.join(__dirname, 'packages', name),
-            target: path.join(
-              __dirname,
-              `${output}/packages`,
-              `${name}.tar`
-            ),
-          });
+          const p = {
+            path: `${projectDir}/packages/${name}`, // path.join(__dirname, 'packages', name),
+            target: `${output}/packages/${name}.tar`
+          };
+          console.log({ p });
+          pack(p);
         }
       });
     });
+
+    console.log(`aa::: ${output}/package.json`);
+
     fs.writeFileSync(
-      `./${output}/package.json`,
+      `${output}/package.json`,
       JSON.stringify(packageJson, null, 2),
       'utf-8'
     );
   });
 }
 
-main('./apps/admin-server', 'dist/tera-admin');
-main('./apps/tera.com-server', 'dist/tera.com');
+main(path.join(projectDir, 'apps/admin-server'), path.join(projectDir, 'dist/tera-admin'));
+// main('./apps/tera.com-server', 'dist/tera.com');

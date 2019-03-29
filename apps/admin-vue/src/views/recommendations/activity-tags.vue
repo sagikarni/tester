@@ -89,7 +89,7 @@ export default class ActivityTags extends Vue {
   showInput(item) {
     this.edit = true;
     this.$nextTick(() => {
-      this.$refs.saveTagInput.$refs.input.focus();
+      (this.$refs.saveTagInput as any).$refs.input.focus();
     });
   }
 

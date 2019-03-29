@@ -10,7 +10,7 @@ npm run build:admin
 
 # npm run build:tera
 
-node dep.js
+node ./scripts/dep.js
 
 docker-compose -f .docker/docker-compose.ecr.yml build
 
