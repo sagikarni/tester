@@ -1,12 +1,7 @@
 <template>
-    <div>
-  <v-toolbar
-      color="blue darken-3"
-      dark
-      app
-    >
+  <div>
+    <v-toolbar color="blue darken-3" dark app>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Via Admin</span>
       </v-toolbar-title>
       <v-text-field
@@ -14,8 +9,9 @@
         solo-inverted
         hide-details
         prepend-inner-icon="search"
-        label="Search"
+        label="Search by Name, Description, Image ID or Activity ID"
         class="hidden-sm-and-down"
+        v-model="searchKey"
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -24,70 +20,54 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn icon large>
-        <v-avatar size="32px" tile>
-          <img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          >
-        </v-avatar>
-      </v-btn>
     </v-toolbar>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-            <router-view/>
-          <!-- <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-btn :href="source" icon large target="_blank" v-on="on">
-                <v-icon large>code</v-icon>
-              </v-btn>
-            </template>
-            <span>Source</span>
-          </v-tooltip>
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-btn icon large href="https://codepen.io/johnjleider/pen/EQOYVV" target="_blank" v-on="on">
-                <v-icon large>mdi-codepen</v-icon>
-              </v-btn>
-            </template>
-            <span>Codepen</span>
-          </v-tooltip> -->
-        </v-layout>
-      </v-container>
-    </v-content>
-    <v-btn
-      fab
-      bottom
-      right
-      color="pink"
-      dark
-      fixed
-      @click="dialog = !dialog"
-    >
+      <DashboardView :searchKey="searchKey" />
+    <v-btn fab bottom right color="pink" dark fixed @click="$router.push('/dashboard/activities/add')">
       <v-icon>add</v-icon>
     </v-btn>
-
-
-    </div>
+  </div>
 </template>
 
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import DashboardView from './dashboard/index.vue';
+import { ActivitiesModule } from '../store/modules/activities';
 
-@Component()
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate', // for vue-router 2.2+
+]);
+
+@Component({
+  components: { DashboardView }
+})
 export default class Activities extends Vue {
+  searchKey = '';
 
-    private source = '';
+  private source = '';
 
-      private dialog = false;
-      private drawer = null;
-      private items = [
-        { icon: 'contacts', text: 'Activities', url: '/dashboard/activities' },
-        { icon: 'history', text: 'Recommendations', url: '/dashboard/recommendations' },
-        { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
-      ];
+  private dialog = false;
+  private drawer = null;
+  private items = [
+    { icon: 'contacts', text: 'Activities', url: '/dashboard/activities' },
+    {
+      icon: 'history',
+      text: 'Recommendations',
+      url: '/dashboard/recommendations',
+    },
+    { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
+  ];
 
+  async beforeRouteEnter(to, from, next) {
+    await Promise.all([
+      ActivitiesModule.LoadActivities(),
+      ActivitiesModule.LoadCategories(),
+      ActivitiesModule.LoadDomains(),
+    ]);
+
+    next();
+  }
 }
 </script>

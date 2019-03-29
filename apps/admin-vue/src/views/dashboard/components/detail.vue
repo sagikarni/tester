@@ -32,7 +32,7 @@ export default class Detail extends Vue {
   activity = null;
 
   onCancel() {
-    this.$router.push(`/dashboard`);
+    this.$router.push(`/dashboard/activities`);
   }
 
   async beforeRouteUpdate(to, from, next) {
@@ -166,7 +166,7 @@ export default class Detail extends Vue {
 
         console.log('done');
 
-        this.$router.push(`/dashboard`);
+        this.$router.push(`/dashboard/activities`);
       })
       .catch(() => {
         this.$message({

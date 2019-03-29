@@ -59,11 +59,6 @@ import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
 import { Message } from 'element-ui';
 
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate', // for vue-router 2.2+
-]);
 
 @Component({})
 export default class Categories extends Vue {
@@ -199,15 +194,6 @@ export default class Categories extends Vue {
     return ActivitiesModule.activities;
   }
 
-  async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.LoadActivities(),
-      ActivitiesModule.LoadCategories(),
-      ActivitiesModule.LoadDomains(),
-    ]);
-
-    next();
-  }
 
   constructor() {
     super();

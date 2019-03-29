@@ -1,4 +1,11 @@
-import { VuexModule, Module, MutationAction, Mutation, Action, getModule } from 'vuex-module-decorators';
+import {
+  VuexModule,
+  Module,
+  MutationAction,
+  Mutation,
+  Action,
+  getModule,
+} from 'vuex-module-decorators';
 import { login, logout, getInfo } from '../../api/login';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import store from '@/store';
@@ -18,11 +25,16 @@ class User extends VuexModule implements IUserState {
   public roles = [];
 
   @Action({ commit: 'SET_TOKEN' })
-  public async Login(userInfo: { username: string, password: string}) {
+  public async Login(userInfo: { username: string; password: string }) {
     const username = userInfo.username.trim();
-    const { data } = { data: { token: '132403289097903290' } }; // await login(username, userInfo.password);
-    setToken(data.token);
-    return data.token;
+    const password = userInfo.password.trim();
+
+    if (username === 'viacards' && password === 'smiim9989') {
+      // const { data } = { data: { token: '132403289097903290' } }; // await login(username, userInfo.password);
+      const token = '132403289097903290';
+      setToken(token);
+      return token;
+    }
   }
 
   @Action({ commit: 'SET_TOKEN' })
@@ -31,13 +43,19 @@ class User extends VuexModule implements IUserState {
     return '';
   }
 
-  @MutationAction({ mutate: [ 'roles', 'name', 'avatar' ] })
+  @MutationAction({ mutate: ['roles', 'name', 'avatar'] })
   public async GetInfo() {
     const token = getToken();
     if (token === undefined) {
       throw Error('GetInfo: token is undefined!');
     }
-    const { data } = { data: { roles: [{ }], name: 'viacards', avatar: 'https://api.adorable.io/avatars/60/wizardnet972@gmail.com.png' } }; // await getInfo(token);
+    const { data } = {
+      data: {
+        roles: [{}],
+        name: 'viacards',
+        avatar: 'https://api.adorable.io/avatars/60/wizardnet972@gmail.com.png',
+      },
+    }; // await getInfo(token);
     if (data.roles && data.roles.length > 0) {
       return {
         roles: data.roles,
@@ -49,7 +67,7 @@ class User extends VuexModule implements IUserState {
     }
   }
 
-  @MutationAction({ mutate: [ 'token', 'roles' ] })
+  @MutationAction({ mutate: ['token', 'roles'] })
   public async LogOut() {
     if (getToken() === undefined) {
       throw Error('LogOut: token is undefined!');

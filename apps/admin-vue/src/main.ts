@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import 'vuetify/dist/vuetify.min.css';
 import 'normalize.css';
+import './style.scss';
 import ElementUI from 'element-ui';
 import SvgIcon from 'vue-svgicon';
 
@@ -14,6 +15,8 @@ import store from './store';
 import './registerServiceWorker';
 import vDragDrop from 'v-drag-drop';
 Vue.use(vDragDrop);
+
+import './loader';
 
 Vue.use(ElementUI);
 Vue.use(SvgIcon, {

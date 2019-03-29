@@ -12,7 +12,7 @@
         <v-icon>notifications</v-icon>
       </v-btn>
     </v-toolbar>
-    <CategoriesView/>
+    <RecommendationsView/>
   </div>
 </template>
 
@@ -21,6 +21,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import CategoriesView from './categories/index.vue';
 import { ActivitiesModule } from '../store/modules/activities';
+import RecommendationsView from './recommendations/index.vue';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -29,9 +30,9 @@ Component.registerHooks([
 ]);
 
 @Component({
-  components: { CategoriesView },
+  components: { RecommendationsView },
 })
-export default class Categories extends Vue {
+export default class Recommendations extends Vue {
   private source = '';
 
   private dialog = false;
@@ -46,14 +47,16 @@ export default class Categories extends Vue {
     { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
   ];
 
-  async beforeRouteEnter(to, from, next) {
+async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ActivitiesModule.LoadActivities(),
       ActivitiesModule.LoadCategories(),
       ActivitiesModule.LoadDomains(),
+      ActivitiesModule.LoadCollections(),
     ]);
 
     next();
   }
+
 }
 </script>

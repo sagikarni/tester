@@ -10,8 +10,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      redirect: '/login',
     },
     {
       path: '/login',
@@ -26,6 +25,12 @@ export default new Router({
         import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue'),
       children: [
         {
+          path: 'recommendations',
+          name: 'recommendations',
+          component: () =>
+            import(/* webpackChunkName: "recommendations" */ './views/Recommendations.vue'),
+        },
+        {
           path: 'categories',
           name: 'categories',
           component: () =>
@@ -35,7 +40,7 @@ export default new Router({
           path: 'activities',
           name: 'activities',
           component: () =>
-            import(/* webpackChunkName: "activities" */ './views/dashboard/index.vue'),
+            import(/* webpackChunkName: "activities" */ './views/Activities.vue'),
           children: [
             {
               path: '',

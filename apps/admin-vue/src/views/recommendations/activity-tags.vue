@@ -9,7 +9,7 @@
           :disable-transitions="false"
           @close="handleClose(tag)"
         >
-          <a target="_blank" :href="`/dashboard/${tag}`">{{tag}}</a>
+          <a target="_blank" :href="`/dashboard/activities/${tag}`">{{tag}}</a>
         </el-tag>
       </transition-group>
     </draggable>

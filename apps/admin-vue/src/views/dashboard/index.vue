@@ -1,16 +1,10 @@
 <template>
+
   <div class="dashboard-container" style="position:relative">
     <div style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;">
       <el-row type="flex" justify="space-between">
-        <el-col :span="4">
-          <el-button
-            style="width:100%;margin-left:10px;"
-            type="success"
-            @click="$router.push('/dashboard/add')"
-            icon="el-icon-plus"
-          >New Activity</el-button>
-        </el-col>
-        <el-col :span="18" style="display:flex;">
+      
+        <el-col :span="24" style="display:flex;">
           <el-select placeholder="All Domain" v-model="form.domain" clearable>
             <el-option v-for="domain in domainNames" :label="domain" :value="domain" :key="domain"/>
           </el-select>
@@ -93,15 +87,10 @@
           <el-col :span="6">
             <div>
               <el-row style>
-                <el-col :span="24" style="padding:10px 20px;background:#F7F7F7">
-                  <el-input
-                    placeholder="Search by Name, Description, Image ID or Activity ID"
-                    prefix-icon="el-icon-search"
-                    v-model="form.text"
-                    clearable
-                  ></el-input>
+                <el-col :span="24">
+                
                   <div
-                    style="font-size:13px;border:1px dotted #ccc;color:#444;font-weight:normal;padding:10px;"
+                    style="font-size:13px;background:khaki;;color:#444;font-weight:bold;padding:10px;"
                   >{{ $options.filters.limitArray(items, form).length }} Activities Founds</div>
                 </el-col>
               </el-row>
@@ -117,7 +106,7 @@
                     <!-- <div style="height:3000px;background:red;">bla</div> -->
                     <router-link
                       style="display:block;"
-                      :to="`/dashboard/${item._id}`"
+                      :to="`/dashboard/activities/${item._id}`"
                       v-for="(item) in $options.filters.limitArray(items, form)"
                       :key="item._id"
                       class="activity-item"
@@ -150,20 +139,16 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
 import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
 
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate', // for vue-router 2.2+
-]);
 
 @Component({
   filters: {
@@ -180,10 +165,10 @@ Component.registerHooks([
         f = f.filter((a) => a.mediaType === form.mediaType);
       }
       if (form.category) {
-        f = f.filter((a) => a.category.name === form.category);
+        f = f.filter((a) => a.category && a.category.name === form.category);
       }
       if (form.subcategory) {
-        f = f.filter((a) => a.subCategory.name === form.subcategory);
+        f = f.filter((a) => a.subCategory && a.subCategory.name === form.subcategory);
       }
       if (form.level && form.level.length > 0) {
         f = f.filter((a) => form.level.includes(a.level));
@@ -223,6 +208,13 @@ export default class Dashboard extends Vue {
     return ActivitiesModule.subcategories;
   }
 
+  @Prop() searchKey;
+
+  @Watch('searchKey') onChangeSearchKey(n, o) {
+    console.log({ n });
+    this.form.text = n;
+  }
+//searchKey
   form = {
     domain: null,
     type: null,
@@ -250,15 +242,7 @@ export default class Dashboard extends Vue {
     return ActivitiesModule.activities;
   }
 
-  async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.LoadActivities(),
-      ActivitiesModule.LoadCategories(),
-      ActivitiesModule.LoadDomains(),
-    ]);
-
-    next();
-  }
+  
 
   constructor() {
     super();

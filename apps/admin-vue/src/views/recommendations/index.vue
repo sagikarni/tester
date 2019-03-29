@@ -44,11 +44,7 @@ import { flatten } from 'lodash';
 import { Message, MessageBox } from 'element-ui';
 import ActivityTags from './activity-tags.vue';
 
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate', // for vue-router 2.2+
-]);
+
 
 @Component({
   components: { ActivityTags },
@@ -208,17 +204,7 @@ export default class Recommendations extends Vue {
     return ActivitiesModule.activities;
   }
 
-  async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.LoadActivities(),
-      ActivitiesModule.LoadCategories(),
-      ActivitiesModule.LoadDomains(),
-      ActivitiesModule.LoadCollections(),
-    ]);
-
-    next();
-  }
-
+  
   constructor() {
     super();
   }

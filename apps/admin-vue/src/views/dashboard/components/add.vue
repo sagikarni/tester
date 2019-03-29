@@ -48,7 +48,7 @@ export default class Add extends Vue {
   };
 
   onCancel() {
-    this.$router.push(`/dashboard`);
+    this.$router.push(`/dashboard/activities`);
   }
 
   region = '';
@@ -82,7 +82,7 @@ export default class Add extends Vue {
 
     await ActivitiesModule.AddActivity(res.activity);
 
-    this.$router.push(`/dashboard/${res.activity._id}`);
+    this.$router.push(`/dashboard/activities/${res.activity._id}`);
     // res.up[0]._id;
 
     console.log('done');
