@@ -17,7 +17,7 @@
     "plain-activity": "^0.0.0",
     "vuex-store": "0.0.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2",
+    "stylus-loader": "^3.0.1",
     "style-loader": "^0.23.1",
     "css-loader": "^2.1.1",
     "vuex-module-decorators": "^0.9.8",

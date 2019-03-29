@@ -6,8 +6,6 @@ import {
   Action,
   getModule,
 } from 'vuex-module-decorators';
-import { login, logout, getInfo } from '@/api/login';
-import { getToken, setToken, removeToken } from '@/utils/auth';
 import store from '@/store';
 import { flatten, values } from 'lodash';
 

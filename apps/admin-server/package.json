@@ -42,10 +42,10 @@
   "devDependencies": {
    
     "@types/cookie-parser": "^1.4.1",
-    "@types/jest": "^23.1.10",
+    "@types/jest": "^23.1.4",
     "@types/node": "^10.12.18",
     "@types/webpack-env": "^1.13.6",
     "nodemon-webpack-plugin": "^4.0.7",
-    "typescript": "^3.0.0"
+    "typescript": "^3.2.1"
   }
 }

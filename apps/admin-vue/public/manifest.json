@@ -1,6 +1,6 @@
 {
-  "name": "tera.com-vue",
-  "short_name": "tera.com-vue",
+  "name": "tera",
+  "short_name": "tera",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

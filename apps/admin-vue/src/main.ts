@@ -1,14 +1,13 @@
 import Vue from 'vue';
-
+import 'vuetify/dist/vuetify.min.css';
 import 'normalize.css';
 import ElementUI from 'element-ui';
 import SvgIcon from 'vue-svgicon';
-import './styles/index.scss';
-import './icons';
-import './permission';
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
+import './plugins/vuetify';
+import './plugins/axios';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -24,7 +23,6 @@ Vue.use(SvgIcon, {
 });
 
 Vue.config.productionTip = false;
-
 
 new Vue({
   router,
