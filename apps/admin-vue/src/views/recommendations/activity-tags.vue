@@ -9,7 +9,9 @@
           :disable-transitions="false"
           @close="handleClose(tag)"
         >
-          <a target="_blank" :href="`/dashboard/activities/${tag}`">{{tag}}</a>
+          <a target="_blank" :href="`/dashboard/activities/${tag}`">{{
+            tag
+          }}</a>
         </el-tag>
       </transition-group>
     </draggable>
@@ -22,7 +24,9 @@
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
     ></el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput()">+ Add Activity</el-button>
+    <el-button v-else class="button-new-tag" size="small" @click="showInput()"
+      >+ Add Activity</el-button
+    >
   </div>
 </template>
 
@@ -62,14 +66,13 @@ export default class ActivityTags extends Vue {
 
   mounted() {
     if (this.value && this.value.length > 0) {
-      this.items = this.value;//.map((v, i) => ({ ...v, id: i }));
+      this.items = this.value; //.map((v, i) => ({ ...v, id: i }));
     }
   }
 
   edit = false;
   radio3 = '';
 
-  
   onchange() {
     this.$emit('input', this.radio3);
   }

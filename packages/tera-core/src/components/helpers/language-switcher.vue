@@ -1,7 +1,10 @@
 <template>
   <v-menu bottom offset-y left attach>
     <v-btn slot="activator" flat style="min-width: 48px">
-      <img :src="require(`@/assets/${currentLanguage.country}.png`)" width="26px">
+      <img
+        :src="require(`@/assets/${currentLanguage.country}.png`)"
+        width="26px"
+      />
     </v-btn>
     <v-list light>
       <v-list-tile
@@ -11,9 +14,12 @@
         @click="translateI18n(language.locale)"
       >
         <v-list-tile-avatar tile size="24px">
-          <img :src="require(`@/assets/${language.country}.png`)" width="24px">
+          <img
+            :src="require(`@/assets/${language.country}.png`)"
+            width="24px"
+          />
         </v-list-tile-avatar>
-        <v-list-tile-title>{{language.name}}</v-list-tile-title>
+        <v-list-tile-title>{{ language.name }}</v-list-tile-title>
       </v-list-tile>
     </v-list>
   </v-menu>
@@ -26,7 +32,7 @@ import { Trans } from '../../translation';
 @Component({})
 export default class LanguageSwitcher extends Vue {
   get currentLanguage() {
-    return this.languages.find(l => l.locale === this.$i18n.locale);
+    return this.languages.find((l) => l.locale === this.$i18n.locale);
   }
 
   languages = Trans.supportedLanguages;

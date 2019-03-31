@@ -1,4 +1,4 @@
-import {Store} from 'vuex-store';
+import { Store } from 'vuex-store';
 import { ApiService } from '../services/api.service';
 import {
   VuexModule,
@@ -352,11 +352,8 @@ export const extractAuthFromResponse = (
   response: any
 ): { token; refreshToken; user } => {
   return {
-    token:
-      get(response, 'headers.map.access_token[0]') ||
-      '',
-    refreshToken:
-      get(response, 'headers.map.refresh_token[0]') || '',
+    token: get(response, 'headers.map.access_token[0]') || '',
+    refreshToken: get(response, 'headers.map.refresh_token[0]') || '',
     user: get(response, 'data.user') || null,
   };
 };

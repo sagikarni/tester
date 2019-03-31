@@ -13,10 +13,14 @@ import { routes } from './routes';
 
 import passport from 'passport';
 
-import { facebookStrategy, googleStrategy, linkedinStrategy, twitterStrategy } from 'auth-node';
+import {
+  facebookStrategy,
+  googleStrategy,
+  linkedinStrategy,
+  twitterStrategy,
+} from 'auth-node';
 
 import schema from './graphql/schema';
-
 
 passport.use(facebookStrategy);
 passport.use(twitterStrategy);
@@ -36,11 +40,14 @@ app.use(helmet());
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  // rootValue: root,
-  graphiql: true,
-}));
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    // rootValue: root,
+    graphiql: true,
+  })
+);
 
 app.use(routes);
 

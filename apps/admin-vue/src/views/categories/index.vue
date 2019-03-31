@@ -59,7 +59,6 @@ import { ActivitiesModule } from '../../store/modules/activities';
 import { flatten } from 'lodash';
 import { Message } from 'element-ui';
 
-
 @Component({})
 export default class Categories extends Vue {
   get activities() {
@@ -75,21 +74,69 @@ export default class Categories extends Vue {
   }
 
   get datab() {
-    if (!this.categories) return;
-    if (!this.activities) return;
+    if (!this.categories) {
+      return;
+    }
+    if (!this.activities) {
+      return;
+    }
 
-    var x = this.categories.map((x) => ({
+    const d = this.categories.map((x) => ({
       id: x.name,
       label: x.name,
-      used: this.activities.some((aa) => aa.category && aa.category.name === x.name),
+      used: this.activities.some(
+        (aa) => aa.category && aa.category.name === x.name
+      ),
       children: x.subcategory.map((v) => ({
         label: v.name,
         id: v.name,
-        used: this.activities.some((aa) => aa.subCategory && aa.subCategory.name === v.name),
+        used: this.activities.some(
+          (aa) => aa.subCategory && aa.subCategory.name === v.name
+        ),
       })),
     }));
 
-    return x;
+    return d;
+  }
+
+  get domainNames() {
+    return Object.keys(ActivitiesModule.domains);
+  }
+
+  get types() {
+    return ActivitiesModule.types;
+  }
+
+  get items() {
+    return ActivitiesModule.activities;
+  }
+
+  input2 = '';
+  formCategory = { name: '' };
+  formSubcategory = { name: '', category: null };
+
+  defaultProps = {
+    children: 'children',
+    label: 'label',
+  };
+
+  form = {
+    domain: null,
+    type: null,
+    mediaType: null,
+    category: null,
+    subcategory: null,
+    level: [],
+    audience: null,
+    status: null,
+    printable: null,
+    free: null,
+    editorial: null,
+    text: null,
+  };
+
+  constructor() {
+    super();
   }
 
   addSubcategory() {
@@ -115,10 +162,6 @@ export default class Categories extends Vue {
     });
   }
 
-  input2 = '';
-  formCategory = { name: '' };
-  formSubcategory = { name: '', category: null };
-
   handleNodeClick(data) {
     console.log(data);
   }
@@ -126,11 +169,6 @@ export default class Categories extends Vue {
   add() {}
 
   onSubmit() {}
-
-  defaultProps = {
-    children: 'children',
-    label: 'label',
-  };
 
   remove(node, data) {
     this.$confirm(
@@ -165,38 +203,6 @@ export default class Categories extends Vue {
     // const children = parent.data.children || parent.data;
     // const index = children.findIndex((d) => d.id === data.id);
     // children.splice(index, 1);
-  }
-
-  form = {
-    domain: null,
-    type: null,
-    mediaType: null,
-    category: null,
-    subcategory: null,
-    level: [],
-    audience: null,
-    status: null,
-    printable: null,
-    free: null,
-    editorial: null,
-    text: null,
-  };
-
-  get domainNames() {
-    return Object.keys(ActivitiesModule.domains);
-  }
-
-  get types() {
-    return ActivitiesModule.types;
-  }
-
-  get items() {
-    return ActivitiesModule.activities;
-  }
-
-
-  constructor() {
-    super();
   }
 }
 </script>
@@ -234,12 +240,12 @@ export default class Categories extends Vue {
   background-color: #fff;
 }
 .colscrol {
-  height: calc(100vh - (120px));
+  height: calc(100vh - 120px);
   // width: 60%;
   // display: inline-block;
 
   &-first {
-    height: calc(100vh - (230px));
+    height: calc(100vh - 230px);
     // display: inline-block;
     // width: 40%;
   }

@@ -37,6 +37,26 @@ export default new Router({
             import(/* webpackChunkName: "categories" */ './views/Categories.vue'),
         },
         {
+          path: 'articulations',
+          name: 'articulations',
+          component: () =>
+            import(/* webpackChunkName: "articulation" */ './views/Articulation.vue'),
+          children: [
+            {
+              path: '',
+              name: 'index-articulation',
+              component: () =>
+                import(/* webpackChunkName: "index-articulation" */ './views/articulation/components/index.vue'),
+            },
+            {
+              path: ':articulation',
+              name: 'view-articulation',
+              component: () =>
+                import(/* webpackChunkName: "view-articulation" */ './views/articulation/components/detail.vue'),
+            },
+          ],
+        },
+        {
           path: 'activities',
           name: 'activities',
           component: () =>

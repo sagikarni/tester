@@ -5,7 +5,9 @@
     </v-toolbar>
 
     <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
+      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">
+        Invalid Credentials
+      </div>
       <div v-else>Cannot login right now, try again later</div>
     </v-alert>
 
@@ -49,7 +51,8 @@
         <v-list-tile>
           <router-link to="/recover-account">Forgot your password?</router-link>
         </v-list-tile>
-        <v-list-tile>Need an account? &nbsp;
+        <v-list-tile
+          >Need an account? &nbsp;
           <router-link to="/register">Register</router-link>
         </v-list-tile>
       </v-list>
@@ -67,7 +70,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import SocialLoginComponent from './social-login.vue';
 
 @Component({
-  components: { SocialLoginComponent }
+  components: { SocialLoginComponent },
 })
 export default class LoginFormComponent extends Vue {
   @Prop()
@@ -86,14 +89,14 @@ export default class LoginFormComponent extends Vue {
       // tslint:disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         v
-      ) || 'E-mail must be valid'
+      ) || 'E-mail must be valid',
   ];
 
   passwordRules = [
     (v: string) => !!v || 'Password is required',
     (v: string) =>
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(v) ||
-      'password should contain at least one digit, one lower case, one upper case, and at least 8 from the mentioned characters'
+      'password should contain at least one digit, one lower case, one upper case, and at least 8 from the mentioned characters',
   ];
 
   constructor() {
@@ -111,4 +114,3 @@ export default class LoginFormComponent extends Vue {
   }
 }
 </script>
-

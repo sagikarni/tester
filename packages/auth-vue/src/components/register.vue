@@ -3,7 +3,10 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-container>
-          <register-form-component :error="error" @submit="submit"></register-form-component>
+          <register-form-component
+            :error="error"
+            @submit="submit"
+          ></register-form-component>
         </v-container>
       </v-flex>
     </v-layout>
@@ -49,4 +52,3 @@ export default class RegisterPage extends Vue {
   }
 }
 </script>
-

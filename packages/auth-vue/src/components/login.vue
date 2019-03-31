@@ -3,7 +3,10 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-container>
-          <login-form-component :error="error" @submit="submit"></login-form-component>
+          <login-form-component
+            :error="error"
+            @submit="submit"
+          ></login-form-component>
         </v-container>
       </v-flex>
     </v-layout>

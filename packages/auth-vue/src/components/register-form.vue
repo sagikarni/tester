@@ -5,7 +5,8 @@
     </v-toolbar>
 
     <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'EMAIL_EXIST'">This email is already registered. Want to
+      <div v-if="error === 'EMAIL_EXIST'">
+        This email is already registered. Want to
         <router-link to="/login">login</router-link>or
         <router-link to="/recover-account">recover your password?</router-link>
       </div>
@@ -55,7 +56,10 @@
           <router-link to="/login">Already have an account?</router-link>
         </v-list-tile>
         <v-list-tile>
-          <small>By registering, you agree to Discord's Terms of Service and Privacy Policy.</small>
+          <small
+            >By registering, you agree to Discord's Terms of Service and Privacy
+            Policy.</small
+          >
         </v-list-tile>
       </v-list>
     </v-card-text>
@@ -72,7 +76,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import SocialLoginComponent from './social-login.vue';
 
 @Component({
-  components: { SocialLoginComponent }
+  components: { SocialLoginComponent },
 })
 export default class RegisterFormComponent extends Vue {
   @Prop()
@@ -90,7 +94,7 @@ export default class RegisterFormComponent extends Vue {
     (v: string) =>
       /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/.test(
         v
-      ) || 'Name must be alphabetical characters, for example: "Jon Doe"'
+      ) || 'Name must be alphabetical characters, for example: "Jon Doe"',
   ];
 
   public emailRules = [
@@ -100,14 +104,14 @@ export default class RegisterFormComponent extends Vue {
       // tslint:disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         v
-      ) || 'E-mail must be valid'
+      ) || 'E-mail must be valid',
   ];
 
   public passwordRules = [
     (v: string) => !!v || 'Password is required',
     (v: string) =>
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(v) ||
-      'password should contain at least one digit, one lower case, one upper case, and at least 8 from the mentioned characters'
+      'password should contain at least one digit, one lower case, one upper case, and at least 8 from the mentioned characters',
   ];
 
   constructor() {
@@ -125,4 +129,3 @@ export default class RegisterFormComponent extends Vue {
   }
 }
 </script>
-

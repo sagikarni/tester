@@ -16,7 +16,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import CategoriesView from './categories/index.vue';
@@ -44,9 +43,14 @@ export default class Categories extends Vue {
       url: '/dashboard/recommendations',
     },
     { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
+    {
+      icon: 'content_copy',
+      text: 'Articulation',
+      url: '/dashboard/articulations',
+    },
   ];
 
-  async beforeRouteEnter(to, from, next) {
+  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ActivitiesModule.LoadActivities(),
       ActivitiesModule.LoadCategories(),

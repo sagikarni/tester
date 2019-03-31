@@ -1,21 +1,21 @@
 <template>
   <div>
-    <cta/>
+    <cta />
 
-    <hero/>
+    <hero />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from "vue-property-decorator";
+import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
     Hero: () =>
-      import(/* webpackChunkName: "hero" */ "./components/helpers/hero.vue"),
+      import(/* webpackChunkName: "hero" */ './components/helpers/hero.vue'),
     Cta: () =>
-      import(/* webpackChunkName: "cta" */ "./components/helpers/cta.vue")
-  }
+      import(/* webpackChunkName: "cta" */ './components/helpers/cta.vue'),
+  },
 })
 export default class Home extends Vue {}
 </script>

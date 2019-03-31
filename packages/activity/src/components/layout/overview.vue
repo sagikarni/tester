@@ -5,9 +5,18 @@
         <span>{{ name }}</span>
       </h2>
       <v-layout wrap="wrap">
-        <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
+        <v-flex
+          v-for="(feature, i) in items"
+          :key="i"
+          xs12="xs12"
+          sm6="sm6"
+          md4="md4"
+        >
           <v-card>
-            <v-img :src="`//picsum.photos/400/147?image=${i}`" aspect-ratio="2.75"></v-img>
+            <v-img
+              :src="`//picsum.photos/400/147?image=${i}`"
+              aspect-ratio="2.75"
+            ></v-img>
 
             <v-card-title primary-title>
               <div>
@@ -20,8 +29,9 @@
               <v-btn
                 flat
                 color="orange"
-                :to="{ name: 'category', params: { category: feature.name }}"
-              >See all activites</v-btn>
+                :to="{ name: 'category', params: { category: feature.name } }"
+                >See all activites</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -47,13 +57,12 @@ export default class Overview extends Vue {
   mounted() {
     const { overview } = this.$route.params;
     this.name = overview;
-    const x = DrawerItems.find(d => d.name === overview);
+    const x = DrawerItems.find((d) => d.name === overview);
     if (x) {
-      this.items = x.items.filter(n => !n.default).map(n => ({ ...n, name: dasherize(n.name) }));
+      this.items = x.items
+        .filter((n) => !n.default)
+        .map((n) => ({ ...n, name: dasherize(n.name) }));
     }
   }
 }
 </script>
-
-
-

@@ -12,5 +12,4 @@ const connectWith = (vendor: string, url: string) =>
     window.open(url, vendor, 'height=585, width=770');
   });
 
-
 export { connectWith };

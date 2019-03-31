@@ -7,8 +7,17 @@
         placeholder="Activity Type"
         value-key="_id"
       >
-        <el-option-group v-for="group in domainsKeys" :key="group" :label="group">
-          <el-option v-for="item in domains[group]" :key="item._id" :label="item.name" :value="item"></el-option>
+        <el-option-group
+          v-for="group in domainsKeys"
+          :key="group"
+          :label="group"
+        >
+          <el-option
+            v-for="item in domains[group]"
+            :key="item._id"
+            :label="item.name"
+            :value="item"
+          ></el-option>
         </el-option-group>
       </el-select>
     </el-form-item>
@@ -18,7 +27,15 @@
     </el-form-item>
 
     <el-form-item label="Cover" v-if="activity.type">
-      <img width="150px" height="100px" :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`">
+      <img
+        width="150px"
+        height="100px"
+        :src="
+          `/storage/${activity.type.domain.name}/${activity.type.name}/${
+            activity._id
+          }/cover-l.jpg`
+        "
+      />
     </el-form-item>
 
     <el-form-item label="Activity Name">
@@ -30,14 +47,20 @@
     </el-form-item>
 
     <el-form-item label="Media Type">
-      <el-select v-model="activity.mediaType" placeholder="please select your zone">
+      <el-select
+        v-model="activity.mediaType"
+        placeholder="please select your zone"
+      >
         <el-option label="Photo" value="Photo"></el-option>
         <el-option label="Video" value="Video"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Audience">
-      <el-select v-model="activity.audience" placeholder="please select your zone">
+      <el-select
+        v-model="activity.audience"
+        placeholder="please select your zone"
+      >
         <el-option label="All" value="All"></el-option>
         <el-option label="Kids" value="Kids"></el-option>
         <el-option label="Elderly" value="Elderly"></el-option>
@@ -45,11 +68,23 @@
     </el-form-item>
 
     <el-form-item label="Status">
-      <el-select v-model="activity.status" placeholder="please select your zone">
+      <el-select
+        v-model="activity.status"
+        placeholder="please select your zone"
+      >
         <el-option label="Started" value="Started"></el-option>
-        <el-option label="WaitingForReview" value="WaitingForReview"></el-option>
-        <el-option label="TechnicalWriterPending" value="TechnicalWriterPending"></el-option>
-        <el-option label="TechnicalWriterApproved" value="TechnicalWriterApproved"></el-option>
+        <el-option
+          label="WaitingForReview"
+          value="WaitingForReview"
+        ></el-option>
+        <el-option
+          label="TechnicalWriterPending"
+          value="TechnicalWriterPending"
+        ></el-option>
+        <el-option
+          label="TechnicalWriterApproved"
+          value="TechnicalWriterApproved"
+        ></el-option>
         <el-option label="Ready" value="Ready"></el-option>
         <el-option label="Published" value="Published"></el-option>
       </el-select>
@@ -91,17 +126,24 @@
     </el-form-item>
 
     <el-form-item label="Orientation">
-      <el-select v-model="activity.orientation" placeholder="please select your zone">
+      <el-select
+        v-model="activity.orientation"
+        placeholder="please select your zone"
+      >
         <el-option label="Landscape" value="Landscape"></el-option>
         <el-option label="Portrait" value="Portrait"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Level">
-      <el-select v-model="activity.level" placeholder="please select your zone" multiple>
-        <el-option label="Basic" value="Basic"/>
-        <el-option label="Intermediate" value="Intermediate"/>
-        <el-option label="Advanced" value="Advanced"/>
+      <el-select
+        v-model="activity.level"
+        placeholder="please select your zone"
+        multiple
+      >
+        <el-option label="Basic" value="Basic" />
+        <el-option label="Intermediate" value="Intermediate" />
+        <el-option label="Advanced" value="Advanced" />
       </el-select>
     </el-form-item>
 
@@ -207,7 +249,9 @@ export default class Modely extends Vue {
   }
 
   get storageUrl() {
-    return `E:/sagi-tera-files/${this.activity.type.domain.name}/${this.activity.type.name}/${this.activity._id}`;
+    return `E:/sagi-tera-files/${this.activity.type.domain.name}/${
+      this.activity.type.name
+    }/${this.activity._id}`;
   }
 
   conf = {

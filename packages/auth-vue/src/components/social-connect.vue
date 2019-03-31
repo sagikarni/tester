@@ -10,7 +10,12 @@
         ></v-switch>
       </v-list-tile-action>
       <v-list-tile-title>Connect with facebook</v-list-tile-title>
-      <v-progress-circular v-if="facebookLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular
+        v-if="facebookLoading"
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
     </v-list-tile>
 
     <v-list-tile>
@@ -23,7 +28,12 @@
         ></v-switch>
       </v-list-tile-action>
       <v-list-tile-title>Connect with twitter</v-list-tile-title>
-      <v-progress-circular v-if="twitterLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular
+        v-if="twitterLoading"
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
     </v-list-tile>
 
     <v-list-tile>
@@ -36,7 +46,12 @@
         ></v-switch>
       </v-list-tile-action>
       <v-list-tile-title>Connect with google</v-list-tile-title>
-      <v-progress-circular v-if="googleLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular
+        v-if="googleLoading"
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
     </v-list-tile>
 
     <v-list-tile>
@@ -49,11 +64,15 @@
         ></v-switch>
       </v-list-tile-action>
       <v-list-tile-title>Connect with linkedin</v-list-tile-title>
-      <v-progress-circular v-if="linkedinLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular
+        v-if="linkedinLoading"
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
     </v-list-tile>
   </v-list>
 </template>
-
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator';
@@ -153,4 +172,3 @@ export default class SocialConnectComponent extends Vue {
   }
 }
 </script>
-

@@ -62,29 +62,29 @@ export const userSchema: Schema = new Schema({
     token: { type: String },
     refreshToken: { type: String },
     code: { type: String },
-    _raw: { type: String }
+    _raw: { type: String },
   },
   twitter: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
     code: { type: String },
-    _raw: { type: String }
+    _raw: { type: String },
   },
   linkedin: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
     code: { type: String },
-    _raw: { type: String }
+    _raw: { type: String },
   },
   google: {
     id: { type: String },
     token: { type: String },
     refreshToken: { type: String },
     code: { type: String },
-    _raw: { type: String }
-  }
+    _raw: { type: String },
+  },
 });
 
 userSchema.pre('save', function(next) {
@@ -116,33 +116,49 @@ userSchema.method('comparePassword', function(password: string): boolean {
 
 userSchema.method('getVerifyToken', function(): string {
   const user = this;
-  const token = jwt.sign({ id: user._id, grant: 'verify' }, process.env.SECRET_TOKEN, {
-    expiresIn: process.env.VERIFY_TOKEN_EXPIRES_IN
-  });
+  const token = jwt.sign(
+    { id: user._id, grant: 'verify' },
+    process.env.SECRET_TOKEN,
+    {
+      expiresIn: process.env.VERIFY_TOKEN_EXPIRES_IN,
+    }
+  );
   return token;
 });
 
 userSchema.method('getAccessToken', function(): string {
   const user = this;
-  const token = jwt.sign({ id: user._id, grant: 'access' }, process.env.SECRET_TOKEN, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN
-  });
+  const token = jwt.sign(
+    { id: user._id, grant: 'access' },
+    process.env.SECRET_TOKEN,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
+    }
+  );
   return token;
 });
 
 userSchema.method('getRefreshToken', function(): string {
   const user = this;
-  const token = jwt.sign({ id: user._id, grant: 'refresh' }, process.env.SECRET_TOKEN, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN
-  });
+  const token = jwt.sign(
+    { id: user._id, grant: 'refresh' },
+    process.env.SECRET_TOKEN,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
+    }
+  );
   return token;
 });
 
 userSchema.method('getResetPasswordToken', function(): string {
   const user = this;
-  const token = jwt.sign({ id: user._id, grant: 'reset' }, process.env.SECRET_TOKEN, {
-    expiresIn: process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN
-  });
+  const token = jwt.sign(
+    { id: user._id, grant: 'reset' },
+    process.env.SECRET_TOKEN,
+    {
+      expiresIn: process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN,
+    }
+  );
   return token;
 });
 
@@ -154,7 +170,7 @@ userSchema.method('toJSON', function(): any {
   delete user.__v;
   delete user._v;
 
-  ['facebook', 'twitter', 'linkedin', 'google'].forEach(i => {
+  ['facebook', 'twitter', 'linkedin', 'google'].forEach((i) => {
     if (user[i]) user[i] = true;
   });
 

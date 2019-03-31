@@ -6,9 +6,22 @@ import {
   Type,
   Domain,
   ActivityCollection,
+  Articulation,
 } from './models';
 import { values, groupBy, entries, toPairs } from 'lodash';
 const router = Router();
+
+router.get('/articulations', async (req, res, next) => {
+  const articulations = await Articulation.find({});
+
+  res.json({ articulations, code: 20000 });
+});
+
+router.get('/articulations/:id', async (req, res, next) => {
+  const articulation = await Articulation.findById(req.params.id);
+
+  res.json({ articulation, code: 20000 });
+});
 
 router.get('/activities', async (req, res, next) => {
   const activities = await Activity.find({})
@@ -143,7 +156,7 @@ router.delete('/categories', async (req, res, next) => {
 router.get('/domains', async (req, res, next) => {
   const types = await Type.find({}).populate('domain');
 
-  let domains = groupBy(types, 'domain.name') as any;
+  const domains = groupBy(types, 'domain.name') as any;
 
   res.json({ domains, code: 20000 });
 });
@@ -197,7 +210,7 @@ router.post('/collection', async (req, res, next) => {
 
   console.log({ collectionsReq });
 
-  for (let col of collectionsReq) {
+  for (const col of collectionsReq) {
     console.log({ col });
     if (col._id) {
       const activity = await ActivityCollection.findOneAndUpdate(

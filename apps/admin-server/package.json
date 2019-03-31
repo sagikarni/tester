@@ -40,7 +40,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
-   
     "@types/cookie-parser": "^1.4.1",
     "@types/jest": "^23.1.4",
     "@types/node": "^10.12.18",

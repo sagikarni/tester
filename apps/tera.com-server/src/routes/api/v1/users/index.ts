@@ -9,7 +9,7 @@ import {
   register,
   sendVerifyNotification,
   verifyAccount,
-  verifyPassword
+  verifyPassword,
 } from 'auth-node';
 
 const router = Router();

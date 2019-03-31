@@ -45,7 +45,8 @@
                   v-if="grand.badge"
                   :color="grand.color || 'primary'"
                   disabled
-                >{{ grand.badge }}</v-chip>
+                  >{{ grand.badge }}</v-chip
+                >
               </v-list-tile>
             </v-list-group>
 
@@ -68,15 +69,23 @@
                 class="white--text pa-0 v-chip--x-small"
                 v-if="subItem.badge"
                 :color="subItem.color || 'primary'"
-              >{{ subItem.badge }}</v-chip>
+                >{{ subItem.badge }}</v-chip
+              >
               <v-list-tile-action v-if="subItem.action">
-                <v-icon :class="[subItem.actionClass || 'success--text']">{{ subItem.action }}</v-icon>
+                <v-icon :class="[subItem.actionClass || 'success--text']">{{
+                  subItem.action
+                }}</v-icon>
               </v-list-tile-action>
             </v-list-tile>
           </template>
         </v-list-group>
 
-        <v-subheader class="grey--text" v-else-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
+        <v-subheader
+          class="grey--text"
+          v-else-if="item.header"
+          :key="item.header"
+          >{{ item.header }}</v-subheader
+        >
 
         <v-divider v-else-if="item.divider" :key="ii"></v-divider>
 
@@ -102,7 +111,8 @@
             v-if="item.badge"
             :color="item.color || 'primary'"
             disabled
-          >{{ item.badge }}</v-chip>
+            >{{ item.badge }}</v-chip
+          >
           <v-list-tile-action v-if="item.subAction">
             <v-icon class="success--text">{{ item.subAction }}</v-icon>
           </v-list-tile-action>
@@ -111,7 +121,8 @@
             v-else-if="item.chip"
             label
             small
-          >{{ item.chip }}</v-chip>
+            >{{ item.chip }}</v-chip
+          >
         </v-list-tile>
       </template>
     </v-list>
@@ -155,8 +166,8 @@ export default class Toolbar extends Vue {
         name: item.group,
         params: {
           overview: `${dasherize(item.name)}`,
-          category: `${dasherize(subItem.name)}`
-        }
+          category: `${dasherize(subItem.name)}`,
+        },
       };
     }
 
@@ -165,8 +176,8 @@ export default class Toolbar extends Vue {
         name: subItem.group,
         params: {
           overview: `${dasherize(item.name)}`,
-          category: `${dasherize(subItem.name)}`
-        }
+          category: `${dasherize(subItem.name)}`,
+        },
       };
     }
 
@@ -175,8 +186,8 @@ export default class Toolbar extends Vue {
       params: {
         overview: `${dasherize(item.name)}`,
         category: `${dasherize(subItem.name)}`,
-        id: `${dasherize(grand.name)}`
-      }
+        id: `${dasherize(grand.name)}`,
+      },
     };
   }
 }

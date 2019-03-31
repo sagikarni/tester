@@ -13,11 +13,19 @@ export default [
         group: 'category',
         items: [
           { title: 'Overview', default: true },
-          { title: 'Photos Plain Slides', name: 'LearningPhoto', group: 'activity' },
-          { title: 'Videos Plain Slides', name: 'LearningVideos', group: 'activity' }
-        ]
-      }
-    ]
+          {
+            title: 'Photos Plain Slides',
+            name: 'LearningPhoto',
+            group: 'activity',
+          },
+          {
+            title: 'Videos Plain Slides',
+            name: 'LearningVideos',
+            group: 'activity',
+          },
+        ],
+      },
+    ],
   },
   {
     title: 'Cognitive',
@@ -30,13 +38,27 @@ export default [
         title: 'Categorization',
         name: 'Categorization',
         group: 'category',
-        items: [{ title: 'Overview', default: true }, { title: 'Categorization 1', name: 'CategorizationX', group: 'activity' }]
+        items: [
+          { title: 'Overview', default: true },
+          {
+            title: 'Categorization 1',
+            name: 'CategorizationX',
+            group: 'activity',
+          },
+        ],
       },
       {
         title: 'Photo Assembly',
         name: 'PhotoAssembly',
         group: 'category',
-        items: [{ title: 'Overview', default: true }, { title: 'Photo Assembly 1', name: 'PhotoAssemblyX', group: 'activity' }]
+        items: [
+          { title: 'Overview', default: true },
+          {
+            title: 'Photo Assembly 1',
+            name: 'PhotoAssemblyX',
+            group: 'activity',
+          },
+        ],
       },
       {
         title: 'Whats in the Picture',
@@ -44,14 +66,25 @@ export default [
         group: 'category',
         items: [
           { title: 'Overview', default: true },
-          { title: 'Whats In The Picture Photo', name: 'WhatsInThePictureX', group: 'activity' }
-        ]
+          {
+            title: 'Whats In The Picture Photo',
+            name: 'WhatsInThePictureX',
+            group: 'activity',
+          },
+        ],
       },
       {
         title: 'Spot The Difference',
         name: 'SpotTheDifference',
         group: 'category',
-        items: [{ title: 'Overview', default: true }, { title: 'Spot The Difference Photo', name: 'SpotTheDifferenceX', group: 'activity' }]
+        items: [
+          { title: 'Overview', default: true },
+          {
+            title: 'Spot The Difference Photo',
+            name: 'SpotTheDifferenceX',
+            group: 'activity',
+          },
+        ],
       },
       {
         title: 'Sound Of Life',
@@ -59,23 +92,37 @@ export default [
         group: 'category',
         items: [
           { title: 'Overview', default: true },
-          { title: 'Sound Of Life Photo', name: 'SoundOfLifePhoto', group: 'activity' },
-          { title: 'Sound Of Life Sound', name: 'SoundOfLifeSound', group: 'activity' }
-        ]
+          {
+            title: 'Sound Of Life Photo',
+            name: 'SoundOfLifePhoto',
+            group: 'activity',
+          },
+          {
+            title: 'Sound Of Life Sound',
+            name: 'SoundOfLifeSound',
+            group: 'activity',
+          },
+        ],
       },
       {
         title: 'Memory Cards',
         name: 'MemoryCards',
         group: 'category',
-        items: [{ title: 'Overview', default: true }, { title: 'Memory cards X', name: 'MemoryCardX', group: 'activity' }]
+        items: [
+          { title: 'Overview', default: true },
+          { title: 'Memory cards X', name: 'MemoryCardX', group: 'activity' },
+        ],
       },
       {
         title: 'Commonality',
         name: 'Commonality',
         group: 'category',
-        items: [{ title: 'Overview', default: true }, { title: 'Commonality X', name: 'CommonalityX', group: 'activity' }]
-      }
-    ]
+        items: [
+          { title: 'Overview', default: true },
+          { title: 'Commonality X', name: 'CommonalityX', group: 'activity' },
+        ],
+      },
+    ],
   },
   {
     title: 'Speech',
@@ -90,11 +137,19 @@ export default [
         group: 'category',
         items: [
           { title: 'Overview', default: true },
-          { title: 'Articulation Word Photo', name: 'ArticulationWordPhoto', group: 'activity' },
-          { title: 'Articulation Word Video', name: 'ArticulationWordVideo', group: 'activity' }
-        ]
-      }
-    ]
+          {
+            title: 'Articulation Word Photo',
+            name: 'ArticulationWordPhoto',
+            group: 'activity',
+          },
+          {
+            title: 'Articulation Word Video',
+            name: 'ArticulationWordVideo',
+            group: 'activity',
+          },
+        ],
+      },
+    ],
   },
   {
     title: 'Communication',
@@ -110,9 +165,9 @@ export default [
         items: [
           { title: 'Overview', default: true },
           { title: 'Meaning Photo', name: 'MeaningPhoto', group: 'activity' },
-          { title: 'Meaning Video', name: 'MeaningVideo', group: 'activity' }
-        ]
-      }
-    ]
-  }
+          { title: 'Meaning Video', name: 'MeaningVideo', group: 'activity' },
+        ],
+      },
+    ],
+  },
 ];

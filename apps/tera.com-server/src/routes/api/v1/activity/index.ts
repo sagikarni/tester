@@ -12,7 +12,7 @@ router.get('/:id', (req, res, next) => {
     title: 'learning photo activity',
     description: 'this is activvity of what in the picture...',
     thumbnails: ['istock-488951890', 'istock-532348674', 'istock-664350152'],
-    type: 'plain-slides'
+    type: 'plain-slides',
   };
 
   res.json(activity);

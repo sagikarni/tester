@@ -5,7 +5,7 @@ const secureLS = SecureLS as any;
 const ls = new secureLS({ encodingType: 'aes' });
 
 export enum StorageTypes {
-  AUTH = 'ta'
+  AUTH = 'ta',
 }
 
 export const StorageService = {
@@ -23,5 +23,5 @@ export const StorageService = {
 
   destroy(key: string) {
     ls.remove(key);
-  }
+  },
 };

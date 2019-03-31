@@ -23,7 +23,7 @@ export const StoreTokenInterceptorPlugin = (store: any) => {
       // console.log('status: ' + response.data)
       console.log('fix that');
       return response;
-    }
+    },
 
     // (request, next) => {
     // if (token && !request.headers.get('Authorization')) {

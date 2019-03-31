@@ -3,7 +3,10 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-container>
-          <recover-account-form-component :error="error" @submit="submit"></recover-account-form-component>
+          <recover-account-form-component
+            :error="error"
+            @submit="submit"
+          ></recover-account-form-component>
         </v-container>
       </v-flex>
     </v-layout>

@@ -5,7 +5,8 @@
     </v-toolbar>
 
     <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'EMAIL_EXIST'">This email is already registered. Want to
+      <div v-if="error === 'EMAIL_EXIST'">
+        This email is already registered. Want to
         <router-link to="/login">login</router-link>or
         <router-link to="/recover-account">recover your password?</router-link>
       </div>
@@ -16,8 +17,9 @@
 
     <template v-if="!submitted">
       <v-card-text>
-        Please provide the email address that you used when you signed up for your account.
-        We will send you an email that will allow you to reset your password.
+        Please provide the email address that you used when you signed up for
+        your account. We will send you an email that will allow you to reset
+        your password.
         <v-spacer></v-spacer>
 
         <v-form v-model="valid" ref="form">
@@ -64,7 +66,7 @@ export default class RecoverAccountFormComponent extends Vue {
       // tslint:disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         v
-      ) || 'E-mail must be valid'
+      ) || 'E-mail must be valid',
   ];
 
   constructor() {
@@ -83,4 +85,3 @@ export default class RecoverAccountFormComponent extends Vue {
   }
 }
 </script>
-

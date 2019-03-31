@@ -11,7 +11,7 @@ const credentials = {
   clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
   callbackURL: process.env.AUTH_GOOGLE_CALLBACK_URL,
   includeEmail: true,
-  passReqToCallback: true
+  passReqToCallback: true,
 };
 
 const strategy = async (
@@ -41,13 +41,13 @@ const strategy = async (
       method: 'POST',
       body: {
         email: user.email,
-        password: user.password
+        password: user.password,
       },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'transfer-encoding': 'chunked'
+        'transfer-encoding': 'chunked',
       },
-      query: {}
+      query: {},
     };
   } else {
     request = {
@@ -56,9 +56,9 @@ const strategy = async (
       body: { name, email, password, verified: true },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'transfer-encoding': 'chunked'
+        'transfer-encoding': 'chunked',
       },
-      query: {}
+      query: {},
     };
   }
 

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import 'vuetify/dist/vuetify.min.css';
 import 'normalize.css';
-import './style.scss';
 import ElementUI from 'element-ui';
 import SvgIcon from 'vue-svgicon';
 

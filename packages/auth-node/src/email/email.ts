@@ -21,9 +21,9 @@ export function sendWelcome({ emailTo, fullname, password }) {
         email: emailTo,
         app,
         fullname,
-        password
-      }
-    })
+        password,
+      },
+    }),
   };
 
   console.log({ sendWelcome: { msg } });
@@ -43,9 +43,9 @@ export function sendVerify({ emailTo, token }) {
         email: emailTo,
         app,
         emailContact: emailContactMail,
-        tokenUrl
-      }
-    })
+        tokenUrl,
+      },
+    }),
   };
 
   console.log({ sendVerify: { msg } });
@@ -62,9 +62,9 @@ export function sendVerification({ emailTo, fullname }) {
       context: {
         email: emailTo,
         app,
-        fullname
-      }
-    })
+        fullname,
+      },
+    }),
   };
 
   console.log({ sendVerification: { msg } });
@@ -83,9 +83,9 @@ export function sendResetPassword({ emailTo, token }) {
       context: {
         email: emailTo,
         app,
-        tokenUrl
-      }
-    }).html
+        tokenUrl,
+      },
+    }).html,
   };
 
   console.log({ sendResetPassword: { msg } });
@@ -103,9 +103,9 @@ export function sendPasswordChanged({ emailTo, password, fullname }) {
         email: emailTo,
         app,
         password,
-        fullname
-      }
-    })
+        fullname,
+      },
+    }),
   };
 
   console.log({ sendPasswordChanged: { msg } });

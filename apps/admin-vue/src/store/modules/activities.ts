@@ -24,6 +24,7 @@ class Activities extends VuexModule implements IActivitiesState {
   public activities = [];
   public domains = [];
   public collections = [];
+  public articulations = [];
 
   public get domainsKeys() {
     return Object.keys(this.domains);
@@ -44,6 +45,17 @@ class Activities extends VuexModule implements IActivitiesState {
     return (res as any).collections;
   }
 
+  @Action({ commit: 'SET_ARTICULATIONS' })
+  public async LoadArticulations() {
+    const res = await request({
+      url: '/api/v1/articulations',
+      method: 'get',
+      baseURL: '',
+    });
+
+    return (res as any).articulations;
+  }
+
   @Action({ commit: 'REMOVE_ACTIVITY' })
   public async RemoveActivity(id) {
     return id;
@@ -57,6 +69,11 @@ class Activities extends VuexModule implements IActivitiesState {
   @Action({ commit: 'UPDATE_ACTIVITY' })
   public async UpdateActivity(activity) {
     return activity;
+  }
+
+  @Action({ commit: 'UPDATE_ARTICULATION' })
+  public async UpdateArticulation(articulation) {
+    return articulation;
   }
 
   @Action({ commit: 'SET_CATEGORIES' })
@@ -153,6 +170,12 @@ class Activities extends VuexModule implements IActivitiesState {
   }
 
   @Mutation
+  private UPDATE_ARTICULATION(articulation: any) {
+    const i = this.articulations.findIndex((s) => s._id === articulation._id);
+    this.articulations[i] = articulation;
+  }
+
+  @Mutation
   private SET_CATEGORIES(categories: any) {
     this.categories = categories;
 
@@ -184,6 +207,11 @@ class Activities extends VuexModule implements IActivitiesState {
   @Mutation
   private SET_COLLECTIONS(collections: any) {
     this.collections = collections;
+  }
+
+  @Mutation
+  private SET_ARTICULATIONS(articulations: any) {
+    this.articulations = articulations;
   }
 }
 

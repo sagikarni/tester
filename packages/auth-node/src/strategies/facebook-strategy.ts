@@ -17,7 +17,7 @@ const strategy = (accessToken, refreshToken, strategyProfile, done) => {
     email: get(strategyProfile, 'emails[0].value'),
     name: get(strategyProfile, 'displayName'),
     picture: get(strategyProfile, 'photos[0].value'),
-    _raw: strategyProfile
+    _raw: strategyProfile,
   };
 
   done(null, { provider: 'facebook', accessToken, refreshToken, userStrategy });

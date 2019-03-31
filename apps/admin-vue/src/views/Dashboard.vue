@@ -8,7 +8,7 @@
               <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
             </v-flex>
             <v-flex xs6 class="text-xs-center">
-              <a href="#!" class="body-2 black--text">EDIT</a>
+              <a href="#" class="body-2 black--text">EDIT</a>
             </v-flex>
           </v-layout>
           <v-list-group
@@ -18,7 +18,7 @@
             :prepend-icon="item.model ? item.icon : item['icon-alt']"
             append-icon
           >
-            <template v-slot:activator>
+            <template v-slot="activator">
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-title>{{ item.text }}</v-list-tile-title>
@@ -68,6 +68,11 @@ export default class Dashboard extends Vue {
       url: '/dashboard/recommendations',
     },
     { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
+    {
+      icon: 'content_copy',
+      text: 'Articulation',
+      url: '/dashboard/articulations',
+    },
   ];
 }
 </script>

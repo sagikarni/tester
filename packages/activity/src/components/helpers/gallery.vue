@@ -4,7 +4,7 @@
       <v-card>
         <v-container grid-list-sm fluid>
           <v-layout row wrap>
-            <v-flex v-for="(item,i) in images" :key="i" xs4 d-flex>
+            <v-flex v-for="(item, i) in images" :key="i" xs4 d-flex>
               <v-card flat tile class="d-flex" @click="dialog = true">
                 <v-img
                   :src="item.pic"
@@ -12,8 +12,17 @@
                   aspect-ratio="1"
                   class="grey lighten-2"
                 >
-                  <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
-                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  <v-layout
+                    slot="placeholder"
+                    fill-height
+                    align-center
+                    justify-center
+                    ma-0
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
                   </v-layout>
                 </v-img>
               </v-card>
@@ -26,11 +35,17 @@
     <div class="text-xs-center">
       <v-dialog v-model="dialog" width="500">
         <v-card>
-          <v-card-title class="headline grey lighten-2" primary-title>What in this activity</v-card-title>
+          <v-card-title class="headline grey lighten-2" primary-title
+            >What in this activity</v-card-title
+          >
 
           <v-card-text>
             <v-carousel>
-              <v-carousel-item v-for="(item,i) in images" :key="i" :src="item.pic"></v-carousel-item>
+              <v-carousel-item
+                v-for="(item, i) in images"
+                :key="i"
+                :src="item.pic"
+              ></v-carousel-item>
             </v-carousel>
           </v-card-text>
 
@@ -46,9 +61,8 @@
   </v-layout>
 </template>
 
-
 <script lang="ts">
-import { Component, Watch, Vue, Prop } from "vue-property-decorator";
+import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class Gallery extends Vue {

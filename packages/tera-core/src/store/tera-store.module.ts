@@ -1,4 +1,4 @@
-import {Store} from 'vuex-store';
+import { Store } from 'vuex-store';
 
 import {
   VuexModule,
@@ -39,7 +39,7 @@ export class TeraStore extends VuexModule implements State {
   @Mutation
   loadingStateChanged(payload: any) {
     this.systemLoading = payload;
-  };
+  }
 
   @Mutation
   updateErrorModalDialog(payload: any) {
@@ -89,50 +89,48 @@ export class TeraStore extends VuexModule implements State {
     this.appDrawer = payload;
   }
 
-
-  @Action({  commit: 'loadingStateChanged' })
+  @Action({ commit: 'loadingStateChanged' })
   async loading(loadingInfo) {
     return loadingInfo;
   }
 
-  @Action({  commit: 'updateErrorPane' })
+  @Action({ commit: 'updateErrorPane' })
   async errorModalDialog(item) {
     return item;
   }
 
-  @Action({  commit: 'updateErrorModalDialog' })
+  @Action({ commit: 'updateErrorModalDialog' })
   async errorPaneAction(item) {
     return item;
   }
 
-  @Action({  commit: 'uploadReloadActivityDetails' })
+  @Action({ commit: 'uploadReloadActivityDetails' })
   async changeReloadActivityDetails(item) {
     return item;
   }
 
-  @Action({  commit: 'updateMediaQuality' })
+  @Action({ commit: 'updateMediaQuality' })
   async changeMediaQuality(item) {
     return item;
   }
 
-  @Action({  commit: 'updateFullscreen' })
+  @Action({ commit: 'updateFullscreen' })
   async changeFullscreen(item) {
     return item;
   }
 
-  @Action({  commit: 'drawerToggle1' })
+  @Action({ commit: 'drawerToggle1' })
   async drawerToggle() {
     return {};
   }
 
-  @Action({  commit: 'drawerToggle1' })
+  @Action({ commit: 'drawerToggle1' })
   async drawer(payload) {
     return payload;
   }
 }
 
 export const TeraStoreModule = getModule(TeraStore);
-
 
 // import { ActionTree, MutationTree, GetterTree } from 'vuex';
 
@@ -158,10 +156,8 @@ export const TeraStoreModule = getModule(TeraStore);
 //   DRAWER,
 // } from './mutations.type';
 
-
-
 // const defaultState: State = {
- 
+
 // };
 
 // const initialState = () => ({

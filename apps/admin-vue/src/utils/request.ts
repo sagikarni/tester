@@ -19,7 +19,7 @@ service.interceptors.request.use(
   (error) => {
     // Handle request error here
     Promise.reject(error);
-  },
+  }
 );
 
 // Response interceptors
@@ -46,10 +46,10 @@ service.interceptors.response.use(
             confirmButtonText: '重新登录',
             cancelButtonText: '取消',
             type: 'warning',
-          },
+          }
         ).then(() => {
           UserModule.FedLogOut().then(() => {
-            location.reload();  // 为了重新实例化vue-router对象 避免bug
+            location.reload(); // 为了重新实例化vue-router对象 避免bug
           });
         });
       }
@@ -65,7 +65,7 @@ service.interceptors.response.use(
       duration: 5 * 1000,
     });
     return Promise.reject(error);
-  },
+  }
 );
 
 export default service;

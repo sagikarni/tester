@@ -5,9 +5,18 @@
         <span>activities based on {{ name }}</span>
       </h2>
       <v-layout wrap="wrap">
-        <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
+        <v-flex
+          v-for="(feature, i) in items"
+          :key="i"
+          xs12="xs12"
+          sm6="sm6"
+          md4="md4"
+        >
           <v-card>
-            <v-img :src="`//picsum.photos/400/147?image=${i}`" aspect-ratio="2.75"></v-img>
+            <v-img
+              :src="`//picsum.photos/400/147?image=${i}`"
+              aspect-ratio="2.75"
+            ></v-img>
 
             <v-card-title primary-title>
               <div>
@@ -17,7 +26,12 @@
             </v-card-title>
 
             <v-card-actions>
-              <v-btn flat color="orange" :to="{ name: 'activity', params: { id: feature.name }}">detail</v-btn>
+              <v-btn
+                flat
+                color="orange"
+                :to="{ name: 'activity', params: { id: feature.name } }"
+                >detail</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -25,7 +39,6 @@
     </v-container>
   </section>
 </template>
-
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
@@ -44,10 +57,15 @@ export default class Category extends Vue {
   mounted() {
     const { overview, category } = this.$route.params;
     this.name = category;
-    const x = DrawerItems.find(d => d.name === overview);
+    const x = DrawerItems.find((d) => d.name === overview);
     if (x) {
-      const d = x.items.filter(n => !n.default).map(n => ({ ...n, name: dasherize(n.name) }));
-      this.items = d.find(r => r.name ===category).items.filter(r => !r.default).map(n => ({ ...n, name: dasherize(n.name) }));
+      const d = x.items
+        .filter((n) => !n.default)
+        .map((n) => ({ ...n, name: dasherize(n.name) }));
+      this.items = d
+        .find((r) => r.name === category)
+        .items.filter((r) => !r.default)
+        .map((n) => ({ ...n, name: dasherize(n.name) }));
     }
   }
 }

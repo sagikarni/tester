@@ -7,7 +7,12 @@ import { routes as plainActivityRoutes } from 'plain-activity';
 
 Vue.use(Router);
 
-const children = [...coreRoutes, ...authRoutes, ...activityRoutes, ...plainActivityRoutes];
+const children = [
+  ...coreRoutes,
+  ...authRoutes,
+  ...activityRoutes,
+  ...plainActivityRoutes,
+];
 
 export default new Router({
   mode: 'history',
@@ -17,7 +22,7 @@ export default new Router({
       path: '/:lang([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,3})',
       component: Shell,
       beforeEnter: Trans.routeMiddleware,
-      children
+      children,
     },
     {
       path: '*',

@@ -4,7 +4,7 @@ mongoose.set('debug', true);
 
 export const db = {
   connect: () => connect(process.env.MONGODB_URI),
-  connection  
+  connection,
 };
 
 export * from './user';

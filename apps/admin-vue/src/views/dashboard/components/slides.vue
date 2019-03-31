@@ -6,7 +6,7 @@
         @dragleave="endDrag"
         @dragend="endDrag"
         @dragover="onDrag"
-        :class="{ 'drag': hover }"
+        :class="{ drag: hover }"
         @drop="onDrop"
       >
         <span>Drop here all media</span>
@@ -15,15 +15,22 @@
       <draggable v-model="items" @end="dosome">
         <transition-group>
           <div
-            v-for="(slide,index) in items"
+            v-for="(slide, index) in items"
             :key="slide.id"
             style="background:#f9f9f9;border:1px solid #dcdfe6;padding:2px;margin-bottom:10px"
           >
-            <dropper v-model="slide.media" :path="slide.path" placeholder="Drop here images" style="margin-bottom:10px;"></dropper>
+            <dropper
+              v-model="slide.media"
+              :path="slide.path"
+              placeholder="Drop here images"
+              style="margin-bottom:10px;"
+            ></dropper>
 
             <!-- <dropper v-model="slide.media" :blobs="slide._blobs" :path="slide.path"></dropper> -->
             <slot v-bind:slide="slide"></slot>
-            <el-button @click="removeSlide(index)" type="text">Remove Slide</el-button>
+            <el-button @click="removeSlide(index)" type="text"
+              >Remove Slide</el-button
+            >
           </div>
         </transition-group>
       </draggable>

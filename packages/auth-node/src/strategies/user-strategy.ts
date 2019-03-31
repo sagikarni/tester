@@ -1,6 +1,6 @@
 export interface UserStrategy {
-    email: string;
-    name: string;
-    picture: string;
-    _raw: any;
+  email: string;
+  name: string;
+  picture: string;
+  _raw: any;
 }

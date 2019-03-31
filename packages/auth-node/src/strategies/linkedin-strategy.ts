@@ -18,8 +18,8 @@ const credentials = {
     'last-name',
     'email-address',
     'headline',
-    'picture-url'
-  ]
+    'picture-url',
+  ],
 };
 
 const strategy = async (
@@ -49,13 +49,13 @@ const strategy = async (
       method: 'POST',
       body: {
         email: user.email,
-        password: user.password
+        password: user.password,
       },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'transfer-encoding': 'chunked'
+        'transfer-encoding': 'chunked',
       },
-      query: {}
+      query: {},
     };
   } else {
     request = {
@@ -64,9 +64,9 @@ const strategy = async (
       body: { name, email, password, verified: true },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'transfer-encoding': 'chunked'
+        'transfer-encoding': 'chunked',
       },
-      query: {}
+      query: {},
     };
   }
 

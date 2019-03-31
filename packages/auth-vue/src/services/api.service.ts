@@ -34,7 +34,7 @@ const ApiService = {
     // return Vue.axios.delete(resource).catch(error => {
     //   throw new Error(`[RWV] ApiService ${error}`);
     // });
-  }
+  },
 };
 
 export { ApiService };

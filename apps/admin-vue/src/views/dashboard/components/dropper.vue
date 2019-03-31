@@ -1,14 +1,16 @@
 <template>
   <div
     id="dropper"
-    :class="{ 'drag': hover }"
+    :class="{ drag: hover }"
     @dragleave="endDrag"
     @dragend="endDrag"
     @dragover="onDrag"
     @drop="onDrop"
     style="position:relative;"
   >
-    <span id="dropper-text" style="text-align:center;display:block;">{{placeholder}}</span>
+    <span id="dropper-text" style="text-align:center;display:block;">
+      {{ placeholder }}
+    </span>
 
     <div style="display:flex;flex-wrap:wrap;">
       <el-card
@@ -17,11 +19,17 @@
         :body-style="{ padding: '0px' }"
         style="width:200px;"
       >
-        <img :src="getImage(item)" class="image">
+        <img :src="getImage(item)" class="image" />
 
-        <div style="padding: 10px;display: flex;justify-content: space-between;">
-          <span>{{item.name}}</span>
-          <el-button type="text" @click="remove(item)" icon="el-icon-delete"></el-button>
+        <div
+          style="padding: 10px;display: flex;justify-content: space-between;"
+        >
+          <span>{{ item.name }}</span>
+          <el-button
+            type="text"
+            @click="remove(item)"
+            icon="el-icon-delete"
+          ></el-button>
         </div>
       </el-card>
     </div>

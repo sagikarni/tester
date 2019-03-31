@@ -48,16 +48,16 @@ async function readTemplateFolder(directory, folder) {
   return {
     name: folder.toLowerCase(),
     html: handlebars.compile(htmlTemplate),
-    text: handlebars.compile(textTemplate)
+    text: handlebars.compile(textTemplate),
   };
 }
 
 function compile({ templateName, context }) {
   console.log({ templateName });
 
-  const template = templates.find(t => t.name === templateName.toLowerCase());
+  const template = templates.find((t) => t.name === templateName.toLowerCase());
   return {
     html: template.html(context),
-    text: template.text(context)
+    text: template.text(context),
   };
 }

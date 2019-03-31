@@ -21,13 +21,20 @@
         <v-icon>notifications</v-icon>
       </v-btn>
     </v-toolbar>
-      <DashboardView :searchKey="searchKey" />
-    <v-btn fab bottom right color="pink" dark fixed @click="$router.push('/dashboard/activities/add')">
+    <DashboardView :searchKey="searchKey"/>
+    <v-btn
+      fab
+      bottom
+      right
+      color="pink"
+      dark
+      fixed
+      @click="$router.push('/dashboard/activities/add')"
+    >
       <v-icon>add</v-icon>
     </v-btn>
   </div>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
@@ -41,7 +48,7 @@ Component.registerHooks([
 ]);
 
 @Component({
-  components: { DashboardView }
+  components: { DashboardView },
 })
 export default class Activities extends Vue {
   searchKey = '';

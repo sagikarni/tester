@@ -37,10 +37,11 @@ const Trans = {
 
   getUserLang() {
     const navigator = window.navigator as any;
-    const lang = navigator.language || navigator.userLanguage || Trans.defaultLanguage;
+    const lang =
+      navigator.language || navigator.userLanguage || Trans.defaultLanguage;
     return {
       lang,
-      langNoISO: lang.split('-')[0]
+      langNoISO: lang.split('-')[0],
     };
   },
 
@@ -59,7 +60,7 @@ const Trans = {
     if (i18n.locale === lang) {
       return Promise.resolve(lang);
     } // has been loaded prior
-    return Trans.loadLanguageFile(lang).then(msgs => {
+    return Trans.loadLanguageFile(lang).then((msgs) => {
       i18n.setLocaleMessage(lang, msgs.default || msgs);
       return Trans.setI18nLanguageInServices(lang);
     });
@@ -70,7 +71,7 @@ const Trans = {
   },
 
   isLangSupported(lang: string) {
-    return Trans.supportedLanguages.map(l => l.locale).includes(lang);
+    return Trans.supportedLanguages.map((l) => l.locale).includes(lang);
   },
 
   routeMiddleware(to, from, next) {
@@ -79,7 +80,7 @@ const Trans = {
       return next(Trans.getUserSupportedLang());
     }
     return Trans.changeLanguage(lang).then(() => next());
-  }
+  },
 };
 
 export { Trans };

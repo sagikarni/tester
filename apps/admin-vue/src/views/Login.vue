@@ -37,7 +37,6 @@
   </v-content>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { UserModule } from '../store/modules/user';
@@ -58,16 +57,15 @@ export default class Login extends Vue {
   }
 
   @Watch('token', { immediate: true, deep: true })
-  onisAuthenticatedChanged(val: string, oldVal: string) {
+  public onisAuthenticatedChanged(val: string, oldVal: string) {
     console.log({ val });
     if (val) {
       this.$router.push('/dashboard/activities');
     }
   }
 
-  login() {
+  public login() {
     UserModule.Login(this.loginForm);
   }
 }
 </script>
-

@@ -3,7 +3,7 @@ import './plugins/vuetify';
 import './plugins/axios';
 import App from '@/App.vue';
 import router from './router';
-import {Store as store } from 'vuex-store';
+import { Store as store } from 'vuex-store';
 import { i18n } from 'tera-core';
 
 import './registerServiceWorker';
@@ -15,7 +15,7 @@ async function createApp() {
     router,
     store,
     i18n,
-    render: h => h(App)
+    render: (h) => h(App),
   }).$mount('#app');
 }
 

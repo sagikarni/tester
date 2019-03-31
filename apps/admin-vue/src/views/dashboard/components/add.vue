@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Model :add="true" :activity="activity"/>
+    <Model :add="true" :activity="activity" />
 
     <el-button type="primary" @click="onSubmit">Create</el-button>
     <el-button @click="onCancel">Cancel</el-button>

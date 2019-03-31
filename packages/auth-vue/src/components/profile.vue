@@ -10,11 +10,13 @@
         >
           <div v-if="displayMessage">
             You must verify your account
-            <a @click="sendVerifyEmail">Resend Verification Email</a> or contact our support team.
+            <a @click="sendVerifyEmail">Resend Verification Email</a> or contact
+            our support team.
           </div>
-          <div
-            v-else
-          >we have sent you a new verification email, please check both your inbox and spam folder.</div>
+          <div v-else>
+            we have sent you a new verification email, please check both your
+            inbox and spam folder.
+          </div>
         </v-alert>
 
         <v-container>
@@ -26,14 +28,22 @@
             <v-list>
               <v-list-tile avatar>
                 <v-list-tile-avatar>
-                  <img v-if="currentUser.picture" :src="currentUser.picture">
-                  <img v-else src="http://www.gravatar.com/avatar/?d=identicon">
+                  <img v-if="currentUser.picture" :src="currentUser.picture" />
+                  <img
+                    v-else
+                    src="http://www.gravatar.com/avatar/?d=identicon"
+                  />
                 </v-list-tile-avatar>
 
                 <v-list-tile-content>
-                  <v-list-tile-title>{{currentUser.name}}</v-list-tile-title>
-                  <v-list-tile-sub-title v-if="currentUser && currentUser.verified">verified</v-list-tile-sub-title>
-                  <v-list-tile-sub-title v-else>not verified</v-list-tile-sub-title>
+                  <v-list-tile-title>{{ currentUser.name }}</v-list-tile-title>
+                  <v-list-tile-sub-title
+                    v-if="currentUser && currentUser.verified"
+                    >verified</v-list-tile-sub-title
+                  >
+                  <v-list-tile-sub-title v-else
+                    >not verified</v-list-tile-sub-title
+                  >
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -69,7 +79,12 @@
                   ></v-switch>
                 </v-list-tile-action>
                 <v-list-tile-title>Connect with twitter</v-list-tile-title>
-                <v-progress-circular v-if="twitterLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+                <v-progress-circular
+                  v-if="twitterLoading"
+                  :size="50"
+                  color="primary"
+                  indeterminate
+                ></v-progress-circular>
               </v-list-tile>
 
               <v-list-tile>
@@ -82,7 +97,12 @@
                   ></v-switch>
                 </v-list-tile-action>
                 <v-list-tile-title>Connect with google</v-list-tile-title>
-                <v-progress-circular v-if="googleLoading" :size="50" color="primary" indeterminate></v-progress-circular>
+                <v-progress-circular
+                  v-if="googleLoading"
+                  :size="50"
+                  color="primary"
+                  indeterminate
+                ></v-progress-circular>
               </v-list-tile>
 
               <v-list-tile>
@@ -114,7 +134,7 @@
             </v-card-actions>
             <v-divider></v-divider>
 
-            <div>{{currentUser}}</div>
+            <div>{{ currentUser }}</div>
           </v-card>
         </v-container>
       </v-flex>
@@ -223,4 +243,3 @@ export default class ProfilePage extends Vue {
   }
 }
 </script>
-
