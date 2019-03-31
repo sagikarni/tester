@@ -27,11 +27,7 @@
           rowHeight="30"
         ></ag-grid-vue>
       </el-tab-pane>
-      <el-tab-pane
-        label="By Blend"
-        name="blend"
-        :disabled="!articulation.model.blend.length"
-      >
+      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
         <ag-grid-vue
           style="width:700px;height:500px"
           class="ag-theme-balham"
@@ -323,15 +319,16 @@ export default class Modely extends Vue {
     // console.log({ files });
 
     const img = new Image();
-    // img.src="https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+    // img.src="
+    // https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
     // const mockFile = {
     //   id: 'bla',
     //   uploaded: true,
     //   path: '',
     //   size: 0,
     // };
-    let file = { size: 123, name: 'Icon', type: 'image/png' };
-    let url =
+    const file = { size: 123, name: 'Icon', type: 'image/png' };
+    const url =
       'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
 
     // var f = new File([""], "filename.png", { type: 'image/png' });
@@ -346,5 +343,6 @@ export default class Modely extends Vue {
   public onSubmit() {
     console.log('submit!');
   }
-}</script
+}
+</script
 >;

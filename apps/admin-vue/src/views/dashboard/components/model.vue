@@ -193,7 +193,7 @@ import WHQuestions from './WHQuestions.vue';
 import GoodStory from './GoodStory.vue';
 import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 // import conf from './c.json';
-import { ActivitiesModule } from '@/store/modules/activities';
+import { ActivitiesModule } from '../../../store/modules/activities';
 
 @Component({
   components: {
@@ -224,9 +224,6 @@ import { ActivitiesModule } from '@/store/modules/activities';
   },
 })
 export default class Modely extends Vue {
-  @Prop() activity;
-
-  @Prop() add;
 
   get categories() {
     return ActivitiesModule.categories;
@@ -254,6 +251,17 @@ export default class Modely extends Vue {
     }/${this.activity._id}`;
   }
 
+  get filterX() {
+    if (!this.activity.category) { return []; }
+
+    return this.subcategories.filter(
+      (xx) => xx.category === this.activity.category._id
+    );
+  }
+  @Prop() activity;
+
+  @Prop() add;
+
   conf = {
     WhatsInThePicture: ['phrases'],
     SpotTheDifference: ['mediaIndex'],
@@ -262,64 +270,7 @@ export default class Modely extends Vue {
 
   slides = [];
   myArray = [];
-
-  // mounted() {
-
-  // }
-
-  removeSlide(index) {
-    this.activity.slides.splice(index, 1);
-  }
-
-  some() {
-    // const files = this.$refs.myVueDropzone[0].getQueuedFiles();
-
-    // console.log({ files });
-
-    const img = new Image();
-    // img.src = 'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
-    // const mockFile = {
-    //   id: 'bla',
-    //   uploaded: true,
-    //   path: '',
-    //   size: 0,
-    // };
-    var file = { size: 123, name: 'Icon', type: 'image/png' };
-    var url =
-      'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
-
-    // var f = new File([""], "filename.png", { type: 'image/png' });
-
-    const fileUrl = img.src;
-    this.$refs.myVueDropzone[0].manuallyAddFile(file, url, null, null, {
-      dontSubtractMaxFiles: false,
-      addToFiles: true,
-    });
-  }
   d = 1;
-
-  get filterX() {
-    if (!this.activity.category) return [];
-
-    return this.subcategories.filter(
-      (xx) => xx.category === this.activity.category._id
-    );
-  }
-
-  addSlide() {
-    //this.slides.push({ id: this.d, name: `name ${this.d}` });
-    this.activity.slides.push({
-      media: [],
-      model: {
-        phrases: ['value1', 'value2'],
-        mediaIndex: '3',
-        size: '3',
-        audio: [],
-        categoryIndex: '',
-      },
-    });
-    this.d++;
-  }
   // activity2 = null;
 
   // @Watch('activity')
@@ -438,6 +389,55 @@ export default class Modely extends Vue {
     resource: '',
     desc: '',
   };
+
+  // mounted() {
+
+  // }
+
+  removeSlide(index) {
+    this.activity.slides.splice(index, 1);
+  }
+
+  some() {
+    // const files = this.$refs.myVueDropzone[0].getQueuedFiles();
+
+    // console.log({ files });
+
+    const img = new Image();
+    // img.src = 'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+    // const mockFile = {
+    //   id: 'bla',
+    //   uploaded: true,
+    //   path: '',
+    //   size: 0,
+    // };
+    const file = { size: 123, name: 'Icon', type: 'image/png' };
+    const url =
+      'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
+
+    // var f = new File([""], "filename.png", { type: 'image/png' });
+
+    const fileUrl = img.src;
+    this.$refs.myVueDropzone[0].manuallyAddFile(file, url, null, null, {
+      dontSubtractMaxFiles: false,
+      addToFiles: true,
+    });
+  }
+
+  addSlide() {
+    // this.slides.push({ id: this.d, name: `name ${this.d}` });
+    this.activity.slides.push({
+      media: [],
+      model: {
+        phrases: ['value1', 'value2'],
+        mediaIndex: '3',
+        size: '3',
+        audio: [],
+        categoryIndex: '',
+      },
+    });
+    this.d++;
+  }
 
   onSubmit() {
     console.log('submit!');

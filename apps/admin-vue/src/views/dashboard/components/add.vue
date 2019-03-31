@@ -12,13 +12,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '@/store/modules/activities';
+import { ActivitiesModule } from '../../../store/modules/activities';
 
 const ObjectId = (
   m = Math,
   d = Date,
   h = 16,
-  s = (s) => m.floor(s).toString(h)
+  s = (ss) => m.floor(ss).toString(h)
 ) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
 
 Component.registerHooks([
@@ -47,10 +47,6 @@ export default class Add extends Vue {
     },
   };
 
-  onCancel() {
-    this.$router.push(`/dashboard/activities`);
-  }
-
   region = '';
 
   form = {
@@ -63,6 +59,10 @@ export default class Add extends Vue {
     resource: '',
     desc: '',
   };
+
+  onCancel() {
+    this.$router.push(`/dashboard/activities`);
+  }
 
   async onSubmit() {
     console.log('submit!', this.activity);

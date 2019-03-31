@@ -31,6 +31,17 @@ Component.registerHooks([
 export default class Detail extends Vue {
   activity = null;
 
+  form = {
+    name: '',
+    region: '',
+    date1: '',
+    date2: '',
+    delivery: false,
+    type: [''],
+    resource: '',
+    desc: '',
+  };
+
   onCancel() {
     this.$router.push(`/dashboard/activities`);
   }
@@ -105,17 +116,6 @@ export default class Detail extends Vue {
     // if (this.activity.editorial) this.activity.options.push('Editorial');
     // if (this.activity.isolate) this.activity.options.push('Isolate');
   }
-
-  form = {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [''],
-    resource: '',
-    desc: '',
-  };
 
   async onSubmit() {
     console.log('submit!', this.activity);

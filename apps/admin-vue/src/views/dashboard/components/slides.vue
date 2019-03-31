@@ -54,6 +54,15 @@ export default class Slides extends Vue {
   items = [];
   ii = 0;
 
+  dropzoneOptions = {
+    url: '/',
+    autoProcessQueue: false,
+    myAwesomeDropzone: false,
+    autoQueue: false,
+  };
+
+  hover = false;
+
   @Watch('value') onValue(n, o) {
     console.log('value!!!', n);
 
@@ -86,7 +95,7 @@ export default class Slides extends Vue {
   addSlide() {
     this.items.push({
       media: [],
-      id: this.items.length, //this.ii,
+      id: this.items.length, // this.ii,
     });
     this.ii++;
 
@@ -96,13 +105,6 @@ export default class Slides extends Vue {
   dosome() {
     this.$emit('input', this.items);
   }
-
-  dropzoneOptions = {
-    url: '/',
-    autoProcessQueue: false,
-    myAwesomeDropzone: false,
-    autoQueue: false,
-  };
 
   onDrag(e) {
     e.stopPropagation();
@@ -119,8 +121,6 @@ export default class Slides extends Vue {
     this.hover = false;
   }
 
-  hover = false;
-
   onDrop(e) {
     this.hover = false;
     e.stopPropagation();
@@ -130,13 +130,13 @@ export default class Slides extends Vue {
   }
 
   add(e) {
-    if (!e.dataTransfer.files) return;
-    if (!e.dataTransfer.files.length) return;
+    if (!e.dataTransfer.files) { return; }
+    if (!e.dataTransfer.files.length) { return; }
 
     const added = [];
     [...e.dataTransfer.files].forEach((f, i) => {
       const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
-      if (added.includes(filename)) return;
+      if (added.includes(filename)) { return; }
       added.push(filename);
 
       const img = window.URL.createObjectURL(f);

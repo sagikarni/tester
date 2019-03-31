@@ -39,8 +39,9 @@ export default class Phrases extends Vue {
   phrases = [];
 
   mounted() {
-    if (this.value && this.value.length)
+    if (this.value && this.value.length) {
       this.phrases = this.value.map((p) => ({ value: p }));
+    }
   }
 
   addPhrase() {

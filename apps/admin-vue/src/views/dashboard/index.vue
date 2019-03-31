@@ -240,13 +240,20 @@ export default class Dashboard extends Vue {
     return ActivitiesModule.subcategories;
   }
 
-  @Prop() searchKey;
-
-  @Watch('searchKey') onChangeSearchKey(n, o) {
-    console.log({ n });
-    this.form.text = n;
+  get domainNames() {
+    return Object.keys(ActivitiesModule.domains);
   }
-  //searchKey
+
+  get types() {
+    return ActivitiesModule.types;
+  }
+
+  get items() {
+    return ActivitiesModule.activities;
+  }
+
+  @Prop() searchKey;
+  // searchKey
   form = {
     domain: null,
     type: null,
@@ -262,20 +269,13 @@ export default class Dashboard extends Vue {
     text: null,
   };
 
-  get domainNames() {
-    return Object.keys(ActivitiesModule.domains);
-  }
-
-  get types() {
-    return ActivitiesModule.types;
-  }
-
-  get items() {
-    return ActivitiesModule.activities;
-  }
-
   constructor() {
     super();
+  }
+
+  @Watch('searchKey') onChangeSearchKey(n, o) {
+    console.log({ n });
+    this.form.text = n;
   }
 }
 </script>

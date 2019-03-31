@@ -54,7 +54,7 @@ export default class Dropper extends Vue {
   items = [];
 
   getImage(item) {
-    if (!item) return;
+    if (!item) { return; }
     if (item.blob) {
       return item.blob;
     }
@@ -90,7 +90,7 @@ export default class Dropper extends Vue {
 
   remove(item) {
     console.log({ item });
-    var i = this.items.indexOf(item);
+    const i = this.items.indexOf(item);
     this.items.splice(i, 1);
 
     this.$emit('input', this.items);
@@ -105,15 +105,15 @@ export default class Dropper extends Vue {
   }
 
   add(e) {
-    if (!e.dataTransfer.files) return;
-    if (!e.dataTransfer.files.length) return;
+    if (!e.dataTransfer.files) { return; }
+    if (!e.dataTransfer.files.length) { return; }
 
     const added = [];
 
     [...e.dataTransfer.files].forEach((f, i) => {
       const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
 
-      if (added.includes(filename)) return;
+      if (added.includes(filename)) { return; }
       added.push(filename);
 
       const img = window.URL.createObjectURL(f);
@@ -153,7 +153,6 @@ export default class Dropper extends Vue {
   //   this.value.forEach((v, i) => {
   //     var file = { size: 0, name: v, type: 'image/png' };
   //     // debugger;
-  //     // var url = `/api/v1/s3?fileKey=${this.path}Learning/5c58a52a8a7b723d70f0c822/thumbnails/istock-488951890-m.jpg` //'https://via.placeholder.com/150';
   //     var url = 'https://via.placeholder.com/150';
   //     if (this.path) {
   //       url = `${this.path.replace('__FILE__', v.replace('.', '-m.'))}`;

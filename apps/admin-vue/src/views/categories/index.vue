@@ -166,9 +166,13 @@ export default class Categories extends Vue {
     console.log(data);
   }
 
-  add() {}
+  add() {
+    console.log('on add');
+  }
 
-  onSubmit() {}
+  onSubmit() {
+    console.log('onSubmit');
+  }
 
   remove(node, data) {
     this.$confirm(

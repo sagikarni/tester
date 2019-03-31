@@ -15,6 +15,7 @@
     "arrow-parens": false,
     "no-console": false,
     "member-access": false,
-    "no-debugger": false
+    "no-debugger": false,
+    "max-line-length": [true, 140]
   }
 }

@@ -42,6 +42,12 @@ export default class ActivityTags extends Vue {
   @Prop() value;
   @Prop() options;
   items = [];
+
+  edit = false;
+  radio3 = '';
+
+  inputVisible = false;
+  inputValue = '';
   dosome() {
     this.$emit('input', this.items);
   }
@@ -66,12 +72,9 @@ export default class ActivityTags extends Vue {
 
   mounted() {
     if (this.value && this.value.length > 0) {
-      this.items = this.value; //.map((v, i) => ({ ...v, id: i }));
+      this.items = this.value; // .map((v, i) => ({ ...v, id: i }));
     }
   }
-
-  edit = false;
-  radio3 = '';
 
   onchange() {
     this.$emit('input', this.radio3);
@@ -80,9 +83,6 @@ export default class ActivityTags extends Vue {
   getActivity(id) {
     return ActivitiesModule.activities.find((a) => a._id === id);
   }
-
-  inputVisible = false;
-  inputValue = '';
 
   handleClose(tag) {
     console.log({ tag });
