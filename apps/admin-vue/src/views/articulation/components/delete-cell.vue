@@ -1,17 +1,7 @@
 <template>
   <span>
-    <el-button
-      type="primary"
-      icon="el-icon-edit"
-      circle
-      :click="editItem"
-    ></el-button>
-    <el-button
-      type="danger"
-      icon="el-icon-delete"
-      circle
-      :click="deleteItem"
-    ></el-button>
+    <el-button size="mini" type="primary" icon="el-icon-edit" circle v-on:click="onEdit"></el-button>
+    <el-button size="mini" type="danger" icon="el-icon-delete" circle v-on:click="onDelete"></el-button>
   </span>
 </template>
 
@@ -22,17 +12,17 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 export default class DeleteCell extends Vue {
   params;
 
-  public editItem() {
-    debugger;
-    this.params.context.componentParent.methodFromParent(
-      `Row: ${this.params.node.rowIndex}, Col: ${this.params.colDef.headerName}`
+  public onEdit() {
+    this.params.context.componentParent.edit(
+      this.params.node.data,
+      this.params.context.source
     );
   }
 
-  public deleteItem() {
-    debugger;
-    this.params.context.componentParent.methodFromParent(
-      `Row: ${this.params.node.rowIndex}, Col: ${this.params.colDef.headerName}`
+  public onDelete() {
+    this.params.context.componentParent.delete(
+      this.params.node.data,
+      this.params.context.source
     );
   }
 }

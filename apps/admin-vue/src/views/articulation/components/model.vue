@@ -17,25 +17,119 @@
     </el-form-item>
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
+        <div>
+          <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
+
+          <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
+            <el-form :model="form">
+              <el-form-item label="Type">
+                <el-select v-model="form.type" placeholder="select...">
+                  <el-option label="Word" value="Word"></el-option>
+                  <el-option label="Phrase" value="Phrase"></el-option>
+                  <el-option label="Sentence" value="Sentence"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Text" label-width="120px">
+                <el-input v-model="form.text" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="Emphasis" label-width="120px">
+                <el-input v-model="form.emphasis" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="Location">
+                <el-select v-model="form.location" placeholder="select...">
+                  <el-option label="Initial" value="Initial"></el-option>
+                  <el-option label="Medial" value="Medial"></el-option>
+                  <el-option label="Final" value="Final"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Syllable">
+                <el-select v-model="form.syllable" placeholder="select...">
+                  <el-option label="1" value="1"></el-option>
+                  <el-option label="2" value="2"></el-option>
+                  <el-option label="3" value="3"></el-option>
+                  <el-option label="4" value="4"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Image:">
+                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
+              </el-form-item>
+              <el-form-item label="Audio:">
+                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+              </el-form-item>
+              <el-form-item label="Properties">
+                <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogSyllableVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="onSaveSyllable">Save</el-button>
+            </span>
+          </el-dialog>
+        </div>
+
         <ag-grid-vue
           style="width: 700px;height: 500px"
           class="ag-theme-balham"
           :columnDefs="syllableColumnDefs"
           :rowData="articulation.model.syllable"
-          :context="context"
+          :context="syllableContext"
           :frameworkComponents="frameworkComponents"
-          rowHeight="30"
+          :enableCellChangeFlash="true"
+          rowHeight="35"
+          :gridOptions="gridOptionsSyllable"
         ></ag-grid-vue>
       </el-tab-pane>
       <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
+        <div>
+          <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
+
+          <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
+            <el-form :model="form">
+              <el-form-item label="Type">
+                <el-select v-model="form.type" placeholder="select...">
+                  <el-option label="Word" value="Word"></el-option>
+                  <el-option label="Phrase" value="Phrase"></el-option>
+                  <el-option label="Sentence" value="Sentence"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Text" label-width="120px">
+                <el-input v-model="form.text" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="Emphasis" label-width="120px">
+                <el-input v-model="form.emphasis" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="Blend">
+                <el-select v-model="form.blend" placeholder="select...">
+                  <el-option v-for="item in getItems()" :label="item" :value="item"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Image:">
+                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
+              </el-form-item>
+              <el-form-item label="Audio:">
+                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+              </el-form-item>
+              <el-form-item label="Properties">
+                <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogBlendVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="onSaveBlend">Save</el-button>
+            </span>
+          </el-dialog>
+        </div>
+
         <ag-grid-vue
           style="width:700px;height:500px"
           class="ag-theme-balham"
           :columnDefs="blendColumnDefs"
           :rowData="articulation.model.blend"
-          :context="context"
+          :context="blendContext"
           :frameworkComponents="frameworkComponents"
-          rowHeight="30"
+          :enableCellChangeFlash="true"
+          rowHeight="35"
+          :gridOptions="gridOptionsBlend"
         ></ag-grid-vue>
       </el-tab-pane>
     </el-tabs>
@@ -71,6 +165,7 @@ import { AgGridVue } from 'ag-grid-vue';
 // import GoodStory from './GoodStory.vue';
 // import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 import { ActivitiesModule } from '../../../store/modules/activities';
+// import dropper from '../../dashboard/components/dropper.vue';
 
 import DeleteCell from './delete-cell.vue';
 
@@ -105,24 +200,90 @@ import DeleteCell from './delete-cell.vue';
   },
 })
 export default class Modely extends Vue {
-  get storageUrl() {
-    return `E:/sagi-tera-files/`; // ${this.articulation.type.domain.name}/${this.articulation.type.name}/${this.articulation._id}`;
+  gridOptionsBlend = {};
+  gridOptionsSyllable = {};
+
+  public all = {
+    s: [
+      'sk',
+      'sl',
+      'sm',
+      'sn',
+      'sp',
+      'st',
+      'sw',
+      'skw',
+      'skr',
+      'str',
+      'spl',
+      'spr',
+    ],
+    l: ['bl', 'cl', 'gl', 'fl', 'pl', 'sl'],
+    r: [
+      'br',
+      'cr',
+      'dr',
+      'fr',
+      'gr',
+      'tr',
+      'pr',
+      'shr',
+      'thr',
+      'ar',
+      'er',
+      'air',
+      'ire',
+      'ear',
+      'or',
+    ],
+    w: ['kw'],
+  };
+
+  getItems() {
+    // this.articulation.name
+    const a = this.all[this.articulation.name.toLocaleLowerCase()];
+
+    return this.all[this.articulation.name.toLocaleLowerCase()];
   }
-  public context;
+
+  public addSyllable() {
+    this.form = this.createNewSyllable();
+
+    this.dialogSyllableVisible = true;
+  }
+
+  public addBlend() {
+    this.form = this.createNewBlend() as any;
+
+    this.dialogBlendVisible = true;
+  }
+
+  get storageUrl() {
+    return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
+  }
+
+  public dialogSyllableVisible = false;
+  public dialogBlendVisible = false;
+
+  public blendContext;
+  public syllableContext;
   public frameworkComponents;
 
   public syllableColumnDefs = [
-    {
-      cellRenderer: 'deleteCell',
-    },
     { headerName: 'Text', field: 'text' },
     { headerName: 'Type', field: 'type' },
     { headerName: 'Emphasis', field: 'emphasis' },
     { headerName: 'Location', field: 'location' },
     { headerName: 'Syllable', field: 'syllable' },
-    { headerName: 'Image', field: 'image' },
+    { headerName: 'Image', field: 'media' },
     { headerName: 'Isolate', field: 'isolate' },
-    { headerName: 'Recording', field: 'recording' },
+    { headerName: 'Recording', field: 'audio' },
+
+    {
+      cellRenderer: 'deleteCell',
+      pinned: 'right',
+      width: 100,
+    },
   ];
 
   public blendColumnDefs = [
@@ -130,9 +291,16 @@ export default class Modely extends Vue {
     { headerName: 'Type', field: 'type' },
     { headerName: 'Emphasis', field: 'emphasis' },
     { headerName: 'Blend', field: 'blend' },
-    { headerName: 'Image', field: 'image' },
+    { headerName: 'Image', field: 'media' },
     { headerName: 'Isolate', field: 'isolate' },
-    { headerName: 'Recording', field: 'recording' },
+    { headerName: 'Recording', field: 'audio' },
+
+    {
+      cellRenderer: 'deleteCell',
+
+      pinned: 'right',
+      width: 100,
+    },
   ];
 
   @Prop() public articulation;
@@ -149,169 +317,157 @@ export default class Modely extends Vue {
   public myArray = [];
   public d = 1;
 
-  // get filterX() {
-  //   if (!this.activity.category) return [];
-
-  //   return this.subcategories.filter(
-  //     (xx) => xx.category === this.activity.category._id
-  //   );
-  // }
-
-  // addSlide() {
-  //   //this.slides.push({ id: this.d, name: `name ${this.d}` });
-  //   this.activity.slides.push({
-  //     media: [],
-  //     model: {
-  //       phrases: ['value1', 'value2'],
-  //       mediaIndex: '3',
-  //       size: '3',
-  //       audio: [],
-  //       categoryIndex: '',
-  //     },
-  //   });
-  //   this.d++;
-  // }
-  // activity2 = null;
-
-  // @Watch('activity')
-  // onChildChanged(val: any, oldVal: any) {
-  //   console.log('here', val);
-  //   this.activity2 = val;
-  //  }
-
-  //   categories;
-
-  //   async beforeRouteUpdate(to, from, next) {
-  //     console.log('beforeRouteUpdate');
-
-  //     const res = await request({
-  //       url: `/api/v1/activities/${to.params.activity}`,
-  //       method: 'get',
-  //       baseURL: '',
-  //     });
-
-  //     this.activity = (res as any).activity;
-
-  //       this.activity.options = [];
-  //       if (this.activity.free) this.activity.options.push('Free');
-  //       if (this.activity.printable) this.activity.options.push('Printable');
-  //       if (this.activity.editorial) this.activity.options.push('Editorial');
-  //       if (this.activity.isolate) this.activity.options.push('Isolate');
-  //     next();
-  //   }
-
-  //   async beforeRouteEnter(to, from, next) {
-  //     console.log('beforeRouteEnter..');
-
-  //     const res = await request({
-  //       url: `/api/v1/activities/${to.params.activity}`,
-  //       method: 'get',
-  //       baseURL: '',
-  //     });
-
-  //     const res2 = await request({
-  //       url: `/api/v1/categories`,
-  //       method: 'get',
-  //       baseURL: '',
-  //     });
-
-  //     next((vm) => {
-  //       // debugger;
-  //       vm.activity = (res as any).activity;
-
-  //       vm.activity.options = [];
-  //       if (vm.activity.free) vm.activity.options.push('Free');
-  //       if (vm.activity.printable) vm.activity.options.push('Printable');
-  //       if (vm.activity.editorial) vm.activity.options.push('Editorial');
-  //       if (vm.activity.isolate) vm.activity.options.push('Isolate');
-
-  //       vm.categories = (res2 as any).categories;
-
-  // console.log('x', vm.categories);
-  //       console.log(vm.activity);
-
-  //     });
-
-  //     // this.activity.options = [];
-  //     // if (this.activity.free) this.activity.options.push('Free');
-  //     // if (this.activity.printable) this.activity.options.push('Printable');
-  //     // if (this.activity.editorial) this.activity.options.push('Editorial');
-  //     // if (this.activity.isolate) this.activity.options.push('Isolate');
-  //   }
-  //   // beforeRouteEnter(to, from, next) {
-  //   //   console.log('fff');
-  //   //   console.log('xxx', to.params.activity);
-  //   //   request({
-  //   //     url: `/api/v1/activities/${to.params.activity}`,
-  //   //     method: 'get',
-  //   //     baseURL: '',
-  //   //   }).then((r: any) => {
-
-  //   //     next(vm => {
-  //   //     vm.activity = r.activity;
-  //   //     vm.activity.options = [];
-  //   //     if (vm.activity.free) vm.activity.options.push('Free');
-  //   //     if (vm.activity.printable) vm.activity.options.push('Printable');
-  //   //     if (vm.activity.editorial) vm.activity.options.push('Editorial');
-  //   //     if (vm.activity.isolate) vm.activity.options.push('Isolate');
-
-  //   //     })// needs to be called to confirm the navigation
-  //   //   });
-  //   // }
-
-  //   //   mounted() {
-
-  //   // request({
-  //   //     url: `/api/v1/activities/${this.$route.params.activity}`,
-  //   //     method: 'get',
-  //   //     baseURL: ''
-
-  //   //   }).then((r: any) => {
-  //   //   console.log({ r});
-  //   //     this.activity = r.activity;
-  //   //     this.activity.options = [];
-  //   //     if (this.activity.free) this.activity.options.push('Free');
-  //   //     if (this.activity.printable) this.activity.options.push('Printable');
-  //   //     if (this.activity.editorial) this.activity.options.push('Editorial');
-  //   //     if (this.activity.isolate) this.activity.options.push('Isolate');
-
-  //   //     // console.log({ x: this.items[0] });
-  //   //   });
-  //   // }
-
   public form = {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [''],
-    resource: '',
-    desc: '',
+    emphasis: null,
+    text: null,
+    isolate: false,
+    audio: [],
+    type: null,
+    location: null,
+    media: [],
+    syllable: null,
   };
 
+  public createNewSyllable() {
+    const form = {
+      emphasis: null,
+      text: null,
+      isolate: false,
+      audio: [],
+      type: null,
+      location: null,
+      media: [],
+      syllable: null,
+    };
+
+    return { ...form };
+  }
+
+  public createNewBlend() {
+    const form = {
+      emphasis: null,
+      text: null,
+      isolate: false,
+      audio: [],
+      type: null,
+      blend: null,
+      media: [],
+    };
+
+    return { ...form };
+  }
+
   public beforeMount() {
-    this.context = { componentParent: this };
+    this.blendContext = { componentParent: this, source: 'blend' };
+    this.syllableContext = { componentParent: this, source: 'syllable' };
+
     this.frameworkComponents = {
       deleteCell: DeleteCell,
     };
   }
 
-  public methodFromParent(cell) {
-    alert('Parent Component Method from ' + cell + '!');
+  onSaveSyllable() {
+    const data = this.form as any;
+
+    if (!data._id) {
+      this.articulation.model.syllable.push(data);
+      this.dialogSyllableVisible = false;
+
+      (this.gridOptionsSyllable as any).api.refreshCells();
+      return;
+    }
+
+    var it = this.articulation.model.syllable.find((s) => s._id === data._id);
+
+    it.emphasis = data.emphasis;
+    it.text = data.text;
+    it.isolate = data.isolate;
+    it.audio = data.audio;
+    it.type = data.type;
+    it.location = data.location;
+    it.media = data.media;
+    it.syllable = data.syllable;
+    // articulation.model.syllable
+    this.dialogSyllableVisible = false;
+
+    (this.gridOptionsSyllable as any).api.refreshCells();
   }
 
-  public onRowDoubleClicked(event) {
-    console.log('fuck');
+  onSaveBlend() {
+    const data = this.form as any;
+
+    if (!data._id) {
+      this.articulation.model.blend.push(data);
+      this.dialogBlendVisible = false;
+
+      (this.gridOptionsBlend as any).api.refreshCells();
+      return;
+    }
+
+    var it = this.articulation.model.blend.find((s) => s._id === data._id);
+
+    it.emphasis = data.emphasis;
+    it.text = data.text;
+    it.type = data.type;
+    it.blend = data.blend;
+    it.audio = data.audio;
+    it.media = data.media;
+    // articulation.model.syllable
+    this.dialogBlendVisible = false;
+
+    (this.gridOptionsBlend as any).api.refreshCells();
   }
 
-  // mounted() {
+  edit(data, source) {
+    if (source === 'blend') {
+      this.editBlend(data);
+      return;
+    }
 
-  // }
+    this.editSyllable(data);
+  }
 
-  // removeSlide(index) {
-  //   this.articulation.slides.splice(index, 1);
-  // }
+  editBlend(data) {
+    this.form = data;
+
+    this.dialogBlendVisible = true;
+  }
+
+  editSyllable(data) {
+    this.form = data;
+
+    this.dialogSyllableVisible = true;
+  }
+
+  delete(data, source) {
+    if (source === 'blend') {
+      this.deleteBlend(data);
+      return;
+    }
+
+    this.deleteSyllable(data);
+  }
+
+  deleteBlend(data) {
+    this.articulation.model.blend = this.articulation.model.blend.filter(
+      (s) => s._id !== data._id
+    );
+
+    this.dialogBlendVisible = false;
+
+    (this.gridOptionsBlend as any).api.refreshCells();
+  }
+
+  deleteSyllable(data) {
+    this.articulation.model.syllable = this.articulation.model.syllable.filter(
+      (s) => s._id !== data._id
+    );
+
+    this.dialogSyllableVisible = false;
+
+    (this.gridOptionsSyllable as any).api.refreshCells();
+  }
+
 
   public some() {
     // const files = this.$refs.myVueDropzone[0].getQueuedFiles();
@@ -344,5 +500,4 @@ export default class Modely extends Vue {
     console.log('submit!');
   }
 }
-</script
->;
+</script>

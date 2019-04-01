@@ -198,6 +198,44 @@ router.post('/activities', async (req, res, next) => {
   res.json({ activity, code: 20000 });
 });
 
+
+router.post('/articulations', async (req, res, next) => {
+  // const categories = await Category.find({});
+
+  console.log('***create or update articulation: ', req.body.articulation);
+
+  const articulation = await Articulation.findOneAndUpdate(
+    { _id: req.body.articulation._id },
+    req.body.articulation,
+    {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true,
+    }
+  );
+    // .populate('category')
+    // .populate('subCategory')
+    // .populate({ path: 'type', populate: { path: 'domain' } });
+
+  // if (d && d !== 'add') {
+  //   up = await Activity.findOneAndUpdate({ _id: d }, req.body.activity, {
+  //     upsert: true,
+  //     new: true,
+  //   });
+  // } else {
+  //   up = await Activity.insertMany([req.body.activity]);
+  // }
+
+  // const activities = await Activity.findOne({ _id: up })
+  //   .populate('category')
+  //   .populate('subCategory')
+  //   .populate({ path: 'type', populate: { path: 'domain' } });
+
+  // console.log({ up });
+
+  res.json({ articulation, code: 20000 });
+});
+
 router.delete('/activities/:id', async (req, res, next) => {
   const activity = await Activity.findByIdAndRemove(req.params.id);
   console.log('in del');
