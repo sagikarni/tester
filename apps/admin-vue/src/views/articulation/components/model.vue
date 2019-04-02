@@ -18,7 +18,9 @@
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
+          <el-button icon="el-icon-plus" type="primary" @click="addSyllable"
+            >Add Syllable</el-button
+          >
 
           <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
             <el-form :model="form">
@@ -51,17 +53,25 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
+                <dropper
+                  v-model="form.media"
+                  placeholder="Drop here image files"
+                ></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
-                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+                <dropper
+                  v-model="form.audio"
+                  placeholder="Drop here audio files"
+                ></dropper>
               </el-form-item>
               <el-form-item label="Properties">
                 <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogSyllableVisible = false">Cancel</el-button>
+              <el-button @click="dialogSyllableVisible = false"
+                >Cancel</el-button
+              >
               <el-button type="primary" @click="onSaveSyllable">Save</el-button>
             </span>
           </el-dialog>
@@ -79,9 +89,15 @@
           :gridOptions="gridOptionsSyllable"
         ></ag-grid-vue>
       </el-tab-pane>
-      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
+      <el-tab-pane
+        label="By Blend"
+        name="blend"
+        :disabled="!articulation.model.blend.length"
+      >
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
+          <el-button icon="el-icon-plus" type="primary" @click="addBlend"
+            >Add Blend</el-button
+          >
 
           <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
             <el-form :model="form">
@@ -100,14 +116,24 @@
               </el-form-item>
               <el-form-item label="Blend">
                 <el-select v-model="form.blend" placeholder="select...">
-                  <el-option v-for="item in getItems()" :label="item" :value="item"></el-option>
+                  <el-option
+                    v-for="item in getItems()"
+                    :label="item"
+                    :value="item"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
+                <dropper
+                  v-model="form.media"
+                  placeholder="Drop here image files"
+                ></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
-                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+                <dropper
+                  v-model="form.audio"
+                  placeholder="Drop here audio files"
+                ></dropper>
               </el-form-item>
               <el-form-item label="Properties">
                 <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
@@ -200,6 +226,9 @@ import DeleteCell from './delete-cell.vue';
   },
 })
 export default class Modely extends Vue {
+  get storageUrl() {
+    return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
+  }
   gridOptionsBlend = {};
   gridOptionsSyllable = {};
 
@@ -238,29 +267,6 @@ export default class Modely extends Vue {
     ],
     w: ['kw'],
   };
-
-  getItems() {
-    // this.articulation.name
-    const a = this.all[this.articulation.name.toLocaleLowerCase()];
-
-    return this.all[this.articulation.name.toLocaleLowerCase()];
-  }
-
-  public addSyllable() {
-    this.form = this.createNewSyllable();
-
-    this.dialogSyllableVisible = true;
-  }
-
-  public addBlend() {
-    this.form = this.createNewBlend() as any;
-
-    this.dialogBlendVisible = true;
-  }
-
-  get storageUrl() {
-    return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
-  }
 
   public dialogSyllableVisible = false;
   public dialogBlendVisible = false;
@@ -328,6 +334,25 @@ export default class Modely extends Vue {
     syllable: null,
   };
 
+  getItems() {
+    // this.articulation.name
+    const a = this.all[this.articulation.name.toLocaleLowerCase()];
+
+    return this.all[this.articulation.name.toLocaleLowerCase()];
+  }
+
+  public addSyllable() {
+    this.form = this.createNewSyllable();
+
+    this.dialogSyllableVisible = true;
+  }
+
+  public addBlend() {
+    this.form = this.createNewBlend() as any;
+
+    this.dialogBlendVisible = true;
+  }
+
   public createNewSyllable() {
     const form = {
       emphasis: null,
@@ -377,7 +402,7 @@ export default class Modely extends Vue {
       return;
     }
 
-    var it = this.articulation.model.syllable.find((s) => s._id === data._id);
+    const it = this.articulation.model.syllable.find((s) => s._id === data._id);
 
     it.emphasis = data.emphasis;
     it.text = data.text;
@@ -404,7 +429,7 @@ export default class Modely extends Vue {
       return;
     }
 
-    var it = this.articulation.model.blend.find((s) => s._id === data._id);
+    const it = this.articulation.model.blend.find((s) => s._id === data._id);
 
     it.emphasis = data.emphasis;
     it.text = data.text;
@@ -467,7 +492,6 @@ export default class Modely extends Vue {
 
     (this.gridOptionsSyllable as any).api.refreshCells();
   }
-
 
   public some() {
     // const files = this.$refs.myVueDropzone[0].getQueuedFiles();

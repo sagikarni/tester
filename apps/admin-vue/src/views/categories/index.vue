@@ -14,7 +14,11 @@
         <el-input v-model="formSubcategory.name" placeholder="name"></el-input>
       </el-form-item>
       <el-form-item label="In Category:">
-        <el-select placeholder="Category" v-model="formSubcategory.category" clearable>
+        <el-select
+          placeholder="Category"
+          v-model="formSubcategory.category"
+          clearable
+        >
           <el-option
             :key="category.name"
             :label="category.name"
@@ -44,7 +48,8 @@
             size="mini"
             :disabled="data.used"
             @click="() => remove(node, data)"
-          >Delete</el-button>
+            >Delete</el-button
+          >
         </span>
       </span>
     </el-tree>

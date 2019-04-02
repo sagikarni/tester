@@ -130,13 +130,19 @@ export default class Slides extends Vue {
   }
 
   add(e) {
-    if (!e.dataTransfer.files) { return; }
-    if (!e.dataTransfer.files.length) { return; }
+    if (!e.dataTransfer.files) {
+      return;
+    }
+    if (!e.dataTransfer.files.length) {
+      return;
+    }
 
     const added = [];
     [...e.dataTransfer.files].forEach((f, i) => {
       const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
-      if (added.includes(filename)) { return; }
+      if (added.includes(filename)) {
+        return;
+      }
       added.push(filename);
 
       const img = window.URL.createObjectURL(f);

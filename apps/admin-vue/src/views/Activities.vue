@@ -14,14 +14,10 @@
         v-model="searchKey"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
+      <v-btn icon> <v-icon>apps</v-icon> </v-btn>
+      <v-btn icon> <v-icon>notifications</v-icon> </v-btn>
     </v-toolbar>
-    <DashboardView :searchKey="searchKey"/>
+    <DashboardView :searchKey="searchKey" />
     <v-btn
       fab
       bottom

@@ -224,7 +224,6 @@ import { ActivitiesModule } from '../../../store/modules/activities';
   },
 })
 export default class Modely extends Vue {
-
   get categories() {
     return ActivitiesModule.categories;
   }
@@ -252,7 +251,9 @@ export default class Modely extends Vue {
   }
 
   get filterX() {
-    if (!this.activity.category) { return []; }
+    if (!this.activity.category) {
+      return [];
+    }
 
     return this.subcategories.filter(
       (xx) => xx.category === this.activity.category._id

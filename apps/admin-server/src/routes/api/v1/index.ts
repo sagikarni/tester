@@ -198,7 +198,6 @@ router.post('/activities', async (req, res, next) => {
   res.json({ activity, code: 20000 });
 });
 
-
 router.post('/articulations', async (req, res, next) => {
   // const categories = await Category.find({});
 
@@ -213,9 +212,9 @@ router.post('/articulations', async (req, res, next) => {
       setDefaultsOnInsert: true,
     }
   );
-    // .populate('category')
-    // .populate('subCategory')
-    // .populate({ path: 'type', populate: { path: 'domain' } });
+  // .populate('category')
+  // .populate('subCategory')
+  // .populate({ path: 'type', populate: { path: 'domain' } });
 
   // if (d && d !== 'add') {
   //   up = await Activity.findOneAndUpdate({ _id: d }, req.body.activity, {

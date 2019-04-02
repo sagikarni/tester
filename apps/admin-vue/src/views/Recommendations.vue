@@ -5,14 +5,10 @@
         <span class="hidden-sm-and-down">Via Admin</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
+      <v-btn icon> <v-icon>apps</v-icon> </v-btn>
+      <v-btn icon> <v-icon>notifications</v-icon> </v-btn>
     </v-toolbar>
-    <RecommendationsView/>
+    <RecommendationsView />
   </div>
 </template>
 

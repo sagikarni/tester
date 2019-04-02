@@ -1,5 +1,5 @@
 <template>
-  <Shell/>
+  <Shell />
 </template>
 
 <script lang="ts">

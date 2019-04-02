@@ -6,7 +6,9 @@
           <el-col :span="24">
             <div
               style="font-size:13px;background:khaki;color:#444;font-weight:bold;padding:10px"
-            >{{ items.length }} Activities Founds</div>
+            >
+              {{ items.length }} Activities Founds
+            </div>
           </el-col>
         </el-row>
         <el-row>
@@ -29,8 +31,7 @@
                 <div class="name">{{ item.name }}</div>
 
                 <div class="tags">
-                  <span>{{ item.name }}</span>
-                  <span>{{ item._id }}</span>
+                  <span>{{ item.name }}</span> <span>{{ item._id }}</span>
                 </div>
               </router-link>
 
@@ -40,12 +41,17 @@
         </el-row>
       </el-col>
       <el-col :span="18">
-        <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
+        <el-scrollbar
+          wrap-class="list"
+          view-class="view-box"
+          :native="false"
+          class="colscrol"
+        >
           <!-- -- as ! < divstyle="height:2000px;background:blue;">lllbla</div> -->
           <div
             style="background:white;display:flex;justify-content:center;align-items:center;min-height:100%;padding:20px"
           >
-            <router-view/>
+            <router-view />
           </div>
         </el-scrollbar>
       </el-col>

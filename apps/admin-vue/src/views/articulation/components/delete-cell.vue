@@ -1,7 +1,19 @@
 <template>
   <span>
-    <el-button size="mini" type="primary" icon="el-icon-edit" circle v-on:click="onEdit"></el-button>
-    <el-button size="mini" type="danger" icon="el-icon-delete" circle v-on:click="onDelete"></el-button>
+    <el-button
+      size="mini"
+      type="primary"
+      icon="el-icon-edit"
+      circle
+      v-on:click="onEdit"
+    ></el-button>
+    <el-button
+      size="mini"
+      type="danger"
+      icon="el-icon-delete"
+      circle
+      v-on:click="onDelete"
+    ></el-button>
   </span>
 </template>
 
