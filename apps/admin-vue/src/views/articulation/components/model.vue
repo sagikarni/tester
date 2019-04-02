@@ -120,6 +120,7 @@
                     v-for="item in getItems()"
                     :label="item"
                     :value="item"
+                    :key="item"
                   ></el-option>
                 </el-select>
               </el-form-item>
