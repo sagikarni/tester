@@ -1,59 +1,56 @@
 <template>
-  <div class="dashboard-container" style="position:relative;padding:20px;">
-    <el-form :inline="true" :model="formCategory" class="demo-form-inline">
-      <el-form-item label="Category:">
-        <el-input v-model="formCategory.name" placeholder="name"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="addCategory">Add</el-button>
-      </el-form-item>
-    </el-form>
+  <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
+    <div class="dashboard-container" style="position:relative;padding:20px;">
+      <el-form :inline="true" :model="formCategory" class="demo-form-inline">
+        <el-form-item label="Category:">
+          <el-input v-model="formCategory.name" placeholder="name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="addCategory">Add</el-button>
+        </el-form-item>
+      </el-form>
 
-    <el-form :inline="true" :model="formSubcategory" class="demo-form-inline">
-      <el-form-item label="Subcategory:">
-        <el-input v-model="formSubcategory.name" placeholder="name"></el-input>
-      </el-form-item>
-      <el-form-item label="In Category:">
-        <el-select
-          placeholder="Category"
-          v-model="formSubcategory.category"
-          clearable
-        >
-          <el-option
-            :key="category.name"
-            :label="category.name"
-            :value="category.name"
-            v-for="category in categories"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="addSubcategory">Add</el-button>
-      </el-form-item>
-    </el-form>
+      <el-form :inline="true" :model="formSubcategory" class="demo-form-inline">
+        <el-form-item label="Subcategory:">
+          <el-input v-model="formSubcategory.name" placeholder="name"></el-input>
+        </el-form-item>
+        <el-form-item label="In Category:">
+          <el-select placeholder="Category" v-model="formSubcategory.category" clearable>
+            <el-option
+              :key="category.name"
+              :label="category.name"
+              :value="category.name"
+              v-for="category in categories"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="addSubcategory">Add</el-button>
+        </el-form-item>
+      </el-form>
 
-    <el-tree
-      :data="datab"
-      :props="defaultProps"
-      @node-click="handleNodeClick"
-      node-key="label"
-      default-expand-all
-      :expand-on-click-node="false"
-    >
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-        <span style="margin:0 20px;">
-          <el-button
-            type="text"
-            size="mini"
-            :disabled="data.used"
-            @click="() => remove(node, data)"
-            >Delete</el-button
-          >
+      <el-tree
+        :data="datab"
+        :props="defaultProps"
+        @node-click="handleNodeClick"
+        node-key="label"
+        default-expand-all
+        :expand-on-click-node="false"
+      >
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>{{ node.label }}</span>
+          <span style="margin:0 20px;">
+            <el-button
+              type="text"
+              size="mini"
+              :disabled="data.used"
+              @click="() => remove(node, data)"
+            >Delete</el-button>
+          </span>
         </span>
-      </span>
-    </el-tree>
-  </div>
+      </el-tree>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script lang="ts">
@@ -249,7 +246,7 @@ export default class Categories extends Vue {
   background-color: #fff;
 }
 .colscrol {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 66px);
   // width: 60%;
   // display: inline-block;
 
