@@ -1,13 +1,9 @@
 <template>
   <div>
-    <Model
-      :add="false"
-      :articulation="articulation"
-      style="margin-bottom:20px"
-    />
-
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button @click="onCancel">Cancel</el-button>
+
+    <Model :add="false" :articulation="articulation" style="margin:20px 0;"/>
   </div>
 </template>
 

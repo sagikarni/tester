@@ -32,7 +32,7 @@
 
       <el-button @click="addCollection" type="text">Add New Collection</el-button>
       <br>
-      <el-button @click="save" type="text">Save All</el-button>
+      <el-button @click="save" type="primary">Save All</el-button>
     </div>
   </el-scrollbar>
 </template>

@@ -1,26 +1,9 @@
 <template>
   <el-form :model="form" label-width="120px" v-if="articulation">
-    <el-form-item label="Storage">
-      <span>{{ storageUrl }}</span>
-    </el-form-item>
-
-    <el-form-item label="Title">
-      <el-input v-model="articulation.title"></el-input>
-    </el-form-item>
-
-    <el-form-item label="Description">
-      <el-input type="textarea" v-model="articulation.description"></el-input>
-    </el-form-item>
-
-    <el-form-item label="Notes">
-      <el-input type="textarea" v-model="articulation.notes"></el-input>
-    </el-form-item>
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addSyllable"
-            >Add Syllable</el-button
-          >
+          <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
             <el-form :model="form">
@@ -53,51 +36,37 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper
-                  v-model="form.media"
-                  placeholder="Drop here image files"
-                ></dropper>
+                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
-                <dropper
-                  v-model="form.audio"
-                  placeholder="Drop here audio files"
-                ></dropper>
+                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
               </el-form-item>
               <el-form-item label="Properties">
                 <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogSyllableVisible = false"
-                >Cancel</el-button
-              >
+              <el-button @click="dialogSyllableVisible = false">Cancel</el-button>
               <el-button type="primary" @click="onSaveSyllable">Save</el-button>
             </span>
           </el-dialog>
         </div>
 
         <ag-grid-vue
-          style="width: 700px;height: 500px"
+          style="width: 700px;height: 500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="syllableColumnDefs"
           :rowData="articulation.model.syllable"
           :context="syllableContext"
           :frameworkComponents="frameworkComponents"
           :enableCellChangeFlash="true"
-          rowHeight="35"
+          rowHeight="55"
           :gridOptions="gridOptionsSyllable"
         ></ag-grid-vue>
       </el-tab-pane>
-      <el-tab-pane
-        label="By Blend"
-        name="blend"
-        :disabled="!articulation.model.blend.length"
-      >
+      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addBlend"
-            >Add Blend</el-button
-          >
+          <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
             <el-form :model="form">
@@ -116,25 +85,14 @@
               </el-form-item>
               <el-form-item label="Blend">
                 <el-select v-model="form.blend" placeholder="select...">
-                  <el-option
-                    v-for="item in getItems()"
-                    :label="item"
-                    :value="item"
-                    :key="item"
-                  ></el-option>
+                  <el-option v-for="item in getItems()" :label="item" :value="item" :key="item"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper
-                  v-model="form.media"
-                  placeholder="Drop here image files"
-                ></dropper>
+                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
-                <dropper
-                  v-model="form.audio"
-                  placeholder="Drop here audio files"
-                ></dropper>
+                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
               </el-form-item>
               <el-form-item label="Properties">
                 <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
@@ -148,18 +106,34 @@
         </div>
 
         <ag-grid-vue
-          style="width:700px;height:500px"
+          style="width:700px;height:500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="blendColumnDefs"
           :rowData="articulation.model.blend"
           :context="blendContext"
           :frameworkComponents="frameworkComponents"
           :enableCellChangeFlash="true"
-          rowHeight="35"
+          rowHeight="55"
           :gridOptions="gridOptionsBlend"
         ></ag-grid-vue>
       </el-tab-pane>
     </el-tabs>
+
+    <el-form-item label="Storage">
+      <span>{{ storageUrl }}</span>
+    </el-form-item>
+
+    <el-form-item label="Title">
+      <el-input v-model="articulation.title"></el-input>
+    </el-form-item>
+
+    <el-form-item label="Description">
+      <el-input type="textarea" v-model="articulation.description"></el-input>
+    </el-form-item>
+
+    <el-form-item label="Notes">
+      <el-input type="textarea" v-model="articulation.notes"></el-input>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -171,33 +145,16 @@ import draggable from 'vuedraggable';
 import dropper from './dropper.vue';
 import { AgGridVue } from 'ag-grid-vue';
 
-// Component.registerHooks([
-//   'beforeRouteEnter',
-//   'beforeRouteLeave',
-//   'beforeRouteUpdate', // for vue-router 2.2+
-// ]);
-// import Plain from './Plain.vue';
-// import Facts from './Facts.vue';
-// import Questions from './Questions.vue';
-// import Categorization from './Categorization.vue';
-// import PhotoAssembly from './PhotoAssembly.vue';
-// import WhatsInThePicture from './WhatsInThePicture.vue';
-// import MemoryCards from './MemoryCards.vue';
-// import WhatIsWrong from './WhatIsWrong.vue';
-// import Zoom from './Zoom.vue';
-// import SpotTheDifference from './SpotTheDifference.vue';
-// import ISee from './ISee.vue';
-// import Meaning from './Meaning.vue';
-// import WHQuestions from './WHQuestions.vue';
-// import GoodStory from './GoodStory.vue';
-// import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 import { ActivitiesModule } from '../../../store/modules/activities';
-// import dropper from '../../dashboard/components/dropper.vue';
 
 import DeleteCell from './delete-cell.vue';
+import AudioCell from './cells/audio-cell.vue';
+import ImageCell from './cells/image-cell.vue';
 
 @Component({
   components: {
+    ImageCell,
+    AudioCell,
     DeleteCell,
     AgGridVue,
     draggable,
@@ -230,8 +187,22 @@ export default class Modely extends Vue {
   get storageUrl() {
     return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
   }
-  gridOptionsBlend = {};
-  gridOptionsSyllable = {};
+  gridOptionsBlend = {
+    defaultColDef: {
+      filter: true,
+      sortable: true,
+      resizable: false
+      //            filter: "agTextColumnFilter"
+    },
+  };
+  gridOptionsSyllable = {
+    defaultColDef: {
+      filter: true,
+      sortable: true,
+      resizable: true
+      //            filter: "agTextColumnFilter"
+    },
+  };
 
   public all = {
     s: [
@@ -278,14 +249,18 @@ export default class Modely extends Vue {
 
   public syllableColumnDefs = [
     { headerName: 'Text', field: 'text' },
-    { headerName: 'Type', field: 'type' },
-    { headerName: 'Emphasis', field: 'emphasis' },
-    { headerName: 'Location', field: 'location' },
-    { headerName: 'Syllable', field: 'syllable' },
-    { headerName: 'Image', field: 'media' },
-    { headerName: 'Isolate', field: 'isolate' },
-    { headerName: 'Recording', field: 'audio' },
+    { headerName: 'Emphasis', field: 'emphasis', width: 100 },
+    { headerName: 'Type', field: 'type', width: 80 },
+    { headerName: 'Location', field: 'location', width: 80 },
+    { headerName: 'Syllable', field: 'syllable', width: 80 },
+    { headerName: 'Isolate', field: 'isolate', width: 80 },
 
+    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell' },
+    {
+      headerName: 'Recording',
+      field: 'audio',
+      cellRenderer: 'audioCell',
+    },
     {
       cellRenderer: 'deleteCell',
       pinned: 'right',
@@ -295,13 +270,16 @@ export default class Modely extends Vue {
 
   public blendColumnDefs = [
     { headerName: 'Text', field: 'text' },
-    { headerName: 'Type', field: 'type' },
-    { headerName: 'Emphasis', field: 'emphasis' },
-    { headerName: 'Blend', field: 'blend' },
-    { headerName: 'Image', field: 'media' },
-    { headerName: 'Isolate', field: 'isolate' },
-    { headerName: 'Recording', field: 'audio' },
-
+    { headerName: 'Emphasis', field: 'emphasis', width: 100 },
+    { headerName: 'Type', field: 'type', width: 80 },
+    { headerName: 'Blend', field: 'blend', width: 80 },
+    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell' },
+    { headerName: 'Isolate', field: 'isolate', width: 80 },
+     {
+      headerName: 'Recording',
+      field: 'audio',
+      cellRenderer: 'audioCell',
+    },
     {
       cellRenderer: 'deleteCell',
 
@@ -389,6 +367,8 @@ export default class Modely extends Vue {
 
     this.frameworkComponents = {
       deleteCell: DeleteCell,
+      audioCell: AudioCell,
+      imageCell: ImageCell,
     };
   }
 
@@ -526,3 +506,11 @@ export default class Modely extends Vue {
   }
 }
 </script>
+
+
+<style lang="scss">
+.ag-theme-balham .ag-ltr .ag-cell {
+  display: flex;
+  align-items: center;
+}
+</style>

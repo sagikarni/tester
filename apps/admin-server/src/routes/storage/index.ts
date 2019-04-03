@@ -23,24 +23,27 @@ router.get('/*', (req, res, next) => {
       Bucket: 'sagi-tera-files',
       Key: fileKey,
     };
-
     res.attachment(fileKey);
+
     const fileStream = s3
       .getObject(options)
       .createReadStream()
       .on('error', (err) => {
+        console.log({ err });
         console.log('download failed');
         res.sendStatus(404);
+        console.log('in error cb');
         return;
         // res.end();
       });
     fileStream.pipe(res);
   } catch (ex) {
+    console.log('in error catch1');
     console.log({ ex });
-
+    console.log('in error catch2');
     res.sendStatus(404);
-
-    res.end();
+    console.log('in error catch3');
+    // res.end();
   }
 });
 
