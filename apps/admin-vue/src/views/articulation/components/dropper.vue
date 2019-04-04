@@ -8,9 +8,11 @@
     @drop="onDrop"
     style="position:relative;"
   >
-    <span id="dropper-text" style="text-align:center;display:block;">{{
+    <span id="dropper-text" style="text-align:center;display:block;">
+      {{
       placeholder
-    }}</span>
+      }}
+    </span>
 
     <div style="display:flex;flex-wrap:wrap;">
       <el-card
@@ -19,15 +21,11 @@
         :body-style="{ padding: '0px' }"
         style="width:200px;"
       >
-        <img :src="getImage(item)" class="image" />
+        <img :src="getImage(item)" class="image">
 
         <div style="padding: 10px;display:flex;justify-content: space-between;">
           <span>{{ item.name }}</span>
-          <el-button
-            type="text"
-            @click="remove(item)"
-            icon="el-icon-delete"
-          ></el-button>
+          <el-button type="text" @click="remove(item)" icon="el-icon-delete"></el-button>
         </div>
       </el-card>
     </div>
@@ -132,64 +130,9 @@ export default class Dropper extends Vue {
 
     this.$emit('input', this.items);
   }
-
-  // @Prop() value;
-  // @Prop() blobs;
-  // @Prop() path;
-  // files = [];
-  // onadd(file) {
-  //   //debugger;
-  //   // const files = this.$refs.myVueDropzone.getQueuedFiles();
-  //   this.files.push(file.name);
-  //   this.files = this.files.filter((f) => !!f);
-  //   // file: file.name
-  //   // console.log({ files });
-  //   this.$emit('input', this.files);
-  //   // this.slides[0]
-  // }
-  // vremoved(file, error, xhr) {
-  //   this.files = this.files.filter((f) => f !== file.name);
-  //   this.$emit('input', this.files);
-  // }
-  // vmounted() {
-  //   if (!this.value) return;
-  //   if (!this.value.length) return;
-  //   if (!this.$refs.myVueDropzone) return;
-  //   const path = this.path;
-  //   this.value.forEach((v, i) => {
-  //     var file = { size: 0, name: v, type: 'image/png' };
-  //     // debugger;
-  //     var url = 'https://via.placeholder.com/150';
-  //     if (this.path) {
-  //       url = `${this.path.replace('__FILE__', v.replace('.', '-m.'))}`;
-  //       console.log({ v });
-  //     }
-  //     // var url = `/api/v1/s3?fileKey=${path}/thumbnails/${v.replace('.', '-m.')}`; //'https://via.placeholder.com/150';
-  //     console.log({ url });
-  //     if (this.blobs) {
-  //       url = this.blobs[i];
-  //     }
-  //     // var f = new File([""], "filename.png", { type: 'image/png' });
-  //     (this.$refs.myVueDropzone as any).manuallyAddFile(file, url, null, null, {
-  //       dontSubtractMaxFiles: false,
-  //       addToFiles: true,
-  //     });
-  //   });
-  //   console.log(this.value);
-  // }
-  // dropzoneOptions = {
-  //   addRemoveLinks: true,
-  //   url: '/',
-  //   autoProcessQueue: false,
-  //   //duplicateCheck: true
-  //   // accept: (e, done) => {
-  //   //   debugger;
-  //   //   done('fick');
-  //   //   // debugger;
-  //   // }
-  // };
 }
 </script>
+
 <style lang="scss" scoped>
 .time {
   font-size: 13px;

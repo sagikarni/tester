@@ -6,7 +6,7 @@
           <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
-            <el-form :model="form">
+            <el-form :model="form" label-width="120px">
               <el-form-item label="Type">
                 <el-select v-model="form.type" placeholder="select...">
                   <el-option label="Word" value="Word"></el-option>
@@ -14,10 +14,10 @@
                   <el-option label="Sentence" value="Sentence"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="Text" label-width="120px">
+              <el-form-item label="Text">
                 <el-input v-model="form.text" autocomplete="off"></el-input>
               </el-form-item>
-              <el-form-item label="Emphasis" label-width="120px">
+              <el-form-item label="Emphasis">
                 <el-input v-model="form.emphasis" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="Location">
@@ -36,7 +36,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
+                <dropper :path="`/storage/Speech/articulation/${articulation.name}/__FILE__`" v-model="form.media" placeholder="Drop here image files"></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
                 <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>

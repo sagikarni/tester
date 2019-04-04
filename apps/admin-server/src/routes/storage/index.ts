@@ -1,50 +1,39 @@
 import { Router } from 'express';
-import { values, groupBy, entries, toPairs } from 'lodash';
+import aws from 'aws-sdk';
+import { async } from 'express-zone';
 
 const router = Router();
 
-const AWS = require('aws-sdk');
+const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET } = process.env;
 
-AWS.config.update({
-  accessKeyId: 'AKIAI54TZXRSE6JGWPCQ',
-  secretAccessKey: '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',
-  // region: 'ap-southeast-1',
+aws.config.update({
+  accessKeyId: ACCESS_KEY_ID,
+  secretAccessKey: SECRET_ACCESS_KEY,
 });
 
-router.get('/*', (req, res, next) => {
-  try {
-    console.log('xx', req.params[0]);
-
+router.get(
+  '/*',
+  async((req, res, next) => {
+    // http://localhost:8080/storage/Speech/articulation/B/4997825.jpg
     const fileKey = req.params[0];
-    console.log('Trying to download file', fileKey);
 
-    const s3 = new AWS.S3();
+    const s3 = new aws.S3();
     const options = {
-      Bucket: 'sagi-tera-files',
+      Bucket: BUCKET,
       Key: fileKey,
     };
+
     res.attachment(fileKey);
 
-    const fileStream = s3
-      .getObject(options)
+    s3.getObject(options)
       .createReadStream()
       .on('error', (err) => {
         console.log({ err });
-        console.log('download failed');
-        res.sendStatus(404);
-        console.log('in error cb');
-        return;
-        // res.end();
-      });
-    fileStream.pipe(res);
-  } catch (ex) {
-    console.log('in error catch1');
-    console.log({ ex });
-    console.log('in error catch2');
-    res.sendStatus(404);
-    console.log('in error catch3');
-    // res.end();
-  }
-});
+        res.status(404).end(); //sendStatus(404);
+        // return;
+      })
+      .pipe(res);
+  })
+);
 
 export { router as storage };
