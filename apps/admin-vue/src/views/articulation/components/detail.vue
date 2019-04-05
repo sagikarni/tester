@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="flex:1;">
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button @click="onCancel">Cancel</el-button>
 

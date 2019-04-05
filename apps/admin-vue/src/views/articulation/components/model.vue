@@ -6,7 +6,7 @@
           <div style="display:flex;justify-content: space-between;align-items: center;">
             <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
 
-            <div>{{syllableRows}} Rows</div>
+            <div style="margin:0 20px;font-weight:bold;">{{syllableRows}} Rows</div>
           </div>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
@@ -61,7 +61,7 @@
         </div>
 
         <ag-grid-vue
-          style="width: 700px;height: 500px;margin:20px 0;"
+          style="width: 100%;height: 500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="syllableColumnDefs"
           :rowData="articulation.model.syllable"
@@ -71,6 +71,7 @@
           rowHeight="55"
           :gridOptions="gridOptionsSyllable"
           @modelUpdated="onSyllableModelUpdated"
+          :floatingFilter="true"
         ></ag-grid-vue>
       </el-tab-pane>
       <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
@@ -78,7 +79,7 @@
           <div style="display:flex;justify-content: space-between;align-items: center;">
             <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
 
-            <div>{{blendRows}} Rows</div>
+            <div style="margin:0 20px;font-weight:bold;">{{blendRows}} Rows</div>
           </div>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
@@ -119,7 +120,7 @@
         </div>
 
         <ag-grid-vue
-          style="width:700px;height:500px;margin:20px 0;"
+          style="width:100%;height:500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="blendColumnDefs"
           :rowData="articulation.model.blend"
@@ -129,6 +130,7 @@
           rowHeight="55"
           :gridOptions="gridOptionsBlend"
           @modelUpdated="onBlendModelUpdated"
+          :floatingFilter="true"
         ></ag-grid-vue>
       </el-tab-pane>
     </el-tabs>
@@ -273,43 +275,62 @@ export default class Modely extends Vue {
   public frameworkComponents;
 
   public syllableColumnDefs = [
-    { headerName: 'Text', field: 'text' },
-    { headerName: 'Emphasis', field: 'emphasis', width: 100 },
-    { headerName: 'Type', field: 'type', width: 80 },
-    { headerName: 'Location', field: 'location', width: 80 },
-    { headerName: 'Syllable', field: 'syllable', width: 80 },
-    { headerName: 'Isolate', field: 'isolate', width: 80 },
+    { headerName: 'Text', field: 'text', suppressSizeToFit: true },
+    { headerName: 'Emphasis', field: 'emphasis' },
+    { headerName: 'Type', field: 'type', width: 90 },
+    { headerName: 'Location', field: 'location', width: 90 },
+    { headerName: 'Syllable', field: 'syllable', width: 90 },
+    { headerName: 'Isolate', field: 'isolate', width: 90 },
 
-    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell' },
+    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell',
+    filter: false,
+      sortable: false,
+      resizable: false
+       },
     {
       headerName: 'Recording',
       field: 'audio',
       cellRenderer: 'audioCell',
+      suppressSizeToFit: true,
+      filter: false,
+      sortable: false,
+      resizable: false,
     },
     {
       cellRenderer: 'deleteCell',
       pinned: 'right',
-      width: 100,
+        filter: false,
+      sortable: false,
+      resizable: false,
     },
   ];
 
   public blendColumnDefs = [
-    { headerName: 'Text', field: 'text' },
-    { headerName: 'Emphasis', field: 'emphasis', width: 100 },
-    { headerName: 'Type', field: 'type', width: 80 },
-    { headerName: 'Blend', field: 'blend', width: 80 },
-    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell' },
-    { headerName: 'Isolate', field: 'isolate', width: 80 },
+    { headerName: 'Text', field: 'text', suppressSizeToFit: true },
+    { headerName: 'Emphasis', field: 'emphasis' },
+    { headerName: 'Type', field: 'type', width: 90 },
+    { headerName: 'Blend', field: 'blend', width: 90 },
+    { headerName: 'Isolate', field: 'isolate', width: 90 },
+    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell',
+     filter: false,
+      sortable: false,
+      resizable: false
+      
+      },
     {
       headerName: 'Recording',
       field: 'audio',
       cellRenderer: 'audioCell',
+ filter: false,
+      sortable: false,
+      resizable: false,
     },
     {
       cellRenderer: 'deleteCell',
-
       pinned: 'right',
-      width: 100,
+      filter: false,
+      sortable: false,
+      resizable: false,
     },
   ];
 
