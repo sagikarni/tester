@@ -3,7 +3,11 @@
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
+          <div style="display:flex;justify-content: space-between;align-items: center;">
+            <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
+
+            <div>{{syllableRows}} Rows</div>
+          </div>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
             <el-form :model="form" label-width="120px">
@@ -36,7 +40,11 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Image:">
-                <dropper :path="`/storage/Speech/articulation/${articulation.name}/__FILE__`" v-model="form.media" placeholder="Drop here image files"></dropper>
+                <dropper
+                  :path="`/storage/Speech/articulation/${articulation.name}/__FILE__`"
+                  v-model="form.media"
+                  placeholder="Drop here image files"
+                ></dropper>
               </el-form-item>
               <el-form-item label="Audio:">
                 <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
@@ -62,11 +70,16 @@
           :enableCellChangeFlash="true"
           rowHeight="55"
           :gridOptions="gridOptionsSyllable"
+          @modelUpdated="onSyllableModelUpdated"
         ></ag-grid-vue>
       </el-tab-pane>
       <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
         <div>
-          <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
+          <div style="display:flex;justify-content: space-between;align-items: center;">
+            <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
+
+            <div>{{blendRows}} Rows</div>
+          </div>
 
           <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
             <el-form :model="form">
@@ -115,6 +128,7 @@
           :enableCellChangeFlash="true"
           rowHeight="55"
           :gridOptions="gridOptionsBlend"
+          @modelUpdated="onBlendModelUpdated"
         ></ag-grid-vue>
       </el-tab-pane>
     </el-tabs>
@@ -184,6 +198,17 @@ import ImageCell from './cells/image-cell.vue';
   },
 })
 export default class Modely extends Vue {
+  blendRows = 0;
+  syllableRows = 0;
+
+  onBlendModelUpdated(event) {
+    this.blendRows = event.api.getDisplayedRowCount();
+  }
+
+  onSyllableModelUpdated(event) {
+    this.syllableRows = event.api.getDisplayedRowCount();
+  }
+
   get storageUrl() {
     return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
   }
@@ -191,7 +216,7 @@ export default class Modely extends Vue {
     defaultColDef: {
       filter: true,
       sortable: true,
-      resizable: false
+      resizable: false,
       //            filter: "agTextColumnFilter"
     },
   };
@@ -199,7 +224,7 @@ export default class Modely extends Vue {
     defaultColDef: {
       filter: true,
       sortable: true,
-      resizable: true
+      resizable: true,
       //            filter: "agTextColumnFilter"
     },
   };
@@ -275,7 +300,7 @@ export default class Modely extends Vue {
     { headerName: 'Blend', field: 'blend', width: 80 },
     { headerName: 'Image', field: 'media', cellRenderer: 'imageCell' },
     { headerName: 'Isolate', field: 'isolate', width: 80 },
-     {
+    {
       headerName: 'Recording',
       field: 'audio',
       cellRenderer: 'audioCell',
