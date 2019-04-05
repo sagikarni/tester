@@ -2,6 +2,8 @@
   <div>
     <v-toolbar color="blue darken-3" dark app>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+                <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
+
         <span class="hidden-sm-and-down">Via Admin</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -16,6 +18,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import ArticulationView from './articulation/index.vue';
 import { ActivitiesModule } from '../store/modules/activities';
+import { AppModule } from '../store/modules/app';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -53,5 +56,10 @@ export default class Articulation extends Vue {
 
     next();
   }
+
+    toggleDrawer() {
+    AppModule.toggleDrawer();
+  }
+
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer fixed app>
+    <v-navigation-drawer fixed app :value="drawer">
       <v-list dense>
         <template v-for="item in items">
           <v-layout v-if="item.heading" :key="item.heading" row align-center>
@@ -55,13 +55,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {AppModule} from '../store/modules/app';
 
 @Component
 export default class Dashboard extends Vue {
   private source = '';
 
   private dialog = false;
-  private drawer = null;
+
+  private get drawer() {
+    return AppModule.sidebar.opened;
+  }
+
   private items = [
     { icon: 'contacts', text: 'Activities', url: '/dashboard/activities' },
     {

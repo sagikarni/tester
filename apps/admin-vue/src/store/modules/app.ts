@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import {
   VuexModule,
   Module,
@@ -24,10 +23,15 @@ export interface IAppState {
 @Module({ dynamic: true, store, name: 'app' })
 class App extends VuexModule implements IAppState {
   public sidebar = {
-    opened: Cookies.get('sidebarStatus') !== 'closed',
+    opened: false,
     withoutAnimation: false,
   };
   public device = DeviceType.Desktop;
+
+  @Action({ commit: 'TOGGLE_SIDEBAR' })
+  public toggleDrawer() {
+    return false;
+  }
 
   @Action({ commit: 'TOGGLE_SIDEBAR' })
   public ToggleSideBar(withoutAnimation: boolean) {
@@ -44,17 +48,11 @@ class App extends VuexModule implements IAppState {
 
   @Mutation
   private TOGGLE_SIDEBAR(withoutAnimation: boolean) {
-    if (this.sidebar.opened) {
-      Cookies.set('sidebarStatus', 'closed');
-    } else {
-      Cookies.set('sidebarStatus', 'opened');
-    }
     this.sidebar.opened = !this.sidebar.opened;
     this.sidebar.withoutAnimation = withoutAnimation;
   }
   @Mutation
   private CLOSE_SIDEBAR(withoutAnimation: boolean) {
-    Cookies.set('sidebarStatus', 'closed');
     this.sidebar.opened = false;
     this.sidebar.withoutAnimation = withoutAnimation;
   }
