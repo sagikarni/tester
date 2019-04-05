@@ -1,14 +1,12 @@
 <template>
-  <span>
+  <span style="display:flex;align-items:center;justify-content:center;width:100%">
     <el-button
-      size="mini"
       type="primary"
       icon="el-icon-edit"
       circle
       v-on:click="onEdit"
     ></el-button>
     <el-button
-      size="mini"
       type="danger"
       icon="el-icon-delete"
       circle

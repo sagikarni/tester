@@ -1,5 +1,5 @@
 <template>
-  <span><img style="height:50px;width:50px;margin:2px;" :src="`/storage/Speech/articulation/${articulationName}/${im.name}`" :alt="im.name" v-for="im in media" :key="im.name"></span>
+  <span style="display:flex;align-items:center"><img style="height:75px;width:120px;margin:2px;" :src="`/storage/Speech/articulation/${articulationName}/${im.name}`" :alt="im.name" v-for="im in media" :key="im.name"></span>
 </template>
 
 <script lang="ts">

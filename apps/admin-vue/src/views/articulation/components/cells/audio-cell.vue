@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="im in audio" :key="im.name">
+    <div v-for="im in audio" :key="im.name" style="display:flex;align-items:center;">
       <audio controls style="width:150px;">
         <source
           :src="`/storage/Speech/articulation/${articulationName}/${im.name}`"
