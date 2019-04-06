@@ -13,6 +13,7 @@
   "author": "Shlomi Levi <wizardnet972@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/graphql": "^0.8.6",
     "graphql-compose": "^6.0.3",
     "graphql-compose-mongoose": "^6.0.2",
     "graphql-compose-connection": "^5.0.0",

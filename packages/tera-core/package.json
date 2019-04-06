@@ -19,6 +19,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "vuex-store": "^0.0.0",
     "auth-vue": "^0.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "dasherize": "^2.0.0",

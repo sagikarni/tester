@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <cta />
+  <div id="home">
+    <v-content>
+      <v-container fluid pa-0>
+        <hero />
 
-    <hero />
+      </v-container>
+    </v-content>
+
+    <home-footer/>
   </div>
 </template>
 
@@ -10,12 +15,10 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-    Hero: () =>
-      import(/* webpackChunkName: "hero" */ './components/helpers/hero.vue'),
-    Cta: () =>
-      import(/* webpackChunkName: "cta" */ './components/helpers/cta.vue'),
-  },
+   components: {
+      Hero: () => import('./components/Hero'),
+      HomeFooter: () => import('./components/Footer')
+    }
 })
 export default class Home extends Vue {}
 </script>

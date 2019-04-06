@@ -1,20 +1,36 @@
+// Polyfills for IE Support
+import 'babel-polyfill';
+import 'event-source-polyfill';
+
+// Packages
 import Vue from 'vue';
-import './plugins/vuetify';
-import './plugins/axios';
-import App from '@/App.vue';
-import router from './router';
-import { Store as store } from 'vuex-store';
-import { i18n } from 'tera-core';
+import { store } from 'vuex-store';
 
-import './registerServiceWorker';
+// Bootstrap
+import '@/plugins';
+import { createI18n } from 'tera-core';
+import { createRouter } from '@/router';
+import { sync } from 'vuex-router-sync';
+// import components from 'tera-core/src/components';
 
-Vue.config.productionTip = false;
+import 'tera-core/src/components';
 
-async function createApp() {
-  await new Vue({
+// Application
+import App from './App.vue';
+
+Vue.config.performance = process.env.NODE_ENV === 'development';
+
+export async function createApp() {
+  const router = createRouter();
+  const i18n = createI18n(router);
+
+  sync(store, router);
+
+  const app = new Vue({
     router,
     store,
     i18n,
+    // ...components,
     render: (h) => h(App),
   }).$mount('#app');
 }
