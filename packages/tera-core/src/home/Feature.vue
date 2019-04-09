@@ -1,40 +1,62 @@
 <template>
-  <v-responsive class="text-xs-center pb-4">
-    <v-container grid-list-xl>
-      <v-layout justify-center wrap>
-        <v-flex v-for="(feature, i) in features" :key="i" d-flex shrink>
-          <v-card class="elevation-12 hide-overflow text-xs-center mx-auto" light max-width="350px">
-            <v-img
-              :alt="feature.title"
-              :aspect-ratio="2.6"
-              :src="`https://cdn.vuetifyjs.com/images/home/${feature.src}`"
-              width="100%"
-            />
-            <v-card-text>
-              <h3 class="subheading font-weight-bold mb-2" v-text="feature.title"/>
-              <p class="mb-2" v-text="feature.text"/>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-responsive>
+  <v-container fluid grid-list-lg>
+    <v-layout justify-center wrap>
+      <v-flex v-for="(feature, i) in features" :key="i" xs12 sm6 md3>
+        <v-card>
+          <v-img
+            :alt="feature"
+            :aspect-ratio="16/9"
+            :src="`https://picsum.photos/200/300?r=${i}`"
+          >
+            <v-layout pa-2 ma-0 column fill-height class="lightbox white--text">
+              <v-spacer></v-spacer>
+              <v-flex shrink>
+                <div class="text-xs-center headline">{{feature}}</div>
+              </v-flex>
+            </v-layout>
+          </v-img>
+
+          <v-card-actions>
+            <v-layout align-center justify-center class="pa-3">
+              <v-btn round>Start</v-btn>
+            </v-layout>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
   data: () => ({
-    images: ['feature3.png', 'feature2.png', 'feature1.png', 'feature1.png'],
+    images: [
+      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
+      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
+      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
+      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
+    ],
   }),
   computed: {
     features() {
-      return this.$t('Vuetify.Home.features').map((feature, i) => {
-        return {
-          ...feature,
-          src: this.images[i],
-        };
-      });
+      return this.$t('Vuetify.Home.features');
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.lightbox {
+  box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    transparent 72px
+  );
+}
+
+.headline {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+</style>

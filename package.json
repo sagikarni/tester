@@ -13,6 +13,7 @@
     "build:tera": "lerna run build --scope tera.com-* --stream",
     "format": "prettier --write \"{app,__{tests,mocks}__}/**/*.js\"",
     "deploy": "bash ./scripts/deploy.sh",
+    "deploy:tera": "bash ./scripts/deploy.sh",
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {

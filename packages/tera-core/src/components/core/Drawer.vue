@@ -1,5 +1,5 @@
 <template>
- <div>nav here</div>
+ <div style="display:none;">nav here</div>
 </template>
 
 <script lang="ts">

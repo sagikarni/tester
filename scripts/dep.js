@@ -74,4 +74,4 @@ function main(input, output) {
 }
 
 main(path.join(projectDir, 'apps/admin-server'), path.join(projectDir, 'dist/tera-admin'));
-// main('./apps/tera.com-server', 'dist/tera.com');
+main(path.join(projectDir, 'apps/tera.com-server'), path.join(projectDir, 'dist/tera.com'));

@@ -1,6 +1,6 @@
 <template>
-  <v-responsive class="black--text py-5">
-    <v-container>
+  <v-responsive class="black--text">
+    <v-container fluid pa-0>
       <v-layout align-center justify-center wrap>
         <div
           class="text-xs-center"
@@ -11,13 +11,13 @@
             class="font-weight-light mb-4 mx-3"
             v-html="$t('Vuetify.Home.callout')"
           />
-        
+
+          <p>{{$t('Vuetify.Home.subcallout')}}</p>
         </div>
       </v-layout>
     </v-container>
 
     <feature/>
-
   </v-responsive>
 </template>
 
@@ -25,10 +25,9 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: { 
-    Feature: () => import('./Feature') 
-  }
+  components: {
+    Feature: () => import('./Feature.vue'),
+  },
 })
-export default class Hero extends Vue { }
-
+export default class Hero extends Vue {}
 </script>
