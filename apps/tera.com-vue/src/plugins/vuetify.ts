@@ -5,13 +5,8 @@ import 'vuetify/src/stylus/app.styl';
 
 Vue.use(Vuetify, {
   theme: {
-    themes: {
-      light: {
-        primary: '#1867c0',
-        secondary: '#5CBBF6',
-        tertiary: '#E57373',
-        accent: '#005CAF',
-      },
-    },
+    primary: '#363636',
+    // secondary: '#29B6F6',
+    // anyColor: '#0000',
   },
 });

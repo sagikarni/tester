@@ -1,0 +1,33 @@
+{
+  "header": "About",
+  "headerText": "Via-Cards is building technology solutions for the advertising industry. Established in 2008 Via-Cards started out as a developer of a Solution for PPC advertisers. Today, just a few years later, we offer an extensive basket of unique technological advertising optimization and monetization solutions for web and mobile as well as operating our own internet assets and mobile apps.",
+  "links": [
+    {
+      "header": "Domains",
+      "children": [
+        { "text": "Cognition", "url": "/cognition" },
+        { "text": "Communication", "url": "/communication" },
+        { "text": "Speech", "url": "/speech" },
+        { "text": "Learning", "url": "/learning" }
+      ]
+    },
+    {
+      "header": "Company",
+      "children": [
+        { "text": "FAQ", "url": "/faq" },
+        { "text": "About Us", "url": "/aboutus" },
+        { "text": "Pricing", "url": "/pricing" },
+        { "text": "Join Us", "url": "/joinus" },
+        { "text": "Blog", "url": "/blog" }
+      ]
+    },
+    {
+      "header": "Contact",
+      "children": [
+        { "text": "Office: HaBarzel st 38, Neverland" },
+        { "text": "Phone: +972-54-3192875" },
+        { "text": "Mail: info@via-cards.com" }
+      ]
+    }
+  ]
+}

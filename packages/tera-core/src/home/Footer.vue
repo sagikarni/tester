@@ -1,104 +1,58 @@
 <template>
-  <v-footer
-    id="footer"
-    class="justify-center align-center py-4"
-    color="grey darken-4"
-    dark
-    height="auto"
-  >
-    <v-container>
+  <v-footer id="footer" class="py-4" color="primary" dark height="auto">
+    <v-container fluid>
       <v-layout wrap>
-        <v-flex xs12>
-          <h5 class="mb-3">
-            <v-layout align-center column justify-center>
-              <v-img
-                contain
-                height="64px"
-                src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"
-                width="64px"
-              />
-            </v-layout>
-          </h5>
+        <v-flex xs12 md5>
+          <v-card dark color="transparent" class="elevation-0">
+            <v-card-title primary class="title">{{$t('Vuetify.Footer.header')}}</v-card-title>
+            <v-card-text>{{$t('Vuetify.Footer.headerText')}}</v-card-text>
+          </v-card>
         </v-flex>
-        <v-flex xs12>
-          <v-layout justify-center mb-3>
-            <a
-              v-for="(social, i) in socials"
-              :key="i"
-              :href="social.href"
-              :title="social.title"
-              class="mx-3"
-              target="_blank"
-              rel="noopener"
+
+        <v-spacer/>
+
+        <v-layout d-flex wrap :column="$vuetify.breakpoint.xs">
+          <v-flex v-for="(col, i) in links" :key="i" xs12>
+            <v-card dark color="transparent" class="elevation-0">
+              <v-card-title primary class="title" v-text="col.header"/>
+              <v-card-text>
+                <div v-for="(child, i) in col.children" :key="i" class="mb-3">
+                  <div v-if="!child.url" v-text="child.text"/>
+                  <a v-else v-text="child.text" :to="child.url" class="white--text"/>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+
+        <v-flex d-flex xs12>
+          <v-layout row wrap :justify-end="$vuetify.breakpoint.mdAndUp" class="mb-4">
+            <v-btn
+              fab
+              flat
+              color="white"
+              v-for="social in socials"
+              :key="social.icon"
+              icon
+              class="white--text"
             >
-              <v-icon dark v-text="social.icon"/>
-            </a>
+              <v-icon size="24px">{{ social.icon }}</v-icon>
+            </v-btn>
           </v-layout>
         </v-flex>
-        <v-flex xs12 sm8 md5 mx-auto>
-          <v-form
-            action="https://www.getrevue.co/profile/vuetify/add_subscriber"
-            method="post"
-            name="revue-form"
-            target="_blank"
-          >
-            <v-text-field
-              id="member_email"
-              v-model="email"
-              class="v-text-field--rounded"
-              color="secondary"
-              type="email"
-              name="member[email]"
-              solo
-              flat
-              hide-details
-              label="Email Address"
-            >
-              <template v-slot:append>
-                <v-btn
-                  type="submit"
-                  color="secondary"
-                  name="member[subscribe]"
-                  value="Subscribe"
-                  @click="email = ''"
-                >Subscribe</v-btn>
-              </template>
-            </v-text-field>
-          </v-form>
-          <div class="text-xs-center caption">
-            Subscribe to our
-            <strong>monthly</strong> Newsletter
-          </div>
-        </v-flex>
-        <v-flex xs12/>
-        <v-flex xs12 my-5 text-xs-center>
-          <v-divider class="mx-auto" style="width: 150px; max-width: 70%;"/>
-        </v-flex>
-        <v-flex xs12>
-          <v-layout column text-xs-center>
-            <div>
-              Released under the&nbsp;
-              <a
-                href="https://opensource.org/licenses/MIT"
-                class="grey--text text--lighten-1"
-                rel="noopener"
-                target="_blank"
-              >MIT License</a>
-              <div class="mb-3">Copyright &copy; 2016-{{ (new Date()).getFullYear() }} Vuetify, LLC</div>
-              <a
-                class="grey--text text--lighten-1"
-                target="_blank"
-                rel="noopener"
-                href="https://www.iubenda.com/privacy-policy/76325752"
-              >Privacy Policy</a>
-              &nbsp;•&nbsp;
-              <a
-                class="grey--text text--lighten-1"
-                target="_blank"
-                rel="noopener"
-                href="https://www.iubenda.com/privacy-policy/76325752/cookie-policy"
-              >Cookie Policy</a>
-            </div>
+
+        <v-flex d-flex xs12>
+          <v-layout row wrap class="mb-4">
+            <v-flex xs12 sm5>
+              <div class="mr-2 my-2">Copyright &copy; {{ (new Date()).getFullYear() }} via-cards.com</div>
+            </v-flex>
+
+            <v-spacer/>
+
+            <v-layout :justify-end="$vuetify.breakpoint.smAndUp" :column="$vuetify.breakpoint.xs">
+              <a href="/" class="white--text text-right mr-3 my-2">Privacy Policy</a>
+              <a href="/" class="white--text text-right mr-3 my-2">Teams of Use</a>
+            </v-layout>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -108,36 +62,31 @@
 
 <script>
 export default {
+  computed: {
+    links() {
+      return this.$t('Vuetify.Footer.links');
+    },
+  },
   data: () => ({
     email: '',
     socials: [
       {
-        icon: 'mdi-reddit',
-        href: 'https://www.reddit.com/r/vuetifyjs',
-        title: 'Reddit',
-      },
-      {
-        icon: 'mdi-medium',
-        href: 'https://medium.com/vuetify',
-        title: 'Medium',
-      },
-      {
-        icon: 'mdi-github-circle',
+        icon: 'fab fa-linkedin',
         href: 'https://github.com/vuetifyjs/vuetify',
         title: 'Github',
       },
       {
-        icon: 'mdi-twitter',
+        icon: 'fab fa-twitter',
         href: 'https://twitter.com/vuetifyjs',
         title: 'Twitter',
       },
       {
-        icon: 'mdi-facebook',
+        icon: 'fab fa-facebook',
         href: 'https://www.facebook.com/vuetifyjs',
         title: 'Facebook',
       },
       {
-        icon: 'mdi-discord',
+        icon: 'fab fa-google',
         href: 'https://community.vuetifyjs.com',
         title: 'Discord Community',
       },
@@ -146,7 +95,16 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.links {
+  display: flex;
+  > div:last-child {
+    flex-grow: 1;
+  }
+}
+</style>
 <style lang="sass">
+
 #footer
   a
     opacity: .8

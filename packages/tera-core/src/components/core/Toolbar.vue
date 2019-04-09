@@ -1,12 +1,11 @@
 <template>
   <v-toolbar
+    color="#363636" dark
     id="app-toolbar"
     class="elevation-0"
     app
     clipped-left
     clipped-right
-    color="primary"
-    dark
     fixed
     height="44"
   >
@@ -14,7 +13,7 @@
 
     <router-link :to="{ name: 'home/Home' }">
       <v-img
-        alt="Vuetify Logo"
+        alt="Tera Logo"
         src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"
         contain
         transition="scale-transition"
@@ -23,7 +22,7 @@
       />
     </router-link>
 
-    <v-toolbar-title class="hidden-xs-only">Vuetify</v-toolbar-title>
+    <v-toolbar-title class="hidden-xs-only">Tera</v-toolbar-title>
 
     <v-spacer/>
 

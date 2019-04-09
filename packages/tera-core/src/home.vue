@@ -3,6 +3,9 @@
     <v-content>
       <v-container fluid pa-0>
         <hero/>
+
+        <!-- <strip for="homepage"> -->
+
       </v-container>
     </v-content>
 
@@ -15,8 +18,9 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    Hero: () => import('./home/Hero.vue'),
-    HomeFooter: () => import('./home/Footer.vue'),
+    Hero: () => import('./home/Hero'),
+    // Strip: () => import('./home/Strip'),
+    HomeFooter: () => import('./home/Footer'),
   },
 })
 export default class Home extends Vue {}
