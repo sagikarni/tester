@@ -15,11 +15,20 @@
     <v-layout justify-end align-center :column="$vuetify.breakpoint.xsOnly">
       <div>
         <v-layout :column="$vuetify.breakpoint.mdAndDown">
-          <div class="f-feature purple"></div>
-          <div class="f-feature blue"></div>
+          <div class="f-feature purple">
+            {{features.printable.text}}
+            {{features.printable.description}}
+          </div>
+          <div class="f-feature blue">
+            {{features.printable.text}}
+            {{features.printable.description}}
+          </div>
         </v-layout>
       </div>
-      <div class="f-feature red"></div>
+      <div class="f-feature red">
+        {{features.printable.text}}
+        {{features.printable.description}}
+      </div>
     </v-layout>
 
     <v-layout>
