@@ -25,15 +25,20 @@
 
     <v-toolbar-title class="hidden-xs-only ma-2">Tera</v-toolbar-title>
 
-    <v-toolbar-items>
-      <v-btn class="font-weight-light" v-for="link in links" :key="link" flat>{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn
+        class="font-weight-light"
+        v-for="link in links"
+        :key="link"
+        flat
+      >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
     <v-spacer/>
 
     <core-login-status/>
 
-    <core-locales/>
+    <!-- <core-locales/> -->
   </v-toolbar>
 </template>
 
