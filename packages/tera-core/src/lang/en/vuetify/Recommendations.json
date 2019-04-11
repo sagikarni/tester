@@ -1,0 +1,60 @@
+{
+  "header": "What customers <br> think about us",
+  "feedbacks": [
+    {
+      "author": "John Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 3
+    },
+    {
+      "author": "John2 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 5
+    },
+    {
+      "author": "John3 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 1
+    },
+    {
+      "author": "John4 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 5
+    },
+    {
+      "author": "John5 Green <br> Israel",
+      "location": "Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 2
+    },
+    {
+      "author": "John6 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 4
+    },
+    {
+      "author": "John7 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 5
+    },
+    {
+      "author": "John8 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 1
+    },
+    {
+      "author": "John9 Green <br> Israel",
+      "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
+      "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
+      "rate": 0
+    }
+  ]
+}

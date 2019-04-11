@@ -3,6 +3,11 @@
   "subcallout": "SLPs | OTs | EDUCATORS",
   "start": "Start",
   "features": ["Cognition", "Communication", "Speech", "Learning"],
+  "strips": {
+    "header": "Hundreds of ready to use <br> activities <strong>for all ages</strong> and variety <br> of treatment goals"
+  },
+  "whyUs": "We Provide All You <br> need For Your <br> treatment",
+  
   "getHelp": "Get Help",
   "getStarted": "Get Started",
   "github": "Github",

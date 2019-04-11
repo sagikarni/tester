@@ -1,40 +1,78 @@
 <template>
-  <v-responsive class="text-xs-center pb-4">
-    <v-container grid-list-xl>
-      <v-layout justify-center wrap>
-        <v-flex v-for="(feature, i) in features" :key="i" d-flex shrink>
-          <v-card class="elevation-12 hide-overflow text-xs-center mx-auto" light max-width="350px">
+  <div>
+    <div v-if="activities">
+      <swiper :options="swiperOption" :class="{ 'mx-4': $vuetify.breakpoint.smAndUp }">
+        <swiper-slide v-for="activity in activities" :key="activity._id">
+          <v-card width="250" >
             <v-img
-              :alt="feature.title"
-              :aspect-ratio="2.6"
-              :src="`https://cdn.vuetifyjs.com/images/home/${feature.src}`"
-              width="100%"
-            />
-            <v-card-text>
-              <h3 class="subheading font-weight-bold mb-2" v-text="feature.title"/>
-              <p class="mb-2" v-text="feature.text"/>
-            </v-card-text>
+              :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`"
+              aspect-ratio="2.75"
+            ></v-img>
+
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">{{activity.name}}</h3>
+                <div>{{activity.type.name}}</div>
+                <div>{{activity.audience}}</div>
+                <div>{{activity.type.domain.name}}</div>
+              </div>
+            </v-card-title>
           </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-responsive>
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    images: ['feature3.png', 'feature2.png', 'feature1.png', 'feature1.png'],
-  }),
-  computed: {
-    features() {
-      return this.$t('Vuetify.Home.features').map((feature, i) => {
-        return {
-          ...feature,
-          src: this.images[i],
-        };
-      });
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class Strip extends Vue {
+  swiperOption = {
+    initialSlide: 0,
+    slidesPerView: 3,
+    spaceBetween: 30,
+    freeMode: true,
+    watchOverflow: true,
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true,
     },
-  },
-};
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      1264: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      960: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      400: {
+        slidesPerView: 1,
+        spaceBetween: 0,
+      },
+    },
+  };
+
+  public activities = null;
+
+  mounted() {
+    this.load();
+  }
+
+  async load() {
+    const res = await this.axios.get('/activity/collection');
+
+    this.activities = res.data.activityCollection[0].items[0].activities;
+  }
+}
 </script>
+

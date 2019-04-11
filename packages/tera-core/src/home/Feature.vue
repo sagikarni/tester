@@ -3,11 +3,7 @@
     <v-layout justify-center wrap>
       <v-flex v-for="(feature, i) in features" :key="i" xs12 sm6 md3>
         <v-card>
-          <v-img
-            :alt="feature"
-            :aspect-ratio="16/9"
-            :src="`https://picsum.photos/200/300?r=${i}`"
-          >
+          <v-img :alt="feature" :aspect-ratio="16/9" :src="`https://picsum.photos/200/300?r=${i}`">
             <v-layout pa-2 ma-0 column fill-height class="lightbox white--text">
               <v-spacer></v-spacer>
               <v-flex shrink>
@@ -17,7 +13,7 @@
           </v-img>
 
           <v-card-actions>
-            <v-layout align-center justify-center class="pa-3">
+            <v-layout align-center justify-center :class="`pa-3 feature-bg-${i}`">
               <v-btn round>Start</v-btn>
             </v-layout>
           </v-card-actions>
@@ -58,5 +54,18 @@ export default {
 .headline {
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.feature-bg-0 {
+  background: #736fff;
+}
+.feature-bg-1 {
+  background: #0f4d7b;
+}
+.feature-bg-2 {
+  background: #17d6bc;
+}
+.feature-bg-3 {
+  background: #122544;
 }
 </style>

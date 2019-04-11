@@ -23,6 +23,16 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/graphql': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true,
+      },
+      '/storage': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true,
+      },
     },
   },
 };

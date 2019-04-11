@@ -1,10 +1,15 @@
 <template>
   <div id="home">
     <v-content>
+
       <hero/>
 
-      
-      <!-- <strip for="homepage"> -->
+      <home-strips />
+
+      <why-us />
+
+      <recommendations />
+
     </v-content>
 
     <home-footer/>
@@ -19,6 +24,9 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
     Hero: () => import('./home/Hero.vue'),
     // Strip: () => import('./home/Strip'),
     HomeFooter: () => import('./home/Footer.vue'),
+    HomeStrips: () => import('./home/Strips.vue'),
+    WhyUs: () => import('./home/WhyUs.vue'),
+    Recommendations: () => import('./home/Recommendations.vue'),
   },
 })
 export default class Home extends Vue {}

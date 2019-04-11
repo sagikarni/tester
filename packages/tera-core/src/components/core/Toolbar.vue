@@ -1,6 +1,7 @@
 <template>
   <v-toolbar
-    color="#363636" dark
+    color="primary"
+    dark
     id="app-toolbar"
     class="elevation-0"
     app
@@ -17,38 +18,22 @@
         src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"
         contain
         transition="scale-transition"
-        height="38px"
-        width="38px"
+        height="28px"
+        width="28px"
       />
     </router-link>
 
-    <v-toolbar-title class="hidden-xs-only">Tera</v-toolbar-title>
+    <v-toolbar-title class="hidden-xs-only ma-2">Tera</v-toolbar-title>
+
+    <v-toolbar-items>
+      <v-btn class="font-weight-light" v-for="link in links" :key="link" flat>{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
+    </v-toolbar-items>
 
     <v-spacer/>
 
-    <v-toolbar-items>
-      <v-btn
-        v-for="link in links"
-        :key="link"
-        :to="{
-          name: link,
-          params: {
-            lang: $route.params.lang,
-            namespace: 'getting-started',
-            page: 'quick-start'
-          }
-        }"
-        flat
-        style="min-width: 48px;"
-      >
-        <span class="hidden-sm-and-down">{{ $t(`Vuetify.AppToolbar.${link}`) }}</span>
-        <v-icon class="hidden-md-and-up">mdi-file-document-box</v-icon>
-      </v-btn>
+    <core-login-status/>
 
-      <core-login-status/>
-
-      <core-locales/>
-    </v-toolbar-items>
+    <core-locales/>
   </v-toolbar>
 </template>
 
