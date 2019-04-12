@@ -1,6 +1,6 @@
 <template>
-  <v-responsive class="primary--text">
-    <v-container fluid pa-0>
+  <v-responsive class="primary--text py-2">
+    <v-container>
       <v-layout align-center justify-center wrap>
         <div
           class="text-xs-center"
@@ -16,7 +16,6 @@
         </div>
       </v-layout>
     </v-container>
-
     <feature/>
   </v-responsive>
 </template>

@@ -1,15 +1,20 @@
 <template>
   <div id="home">
     <v-content>
+      <v-container fluid pa-0>
+        <hero/>
 
-      <hero/>
+        <!-- <home-strips/> -->
+        <why-us/>
 
-      <home-strips />
+      </v-container>
 
-      <why-us />
+      
 
-      <recommendations />
+      <!-- 
 
+
+      <recommendations />-->
     </v-content>
 
     <home-footer/>

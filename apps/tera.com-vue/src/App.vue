@@ -3,8 +3,5 @@
 </template>
 
 <style lang="scss">
-body,
-.application {
-  font-family: 'OpenSans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+@import url('./style.scss');
 </style>

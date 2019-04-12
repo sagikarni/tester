@@ -23,18 +23,27 @@
       />
     </router-link>
 
-    <v-toolbar-title class="hidden-xs-only ma-2">Tera</v-toolbar-title>
+    <!-- <v-toolbar-title class="ma-2">Tera</v-toolbar-title> -->
 
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn
         class="font-weight-light"
-        v-for="link in links"
+        v-for="link in linksLeft"
         :key="link"
         flat
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
     <v-spacer/>
+
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn
+        class="font-weight-light"
+        v-for="link in linksRight"
+        :key="link"
+        flat
+      >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
+    </v-toolbar-items>
 
     <core-login-status/>
 
@@ -48,7 +57,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Toolbar extends Vue {
-  links = ['cognition', 'speech', 'communication', 'learning', 'pricing'];
+  linksLeft = ['cognition', 'speech', 'communication', 'learning'];
+  linksRight = ['pricing']; // hidden in 678px.
+
   // stateless = false;
   // constructor() {
   //   super();
