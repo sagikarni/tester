@@ -16,7 +16,6 @@ function pack({ path, target }) {
 const projectDir = path.join(__dirname, '..');
 
 function main(input, output) {
-  console.log({ input });
 
   const packageJson = require(`${input}/package.json`);
   const LsCommand = require('@lerna/list');
@@ -51,19 +50,15 @@ function main(input, output) {
     Object.keys(dependencies).forEach((name) => {
       r.forEach((rr) => {
         if (rr.name === name) {
-          console.log({ name });
           packageJson['dependencies'][name] = `file:packages/${name}.tar`;
           const p = {
             path: `${projectDir}/packages/${name}`, // path.join(__dirname, 'packages', name),
             target: `${output}/packages/${name}.tar`
           };
-          console.log({ p });
           pack(p);
         }
       });
     });
-
-    console.log(`aa::: ${output}/package.json`);
 
     fs.writeFileSync(
       `${output}/package.json`,

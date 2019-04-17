@@ -4,7 +4,7 @@
       <v-container fluid pa-0>
         <hero/>
 
-        <!-- <home-strips/> -->
+        <home-strips/>
         <why-us/>
 
       </v-container>
