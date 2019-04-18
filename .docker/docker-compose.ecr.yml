@@ -2,13 +2,15 @@ version: '3'
 
 services:
   tera-admin:
-    image: 879624705037.dkr.ecr.us-east-2.amazonaws.com/tera-admin:latest
+    env_file: ../.env
+    image: ${TERA_ADMIN}:latest
     build:
       context: ../
       dockerfile: ./.docker/Dockerfile_tera-admin
 
   tera-www:
-    image: 879624705037.dkr.ecr.us-east-2.amazonaws.com/tera-www:latest
+    env_file: ../.env
+    image: ${TERA_WWW}:latest
     build:
       context: ../
       dockerfile: ./.docker/Dockerfile_tera-www

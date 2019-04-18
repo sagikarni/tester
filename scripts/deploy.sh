@@ -28,6 +28,7 @@ if [ -z "$TARGET" ]; then
     npm run build:tera
     node ./scripts/dep.js
     docker-compose -f .docker/docker-compose.ecr.yml build
+    docker-compose -f .docker/docker-compose.ecr.yml push
 
     echo "deploy complete"
 
@@ -51,6 +52,8 @@ fi
 if [ "$TARGET" = "tera" ]; then
     docker-compose -f .docker/docker-compose.ecr.yml build tera-www
 fi
+
+docker-compose -f .docker/docker-compose.ecr.yml push
 
 echo "deploy complete"
 

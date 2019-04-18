@@ -10,10 +10,10 @@ const copies = [{ from: path.join(__dirname, './src/assets'), to: 'assets' }];
 
 const packageJson = require('./package.json');
 
-const whitelist = Object.keys(packageJson.dependencies).filter(d => packageJson.dependencies[d] === "0.0.0");
+// const whitelist = Object.keys(packageJson.dependencies).filter(d => packageJson.dependencies[d] === "0.0.0");
 
 module.exports = {
-  externals: [nodeExternals({ modulesDir: '../../node_modules' }), nodeExternals({ whitelist })],
+  externals: [nodeExternals({ modulesDir: '../../node_modules' })], //, nodeExternals({ whitelist })],
   target: 'node',
   devtool: 'source-map',
   entry: {
