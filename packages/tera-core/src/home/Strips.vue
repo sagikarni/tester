@@ -23,8 +23,9 @@
 
       <strip group="homepage"/>-->
     </v-responsive>
-
-    <strip group="homepage"/>
+    <v-container fluid>
+      <strip group="homepage" />
+    </v-container>
   </div>
 </template>
 

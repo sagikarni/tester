@@ -5,11 +5,9 @@
         <hero/>
 
         <home-strips/>
+
         <why-us/>
-
       </v-container>
-
-      
 
       <!-- 
 
