@@ -6,7 +6,7 @@
 
         <home-strips/>
 
-        <speech-strips />
+        <speech-strips/>
 
         <why-us/>
 
@@ -34,3 +34,9 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
 })
 export default class Home extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+#home {
+  background: #f2f2f2;
+}
+</style>

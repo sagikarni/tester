@@ -41,7 +41,7 @@
               </el-form-item>
               <el-form-item label="Image:">
                 <dropper
-                  :path="`/storage/Speech/articulation/${articulation.name}/__FILE__`"
+                  :path="`/storage/Speech/Articulation/${articulation.name}/__FILE__`"
                   v-model="form.media"
                   placeholder="Drop here image files"
                 ></dropper>
@@ -212,7 +212,7 @@ export default class Modely extends Vue {
   }
 
   get storageUrl() {
-    return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
+    return `E:/sagi-tera-files/speech/Articulation/${this.articulation.name}`;
   }
   gridOptionsBlend = {
     defaultColDef: {

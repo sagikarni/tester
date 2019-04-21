@@ -3,7 +3,7 @@
     <div v-for="im in audio" :key="im.name" style="display:flex;align-items:center;">
       <audio controls style="width:150px;">
         <source
-          :src="`/storage/Speech/articulation/${articulationName}/${im.name}`"
+          :src="`/storage/Speech/Articulation/${articulationName}/${im.name}`"
           type="audio/mpeg"
         >Your browser does not support the audio element.
       </audio>

@@ -14,7 +14,7 @@ aws.config.update({
 router.get(
   '/*',
   async((req, res, next) => {
-    // http://localhost:8080/storage/Speech/articulation/B/4997825.jpg
+    // http://localhost:8080/storage/Speech/Articulation/B/4997825.jpg
     const fileKey = req.params[0];
 
     const s3 = new aws.S3();

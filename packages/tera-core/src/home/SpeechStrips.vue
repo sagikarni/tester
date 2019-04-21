@@ -1,28 +1,22 @@
 <template>
   <div>
-    <v-container fluid>
+    <v-container fluid class="pa-4 white">
+      <h3 class="text-uppercase mb-2 headline">SPEECH ACTIVITIES</h3>
       <div v-if="articulations">
         <swiper :options="swiperOption">
-          <!-- <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-        <swiper-slide>Slide 4</swiper-slide>
-        <swiper-slide>Slide 5</swiper-slide>
-        <swiper-slide>Slide 6</swiper-slide>
-        <swiper-slide>Slide 7</swiper-slide>
-        <swiper-slide>Slide 8</swiper-slide>
-        <swiper-slide>Slide 9</swiper-slide>
-          <swiper-slide>Slide 10</swiper-slide>-->
           <swiper-slide v-for="articulation in articulations" :key="articulation._id">
-            <v-card
-              class="display-2 white--text"
-              style="display:flex;align-items:center;justify-content:center;height:300px;width:300px;background:#0f4d7b;color:#fff;"
-            >{{articulation.name}}</v-card>
+            <v-card class="display-4 pa-3 speech-feature" style>
+              <v-card-title class="inner">{{articulation.name}}</v-card-title>
+            </v-card>
           </swiper-slide>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
+
+        <div class="text-xs-center">
+          <v-btn round color="white" large>View All</v-btn>
+        </div>
       </div>
     </v-container>
   </div>
@@ -95,5 +89,25 @@ export default class SpeechStrips extends Vue {
 <style lang="scss" scoped>
 .swiper-slide {
   width: 250px;
+  box-sizing: border-box;
+}
+
+.speech-feature {
+  background: #0f4d7b;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16);
+  width: 250px;
+  height: 195px;
+}
+
+.speech-feature .inner {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #77a6c7;
+  border-radius: 10px;
+  font-weight: bold;
 }
 </style>
