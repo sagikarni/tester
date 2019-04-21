@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="activities">
+    <div v-if="activities" class="mb-4">
+      <h3 class="text-uppercase mb-2 headline">{{title}}</h3>
       <swiper :options="swiperOption">
         <!-- <swiper-slide>Slide 1</swiper-slide>
         <swiper-slide>Slide 2</swiper-slide>
@@ -102,17 +103,18 @@ export default class Strip extends Vue {
     // },
   };
 
-  public activities = null;
+  @Prop() title;
+  @Prop() activities;
 
-  mounted() {
-    this.load();
-  }
+  // mounted() {
+  //   this.load();
+  // }
 
-  async load() {
-    const res = await this.axios.get('/activity/collection');
+  // async load() {
+  //   const res = await this.axios.get('/activity/collection');
 
-    this.activities = res.data.activityCollection[0].items[0].activities;
-  }
+  //   this.activities = res.data.activityCollection[0].items[0].activities;
+  // }
 }
 </script>
 

@@ -6,13 +6,12 @@
 
         <home-strips/>
 
+        <speech-strips />
+
         <why-us/>
+
+        <recommendations/>
       </v-container>
-
-      <!-- 
-
-
-      <recommendations />-->
     </v-content>
 
     <home-footer/>
@@ -28,6 +27,7 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
     // Strip: () => import('./home/Strip'),
     HomeFooter: () => import('./home/Footer.vue'),
     HomeStrips: () => import('./home/Strips.vue'),
+    SpeechStrips: () => import('./home/SpeechStrips.vue'),
     WhyUs: () => import('./home/WhyUs.vue'),
     Recommendations: () => import('./home/Recommendations.vue'),
   },

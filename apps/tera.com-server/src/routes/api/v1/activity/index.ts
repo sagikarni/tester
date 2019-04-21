@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { authenticate } from 'auth-node';
 
 // import { activitiesMetadata } from '@libs/tera-activities';
-import { ActivityCollection } from '../../../../models';
+import { ActivityCollection, Articulation } from '../../../../models';
 
 const router = Router();
 
@@ -19,8 +19,11 @@ const router = Router();
 //   res.json(activity);
 // });
 
-router.get('/collection', async (req, res, next) => {
-  const activityCollection = await ActivityCollection.find({}).populate({
+router.get('/collection/:group', async (req, res, next) => {
+
+  const group = req.params.group;
+
+  const activityCollection = await ActivityCollection.find({ name: group }).populate({
     path: 'items.activities',
     populate: [
       {
@@ -35,6 +38,12 @@ router.get('/collection', async (req, res, next) => {
   });
 
   res.json({ activityCollection });
+});
+
+router.get('/articulations', async (req, res, next) => {
+  const articulations = await Articulation.find({});
+
+  res.json({ articulations, code: 20000 });
 });
 
 export { router as activity };

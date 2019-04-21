@@ -107,3 +107,42 @@ export const Activity = mongoose.model(
     { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
   )
 );
+
+
+export const Articulation = mongoose.model(
+  'Articulation',
+  new mongoose.Schema(
+    {
+      name: { type: String },
+      display: { type: String },
+      title: { type: String },
+      description: { type: String },
+      notes: { type: String },
+      model: {
+        syllable: [
+          {
+            text: { type: String },
+            type: { type: String, enum: types.level },
+            emphasis: { type: String },
+            location: { type: String },
+            syllable: { type: String },
+            media: [{ name: { type: String } }],
+            isolate: { type: Boolean },
+            audio: [{ name: { type: String } }],
+          },
+        ],
+        blend: [
+          {
+            text: { type: String },
+            type: { type: String, enum: types.level },
+            blend: { type: String },
+            media: [{ name: { type: String } }],
+            isolate: { type: Boolean },
+            audio: [{ name: { type: String } }],
+          },
+        ],
+      },
+    },
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
+  )
+);

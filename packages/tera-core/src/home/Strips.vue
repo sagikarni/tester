@@ -24,7 +24,7 @@
       <strip group="homepage"/>-->
     </v-responsive>
     <v-container fluid>
-      <strip group="homepage" />
+      <strip-group value="homepage" />
     </v-container>
   </div>
 </template>
@@ -34,7 +34,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    Strip: () => import('./Strip.vue'),
+    StripGroup: () => import('./StripGroup.vue'),
   },
 })
 export default class Hero extends Vue {}
