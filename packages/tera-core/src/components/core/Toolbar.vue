@@ -31,7 +31,7 @@
         v-for="link in linksLeft"
         :key="link"
         flat
-        :to="link"
+        :to="`/${link}`"
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
@@ -43,7 +43,7 @@
         v-for="link in linksRight"
         :key="link"
         flat
-        :to="link"
+        :to="`/${link}`"
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 

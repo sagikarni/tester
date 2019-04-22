@@ -1,12 +1,12 @@
 <template>
   <v-responsive class="text-xs-center pb-4">
-    <v-container grid-list-xl fluid>
+    <v-container grid-list-md fluid>
       <v-layout justify-center wrap>
-        <v-flex v-for="(feature, i) in features" :key="i" xs12 sm6 lg3>
+        <v-flex v-for="(feature, i) in features" :key="i" xs12 sm6 md3>
           <v-card class="elevation-6">
             <v-img
               width="100%"
-              :aspect-ratio="1.6"
+              height="250px"
               :alt="feature"
               :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
             >

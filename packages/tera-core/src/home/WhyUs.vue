@@ -34,7 +34,7 @@
     </v-container>
 
     <v-responsive class="text-xs-center pb-4">
-      <v-container grid-list-xl fluid>
+      <v-container grid-list-xl>
         <v-layout justify-center wrap>
           <v-flex v-for="(domain, i) in domains" :key="i" xs12 sm6 lg3>
             <v-card class="elevation-6">

@@ -17,8 +17,8 @@
         { "text": "FAQ", "url": "/faq" },
         { "text": "About Us", "url": "/aboutus" },
         { "text": "Pricing", "url": "/pricing" },
-        { "text": "Join Us", "url": "/joinus" },
-        { "text": "Blog", "url": "/blog" }
+        { "text": "Team", "url": "/team" },
+        { "text": "Tips", "url": "/tips" }
       ]
     },
     {

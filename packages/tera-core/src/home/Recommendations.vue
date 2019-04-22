@@ -11,6 +11,7 @@
         </div>
       </v-layout>
     </v-container>
+    <v-container>
     <swiper :options="swiperOption" :class="{ 'mx-4': $vuetify.breakpoint.smAndUp }">
       <swiper-slide v-for="(feedback, i) in feedbacks" :key="feedback.author">
         <v-card :color="slidesColors[i]" dark class="pa-3">
@@ -36,6 +37,8 @@
       <div class="swiper-button-next" slot="button-next"></div>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
+
+    </v-container>
   </div>
 </template>
 

@@ -18,7 +18,7 @@
               <v-card-text>
                 <div v-for="(child, i) in col.children" :key="i" class="mb-3">
                   <div v-if="!child.url" v-text="child.text"/>
-                  <a v-else v-text="child.text" :to="child.url" class="white--text"/>
+                  <router-link v-else v-text="child.text" :to="child.url" class="white--text"></router-link>
                 </div>
               </v-card-text>
             </v-card>
@@ -50,8 +50,8 @@
             <v-spacer/>
 
             <v-layout :justify-end="$vuetify.breakpoint.smAndUp" :column="$vuetify.breakpoint.xs">
-              <a href="/" class="white--text text-right mr-3 my-2">Privacy Policy</a>
-              <a href="/" class="white--text text-right mr-3 my-2">Teams of Use</a>
+              <router-link to="/privacy" class="white--text text-right mr-3 my-2">Privacy Policy</router-link>
+              <router-link to="/terms" class="white--text text-right mr-3 my-2">Teams of Use</router-link>
             </v-layout>
           </v-layout>
         </v-flex>

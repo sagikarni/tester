@@ -8,7 +8,7 @@
         <v-layout wrap="wrap">
           <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
             <v-card>
-              <v-img :src="`//picsum.photos/400/147?image=${i}`" aspect-ratio="2.75"></v-img>
+              <v-img :src="`/storage/${overview}/${name}/${feature._id}/cover-l.jpg`" aspect-ratio="2.75"></v-img>
 
               <v-card-title primary-title>
                 <div>
@@ -36,30 +36,34 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 // import { DrawerItems } from 'tera-core';
 import dasherize from 'dasherize';
+import { startCase } from 'lodash';
 
 @Component({})
 export default class Category extends Vue {
 
   items = [];
   name = '';
+  overview = '';
 
   constructor() {
     super();
   }
 
   mounted() {
-    const { overview } = this.$route.params;
-    this.name = overview;
+    const { overview, category } = this.$route.params;
+    this.overview = startCase(overview);
+    this.name = startCase(category);
 
     this.load();
   }
 
   async load() {
-    const res = await this.axios.get(`/activity/category/${this.name}`);
+    const res = await this.axios.get(`/activity/activities/${this.name}`);
 
-    this.items = res.data.types.map((t) => ({
+this.items = res.data.activities.map((t) => ({
       name: t.name.toLocaleLowerCase(),
       title: t.name,
+      _id: t._id
     }));
   }
 

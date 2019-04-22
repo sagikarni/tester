@@ -7,6 +7,7 @@ import {
   ActivityCollection,
   Articulation,
   ActivityType,
+  Activity
 } from '../../../../models';
 
 const router = Router();
@@ -62,6 +63,19 @@ router.get('/types/:domain', async (req, res, next) => {
   res.json({ types, code: 20000 });
 });
 
+
+router.get('/activities/:category', async (req, res, next) => {
+  const category = req.params.category;
+
+  let activities = await Activity.find({})
+  .populate('category')
+  .populate('subCategory')
+  .populate({ path: 'type', populate: { path: 'domain' } });
+
+  activities = activities.filter(a => a.type.name.toLocaleLowerCase() === category.toLocaleLowerCase());
+
+  res.json({ activities, code: 20000 });
+});
 
 
 export { router as activity };
