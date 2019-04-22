@@ -21,7 +21,7 @@
                 <v-btn
                   flat
                   color="orange"
-                  :to="{ name: 'activity', params: { id: feature.name } }"
+                  :to="{ name: 'activity', params: { id: feature._id } }"
                 >detail</v-btn>
               </v-card-actions>
             </v-card>

@@ -12,7 +12,7 @@
   >
     <v-toolbar-side-icon/>
 
-    <router-link :to="{ name: 'home/Home' }">
+    <router-link to="/">
       <v-img
         alt="Tera Logo"
         src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"

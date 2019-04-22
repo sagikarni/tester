@@ -1,12 +1,14 @@
 <template>
-  <section id="activity">
-    activity page!!
-    <!-- <Cta :item="item" />
+   <div id="activity">
+    <v-content>
+      activity details page!
+     <!-- <Cta :item="item" />
 
     <v-btn :to="{ name: routeName }">start!</v-btn>
 
     <Gallery :images="thumbnails" /> -->
-  </section>
+    </v-content>
+    </div>
 </template>
 
 <script lang="ts">
