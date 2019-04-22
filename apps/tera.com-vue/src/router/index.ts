@@ -6,6 +6,9 @@ import Router from 'vue-router';
 // import languages from '@/data/i18n/languages.json';
 
 import { Shell, routes as coreRoutes } from 'tera-core';
+import { routes as authRoutes } from 'auth-vue';
+import { routes as activityRoutes } from 'activity';
+import { routes as plainActivityRoutes } from 'plain-activity';
 
 Vue.use(Router);
 
@@ -17,9 +20,9 @@ const languageRegex = /^\/([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,
 
 const children = [
   ...coreRoutes,
-  // ...authRoutes,
-  // ...activityRoutes,
-  // ...plainActivityRoutes,
+  ...authRoutes,
+  ...activityRoutes,
+  ...plainActivityRoutes,
 ];
 
 export function createRouter() {

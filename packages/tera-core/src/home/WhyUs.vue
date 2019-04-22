@@ -12,8 +12,8 @@
       </v-layout>
     </v-container>
 
-    <v-container fluid>
-      <v-layout justify-end align-center :column="$vuetify.breakpoint.xsOnly" class="white--text">
+    <v-container >
+      <v-layout justify-center align-center :column="$vuetify.breakpoint.xsOnly" class="white--text">
         <div>
           <v-layout :column="$vuetify.breakpoint.mdAndDown">
             <div class="f-feature feature-photos py-5 px-4">
@@ -85,6 +85,7 @@ export default class Hero extends Vue {
   width: 250px;
   height: 250px;
   box-sizing: border-box;
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.16);
 }
 
 .feature-photos {

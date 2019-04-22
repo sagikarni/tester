@@ -23,7 +23,7 @@
 
       <strip group="homepage"/>-->
     </v-responsive>
-    <v-container fluid>
+    <v-container>
       <strip-group value="homepage" />
     </v-container>
   </div>

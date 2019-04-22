@@ -1,19 +1,20 @@
 <template>
   <section id="activity">
-    <Cta :item="item" />
+    activity page!!
+    <!-- <Cta :item="item" />
 
     <v-btn :to="{ name: routeName }">start!</v-btn>
 
-    <Gallery :images="thumbnails" />
+    <Gallery :images="thumbnails" /> -->
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { DrawerItems } from 'tera-core';
+// import { DrawerItems } from 'tera-core';
 import dasherize from 'dasherize';
 
-import { activities } from 'tera-core';
+// import { activities } from 'tera-core';
 
 @Component({
   components: {
@@ -23,28 +24,28 @@ import { activities } from 'tera-core';
   },
 })
 export default class Activity extends Vue {
-  routeName = '';
-  item = null;
+  // routeName = '';
+  // item = null;
 
-  get thumbnails() {
-    return (
-      (this.item &&
-        this.item.thumbnails.map((thumbnail) => ({
-          pic: `/activities/${this.item.name}/thumbnails/${thumbnail}-l.jpg`,
-          lazy: `/activities/${this.item.name}/thumbnails/${thumbnail}-m.jpg`,
-        }))) ||
-      []
-    );
-  }
+  // get thumbnails() {
+  //   return (
+  //     (this.item &&
+  //       this.item.thumbnails.map((thumbnail) => ({
+  //         pic: `/activities/${this.item.name}/thumbnails/${thumbnail}-l.jpg`,
+  //         lazy: `/activities/${this.item.name}/thumbnails/${thumbnail}-m.jpg`,
+  //       }))) ||
+  //     []
+  //   );
+  // }
 
-  constructor() {
-    super();
-  }
+  // constructor() {
+  //   super();
+  // }
 
-  mounted() {
-    const { category, id } = this.$route.params;
-    this.item = activities.find((i) => i.name === id);
-    this.routeName = `${category}/start`;
-  }
+  // mounted() {
+  //   const { category, id } = this.$route.params;
+  //   this.item = activities.find((i) => i.name === id);
+  //   this.routeName = `${category}/start`;
+  // }
 }
 </script>

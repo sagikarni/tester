@@ -16,7 +16,6 @@
     "deploy:tera": "bash ./scripts/deploy.sh --target tera",
     "deploy:admin": "bash ./scripts/deploy.sh --target admin",
     "login": "bash ./scripts/login.sh",
-
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {

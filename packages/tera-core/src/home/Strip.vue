@@ -14,17 +14,17 @@
         <swiper-slide>Slide 9</swiper-slide>
         <swiper-slide>Slide 10</swiper-slide>-->
         <swiper-slide v-for="activity in activities" :key="activity._id">
-          <v-card width="250" class="elevation-8">
+          <v-card width="260" class="elevation-8">
             <v-img
               :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`"
               class="white--text"
-              height="250px"
+              height="205px"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             >
               <v-card-title class="fill-height align-end" style="box-sizing: border-box;">
                 <div style="text-align:left">
                   <div class="text-uppercase subheading font-weight-bold">{{activity.name}}</div>
-                  <div class="">{{activity.type.name}}</div>
+                  <div class>{{activity.type.name}}</div>
                 </div>
               </v-card-title>
             </v-img>
@@ -122,5 +122,6 @@ export default class Strip extends Vue {
 <style lang="scss" scoped>
 .swiper-slide {
   width: 250px;
+  box-shadow: 0 5px 11px 0 #dcdcdc;
 }
 </style>

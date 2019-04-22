@@ -3,7 +3,11 @@ import { Router } from 'express';
 import { authenticate } from 'auth-node';
 
 // import { activitiesMetadata } from '@libs/tera-activities';
-import { ActivityCollection, Articulation } from '../../../../models';
+import {
+  ActivityCollection,
+  Articulation,
+  ActivityType,
+} from '../../../../models';
 
 const router = Router();
 
@@ -20,10 +24,11 @@ const router = Router();
 // });
 
 router.get('/collection/:group', async (req, res, next) => {
-
   const group = req.params.group;
 
-  const activityCollection = await ActivityCollection.find({ name: group }).populate({
+  const activityCollection = await ActivityCollection.find({
+    name: group,
+  }).populate({
     path: 'items.activities',
     populate: [
       {
@@ -45,5 +50,18 @@ router.get('/articulations', async (req, res, next) => {
 
   res.json({ articulations, code: 20000 });
 });
+
+router.get('/types/:domain', async (req, res, next) => {
+  const domain = req.params.domain;
+  console.log({ domain });
+
+  let types = await ActivityType.find({}).populate('domain'); // One({ category: {name: domain} });
+
+  types = types.filter(t => t.domain.name.toLocaleLowerCase() === domain);
+
+  res.json({ types, code: 20000 });
+});
+
+
 
 export { router as activity };

@@ -1,4 +1,4 @@
-import { Store } from 'vuex-store';
+import { store } from 'vuex-store';
 import { ApiService } from '../services/api.service';
 import {
   VuexModule,
@@ -16,7 +16,7 @@ export interface State {
   user: any | null;
 }
 
-@Module({ name: 'auth', dynamic: true, store: Store })
+@Module({ name: 'auth', dynamic: true, store })
 export class Auth extends VuexModule implements State {
   error = null;
   token = null;

@@ -1,6 +1,6 @@
  <template>
   <div class="primary--text mb-3">
-    <v-container fluid pa-0>
+    <v-container >
       <v-layout align-center justify-center wrap>
         <div :style="`flex: 1 1 ${$vuetify.breakpoint.mdAndDown ? '100%' : 'auto'}`">
           <h3

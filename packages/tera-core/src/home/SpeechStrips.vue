@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-container fluid class="pa-4 white">
+  <div class="pa-4 white">
+    <v-container >
       <h3 class="text-uppercase mb-2 headline">SPEECH ACTIVITIES</h3>
       <div v-if="articulations">
         <swiper :options="swiperOption">

@@ -19,6 +19,7 @@
     "watcher": "tsc -w"
   },
   "dependencies": {
+    "tera-core": "0.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "axios": "^0.18.0",
     "dasherize": "^2.0.0",
