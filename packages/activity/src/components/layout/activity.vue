@@ -1,14 +1,13 @@
 <template>
-   <div id="activity">
+  <div id="activity">
     <v-content>
-      activity details page!
-     <!-- <Cta :item="item" />
+      <Cta :item="item" v-if="item"/>
 
-    <v-btn :to="{ name: routeName }">start!</v-btn>
+      <v-btn :to="{ name: routeName }">start!</v-btn>
 
-    <Gallery :images="thumbnails" /> -->
+      <Gallery :images="thumbnails" v-if="thumbnails"/>
     </v-content>
-    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,9 +25,10 @@ import dasherize from 'dasherize';
   },
 })
 export default class Activity extends Vue {
-  // routeName = '';
-  // item = null;
-
+  category = '';
+  id = '';
+  routeName = '';
+  item = null;
   // get thumbnails() {
   //   return (
   //     (this.item &&
@@ -39,15 +39,35 @@ export default class Activity extends Vue {
   //     []
   //   );
   // }
+  get thumbnails() {
+    return null;
+  }
 
-  // constructor() {
-  //   super();
-  // }
+  constructor() {
+    super();
+  }
 
-  // mounted() {
-  //   const { category, id } = this.$route.params;
-  //   this.item = activities.find((i) => i.name === id);
-  //   this.routeName = `${category}/start`;
-  // }
+  mounted() {
+    const { category, id } = this.$route.params;
+    this.category = category;
+    this.id = id;
+
+    // this.item = activities.find((i) => i.name === id);
+    this.routeName = `${category}/start`;
+
+    this.load();
+  }
+
+  async load() {
+    const res = await this.axios.get(`/activity/activities/${this.category}`);
+    debugger;
+
+    this.item = res.data.activities.find((a) => a._id === this.id);
+    // this.items = res.data.activities.map((t) => ({
+    //       name: t.name.toLocaleLowerCase(),
+    //       title: t.name,
+    //       _id: t._id
+    //     }));
+  }
 }
 </script>

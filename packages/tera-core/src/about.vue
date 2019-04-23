@@ -3,7 +3,10 @@
     <v-content>
       <v-container fluid pa-0>
         about
-
+        <div v-for="(feature, i) in features" :key="i">
+          <h2>{{feature.header}}</h2>
+          <p>{{feature.content}}</p>
+        </div>
       </v-container>
     </v-content>
 
@@ -15,10 +18,16 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-  },
+  components: {},
 })
-export default class About extends Vue {}
+export default class About extends Vue {
+  get features() {
+    // const { category, id } = this.$route.params;
+
+
+    return this.$t('Vuetify.AboutUs');
+  }
+}
 </script>
 
 <style lang="scss" scoped>
