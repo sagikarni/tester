@@ -39,4 +39,4 @@ npm run test:unit
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## test
-test1
+test
