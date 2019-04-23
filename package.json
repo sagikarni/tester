@@ -1,6 +1,11 @@
 {
   "name": "tera-repo",
   "private": true,
+  "repository": "https://github.com/sagikarni/tera.git",
+  "author": "Shlomi Levi <wizardnet972@gmail.com>",
+  "contributors": [
+    "Shlomi Levi <wizardnet972@gmail.com>"
+  ],
   "scripts": {
     "preinstall": "rm node_modules -rf && lerna exec \"rm node_modules -rf\" && del package-lock.json /s",
     "postinstall": "npm run bootstrap",
@@ -22,12 +27,26 @@
   "devDependencies": {
     "lerna": "^3.13.1",
     "cz-lerna-changelog": "^2.0.2",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "lint-staged": "^8.1.5",
+    "husky": "^1.3.1"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-lerna-changelog"
+      "path": "git-cz"
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "postcss": {
     "plugins": {
