@@ -34,12 +34,14 @@ export function createI18n(router) {
 
   function loadLanguageAsync(lang) {
     if (!loadedLanguages.includes(lang)) {
-      const { locale } =
-        languages.find((l) => lang === l.alternate || lang === l.locale) || { locale : null };
+      const { locale } = languages.find(
+        (l) => lang === l.alternate || lang === l.locale
+      ) || { locale: null };
       if (!locale) return Promise.reject(new Error('Language not found'));
-      return import(/* webpackChunkName: "lang-[request]" */ `../lang/${locale}`)
+      return import(
+        /* webpackChunkName: "lang-[request]" */ `../lang/${locale}`
+      )
         .then((msgs) => {
-
           loadedLanguages.push(lang);
           globalLanguages[lang] = msgs.default;
           i18n.setLocaleMessage(lang, globalLanguages[lang]);

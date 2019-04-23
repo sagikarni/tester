@@ -108,7 +108,6 @@ export const Activity = mongoose.model(
   )
 );
 
-
 export const Articulation = mongoose.model(
   'Articulation',
   new mongoose.Schema(

@@ -9,7 +9,7 @@ import { Shell, routes as coreRoutes } from 'tera-core';
 import { routes as authRoutes } from 'auth-vue';
 import { routes as activityRoutes } from 'activity';
 import { routes as plainActivityRoutes } from 'plain-activity';
-import { routes as productsRoutes} from 'products';
+import { routes as productsRoutes } from 'products';
 
 Vue.use(Router);
 

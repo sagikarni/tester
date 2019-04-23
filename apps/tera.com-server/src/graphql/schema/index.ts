@@ -1,7 +1,12 @@
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 import { schemaComposer } from 'graphql-compose';
 
-import { Activity, ActivityType, Category, ActivityCollection } from '../../models';
+import {
+  Activity,
+  ActivityType,
+  Category,
+  ActivityCollection,
+} from '../../models';
 
 const ActivityTC = composeWithMongoose(Activity);
 const CategoryTC = composeWithMongoose(Category);
@@ -48,7 +53,6 @@ schemaComposer.Query.addFields({
   activityConnection: ActivityTC.getResolver('connection'),
   activityPagination: ActivityTC.getResolver('pagination'),
 });
-
 
 schemaComposer.Query.addFields({
   activityCollectionById: ActivityCollectionTC.getResolver('findById'),

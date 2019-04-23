@@ -15,7 +15,9 @@ export default [
     path: 'recover-account',
     name: 'recover-account',
     component: () =>
-      import(/* webpackChunkName: "recover-account" */ './components/recover-account.vue'),
+      import(
+        /* webpackChunkName: "recover-account" */ './components/recover-account.vue'
+      ),
   },
   {
     path: 'profile',
