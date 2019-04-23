@@ -23,6 +23,11 @@
     "lerna": "^3.13.1",
     "prettier": "^1.15.3"
   },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
