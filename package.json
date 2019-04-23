@@ -21,11 +21,12 @@
   },
   "devDependencies": {
     "lerna": "^3.13.1",
+    "cz-lerna-changelog": "^2.0.2",
     "prettier": "^1.15.3"
   },
   "config": {
     "commitizen": {
-      "path": "git-cz"
+      "path": "./node_modules/cz-lerna-changelog"
     }
   },
   "postcss": {
