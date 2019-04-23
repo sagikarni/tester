@@ -16,7 +16,6 @@
     "build:server": "lerna run build --scope tera.com-server --stream",
     "build:admin": "lerna run build --scope admin-* --stream",
     "build:tera": "lerna run build --scope tera.com-* --stream",
-    "format": "prettier --write \"{app,__{tests,mocks}__}/**/*.js\"",
     "deploy": "bash ./scripts/deploy.sh",
     "deploy:tera": "bash ./scripts/deploy.sh --target tera",
     "deploy:admin": "bash ./scripts/deploy.sh --target admin",
@@ -38,7 +37,6 @@
     "prettier": "^1.15.3"
   },
   "config": {
-    
     "commitizen": {
       "path": "cz-conventional-changelog"
     }

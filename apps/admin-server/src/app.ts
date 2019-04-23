@@ -1,4 +1,4 @@
-import { json, urlencoded } from 'body-parser';
+import { json, urlencoded } from "body-parser";
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import express from 'express';
