@@ -4,7 +4,7 @@ module.exports = {
     'type-enum': [
       2,
       'always',
-      ['feat', 'Xfix', 'docs', 'style', 'refactor', 'test', 'revert'],
+      ['feat', 'xfix', 'docs', 'style', 'refactor', 'test', 'revert'],
     ],
   },
 };
