@@ -25,6 +25,7 @@
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {
+    "gitmoji-cli": "^1.9.2",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
     "commitizen": "^3.1.1",
