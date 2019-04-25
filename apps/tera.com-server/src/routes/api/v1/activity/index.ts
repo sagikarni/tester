@@ -58,7 +58,9 @@ router.get('/types/:domain', async (req, res, next) => {
 
   let types = await ActivityType.find({}).populate('domain'); // One({ category: {name: domain} });
 
-  types = types.filter((t) => t.domain.name.toLocaleLowerCase() === domain);
+  types = types.filter(
+    (t: any) => t.domain.name.toLocaleLowerCase() === domain
+  );
 
   res.json({ types, code: 20000 });
 });
@@ -72,7 +74,7 @@ router.get('/activities/:category', async (req, res, next) => {
     .populate({ path: 'type', populate: { path: 'domain' } });
 
   activities = activities.filter(
-    (a) => a.type.name.toLocaleLowerCase() === category.toLocaleLowerCase()
+    (a: any) => a.type.name.toLocaleLowerCase() === category.toLocaleLowerCase()
   );
 
   res.json({ activities, code: 20000 });
