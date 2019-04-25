@@ -42,7 +42,7 @@
     },
     "cz-customizable": {
       "config": "cz-config.js"
-    }   
+    }
   },
   "husky": {
     "hooks": {
