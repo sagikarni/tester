@@ -8,15 +8,6 @@ const gitmojis = require('./gitmojis.json');
 const args = process.env.HUSKY_GIT_PARAMS.split(' ');
 const editMsgFile = args[0];
 
-// const defaultConfig = {
-//   extends: ['@commitlint/config-conventional'],
-//   //   rules: {
-//   //     "subject-case": [0],
-//   //     "subject-max-length": [2, "always", 100],
-//   //     "type-enum": [2, "always", ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'chore', 'revert', 'wip']],
-//   //   }
-// };
-
 function getCommitMsg() {
   const msg = fse.readFileSync(editMsgFile, { encoding: 'utf-8' });
   return msg.replace(/#(.*[\n\r])?/g, '');
