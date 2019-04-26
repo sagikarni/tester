@@ -25,6 +25,7 @@
     "//": "lerna run watch --paraell --stream"
   },
   "devDependencies": {
+    "fs-extra": "^7.0.1",
     "gitmoji-cli": "^1.9.2",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
@@ -48,7 +49,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "node scripts/lint-commit-message.js"
     }
   },
   "lint-staged": {
