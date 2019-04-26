@@ -7,43 +7,36 @@ export default [
   {
     path: '/about',
     name: 'about',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/contactus',
     name: 'contactus',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/faq',
     name: 'faq',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/team',
     name: 'team',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/tips',
     name: 'tips',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/terms',
     name: 'terms',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
   {
     path: '/privacy',
     name: 'privacy',
-    component: () =>
-      import(/* webpackChunkName: "contentpage" */ './ContentPage.vue'),
+    component: () => import(/* webpackChunkName: "content" */ './Content.vue'),
   },
 ];

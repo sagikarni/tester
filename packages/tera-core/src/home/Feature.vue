@@ -2,30 +2,32 @@
   <v-responsive class="text-xs-center pb-4">
     <v-container grid-list-md fluid>
       <v-layout justify-center wrap>
-        <v-flex v-for="(feature, i) in features" :key="i" xs12 sm6 md3>
-          <v-card class="elevation-6">
+        <v-flex v-for="(feature, i) in features" :key="i" xs6 sm6 md3>
+          <v-card class="pa-2">
             <v-img
               width="100%"
               height="250px"
               :alt="feature"
               :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
             >
-              <v-layout
+              <!-- <v-layout
                 fill-height
-                class="ma-0 pa-0 lightbox white--text"
+                class="ma-0 pa-2 lightbox white--text"
                 style="background-image: linear-gradient(to top, #0a0a0a, rgba(104, 104, 104, 0));"
               >
                 <v-flex d-flex xs12 align-end flexbox>
                   <div class="text-xs-center headline">{{feature}}</div>
                 </v-flex>
-              </v-layout>
+              </v-layout>-->
             </v-img>
 
-            <v-card-actions :class="`${feature.toLocaleLowerCase()}`">
+            <v-card-actions>
               <v-layout align-center justify-center class="ma-0 pa-3">
-                <v-btn round>{{$t('Vuetify.Feature.start')}}</v-btn>
+                <div class="text-none font-weight-regular text-xs-center headline">{{feature}}</div>
+                <!-- <v-btn round>{{$t('Vuetify.Feature.start')}}</v-btn> -->
               </v-layout>
             </v-card-actions>
+            <div style="height:10px;margin:0 -8px -8px;" :class="`${feature.toLocaleLowerCase()}`"></div>
           </v-card>
         </v-flex>
       </v-layout>
