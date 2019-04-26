@@ -1,41 +1,21 @@
-// const fs = require('fs');
-
-// const reset = '\x1b[0m';
-// const red = '\x1b[31m';
-
-// const x = process.env.HUSKY_GIT_PARAMS;
-
-// const [messageFile] = process.env.HUSKY_GIT_PARAMS.split(' ');
-
-// const y = process.env.GIT_PARAMS;
-
-// const currentMessage = fs.readFileSync(messageFile, 'utf8'); //.replace(/^# ------------------------ >8 ------------------------[\s\S]*$|^#.*\n/gm, '')
-
-// console.log({ currentMessage });
-
-// // require('fs').writeFileSync(process.env.GIT_PARAMS, 'some message edited');
-
-// process.exit(1);
-
-// The hook is executed at project root directory.
 const load = require('@commitlint/load');
 const lint = require('@commitlint/lint');
 const fse = require('fs-extra');
 const chalk = require('chalk');
-
-const emoji = require('./emoji');
+const defaultConfig = require('./lint-commit-message');
+const gitmojis = require('./gitmojis.json');
 
 const args = process.env.HUSKY_GIT_PARAMS.split(' ');
 const editMsgFile = args[0];
 
-const defaultConfig = {
-  extends: ['@commitlint/config-conventional'],
-  //   rules: {
-  //     "subject-case": [0],
-  //     "subject-max-length": [2, "always", 100],
-  //     "type-enum": [2, "always", ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'chore', 'revert', 'wip']],
-  //   }
-};
+// const defaultConfig = {
+//   extends: ['@commitlint/config-conventional'],
+//   //   rules: {
+//   //     "subject-case": [0],
+//   //     "subject-max-length": [2, "always", 100],
+//   //     "type-enum": [2, "always", ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'chore', 'revert', 'wip']],
+//   //   }
+// };
 
 function getCommitMsg() {
   const msg = fse.readFileSync(editMsgFile, { encoding: 'utf-8' });
@@ -50,11 +30,14 @@ function printLintResult(result) {
   });
 }
 
-function updateMessageWithEmoji() {
-  console.log({ msg });
+function updateMessageWithEmoji(msg) {
+  const type = msg.match(/[^/(]*/i)[0];
 
-  process.exit(1);
-  // emoji.types[]
+  const { code } = gitmojis.gitmojis.find((g) => g.type && g.type === type);
+
+  const msgWithEmoji = msg.replace(/[^/(]*/i, code + ' ' + type);
+
+  fse.writeFileSync(editMsgFile, msgWithEmoji, { encoding: 'utf-8' });
 }
 
 async function run() {

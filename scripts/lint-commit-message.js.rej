@@ -1,0 +1,4 @@
+diff a/scripts/lint-commit-message.js b/scripts/lint-commit-message.js	(rejected hunks)
+@@ -56 +55 @@ function updateMessageWithEmoji() {
+-  
++
