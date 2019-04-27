@@ -3,7 +3,7 @@
     <v-layout fill-height wrap>
       <v-flex md6 xs12>
         <v-card flat height="100%" tile>
-          <v-img height="100%" :src="`/activities/${item.name}/cover-s.jpg`" />
+          <v-img height="100%" :src="baseUrl" />
         </v-card>
       </v-flex>
 
@@ -24,5 +24,7 @@ import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
 @Component({})
 export default class Cta extends Vue {
   @Prop() item;
+
+  @Prop() baseUrl;
 }
 </script>

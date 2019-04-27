@@ -1,7 +1,7 @@
 <template>
   <div id="activity">
     <v-content>
-      <Cta :item="item" v-if="item"/>
+      <Cta :item="item" v-if="item" :baseUrl="`/storage/${overview}/${category}/${id}/cover-l.jpg`" />
 
       <v-btn :to="{ name: routeName }">start!</v-btn>
 
@@ -14,8 +14,16 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 // import { DrawerItems } from 'tera-core';
 import dasherize from 'dasherize';
+import { startCase } from 'lodash';
 
 // import { activities } from 'tera-core';
+const undasherize = (str) => {
+  if (str.indexOf('-') === -1) return str;
+  return str
+    .split('-')
+    .map((s) => startCase(s))
+    .join('');
+};
 
 @Component({
   components: {
@@ -29,6 +37,8 @@ export default class Activity extends Vue {
   id = '';
   routeName = '';
   item = null;
+  overview = '';
+
   // get thumbnails() {
   //   return (
   //     (this.item &&
@@ -48,8 +58,9 @@ export default class Activity extends Vue {
   }
 
   mounted() {
-    const { category, id } = this.$route.params;
-    this.category = category;
+    const { overview, category, id } = this.$route.params;
+    this.overview = startCase(overview);
+    this.category = undasherize(category); // startCase(category);
     this.id = id;
 
     // this.item = activities.find((i) => i.name === id);
@@ -60,7 +71,6 @@ export default class Activity extends Vue {
 
   async load() {
     const res = await this.axios.get(`/activity/activities/${this.category}`);
-    debugger;
 
     this.item = res.data.activities.find((a) => a._id === this.id);
     // this.items = res.data.activities.map((t) => ({

@@ -8,7 +8,10 @@
         <v-layout wrap="wrap">
           <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
             <v-card>
-              <v-img :src="`/storage/${overview}/${name}/${feature._id}/cover-l.jpg`" aspect-ratio="2.75"></v-img>
+              <v-img
+                :src="`/storage/${overview}/${name}/${feature._id}/cover-l.jpg`"
+                aspect-ratio="2.75"
+              ></v-img>
 
               <v-card-title primary-title>
                 <div>
@@ -38,9 +41,16 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
 import dasherize from 'dasherize';
 import { startCase } from 'lodash';
 
+const undasherize = (str) => {
+  if (str.indexOf('-') === -1) return str;
+  return str
+    .split('-')
+    .map((s) => startCase(s))
+    .join('');
+};
+
 @Component({})
 export default class Category extends Vue {
-
   items = [];
   name = '';
   overview = '';
@@ -52,7 +62,7 @@ export default class Category extends Vue {
   mounted() {
     const { overview, category } = this.$route.params;
     this.overview = startCase(overview);
-    this.name = startCase(category);
+    this.name = undasherize(category); // startCase(category);
 
     this.load();
   }
@@ -60,10 +70,10 @@ export default class Category extends Vue {
   async load() {
     const res = await this.axios.get(`/activity/activities/${this.name}`);
 
-this.items = res.data.activities.map((t) => ({
+    this.items = res.data.activities.map((t) => ({
       name: t.name.toLocaleLowerCase(),
       title: t.name,
-      _id: t._id
+      _id: t._id,
     }));
   }
 

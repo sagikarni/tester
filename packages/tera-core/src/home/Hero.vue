@@ -13,7 +13,10 @@
             v-html="$t('Vuetify.Home.callout')"
           />
 
-          <h2 class="display-1 font-weight-regular">{{$t('Vuetify.Home.subcallout')}}</h2>
+          <h2
+            class="font-weight-regular"
+            :class="$vuetify.breakpoint.smAndDown && 'headline' || 'display-1'"
+          >{{$t('Vuetify.Home.subcallout')}}</h2>
         </div>
       </v-layout>
     </v-container>

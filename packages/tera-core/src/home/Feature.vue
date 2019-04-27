@@ -6,7 +6,7 @@
           <v-card class="pa-2">
             <v-img
               width="100%"
-              height="250px"
+              height="100px"
               :alt="feature"
               :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
             >
@@ -22,8 +22,8 @@
             </v-img>
 
             <v-card-actions>
-              <v-layout align-center justify-center class="ma-0 pa-3">
-                <div class="text-none font-weight-regular text-xs-center headline">{{feature}}</div>
+              <v-layout align-center justify-center class="ma-0 pa-2">
+                <div class="text-none font-weight-medium text-xs-center subheading">{{feature}}</div>
                 <!-- <v-btn round>{{$t('Vuetify.Feature.start')}}</v-btn> -->
               </v-layout>
             </v-card-actions>

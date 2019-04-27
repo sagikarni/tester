@@ -56,7 +56,7 @@ export default class Overview extends Vue {
     const res = await this.axios.get(`/activity/types/${this.name}`);
 
     this.items = res.data.types.map((t) => ({
-      name: t.name.toLocaleLowerCase(),
+      name: dasherize(t.name).toLocaleLowerCase(),
       title: t.name,
     }));
   }
