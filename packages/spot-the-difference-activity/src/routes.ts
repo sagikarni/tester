@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/spot-the-difference/:id/start',
+    name: 'spot-the-difference/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "spot-the-difference-activity" */ './components/start.vue'
       ),
   },
 ];

@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/articulation-word/:id/start',
+    name: 'articulation-word/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "articulation-word-activity" */ './components/start.vue'
       ),
   },
 ];

@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/memory-cards/:id/start',
+    name: 'memory-cards/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "memory-cards-activity" */ './components/start.vue'
       ),
   },
 ];

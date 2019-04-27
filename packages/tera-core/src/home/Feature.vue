@@ -1,12 +1,13 @@
 <template>
   <v-responsive class="text-xs-center pb-4">
-    <v-container grid-list-md fluid>
+    <v-container grid-list-md fluid class="pa-0">
       <v-layout justify-center wrap>
         <v-flex v-for="(feature, i) in features" :key="i" xs6 sm6 md3>
-          <v-card class="pa-2">
+          <v-card class="pa-1">
             <v-img
               width="100%"
-              height="100px"
+             
+              class="featue-img"
               :alt="feature"
               :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
             >
@@ -27,7 +28,7 @@
                 <!-- <v-btn round>{{$t('Vuetify.Feature.start')}}</v-btn> -->
               </v-layout>
             </v-card-actions>
-            <div style="height:10px;margin:0 -8px -8px;" :class="`${feature.toLocaleLowerCase()}`"></div>
+            <div style="height:10px;margin:0 -4px -4px;" :class="`${feature.toLocaleLowerCase()}`"></div>
           </v-card>
         </v-flex>
       </v-layout>
@@ -67,4 +68,9 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
 }
+
+.featue-img {
+ height:100px;
+}
+
 </style>

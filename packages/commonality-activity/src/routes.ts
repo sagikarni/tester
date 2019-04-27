@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/commonality/:id/start',
+    name: 'commonality/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "commonality-activity" */ './components/start.vue'
       ),
   },
 ];

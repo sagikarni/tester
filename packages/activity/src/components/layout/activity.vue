@@ -66,6 +66,8 @@ export default class Activity extends Vue {
     // this.item = activities.find((i) => i.name === id);
     this.routeName = `${category}/start`;
 
+console.log('route: ', this.routeName);
+
     this.load();
   }
 

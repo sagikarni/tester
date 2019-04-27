@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/photo-assembly/:id/start',
+    name: 'photo-assembly/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "photo-assembly-activity" */ './components/start.vue'
       ),
   },
 ];

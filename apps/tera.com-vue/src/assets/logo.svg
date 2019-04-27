@@ -1,1 +1,9 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.5 100"><defs><style>.cls-1{fill:#1697f6;}.cls-2{fill:#7bc6ff;}.cls-3{fill:#1867c0;}.cls-4{fill:#aeddff;}</style></defs><title>Artboard 46</title><polyline class="cls-1" points="43.75 0 23.31 0 43.75 48.32"/><polygon class="cls-2" points="43.75 62.5 43.75 100 0 14.58 22.92 14.58 43.75 62.5"/><polyline class="cls-3" points="43.75 0 64.19 0 43.75 48.32"/><polygon class="cls-4" points="64.58 14.58 87.5 14.58 43.75 100 43.75 62.5 64.58 14.58"/></svg>
+<svg class="ffLogo" viewBox="0 0 112 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <polygon id="path83582" fill="#FFCC00" points="69.8974237 29.7149196 82.3151353 42.172447 42.3442105 82.4319044 29.5893495 69.6635955"></polygon>
+    <polyline id="path83250" fill="#FF3B3B" points="43.9559237 39.0668486 33.2057239 28.3166487 2.54634697e-06 61.6052757 21.4669583 61.5590879 43.9559237 39.0668486"></polyline>
+    <polyline id="path83260" fill="#96B9FF" points="67.9826386 72.8352719 78.7328384 83.5855069 111.93856 50.291881 90.471604 50.3380336 67.9826386 72.8352719"></polyline>
+    <polyline id="path83254" fill="#FD0000" points="61.0946433 101.223702 50.4211884 111.897157 2.54634697e-06 61.6052757 21.4669583 61.5590879 61.0946433 101.223702"></polyline>
+    <polyline id="path83264" fill="#6699FF" points="50.843919 10.6734547 61.5173739 -2.35882135e-07 111.93856 50.291881 90.471604 50.3380336 50.843919 10.6734547"></polyline>
+    <polygon id="path83563" fill="#FF3B3B" points="42.3273477 82.4430993 42.3273477 57.0576125 29.5710433 69.6747903 42.3273477 82.4430993"></polygon>
+    <polygon id="path83578" fill="#96B9FF" points="69.880561 29.7261497 69.8075477 54.8650319 82.3151353 42.172447 69.880561 29.7261497"></polygon>
+</svg>

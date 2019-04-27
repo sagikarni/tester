@@ -8,7 +8,7 @@
           style="min-height: 45vh;padding-bottom: 10vh;"
         >
           <h1
-            :class="$vuetify.breakpoint.smAndDown && 'display-1' || 'display-3'"
+            :class="$vuetify.breakpoint.smAndDown && 'display-1' || 'display-1'"
             class="font-weight-regular mb-4 mx-3"
             v-html="$t('Vuetify.Home.callout')"
           />

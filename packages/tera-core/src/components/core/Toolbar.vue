@@ -15,7 +15,7 @@
     <router-link to="/">
       <v-img
         alt="Tera Logo"
-        src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"
+        :src="require(`@/assets/logo.svg`)"
         contain
         transition="scale-transition"
         height="28px"

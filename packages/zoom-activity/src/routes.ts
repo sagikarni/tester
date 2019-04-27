@@ -1,10 +1,8 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/zoom/:id/start',
+    name: 'zoom/start',
     component: () =>
-      import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
-      ),
+      import(/* webpackChunkName: "zoom-activity" */ './components/start.vue'),
   },
 ];

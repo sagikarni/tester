@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/sound-of-life-photo/:id/start',
+    name: 'sound-of-life-photo/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "sound-of-life-photo-activity" */ './components/start.vue'
       ),
   },
 ];

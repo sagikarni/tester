@@ -1,10 +1,10 @@
 export default [
   {
-    path: ':overview/plain-slides/:id/start',
-    name: 'plain-slides/start',
+    path: ':overview/what-is-wrong/:id/start',
+    name: 'what-is-wrong/start',
     component: () =>
       import(
-        /* webpackChunkName: "learning-activity" */ './components/start.vue'
+        /* webpackChunkName: "what-is-wrong-activity" */ './components/start.vue'
       ),
   },
 ];
