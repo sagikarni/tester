@@ -113,7 +113,7 @@ export default class Dropper extends Vue {
     const added = [];
 
     [...e.dataTransfer.files].forEach((f, i) => {
-      const filename = f.name.replace(/(-l|-s|-m|-xs)\./g, '.');
+      const filename = f.name.replace(/(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g, '.');
 
       if (added.includes(filename)) {
         return;
