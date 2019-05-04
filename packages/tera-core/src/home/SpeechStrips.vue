@@ -1,22 +1,42 @@
 <template>
   <div class="pa-4 white">
-    <v-container >
+    <v-container>
       <h3 class="text-uppercase mb-2 headline">SPEECH ACTIVITIES</h3>
-      <div v-if="articulations">
+      <div v-if="articulations" style="position:relative;">
         <swiper :options="swiperOption">
           <swiper-slide v-for="articulation in articulations" :key="articulation._id">
             <v-card class="display-4 pa-3 speech-feature" style>
               <v-card-title class="inner">{{articulation.name}}</v-card-title>
             </v-card>
           </swiper-slide>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-          <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
 
-        <div class="text-xs-center">
-          <v-btn round color="white" large>View All</v-btn>
-        </div>
+        <v-btn
+          class="swiper-button swiper-button-prev"
+          :class="getU('swiper-button-prev')"
+          slot="button-prev"
+          fab
+          light
+          small
+          color="white"
+        >
+          <v-icon dark class="font-weight-bold">chevron_left</v-icon>
+        </v-btn>
+        <v-btn
+          class="swiper-button swiper-button-next"
+          :class="getU('swiper-button-next')"
+          slot="button-next"
+          fab
+          light
+          small
+          color="white"
+        >
+          <v-icon dark class="font-weight-bold">chevron_right</v-icon>
+        </v-btn>
+      </div>
+
+      <div class="text-xs-center">
+        <v-btn round color="white" large>View All</v-btn>
       </div>
     </v-container>
   </div>
@@ -27,10 +47,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class SpeechStrips extends Vue {
+  id = Math.random()
+    .toString(36)
+    .substring(7);
+
+  getU(v) {
+    return `${v}-${this.id}`;
+  }
+
   public articulations = null;
   swiperOption = {
     slidesPerView: 'auto',
-    spaceBetween: 20,
+    spaceBetween: 10,
     // on: {
     //   beforeResize() {
     //     if (window.innerWidth >= 640) {
@@ -48,13 +76,9 @@ export default class SpeechStrips extends Vue {
     // watchOverflow: true,
 
     // slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      dynamicBullets: true,
-    },
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: `.swiper-button-next-${this.id}`,
+      prevEl: `.swiper-button-prev-${this.id}`,
     },
 
     // breakpoints: {
@@ -109,5 +133,38 @@ export default class SpeechStrips extends Vue {
   border: 2px solid #77a6c7;
   border-radius: 10px;
   font-weight: bold;
+}
+
+.swiper-container {
+}
+
+.swiper-slide {
+  width: 250px;
+  // box-shadow: 0 5px 11px 0 #dcdcdc;
+}
+
+.swiper-button {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  margin: 0;
+  transform: translateY(-50%);
+  background-image: none;
+  cursor: pointer;
+  &.swiper-button-prev {
+    left: -21px;
+  }
+  &.swiper-button-next {
+    right: -21px;
+  }
+  &:global(.swiper-button-disabled) {
+    display: none;
+  }
+}
+.swiper-button.swiper-button-prev.swiper-button-disabled {
+  opacity: 0 !important;
+}
+.swiper-button.swiper-button-next.swiper-button-disabled {
+  opacity: 0 !important;
 }
 </style>

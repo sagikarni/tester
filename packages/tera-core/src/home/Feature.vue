@@ -1,39 +1,30 @@
 <template>
-  <v-responsive class="text-xs-center pb-4">
-    <v-container grid-list-md fluid class="pa-0">
-      <v-layout justify-center wrap>
-        <v-flex v-for="(feature, i) in features" :key="i" xs6 sm6 md3>
-          <v-card class="pa-1">
+  <!-- <v-responsive class="text-xs-center"> -->
+    <!-- <v-container grid-list-md fluid class="pa-0"> -->
+      <v-layout wrap>
+        <v-flex v-for="(feature, i) in features" :key="i" xs6 md6 lg3 d-flex>
+          <v-card class="pa-0" fill-height>
             <v-img
               width="100%"
-             
-              class="featue-img"
+              height="100%"
               :alt="feature"
-              :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
+              :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
             >
-              <!-- <v-layout
+              <v-layout
                 fill-height
                 class="ma-0 pa-2 lightbox white--text"
-                style="background-image: linear-gradient(to top, #0a0a0a, rgba(104, 104, 104, 0));"
+                xstyle="background-image: linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
               >
                 <v-flex d-flex xs12 align-end flexbox>
-                  <div class="text-xs-center headline">{{feature}}</div>
+                  <div class="text-xs-center title">{{feature}}</div>
                 </v-flex>
-              </v-layout>-->
-            </v-img>
-
-            <v-card-actions>
-              <v-layout align-center justify-center class="ma-0 pa-2">
-                <div class="text-none font-weight-medium text-xs-center subheading">{{feature}}</div>
-                <!-- <v-btn round>{{$t('Vuetify.Feature.start')}}</v-btn> -->
               </v-layout>
-            </v-card-actions>
-            <div style="height:10px;margin:0 -4px -4px;" :class="`${feature.toLocaleLowerCase()}`"></div>
+            </v-img>
           </v-card>
         </v-flex>
       </v-layout>
-    </v-container>
-  </v-responsive>
+    <!-- </v-container> -->
+  <!-- </v-responsive> -->
 </template>
 
 <script>
@@ -70,7 +61,6 @@ export default {
 }
 
 .featue-img {
- height:100px;
+  height: 100px;
 }
-
 </style>

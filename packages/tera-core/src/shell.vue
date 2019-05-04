@@ -2,6 +2,6 @@
   <v-app v-cloak>
     <router-view/>
 
-    <core-toolbar/>
+    <core-toolbar />
   </v-app>
 </template>

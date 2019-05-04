@@ -2,53 +2,58 @@
   <div>
     <div v-if="activities" class="mb-4">
       <h3 class="text-uppercase mb-2 headline">{{title}}</h3>
-      <swiper :options="swiperOption">
-        <!-- <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-        <swiper-slide>Slide 4</swiper-slide>
-        <swiper-slide>Slide 5</swiper-slide>
-        <swiper-slide>Slide 6</swiper-slide>
-        <swiper-slide>Slide 7</swiper-slide>
-        <swiper-slide>Slide 8</swiper-slide>
-        <swiper-slide>Slide 9</swiper-slide>
-        <swiper-slide>Slide 10</swiper-slide>-->
-        <swiper-slide v-for="activity in activities" :key="activity._id">
-          <v-card width="260" class="elevation-8">
-            <v-img
-              :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`"
-              class="white--text"
-              height="205px"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            >
-              <v-card-title class="fill-height align-end" style="box-sizing: border-box;">
-                <div style="text-align:left">
-                  <div class="text-uppercase subheading font-weight-bold">{{activity.name}}</div>
-                  <div class>{{activity.type.name}}</div>
-                </div>
-              </v-card-title>
-            </v-img>
+      <div style="position:relative;">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="activity in activities" :key="activity._id">
+      
+            <v-card width="260"  class="card"
+            style=""
+      >
+              <v-img
+                :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`"
+                class="white--text"
+                height="205px"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
+              >
+                <v-card-title class="fill-height align-end" style="box-sizing: border-box;">
+                  <div style="text-align:left">
+                    <div class="subheading font-weight-bold">{{activity.name}}</div>
+                    <div class>{{activity.type.name}}</div>
+                  </div>
+                </v-card-title>
+              </v-img>
+            </v-card>
+            
+          </swiper-slide>
+        </swiper>
 
-            <!-- <v-img
-              :src="`/storage/${activity.type.domain.name}/${activity.type.name}/${activity._id}/cover-l.jpg`"
-              aspect-ratio="1.3"
-            ></v-img>
-
-            <v-card-title>
-              
-            </v-card-title>
-
-            <v-card-actions
-              style="justify-content:center"
-              class="pa-1 white--text text-uppercase caption"
-              :class="activity.type.domain.name.toLocaleLowerCase()"
-            >{{activity.type.domain.name}}</v-card-actions>-->
-          </v-card>
-        </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+        <div slot="button-prev">
+          <v-btn
+            class="swiper-button swiper-button-prev"
+            :class="getU('swiper-button-prev')"
+            
+            fab
+            light
+            small
+            color="white"
+          >
+            <v-icon dark class="font-weight-bold">chevron_left</v-icon>
+          </v-btn>
+        </div>
+        <div slot="button-next" class="wrap-next">
+        <v-btn
+          class="swiper-button swiper-button-next"
+          :class="getU('swiper-button-next')"
+          
+          fab
+          light
+          small
+          color="white"
+        >
+          <v-icon dark class="font-weight-bold">chevron_right</v-icon>
+        </v-btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,9 +63,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Strip extends Vue {
+  id = Math.random()
+    .toString(36)
+    .substring(7);
+
+  getU(v) {
+    return `${v}-${this.id}`;
+  }
+
   swiperOption = {
     slidesPerView: 'auto',
-    spaceBetween: 20,
+    spaceBetween: 10,
+    speed:500,
+    //  effect: 'fade',
     // on: {
     //   beforeResize() {
     //     if (window.innerWidth >= 640) {
@@ -78,13 +93,13 @@ export default class Strip extends Vue {
     // watchOverflow: true,
 
     // slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      dynamicBullets: true,
-    },
+    // pagination: {
+    //   el: '.swiper-pagination',
+    //   dynamicBullets: true,
+    // },
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: `.swiper-button-next-${this.id}`,
+      prevEl: `.swiper-button-prev-${this.id}`,
     },
 
     // breakpoints: {
@@ -107,7 +122,6 @@ export default class Strip extends Vue {
   @Prop() activities;
 
   // mounted() {
-  //   this.load();
   // }
 
   // async load() {
@@ -120,8 +134,67 @@ export default class Strip extends Vue {
 
 
 <style lang="scss" scoped>
+.swiper-container {
+      box-sizing: content-box;
+    padding: 5px 0 15px 0;
+
+}
+.card {
+  box-shadow:0 1px 0 rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.15);
+  // box-shadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+border-radius:5px;
+  &:hover {
+transition:all .4s cubic-bezier(.25,.8,.25,1);
+//  box-shadow:0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  }
+}
 .swiper-slide {
   width: 250px;
-  box-shadow: 0 5px 11px 0 #dcdcdc;
+  // box-shadow: 0 5px 11px 0 #dcdcdc;
 }
+.wrap-next {
+  position: absolute;
+  z-index: 10;
+  top: 0%;
+  right:0;
+  height:100%;
+  width:20px;
+          // box-shadow: 5px 0 5px -5px #333;
+            background-image: linear-gradient(to right,rgba(242, 242, 242, 0), rgba(242,242,242,1));
+
+
+}
+
+.swiper-button {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  margin: 0;
+  transform: translateY(-50%);
+  background-image: none;
+  cursor: pointer;
+  &.swiper-button-prev {
+    left: -21px;
+  }
+  &.swiper-button-next {
+    right: -21px;
+  }
+  &:global(.swiper-button-disabled) {
+    display: none;
+  }
+}
+.swiper-button.swiper-button-prev.swiper-button-disabled {
+  opacity: 0 !important;
+}
+.swiper-button.swiper-button-next.swiper-button-disabled {
+  opacity: 0 !important;
+}
+
+// .xx {
+//   transition:all .4s cubic-bezier(.25,.8,.25,1);
+//   box-shadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) ;
+//   &:hover {
+//     box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+//   }
+// }
 </style>

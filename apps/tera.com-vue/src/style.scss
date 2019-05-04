@@ -18,7 +18,7 @@ body,
 
 
 .swiper-container {
-  height: 250px;
+  height: 205px;
   width: 100%;
 }
 
@@ -28,3 +28,26 @@ body,
   justify-content: center;
   align-items: center;
 }
+
+body {
+  min-height: 900px;
+}
+/*
+.hero {
+  min-height:600px;
+  height:auto;
+}*/
+
+@media only screen and (max-width: 600px) {
+  /* .hero {
+  //   min-height: 400px;
+  //   height:auto;
+  // }*/
+}
+
+
+.bk-xs { border:1px solid green; }
+.bk-sm { border:1px solid blue; }
+.bk-md { border:1px solid red; }
+.bk-lg { border:1px solid pink; }
+.bk-xl { border:1px solid orange; }

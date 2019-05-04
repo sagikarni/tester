@@ -10,9 +10,10 @@
     fixed
     height="44"
   >
+  
     <v-toolbar-side-icon/>
 
-    <router-link to="/">
+    <router-link to="/" :class="`bk-${$vuetify.breakpoint.name}`">
       <v-img
         alt="Tera Logo"
         :src="require(`@/assets/logo.svg`)"
@@ -22,6 +23,8 @@
         width="28px"
       />
     </router-link>
+
+    <!-- cognishine.svg -->
 
     <!-- <v-toolbar-title class="ma-2">Tera</v-toolbar-title> -->
 
