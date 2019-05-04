@@ -53,7 +53,7 @@ if [ "$TARGET" = "tera" ]; then
     docker-compose -f .docker/docker-compose.ecr.yml build tera-www
 fi
 
-docker-compose -f .docker/docker-compose.ecr.yml push
+docker-compose -f .docker/docker-compose.ecr.yml push tera-www
 
 echo "deploy complete"
 
