@@ -1,7 +1,7 @@
 <template>
   <v-responsive class="white--text">
     <v-container fluid class="hero pa-0">
-      <v-layout align-center justify-center row wrap fill-height style="border:1px solid blue">
+      <v-layout align-center justify-center row wrap fill-height>
         <v-flex xs12 md4 class="text-xs-center intro">
           <div class="logo mb-3">
             <v-img
@@ -24,7 +24,7 @@
           <h2 class="font-weight-regular">{{$t('Vuetify.Home.subcallout')}}</h2>
           
         </v-flex>
-        <v-flex d-flex xs12 md8 style="border:1px solid green;align-self:stretch">
+        <v-flex d-flex xs12 md8 style="align-self:stretch">
           <!-- <v-card class="pa-0">
             <v-img
               width="100%"
@@ -83,7 +83,6 @@ export default class Hero extends Vue {}
 }
 
 .intro {
-  border: 1px solid red;
   padding: 20px 0;
 
   // @media only screen and (min-width: 600px) {
@@ -91,7 +90,7 @@ export default class Hero extends Vue {}
   // }
 
   @media only screen and (min-width: 1000px) {
-    padding: 220px 0;
+    padding: 179px 0;
   }
 }
 </style>

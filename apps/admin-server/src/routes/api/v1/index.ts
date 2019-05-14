@@ -3,11 +3,12 @@ import {
   Activity,
   SubCategory,
   Category,
-  Type,
+  // Type,
   Domain,
   ActivityCollection,
   Articulation,
-} from './models';
+} from '../../../mongodb';
+
 import { values, groupBy, entries, toPairs } from 'lodash';
 const router = Router();
 
@@ -153,13 +154,13 @@ router.delete('/categories', async (req, res, next) => {
   res.json({ categories, code: 20000 });
 });
 
-router.get('/domains', async (req, res, next) => {
-  const types = await Type.find({}).populate('domain');
+// router.get('/domains', async (req, res, next) => {
+//   const types = await Type.find({}).populate('domain');
 
-  const domains = groupBy(types, 'domain.name') as any;
+//   const domains = groupBy(types, 'domain.name') as any;
 
-  res.json({ domains, code: 20000 });
-});
+//   res.json({ domains, code: 20000 });
+// });
 
 router.post('/activities', async (req, res, next) => {
   // const categories = await Category.find({});

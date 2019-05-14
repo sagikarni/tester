@@ -17,21 +17,21 @@ const ActivityCollectionTC = composeWithMongoose(ActivityCollection, {
   name: 'ActivityCollection',
 });
 
-ActivityTC.addRelation('type', {
-  resolver: ActivityTypeTC.getResolver('findById'),
-  prepareArgs: {
-    _id: (source: any) => source.type._id,
-  },
-  projection: { type: true },
-});
+// ActivityTC.addRelation('type', {
+//   resolver: ActivityTypeTC.getResolver('findById'),
+//   prepareArgs: {
+//     _id: (source: any) => source.type._id,
+//   },
+//   projection: { type: true },
+// });
 
-ActivityTC.addRelation('category', {
-  resolver: CategoryTC.getResolver('findById'),
-  prepareArgs: {
-    _id: (source: any) => source.category._id,
-  },
-  projection: { category: true },
-});
+// ActivityTC.addRelation('category', {
+//   resolver: CategoryTC.getResolver('findById'),
+//   prepareArgs: {
+//     _id: (source: any) => source.category._id,
+//   },
+//   projection: { category: true },
+// });
 
 // ActivityCollectionTC.addRelation('items', {
 //   resolver: ActivityTC.getResolver('findById'),

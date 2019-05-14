@@ -3,11 +3,12 @@
     <!-- <v-container grid-list-md fluid class="pa-0"> -->
       <v-layout wrap>
         <v-flex v-for="(feature, i) in features" :key="i" xs6 md6 lg3 d-flex>
-          <v-card class="pa-0" fill-height>
+          <v-card class="pa-0" fill-height :to="`${feature.toLocaleLowerCase()}`">
             <v-img
               width="100%"
               height="100%"
               :alt="feature"
+              :aspect-ratio="1.3"
               :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
             >
               <v-layout

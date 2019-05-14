@@ -1,9 +1,10 @@
-import './entrypoint';
+import './bootstrap';
 
 // import { db } from 'auth-node';
 import { logger } from 'express-zone';
 import http from 'http';
 import { connect, connection } from 'mongoose';
+// import { migrate } from '../migrations/01_create_base_users';
 
 import app from '../app';
 
@@ -20,6 +21,8 @@ async function createServer() {
     server.listen(PORT, () => {
       logger.log(`app listening on port ${PORT}!`);
     });
+
+    // migrate();
   });
 
   await connect(process.env.MONGODB_URI);

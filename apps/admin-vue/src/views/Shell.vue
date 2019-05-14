@@ -1,5 +1,7 @@
 <template>
-  <v-app id="inspire"> <router-view /> </v-app>
+  <v-app id="inspire">
+    <router-view/>
+  </v-app>
 </template>
 
 <script lang="ts">

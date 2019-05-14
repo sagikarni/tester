@@ -1,4 +1,5 @@
 import { createLogger, format, transports } from 'winston';
+import { StreamOptions } from 'morgan';
 import * as path from 'path';
 import * as uuid from 'uuid';
 import * as fs from 'fs';
@@ -31,6 +32,9 @@ const logger: any = createLogger({
   format: combine(timestamp(), prettyPrint()),
 
   transports: [
+    new transports.Console({
+      level: 'info',
+    }),
     new transports.File({
       filename: errorFilename,
       level: 'error',
@@ -52,6 +56,12 @@ logger.__proto__.log = function(level, msg, meta) {
   );
 };
 
-logger.log('info', 'App Started.');
+const morganStreamWriter: StreamOptions = {
+  write(message: string): void {
+    logger.info(message.replace(/\n$/, ''));
+  },
+};
 
-export { logger };
+logger.log('info', 'Logger Started.');
+
+export { logger, morganStreamWriter };
