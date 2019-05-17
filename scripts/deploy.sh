@@ -1,4 +1,4 @@
-#!/bin/bash
+# !/bin/bash
 
 # CREATOR Shlomi Levi <wizardnet972@gmail.com>
 
@@ -54,8 +54,6 @@ if [ "$TARGET" = "tera" ]; then
     docker-compose -f .docker/docker-compose.ecr.yml build tera-www
     docker-compose -f .docker/docker-compose.ecr.yml push tera-www
 fi
-
-
 
 echo "deploy complete"
 

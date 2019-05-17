@@ -1,7 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "target": "esnext",
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["webpack-env", "jest", "node"],
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "declaration": true
   },
   "include": ["./src"]
 }

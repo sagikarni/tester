@@ -126,6 +126,14 @@ class Activities extends VuexModule implements IActivitiesState {
               syllable
               isolate
               _id
+              media {
+                _id
+                name
+              }
+              audio {
+                _id
+                name
+              }
             }
             blend {
               text
@@ -133,6 +141,14 @@ class Activities extends VuexModule implements IActivitiesState {
               blend
               isolate
               _id
+              media {
+                _id
+                name
+              }
+              audio {
+                _id
+                name
+              }
             }
           }
         }

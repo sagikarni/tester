@@ -14,7 +14,8 @@
     "lib"
   ],
   "scripts": {
-    "builder": "tsc",
+    "pack": "npm pack",
+    "build": "tsc",
     "watcher": "tsc -w",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },

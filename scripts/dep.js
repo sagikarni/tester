@@ -4,22 +4,72 @@ const path = require('path');
 const tar = require('tar-fs');
 const fse = require('fs-extra');
 
+const npm = null;
+
+const projectDir = path.join(__dirname, '..');
+
+const apps = [
+  {
+    sourcePath: path.join(projectDir, `apps/admin-server`),
+    targetPath: path.join(projectDir, `dist/tera-admin`),
+  },
+  {
+    sourcePath: path.join(projectDir, `apps/tera.com-server`),
+    targetPath: path.join(projectDir, `dist/tera.com`),
+  },
+];
+
+async function main() {
+  this.npm = await createNpm();
+
+  await asyncForEach(apps, async (app) => {
+    await packApp(app);
+  });
+  // r[0].filename
+}
+
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
 }
 
-const projectDir = path.join(__dirname, '..');
-
-const apps = ['admin-server', 'tera.com-server'];
-
-asyncForEach(apps, async (app) => {
-  await packApp({
-    sourcePath: path.join(projectDir, `apps/${app}`),
-    targetPath: path.join(projectDir, `dist/${app}`),
+function createNpm() {
+  return new Promise((res, req) => {
+    const npm = require('npm');
+    npm.load({}, (a) => {
+      res(npm);
+    });
   });
-});
+}
+
+function npmPack(directory) {
+  return new Promise((res, req) => {
+    this.npm.pack(directory, (_, result) => {
+      res(result);
+    });
+  });
+}
+
+function pack(sourceDirectory, targetDirectory) {
+  return new Promise(async (res, req) => {
+    const dir = process.cwd();
+    try {
+      process.chdir(targetDirectory);
+      const result = await npmPack(sourceDirectory);
+      process.chdir(dir);
+      res(result);
+    } finally {
+      process.chdir(dir);
+    }
+  });
+}
+
+main();
+
+// console.log('done');
+
+// process.exit();
 
 async function packApp({ sourcePath, targetPath }) {
   const packageJson = require(`${sourcePath}/package.json`);
@@ -28,13 +78,18 @@ async function packApp({ sourcePath, targetPath }) {
 
   fse.ensureDirSync(`${targetPath}/packages`);
 
-  Object.keys(dependencies).forEach((name) => {
-    lernaPackages.forEach((package) => {
+  await asyncForEach(Object.keys(dependencies), async (name) => {
+    await asyncForEach(lernaPackages, async (package) => {
       if (package.name === name) {
-        packageJson['dependencies'][name] = `file:packages/${name}.tar`;
-        tar
-          .pack(`${projectDir}/packages/${name}`)
-          .pipe(fs.createWriteStream(`${targetPath}/packages/${name}.tar`));
+        const r = await pack(
+          `${projectDir}/packages/${name}`,
+          `${targetPath}/packages`
+        );
+
+        packageJson['dependencies'][name] = `file:packages/${r[0].filename}`;
+        // tar
+        //   .pack(`${projectDir}/packages/${name}`)
+        //   .pipe(fs.createWriteStream(`${targetPath}/packages/${name}.tar`));
       }
     });
   });
