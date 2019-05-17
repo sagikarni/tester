@@ -1,27 +1,54 @@
 const fs = require('fs');
 const lerna = require('lerna');
 const path = require('path');
-const tar = require('tar');
+const tar = require('tar-fs');
 const fse = require('fs-extra');
 
-var fstream = require('fstream');
-
-function pack({ path, target }) {
-  fstream
-    .Reader({ path, type: 'Directory' })
-    .pipe(tar.Pack({ noProprietary: true }))
-    .pipe(fs.createWriteStream(target));
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
 }
 
 const projectDir = path.join(__dirname, '..');
 
-function main(input, output) {
+const apps = ['admin-server', 'tera.com-server'];
 
-  const packageJson = require(`${input}/package.json`);
-  const LsCommand = require('@lerna/list');
+asyncForEach(apps, async (app) => {
+  await packApp({
+    sourcePath: path.join(projectDir, `apps/${app}`),
+    targetPath: path.join(projectDir, `dist/${app}`),
+  });
+});
 
-  const filteredPackages = new Promise((res, onRejected) => {
-    const ls = new LsCommand({
+async function packApp({ sourcePath, targetPath }) {
+  const packageJson = require(`${sourcePath}/package.json`);
+  const lernaPackages = await getLernaPackages();
+  const dependencies = packageJson['dependencies'];
+
+  fse.ensureDirSync(`${targetPath}/packages`);
+
+  Object.keys(dependencies).forEach((name) => {
+    lernaPackages.forEach((package) => {
+      if (package.name === name) {
+        packageJson['dependencies'][name] = `file:packages/${name}.tar`;
+        tar
+          .pack(`${projectDir}/packages/${name}`)
+          .pipe(fs.createWriteStream(`${targetPath}/packages/${name}.tar`));
+      }
+    });
+  });
+
+  fs.writeFileSync(
+    `${targetPath}/package.json`,
+    JSON.stringify(packageJson, null, 2),
+    'utf-8'
+  );
+}
+
+async function getLernaPackages() {
+  return new Promise((res, onRejected) => {
+    const ls = new require('@lerna/list')({
       _: [],
       json: true,
       onRejected,
@@ -38,35 +65,4 @@ function main(input, output) {
       },
     });
   });
-
-  filteredPackages.then((r) => {
-    const dependencies = packageJson['dependencies'];
-
-    fse.ensureDirSync(`${output}/packages`);
-
-    // path.join(__dirname, 'dist/tera-admin/packages'
-
-    // console.log({ dependencies });
-    Object.keys(dependencies).forEach((name) => {
-      r.forEach((rr) => {
-        if (rr.name === name) {
-          packageJson['dependencies'][name] = `file:packages/${name}.tar`;
-          const p = {
-            path: `${projectDir}/packages/${name}`, // path.join(__dirname, 'packages', name),
-            target: `${output}/packages/${name}.tar`
-          };
-          pack(p);
-        }
-      });
-    });
-
-    fs.writeFileSync(
-      `${output}/package.json`,
-      JSON.stringify(packageJson, null, 2),
-      'utf-8'
-    );
-  });
 }
-
-main(path.join(projectDir, 'apps/admin-server'), path.join(projectDir, 'dist/tera-admin'));
-main(path.join(projectDir, 'apps/tera.com-server'), path.join(projectDir, 'dist/tera.com'));

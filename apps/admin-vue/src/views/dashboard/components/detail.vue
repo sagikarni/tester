@@ -43,8 +43,8 @@ export default class Detail extends Vue {
       (r) => r._id === to.params.activity
     );
 
-    if (this.activity.model.slides.length > 0) {
-      this.activity.model.slides.forEach((s) => {
+    if (this.activity.metadata.slides.length > 0) {
+      this.activity.metadata.slides.forEach((s) => {
         const type = DomainModule.types.find(
           (t) => t._id === this.activity.type
         );
@@ -86,8 +86,8 @@ export default class Detail extends Vue {
       // console.log({ a: vm.activity.type });
       // debugger;
 
-      if (vm.activity.model.slides.length > 0) {
-        vm.activity.model.slides.forEach((s) => {
+      if (vm.activity.metadata.slides.length > 0) {
+        vm.activity.metadata.slides.forEach((s) => {
           const type = DomainModule.types.find(
             (t) => t._id === vm.activity.type
           );

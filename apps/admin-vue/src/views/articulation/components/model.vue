@@ -64,7 +64,7 @@
           style="width: 100%;height: 500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="syllableColumnDefs"
-          :rowData="articulation.model.syllable"
+          :rowData="articulation.metadata.syllable"
           :context="syllableContext"
           :frameworkComponents="frameworkComponents"
           :enableCellChangeFlash="true"
@@ -74,7 +74,7 @@
           :floatingFilter="true"
         ></ag-grid-vue>
       </el-tab-pane>
-      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.model.blend.length">
+      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.metadata.blend.length">
         <div>
           <div style="display:flex;justify-content: space-between;align-items: center;">
             <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
@@ -123,7 +123,7 @@
           style="width:100%;height:500px;margin:20px 0;"
           class="ag-theme-balham"
           :columnDefs="blendColumnDefs"
-          :rowData="articulation.model.blend"
+          :rowData="articulation.metadata.blend"
           :context="blendContext"
           :frameworkComponents="frameworkComponents"
           :enableCellChangeFlash="true"
@@ -422,14 +422,14 @@ export default class Modely extends Vue {
     const data = this.form as any;
 
     if (!data._id) {
-      this.articulation.model.syllable.push(data);
+      this.articulation.metadata.syllable.push(data);
       this.dialogSyllableVisible = false;
 
       (this.gridOptionsSyllable as any).api.refreshCells();
       return;
     }
 
-    const it = this.articulation.model.syllable.find((s) => s._id === data._id);
+    const it = this.articulation.metadata.syllable.find((s) => s._id === data._id);
 
     it.emphasis = data.emphasis;
     it.text = data.text;
@@ -439,7 +439,7 @@ export default class Modely extends Vue {
     it.location = data.location;
     it.media = data.media;
     it.syllable = data.syllable;
-    // articulation.model.syllable
+    // articulation.metadata.syllable
     this.dialogSyllableVisible = false;
 
     (this.gridOptionsSyllable as any).api.refreshCells();
@@ -449,14 +449,14 @@ export default class Modely extends Vue {
     const data = this.form as any;
 
     if (!data._id) {
-      this.articulation.model.blend.push(data);
+      this.articulation.metadata.blend.push(data);
       this.dialogBlendVisible = false;
 
       (this.gridOptionsBlend as any).api.refreshCells();
       return;
     }
 
-    const it = this.articulation.model.blend.find((s) => s._id === data._id);
+    const it = this.articulation.metadata.blend.find((s) => s._id === data._id);
 
     it.emphasis = data.emphasis;
     it.text = data.text;
@@ -464,7 +464,7 @@ export default class Modely extends Vue {
     it.blend = data.blend;
     it.audio = data.audio;
     it.media = data.media;
-    // articulation.model.syllable
+    // articulation.metadata.syllable
     this.dialogBlendVisible = false;
 
     (this.gridOptionsBlend as any).api.refreshCells();
@@ -501,7 +501,7 @@ export default class Modely extends Vue {
   }
 
   deleteBlend(data) {
-    this.articulation.model.blend = this.articulation.model.blend.filter(
+    this.articulation.metadata.blend = this.articulation.metadata.blend.filter(
       (s) => s._id !== data._id
     );
 
@@ -511,7 +511,7 @@ export default class Modely extends Vue {
   }
 
   deleteSyllable(data) {
-    this.articulation.model.syllable = this.articulation.model.syllable.filter(
+    this.articulation.metadata.syllable = this.articulation.metadata.syllable.filter(
       (s) => s._id !== data._id
     );
 

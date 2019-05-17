@@ -45,6 +45,7 @@ class Activities extends VuexModule implements IActivitiesState {
           _id
           name
           type
+          level
           description
           free
           printable
@@ -59,7 +60,7 @@ class Activities extends VuexModule implements IActivitiesState {
           isolate
           updated_at
           created_at
-          model {
+          metadata {
             slideCategories
             slides {
               media {
@@ -116,7 +117,7 @@ class Activities extends VuexModule implements IActivitiesState {
           notes
           updated_at
           created_at
-          model {
+          metadata {
             syllable {
               text
               type
@@ -192,6 +193,7 @@ class Activities extends VuexModule implements IActivitiesState {
           printable
           editorial
           notes
+          level
           orientation
           mediaType
           category
@@ -201,7 +203,7 @@ class Activities extends VuexModule implements IActivitiesState {
           isolate
           updated_at
           created_at
-          model {
+          metadata {
             slideCategories
             slides {
               media {
@@ -258,7 +260,7 @@ class Activities extends VuexModule implements IActivitiesState {
           notes
           updated_at
           created_at
-          model {
+          metadata {
             syllable {
               text
               type

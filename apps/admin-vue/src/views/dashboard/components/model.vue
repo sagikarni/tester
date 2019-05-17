@@ -119,7 +119,7 @@
       <el-input type="textarea" v-model="activity.notes"></el-input>
     </el-form-item>
 
-    <component v-if="activity.type" :is="getCurrentType().name" v-model="activity.model"></component>
+    <component v-if="activity.type" :is="getCurrentType().name" v-model="activity.metadata"></component>
   </el-form>
 </template>
 

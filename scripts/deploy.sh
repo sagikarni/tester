@@ -47,13 +47,15 @@ node ./scripts/dep.js
 
 if [ "$TARGET" = "admin" ]; then
     docker-compose -f .docker/docker-compose.ecr.yml build tera-admin
+    docker-compose -f .docker/docker-compose.ecr.yml push tera-admin
 fi
 
 if [ "$TARGET" = "tera" ]; then
     docker-compose -f .docker/docker-compose.ecr.yml build tera-www
+    docker-compose -f .docker/docker-compose.ecr.yml push tera-www
 fi
 
-docker-compose -f .docker/docker-compose.ecr.yml push tera-www
+
 
 echo "deploy complete"
 

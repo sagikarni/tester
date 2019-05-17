@@ -24,7 +24,7 @@ const ActivitySchema = new Schema(
     status: { type: String, enum: types.status },
     audience: { type: String, enum: types.audience },
     isolate: { type: Boolean },
-    model: {
+    metadata: {
       slideCategories: [String],
       slides: [
         {

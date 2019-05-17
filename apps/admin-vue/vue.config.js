@@ -7,6 +7,7 @@ module.exports = {
   outputDir: '../../dist/tera-admin/public',
   runtimeCompiler: true,
   devServer: {
+    clientLogLevel: 'warn',
     proxy: {
       '/graphql': {
         target: apiUrl,

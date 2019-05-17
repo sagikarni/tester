@@ -7,7 +7,7 @@ export interface IArticulation {
   title: string;
   description: string;
   notes: string;
-  model: {
+  metadata: {
     syllable: [
       {
         text: string;
@@ -42,7 +42,7 @@ const ArticulationSchema = new Schema(
     title: { type: String },
     description: { type: String },
     notes: { type: String },
-    model: {
+    metadata: {
       syllable: [
         {
           text: { type: String },
