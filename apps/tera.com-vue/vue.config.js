@@ -8,6 +8,11 @@ module.exports = {
   outputDir: '../../dist/tera.com/public',
   devServer: {
     proxy: {
+      '/graphql': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true,
+      },
       '/api': {
         target: apiUrl,
         ws: true,
@@ -19,11 +24,6 @@ module.exports = {
         changeOrigin: true,
       },
       '/assets': {
-        target: apiUrl,
-        ws: true,
-        changeOrigin: true,
-      },
-      '/graphql': {
         target: apiUrl,
         ws: true,
         changeOrigin: true,

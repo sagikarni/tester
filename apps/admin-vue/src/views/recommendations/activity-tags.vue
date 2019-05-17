@@ -1,6 +1,6 @@
 <template>
   <div>
-    <draggable v-model="items" @end="dosome">
+    <draggable v-model="items" @end="onDraggableEnd">
       <transition-group>
         <el-tag
           :key="tag"
@@ -9,9 +9,7 @@
           :disable-transitions="false"
           @close="handleClose(tag)"
         >
-          <a target="_blank" :href="`/dashboard/activities/${tag}`">{{
-            tag
-          }}</a>
+          <a target="_blank" :href="`/dashboard/activities/${tag}`">{{ tag }}</a>
         </el-tag>
       </transition-group>
     </draggable>
@@ -24,9 +22,7 @@
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
     ></el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput()"
-      >+ Add Activity</el-button
-    >
+    <el-button v-else class="button-new-tag" size="small" @click="showInput()">+ Add Activity</el-button>
   </div>
 </template>
 
@@ -40,33 +36,18 @@ import draggable from 'vuedraggable';
 })
 export default class ActivityTags extends Vue {
   @Prop() value;
-  @Prop() options;
   items = [];
 
   edit = false;
-  radio3 = '';
+  // radio3 = '';
 
-  inputVisible = false;
   inputValue = '';
-  dosome() {
+
+  onDraggableEnd() {
     this.$emit('input', this.items);
   }
 
-  @Watch('value') onValue(n, o) {
-    console.log('value!!!', n);
-
-    // if (n !== this.items) {
-    //   console.log('need update');
-    //   this.items = n.map((v, i) => ({ ...v, id: i }));
-    // } else {
-    //   console.log('do need');
-    // }
-    // this.items = this.value.map((v, i) => ({ ...v, id: i }));
-    // this.$emit('input', this.items);
-  }
-
   @Watch('items') onItems(n, o) {
-    console.log('somehap');
     this.$emit('input', this.items);
   }
 
@@ -74,14 +55,6 @@ export default class ActivityTags extends Vue {
     if (this.value && this.value.length > 0) {
       this.items = this.value; // .map((v, i) => ({ ...v, id: i }));
     }
-  }
-
-  onchange() {
-    this.$emit('input', this.radio3);
-  }
-
-  getActivity(id) {
-    return ActivitiesModule.activities.find((a) => a._id === id);
   }
 
   handleClose(tag) {
@@ -99,34 +72,15 @@ export default class ActivityTags extends Vue {
   handleInputConfirm() {
     console.log({ inputValue: this.inputValue });
     if (!this.items.includes(this.inputValue)) {
-      if (ActivitiesModule.activities.find((a) => a._id === this.inputValue)) {
+      const { activities } = ActivitiesModule;
+      if (activities.find((a) => a._id === this.inputValue)) {
         this.items.push(this.inputValue);
-        this.$emit('input', this.radio3);
+        // this.$emit('input', this.radio3);
       }
     }
-    // this.$emit('input', );
     this.edit = false;
-    // let inputValue = this.inputValue;
-    // if (inputValue) {
-    //   this.dynamicTags.push(inputValue);
-    // }
-    // this.inputVisible = false;
     this.inputValue = '';
   }
-
-  // phrases = [];
-
-  // mounted() {
-  //   if (this.value && this.value.length)
-  //     this.phrases = this.value.map((p) => ({ value: p }));
-  // }
-
-  // add() {
-  //   this.phrases.push({ value: '' });
-  // }
-  // dosome() {
-  //   this.$emit('input', this.phrases.map((p) => p.value));
-  // }
 }
 </script>
 

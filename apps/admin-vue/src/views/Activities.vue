@@ -41,7 +41,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardView from './dashboard/index.vue';
 import { ActivitiesModule } from '../store/modules/activities';
-import {AppModule} from '../store/modules/app';
+import { CategoryModule } from '../store/modules/category';
+import { DomainModule } from '../store/modules/domains';
+import { AppModule } from '../store/modules/app';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -55,25 +57,11 @@ Component.registerHooks([
 export default class Activities extends Vue {
   searchKey = '';
 
-  private source = '';
-
-  private dialog = false;
-  private drawer = null;
-  private items = [
-    { icon: 'contacts', text: 'Activities', url: '/dashboard/activities' },
-    {
-      icon: 'history',
-      text: 'Recommendations',
-      url: '/dashboard/recommendations',
-    },
-    { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
-  ];
-
   async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.LoadActivities(),
-      ActivitiesModule.LoadCategories(),
-      ActivitiesModule.LoadDomains(),
+      ActivitiesModule.loadActivities(),
+      CategoryModule.loadCategory(),
+      DomainModule.loadDomains(),
     ]);
 
     next();
@@ -82,6 +70,5 @@ export default class Activities extends Vue {
   toggleDrawer() {
     AppModule.toggleDrawer();
   }
-
 }
 </script>

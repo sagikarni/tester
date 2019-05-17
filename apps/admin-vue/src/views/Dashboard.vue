@@ -25,11 +25,7 @@
                 </v-list-tile-content>
               </v-list-tile>
             </template>
-            <v-list-tile
-              v-for="(child, i) in item.children"
-              :key="i"
-              @click="redirectTo(child)"
-            >
+            <v-list-tile v-for="(child, i) in item.children" :key="i" @click="redirectTo(child)">
               <v-list-tile-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
@@ -49,13 +45,15 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-content> <router-view /> </v-content>
+    <v-content>
+      <router-view/>
+    </v-content>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {AppModule} from '../store/modules/app';
+import { AppModule } from '../store/modules/app';
 
 @Component
 export default class Dashboard extends Vue {

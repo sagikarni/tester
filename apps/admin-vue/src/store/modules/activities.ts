@@ -8,62 +8,236 @@ import {
 } from 'vuex-module-decorators';
 import store from '@/store';
 import { flatten, values } from 'lodash';
+import gql from 'graphql-tag';
 
 import request from '../../utils/request';
+import axios from 'axios';
+import { print } from 'graphql';
+import { chain } from 'lodash';
 
 export interface IActivitiesState {
-  categories: any[];
+  // categories: any[];
   activities: any[];
-  domains: any[];
+  // domains: any[];
 }
 
 @Module({ dynamic: true, store, name: 'activities' })
 class Activities extends VuexModule implements IActivitiesState {
-  public categories = [];
-  public subcategories = [];
+  // public categories = [];
+  // public subcategories = [];
   public activities = [];
-  public domains = [];
-  public collections = [];
+  // public domains = [];
+  // public collections = [];
   public articulations = [];
 
-  public get domainsKeys() {
-    return Object.keys(this.domains);
-  }
+  // public get domainsKeys() {
+  //   return Object.keys(this.domains);
+  // }
 
-  public get types() {
-    return flatten(this.domainsKeys.map((k) => this.domains[k]));
-  }
+  // public get types() {
+  //   return flatten(this.domainsKeys.map((k) => this.domains[k]));
+  // }
+  @Action({ commit: 'SET_ACTIVITIES' })
+  async loadActivities() {
+    const query = gql`
+      {
+        activityMany {
+          _id
+          name
+          type
+          description
+          free
+          printable
+          editorial
+          notes
+          orientation
+          mediaType
+          category
+          subCategory
+          status
+          audience
+          isolate
+          updated_at
+          created_at
+          model {
+            slideCategories
+            slides {
+              media {
+                name
+                _id
+              }
+              phrases
+              category
+              size
+              audio {
+                name
+                _id
+              }
+              mediaIndex
+              _id
+            }
+          }
+        }
+      }
+    `;
 
-  @Action({ commit: 'SET_COLLECTIONS' })
-  public async LoadCollections() {
-    const res = await request({
-      url: '/api/v1/collections',
-      method: 'get',
-      baseURL: '',
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+      },
     });
-
-    return (res as any).collections;
+    return res2.data.data.activityMany;
   }
+
+  // @Action({ commit: 'SET_COLLECTIONS' })
+  // public async LoadCollections() {
+  //   const res = await request({
+  //     url: '/api/v1/collections',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+  //   return (res as any).collections;
+  // }
 
   @Action({ commit: 'SET_ARTICULATIONS' })
   public async LoadArticulations() {
-    const res = await request({
-      url: '/api/v1/articulations',
-      method: 'get',
-      baseURL: '',
+    const query = gql`
+      {
+        articulationMany {
+          _id
+          name
+          display
+          title
+          description
+          notes
+          updated_at
+          created_at
+          model {
+            syllable {
+              text
+              type
+              emphasis
+              location
+              syllable
+              isolate
+              _id
+            }
+            blend {
+              text
+              type
+              blend
+              isolate
+              _id
+            }
+          }
+        }
+      }
+    `;
+
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+      },
     });
 
-    return (res as any).articulations;
+    return res2.data.data.articulationMany;
   }
 
   @Action({ commit: 'REMOVE_ACTIVITY' })
   public async RemoveActivity(id) {
+    const query = gql`
+      mutation($id: MongoID!) {
+        activityRemoveOne(filter: { _id: $id }) {
+          recordId
+        }
+      }
+    `;
+
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+        variables: {
+          id,
+        },
+      },
+    });
+
+    debugger;
+
     return id;
   }
 
   @Action({ commit: 'ADD_ACTIVITY' })
   public async AddActivity(activity) {
-    return activity;
+    const query = gql`
+      mutation($collections: [JSON!]) {
+        activityUpdateOrCreate(collections: $collections) {
+          _id
+          name
+          type
+          description
+          free
+          printable
+          editorial
+          notes
+          orientation
+          mediaType
+          category
+          subCategory
+          status
+          audience
+          isolate
+          updated_at
+          created_at
+          model {
+            slideCategories
+            slides {
+              media {
+                name
+                _id
+              }
+              phrases
+              category
+              size
+              audio {
+                name
+                _id
+              }
+              mediaIndex
+              _id
+            }
+          }
+        }
+      }
+    `;
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+        variables: {
+          collections: [activity],
+        },
+      },
+    });
+
+    debugger;
+
+    // return res2.data.data.categoryCreateOne.record;
+    return res2.data.data.activityUpdateOrCreate;
   }
 
   @Action({ commit: 'UPDATE_ACTIVITY' })
@@ -73,93 +247,149 @@ class Activities extends VuexModule implements IActivitiesState {
 
   @Action({ commit: 'UPDATE_ARTICULATION' })
   public async UpdateArticulation(articulation) {
-    return articulation;
-  }
+    const query = gql`
+      mutation($collections: [JSON!]) {
+        articulationUpdateOrCreate(collections: $collections) {
+          _id
+          name
+          display
+          title
+          description
+          notes
+          updated_at
+          created_at
+          model {
+            syllable {
+              text
+              type
+              emphasis
+              location
+              syllable
+              isolate
+              _id
+            }
+            blend {
+              text
+              type
+              blend
+              isolate
+              _id
+            }
+          }
+        }
+      }
+    `;
 
-  @Action({ commit: 'SET_CATEGORIES' })
-  public async LoadCategories() {
-    const res2 = await request({
-      url: `/api/v1/categories`,
-      method: 'get',
-      baseURL: '',
-    });
-
-    return (res2 as any).categories;
-  }
-
-  @Action({ commit: 'SET_CATEGORIES' })
-  public async AddCategory({ category }) {
-    const res2 = await request({
-      url: `/api/v1/categories`,
+    const res2 = await axios({
+      url: '/graphql',
       method: 'post',
-      baseURL: '',
-      data: { category },
+      data: {
+        query: print(query),
+        variables: {
+          collections: [articulation],
+        },
+      },
     });
 
-    return (res2 as any).categories;
+    debugger;
+
+    // return res2.data.data.categoryCreateOne.record;
+    return res2.data.data.articulationUpdateOrCreate;
   }
 
-  @Action({ commit: 'SET_CATEGORIES' })
-  public async RemoveCategory({ name }) {
-    const res2 = await request({
-      url: `/api/v1/categories`,
-      method: 'delete',
-      baseURL: '',
-      data: { name },
-    });
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async LoadCategories() {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
 
-    return (res2 as any).categories;
-  }
+  //   return (res2 as any).categories;
+  // }
 
-  @Action({ commit: 'SET_CATEGORIES' })
-  public async RemoveSubCategory({ name }) {
-    const res2 = await request({
-      url: `/api/v1/categories/sub`,
-      method: 'delete',
-      baseURL: '',
-      data: { name },
-    });
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async AddCategory({ category }) {
+  //   debugger;
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'post',
+  //     baseURL: '',
+  //     data: { category },
+  //   });
 
-    return (res2 as any).categories;
-  }
+  //   return (res2 as any).categories;
+  // }
 
-  @Action({ commit: 'SET_CATEGORIES' })
-  public async AddSubCategory({ name, category }) {
-    const res2 = await request({
-      url: `/api/v1/categories/sub`,
-      method: 'post',
-      baseURL: '',
-      data: { name, category },
-    });
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async RemoveCategory({ name }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'delete',
+  //     baseURL: '',
+  //     data: { name },
+  //   });
 
-    return (res2 as any).categories;
-  }
+  //   return (res2 as any).categories;
+  // }
 
-  @Action({ commit: 'SET_ACTIVITIES' })
-  public async LoadActivities() {
-    const res = await request({
-      url: '/api/v1/activities',
-      method: 'get',
-      baseURL: '',
-    });
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async RemoveSubCategory({ name }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories/sub`,
+  //     method: 'delete',
+  //     baseURL: '',
+  //     data: { name },
+  //   });
 
-    return (res as any).activities;
-  }
+  //   return (res2 as any).categories;
+  // }
 
-  @Action({ commit: 'SET_DOMAINS' })
-  public async LoadDomains() {
-    const res = await request({
-      url: '/api/v1/domains',
-      method: 'get',
-      baseURL: '',
-    });
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async AddSubCategory({ name, category }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories/sub`,
+  //     method: 'post',
+  //     baseURL: '',
+  //     data: { name, category },
+  //   });
 
-    return (res as any).domains;
-  }
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_ACTIVITIES' })
+  // public async LoadActivities() {
+  //   const res = await request({
+  //     url: '/api/v1/activities',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+
+  //   return (res as any).activities;
+  // }
+
+  // @Action({ commit: 'SET_DOMAINS' })
+  // public async LoadDomains() {
+  //   const res = await request({
+  //     url: '/api/v1/domains',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+
+  //   return (res as any).domains;
+  // }
 
   @Mutation
-  private ADD_ACTIVITY(activity: any) {
-    this.activities.push(activity);
+  private ADD_ACTIVITY(activities: any) {
+    debugger;
+
+    activities.forEach((a, i) => {
+      if (this.activities.find((aa) => aa._id === a._id)) {
+        this.activities[i] = a;
+      } else {
+        this.activities = [...this.activities, a];
+      }
+    });
   }
 
   @Mutation
@@ -171,28 +401,36 @@ class Activities extends VuexModule implements IActivitiesState {
 
   @Mutation
   private UPDATE_ARTICULATION(articulation: any) {
-    const i = this.articulations.findIndex((s) => s._id === articulation._id);
-    this.articulations[i] = articulation;
-  }
-
-  @Mutation
-  private SET_CATEGORIES(categories: any) {
-    this.categories = categories;
-
-    let r = [];
-
-    this.categories.forEach((a) => {
-      r = [...r, ...a.subcategory];
+    articulation.forEach((a, i) => {
+      if (this.articulations.find((aa) => aa._id === a._id)) {
+        this.articulations[i] = a;
+      } else {
+        this.articulations = [...this.articulations, a];
+      }
     });
 
-    console.log({ r });
-    this.subcategories = r;
+    // const i = this.articulations.findIndex((s) => s._id === articulation._id);
+    // this.articulations[i] = articulation;
   }
 
-  @Mutation
-  private SET_DOMAINS(domains: any) {
-    this.domains = domains;
-  }
+  // @Mutation
+  // private SET_CATEGORIES(categories: any) {
+  //   this.categories = categories;
+
+  //   let r = [];
+
+  //   this.categories.forEach((a) => {
+  //     r = [...r, ...a.subcategory];
+  //   });
+
+  //   console.log({ r });
+  //   this.subcategories = r;
+  // }
+
+  // @Mutation
+  // private SET_DOMAINS(domains: any) {
+  //   this.domains = domains;
+  // }
 
   @Mutation
   private REMOVE_ACTIVITY(id: any) {
@@ -204,13 +442,14 @@ class Activities extends VuexModule implements IActivitiesState {
     this.activities = activities;
   }
 
-  @Mutation
-  private SET_COLLECTIONS(collections: any) {
-    this.collections = collections;
-  }
+  // @Mutation
+  // private SET_COLLECTIONS(collections: any) {
+  //   this.collections = collections;
+  // }
 
   @Mutation
   private SET_ARTICULATIONS(articulations: any) {
+    debugger;
     this.articulations = articulations;
   }
 }

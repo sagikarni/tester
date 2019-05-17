@@ -28,6 +28,13 @@ schemaComposer.Query.addFields({
   ...fromActivityCollection.QUERIES,
 });
 
+schemaComposer.Mutation.addFields({
+  ...fromActivityCollection.MUTATIONS,
+  ...fromCategory.MUTATIONS,
+  ...fromSubCategory.MUTATIONS,
+  ...fromActivity.MUTATIONS,
+  ...fromArticulation.MUTATIONS,
+});
 // schemaComposer.Mutation.addFields({
 //   ...fromUser.MUTATIONS,
 // });

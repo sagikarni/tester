@@ -1,3 +1,7 @@
+import mongoose from 'mongoose';
+
+mongoose.set('debug', true);
+
 export * from './user';
 export * from './user-role';
 export * from './domain';

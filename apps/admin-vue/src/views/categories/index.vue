@@ -29,36 +29,35 @@
         </el-form-item>
       </el-form>
 
-      <el-tree
-        :data="datab"
-        :props="defaultProps"
-        @node-click="handleNodeClick"
-        node-key="label"
-        default-expand-all
-        :expand-on-click-node="false"
-      >
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>{{ node.label }}</span>
-          <span style="margin:0 20px;">
-            <el-button
-              type="text"
-              size="mini"
-              :disabled="data.used"
-              @click="() => remove(node, data)"
-            >Delete</el-button>
-          </span>
-        </span>
-      </el-tree>
+      <div v-for="data in datasource" :key="data.id" style="margin-bottom:20px;">
+        <h2>
+          {{data.label}}
+          <el-button
+            @click="removeCategory(data)"
+            :disabled="data.used"
+            size="mini"
+            type="danger"
+            icon="el-icon-delete"
+            circle
+          ></el-button>
+        </h2>
+        <el-tag
+          v-for="tag in data.children"
+          :key="tag.id"
+          :closable="!tag.used"
+          @close="handleClose(tag)"
+          :type="!tag.used ? 'danger': 'primary'"
+        >{{tag.label}}</el-tag>
+      </div>
     </div>
   </el-scrollbar>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-// import { UserModule } from '@/store/modules/user';
-import request from '../../utils/request';
 import { ActivitiesModule } from '../../store/modules/activities';
-import { flatten } from 'lodash';
+import { CategoryModule } from '../../store/modules/category';
+import { DomainModule } from '../../store/modules/domains';
 import { Message } from 'element-ui';
 
 @Component({})
@@ -68,94 +67,56 @@ export default class Categories extends Vue {
   }
 
   get categories() {
-    return ActivitiesModule.categories;
+    return CategoryModule.categories;
   }
 
   get subcategories() {
-    return ActivitiesModule.subcategories;
+    return CategoryModule.subCategories;
   }
 
-  get datab() {
-    if (!this.categories) {
-      return;
-    }
-    if (!this.activities) {
-      return;
-    }
-
-    const d = this.categories.map((x) => ({
-      id: x.name,
-      label: x.name,
-      used: this.activities.some(
-        (aa) => aa.category && aa.category.name === x.name
-      ),
-      children: x.subcategory.map((v) => ({
-        label: v.name,
-        id: v.name,
-        used: this.activities.some(
-          (aa) => aa.subCategory && aa.subCategory.name === v.name
-        ),
-      })),
+  get datasource() {
+    const ds = this.categories.map((category) => ({
+      id: category._id,
+      label: category.name,
+      used: this.activities.some((a) => a.category === category._id),
+      children: this.subcategories
+        .filter((a) => a.category._id === category._id)
+        .map((sub) => ({
+          label: sub.name,
+          id: sub._id,
+          used: this.activities.some((a) => a.subCategory === sub._id),
+        })),
     }));
 
-    return d;
+    return ds;
   }
 
-  get domainNames() {
-    return Object.keys(ActivitiesModule.domains);
-  }
-
-  get types() {
-    return ActivitiesModule.types;
-  }
-
-  get items() {
-    return ActivitiesModule.activities;
-  }
-
-  input2 = '';
   formCategory = { name: '' };
   formSubcategory = { name: '', category: null };
-
-  defaultProps = {
-    children: 'children',
-    label: 'label',
-  };
-
-  form = {
-    domain: null,
-    type: null,
-    mediaType: null,
-    category: null,
-    subcategory: null,
-    level: [],
-    audience: null,
-    status: null,
-    printable: null,
-    free: null,
-    editorial: null,
-    text: null,
-  };
 
   constructor() {
     super();
   }
 
-  addSubcategory() {
-    ActivitiesModule.AddSubCategory({
+  async addSubcategory() {
+    const sub = {
       name: this.formSubcategory.name,
-      category: this.formSubcategory.category,
-    });
+      category: this.categories.find(
+        (c) => c.name === this.formSubcategory.category
+      )._id,
+    };
+
+    await CategoryModule.AddSubCategory(sub);
 
     Message({
-      message: 'sub category saved',
+      message: 'sub-category saved!',
       type: 'success',
       duration: 5 * 1000,
     });
   }
 
   addCategory() {
-    ActivitiesModule.AddCategory({ category: this.formCategory.name });
+    CategoryModule.AddCategory({ category: this.formCategory.name });
 
     Message({
       message: 'category saved!',
@@ -164,19 +125,7 @@ export default class Categories extends Vue {
     });
   }
 
-  handleNodeClick(data) {
-    console.log(data);
-  }
-
-  add() {
-    console.log('on add');
-  }
-
-  onSubmit() {
-    console.log('onSubmit');
-  }
-
-  remove(node, data) {
+  handleClose(tag) {
     this.$confirm(
       'This will permanently delete this item. Continue?',
       'Warning',
@@ -186,29 +135,34 @@ export default class Categories extends Vue {
         type: 'warning',
       }
     ).then(async () => {
-      if (node.level === 1) {
-        ActivitiesModule.RemoveCategory({
-          name: data.label,
-        });
-      }
-
-      if (node.level === 2) {
-        ActivitiesModule.RemoveSubCategory({
-          name: data.label,
-        });
-      }
+      await CategoryModule.RemoveSubCategory({ id: tag.id });
 
       Message({
-        message: 'removed!',
+        message: `${tag.label} removed!`,
         type: 'success',
         duration: 5 * 1000,
       });
     });
+  }
 
-    // const parent = node.parent;
-    // const children = parent.data.children || parent.data;
-    // const index = children.findIndex((d) => d.id === data.id);
-    // children.splice(index, 1);
+  removeCategory(some) {
+    this.$confirm(
+      'This will permanently delete this item. Continue?',
+      'Warning',
+      {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }
+    ).then(async () => {
+      await CategoryModule.RemoveCategory({ id: some.id });
+
+      Message({
+        message: `${some.label} removed!`,
+        type: 'success',
+        duration: 5 * 1000,
+      });
+    });
   }
 }
 </script>
@@ -243,7 +197,7 @@ export default class Categories extends Vue {
 
 .activity-item.router-link-active {
   // box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05), 0 -5px 5px 0 rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+  background-color: lightgoldenrodyellow;
 }
 .colscrol {
   height: calc(100vh - 66px);
@@ -283,7 +237,7 @@ export default class Categories extends Vue {
   padding: 0;
 }
 .el-tag {
-  margin-right: 10px;
+  margin: 10px 10px 10px 0;
   color: #777;
 }
 

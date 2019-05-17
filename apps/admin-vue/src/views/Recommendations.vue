@@ -1,22 +1,29 @@
 <template>
   <div>
     <v-toolbar color="blue darken-3" dark app>
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">        <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
 
         <span class="hidden-sm-and-down">Via Admin</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon> <v-icon>apps</v-icon> </v-btn>
-      <v-btn icon> <v-icon>notifications</v-icon> </v-btn>
+      <v-btn icon>
+        <v-icon>apps</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>notifications</v-icon>
+      </v-btn>
     </v-toolbar>
-    <RecommendationsView />
+    <RecommendationsView/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import CategoriesView from './categories/index.vue';
 import { ActivitiesModule } from '../store/modules/activities';
+import { ActivityCollectionModule } from '../store/modules/activities-collection';
+import { CategoryModule } from '../store/modules/category';
+import { DomainModule } from '../store/modules/domains';
 import { AppModule } from '../store/modules/app';
 import RecommendationsView from './recommendations/index.vue';
 
@@ -30,39 +37,18 @@ Component.registerHooks([
   components: { RecommendationsView },
 })
 export default class Recommendations extends Vue {
-  private source = '';
-
-  private dialog = false;
-  private drawer = null;
-  private items = [
-    { icon: 'contacts', text: 'Activities', url: '/dashboard/activities' },
-    {
-      icon: 'history',
-      text: 'Recommendations',
-      url: '/dashboard/recommendations',
-    },
-    { icon: 'content_copy', text: 'Categories', url: '/dashboard/categories' },
-    {
-      icon: 'content_copy',
-      text: 'Articulation',
-      url: '/dashboard/articulations',
-    },
-  ];
-
   public async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.LoadActivities(),
-      ActivitiesModule.LoadCategories(),
-      ActivitiesModule.LoadDomains(),
-      ActivitiesModule.LoadCollections(),
+      ActivitiesModule.loadActivities(),
+      CategoryModule.loadCategory(),
+      DomainModule.loadDomains(),
+      ActivityCollectionModule.loadActivitiesCollection(),
     ]);
-
     next();
   }
 
-    toggleDrawer() {
+  toggleDrawer() {
     AppModule.toggleDrawer();
   }
-
 }
 </script>

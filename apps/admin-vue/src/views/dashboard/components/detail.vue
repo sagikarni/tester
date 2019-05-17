@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Model :add="false" :activity="activity" />
+    <Model :add="false" :activity="activity"/>
 
     <el-button type="primary" @click="onSubmit">Save</el-button>
     <el-button @click="onCancel">Cancel</el-button>
@@ -16,6 +16,7 @@ import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
 import { ActivitiesModule } from '../../../store/modules/activities';
 import lodash from 'lodash';
+import { DomainModule } from '../../../store/modules/domains';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -31,41 +32,28 @@ Component.registerHooks([
 export default class Detail extends Vue {
   activity = null;
 
-  form = {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [''],
-    resource: '',
-    desc: '',
-  };
-
   onCancel() {
     this.$router.push(`/dashboard/activities`);
   }
 
   async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
+
     this.activity = ActivitiesModule.activities.find(
       (r) => r._id === to.params.activity
     );
+
     if (this.activity.model.slides.length > 0) {
       this.activity.model.slides.forEach((s) => {
-        s.path = `/storage/${this.activity.type.domain.name}/${
-          this.activity.type.name
-        }/${this.activity._id}/thumbnails/__FILE__`;
+        const type = DomainModule.types.find(
+          (t) => t._id === this.activity.type
+        );
+
+        s.path = `/storage/${type.domain.name}/${type.name}/${
+          this.activity._id
+        }/thumbnails/__FILE__`;
       });
     }
-
-    // const res = await request({
-    //   url: `/api/v1/activities/${to.params.activity}`,
-    //   method: 'get',
-    //   baseURL: '',
-    // });
-
-    // this.activity = (res as any).activity;
 
     next();
   }
@@ -80,52 +68,61 @@ export default class Detail extends Vue {
     if (!activity) {
       debugger;
     }
-    // const res = await request({
-    //   url: `/api/v1/activities/${to.params.activity}`,
-    //   method: 'get',
-    //   baseURL: '',
-    // });
 
     next((vm) => {
-      // debugger;
       vm.activity = activity;
-
-      // vm.activity.options = [];
-      // if (vm.activity.free) vm.activity.options.push('Free');
-      // if (vm.activity.printable) vm.activity.options.push('Printable');
-      // if (vm.activity.editorial) vm.activity.options.push('Editorial');
-      // if (vm.activity.isolate) vm.activity.options.push('Isolate');
-
-      // debugger;
-      //       const d = lodash.filter(vm.activity.model.slides, { media: [ ]});
       // debugger;
 
-      // vm.activity.media = [];
+      // var oldValue = vm.activity.type;
+
+      // Object.defineProperty(vm.activity, 'type', {
+      //   get: function() {
+      //     return DomainModule.types.find(b => b._id === oldValue);
+      //     }
+      // });
+
+      // on('activity.type', (o) => DomainModule.types.find(b => b._id === oldValue);
+
+      // console.log({ a: vm.activity.type });
+      // debugger;
+
       if (vm.activity.model.slides.length > 0) {
         vm.activity.model.slides.forEach((s) => {
-          s.path = `/storage/${vm.activity.type.domain.name}/${
-            vm.activity.type.name
-          }/${vm.activity._id}/thumbnails/__FILE__`;
+          const type = DomainModule.types.find(
+            (t) => t._id === vm.activity.type
+          );
+
+          s.path = `/storage/${type.domain.name}/${type.name}/${
+            vm.activity._id
+          }/thumbnails/__FILE__`;
         });
       }
     });
-
-    // this.activity.options = [];
-    // if (this.activity.free) this.activity.options.push('Free');
-    // if (this.activity.printable) this.activity.options.push('Printable');
-    // if (this.activity.editorial) this.activity.options.push('Editorial');
-    // if (this.activity.isolate) this.activity.options.push('Isolate');
   }
 
   async onSubmit() {
-    console.log('submit!', this.activity);
+    // console.log('submit!', this.activity);
 
-    const res: any = await request({
-      url: `/api/v1/activities`,
-      method: 'post',
-      baseURL: '',
-      data: { activity: this.activity },
-    });
+    // const res: any = await request({
+    //   url: `/api/v1/activities`,
+    //   method: 'post',
+    //   baseURL: '',
+    //   data: { activity: this.activity },
+    // });
+
+    // Message({
+    //   message: 'saved',
+    //   type: 'success',
+    //   duration: 5 * 1000,
+    // });
+
+    // ActivitiesModule.UpdateActivity(res.activity);
+
+    // console.log('done');
+
+    console.log({ activity: this.activity });
+
+    await ActivitiesModule.AddActivity(this.activity);
 
     Message({
       message: 'saved',
@@ -133,7 +130,7 @@ export default class Detail extends Vue {
       duration: 5 * 1000,
     });
 
-    ActivitiesModule.UpdateActivity(res.activity);
+    this.$router.push(`/dashboard/activities/${this.activity._id}`);
 
     console.log('done');
   }
@@ -149,20 +146,13 @@ export default class Detail extends Vue {
       }
     )
       .then(async () => {
-        const res = await request({
-          url: `/api/v1/activities/${this.activity._id}`,
-          method: 'delete',
-          baseURL: '',
-          data: { activity: this.activity },
-        });
+        await ActivitiesModule.RemoveActivity(this.activity._id);
 
         this.$message({
           message: 'Delete completed',
           type: 'success',
           duration: 5 * 1000,
         });
-
-        ActivitiesModule.RemoveActivity(this.activity._id);
 
         console.log('done');
 

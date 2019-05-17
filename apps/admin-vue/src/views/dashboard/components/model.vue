@@ -7,35 +7,23 @@
         placeholder="Activity Type"
         value-key="_id"
       >
-        <el-option-group
-          v-for="group in domainsKeys"
-          :key="group"
-          :label="group"
-        >
-          <el-option
-            v-for="item in domains[group]"
-            :key="item._id"
-            :label="item.name"
-            :value="item"
-          ></el-option>
-        </el-option-group>
+        <el-option v-for="item in types" :key="item._id" :label="item.name" :value="item._id"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Storage" v-if="activity.type">
       <span>{{ storageUrl }}</span>
     </el-form-item>
-
     <el-form-item label="Cover" v-if="activity.type">
       <img
         width="150px"
         height="100px"
         :src="
-          `/storage/${activity.type.domain.name}/${activity.type.name}/${
+          `/storage/${getType(activity.type).domain.name}/${getType(activity.type).name}/${
             activity._id
           }/cover-l.jpg`
         "
-      />
+      >
     </el-form-item>
 
     <el-form-item label="Activity Name">
@@ -47,20 +35,14 @@
     </el-form-item>
 
     <el-form-item label="Media Type">
-      <el-select
-        v-model="activity.mediaType"
-        placeholder="please select your zone"
-      >
+      <el-select v-model="activity.mediaType" placeholder="please select your zone">
         <el-option label="Photo" value="Photo"></el-option>
         <el-option label="Video" value="Video"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Audience">
-      <el-select
-        v-model="activity.audience"
-        placeholder="please select your zone"
-      >
+      <el-select v-model="activity.audience" placeholder="please select your zone">
         <el-option label="All" value="All"></el-option>
         <el-option label="Kids" value="Kids"></el-option>
         <el-option label="Elderly" value="Elderly"></el-option>
@@ -68,23 +50,11 @@
     </el-form-item>
 
     <el-form-item label="Status">
-      <el-select
-        v-model="activity.status"
-        placeholder="please select your zone"
-      >
+      <el-select v-model="activity.status" placeholder="please select your zone">
         <el-option label="Started" value="Started"></el-option>
-        <el-option
-          label="WaitingForReview"
-          value="WaitingForReview"
-        ></el-option>
-        <el-option
-          label="TechnicalWriterPending"
-          value="TechnicalWriterPending"
-        ></el-option>
-        <el-option
-          label="TechnicalWriterApproved"
-          value="TechnicalWriterApproved"
-        ></el-option>
+        <el-option label="WaitingForReview" value="WaitingForReview"></el-option>
+        <el-option label="TechnicalWriterPending" value="TechnicalWriterPending"></el-option>
+        <el-option label="TechnicalWriterApproved" value="TechnicalWriterApproved"></el-option>
         <el-option label="Ready" value="Ready"></el-option>
         <el-option label="Published" value="Published"></el-option>
       </el-select>
@@ -95,13 +65,12 @@
           style="width: 100%;"
           v-model="activity.category"
           placeholder="please select your zone"
-          value-key="_id"
           clearable
         >
           <el-option
             :key="category._id"
             :label="category.name"
-            :value="category"
+            :value="category._id"
             v-for="category in categories"
           ></el-option>
         </el-select>
@@ -111,14 +80,13 @@
         <el-select
           style="width: 100%;"
           v-model="activity.subCategory"
-          value-key="_id"
           placeholder="please select your zone"
           clearable
         >
           <el-option
             :key="subCategory._id"
             :label="subCategory.name"
-            :value="subCategory"
+            :value="subCategory._id"
             v-for="subCategory in filterX"
           ></el-option>
         </el-select>
@@ -126,24 +94,17 @@
     </el-form-item>
 
     <el-form-item label="Orientation">
-      <el-select
-        v-model="activity.orientation"
-        placeholder="please select your zone"
-      >
+      <el-select v-model="activity.orientation" placeholder="please select your zone">
         <el-option label="Landscape" value="Landscape"></el-option>
         <el-option label="Portrait" value="Portrait"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Level">
-      <el-select
-        v-model="activity.level"
-        placeholder="please select your zone"
-        multiple
-      >
-        <el-option label="Basic" value="Basic" />
-        <el-option label="Intermediate" value="Intermediate" />
-        <el-option label="Advanced" value="Advanced" />
+      <el-select v-model="activity.level" placeholder="please select your zone" multiple>
+        <el-option label="Basic" value="Basic"/>
+        <el-option label="Intermediate" value="Intermediate"/>
+        <el-option label="Advanced" value="Advanced"/>
       </el-select>
     </el-form-item>
 
@@ -158,11 +119,7 @@
       <el-input type="textarea" v-model="activity.notes"></el-input>
     </el-form-item>
 
-    <component
-      v-if="activity.type && activity.type.name"
-      :is="activity.type.name"
-      v-model="activity.model"
-    ></component>
+    <component v-if="activity.type" :is="getCurrentType().name" v-model="activity.model"></component>
   </el-form>
 </template>
 
@@ -194,6 +151,8 @@ import GoodStory from './GoodStory.vue';
 import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 // import conf from './c.json';
 import { ActivitiesModule } from '../../../store/modules/activities';
+import { CategoryModule } from '../../../store/modules/category';
+import { DomainModule } from '../../../store/modules/domains';
 
 @Component({
   components: {
@@ -224,40 +183,49 @@ import { ActivitiesModule } from '../../../store/modules/activities';
   },
 })
 export default class Modely extends Vue {
+  getType(type) {
+    return DomainModule.types.find((t) => t._id === type);
+  }
+
+  getCurrentType() {
+    return DomainModule.types.find((t) => t._id === this.activity.type);
+  }
+
   get categories() {
-    return ActivitiesModule.categories;
+    return CategoryModule.categories;
   }
 
   get subcategories() {
-    return ActivitiesModule.subcategories;
-  }
-
-  get domainsKeys() {
-    return ActivitiesModule.domainsKeys;
+    return CategoryModule.subCategories;
   }
 
   get domains() {
-    return ActivitiesModule.domains;
+    return DomainModule.domains;
   }
 
   get types() {
-    return ActivitiesModule.types;
+    return DomainModule.types;
   }
 
   get storageUrl() {
-    return `E:/sagi-tera-files/${this.activity.type.domain.name}/${
-      this.activity.type.name
-    }/${this.activity._id}`;
+    const type = DomainModule.types.find((t) => t._id === this.activity.type);
+
+    return `E:/sagi-tera-files/${type.domain.name}/${type.name}/${
+      this.activity._id
+    }`;
   }
 
   get filterX() {
-    if (!this.activity.category) {
-      return [];
-    }
-
-    return this.subcategories.filter(
-      (xx) => xx.category === this.activity.category._id
+    return CategoryModule.subCategories.filter(
+      (t) => t.category._id === this.activity.category
     );
+    // if (!this.activity.category) {
+    //   return [];
+    // }
+
+    // return this.subcategories.filter(
+    //   (xx) => xx.category === this.activity.category._id
+    // );
   }
   @Prop() activity;
 

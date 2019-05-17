@@ -18,5 +18,12 @@ export const QUERIES = {
 };
 
 export const MUTATIONS = {
-  // : IGraphQlFields = {
+  categoryCreateOne: CategoryTC.getResolver('createOne'),
+  categoryCreateMany: CategoryTC.getResolver('createMany'),
+  categoryUpdateById: CategoryTC.getResolver('updateById'),
+  categoryUpdateOne: CategoryTC.getResolver('updateOne'),
+  categoryUpdateMany: CategoryTC.getResolver('updateMany'),
+  categoryRemoveById: CategoryTC.getResolver('removeById'),
+  categoryRemoveOne: CategoryTC.getResolver('removeOne'),
+  categoryRemoveMany: CategoryTC.getResolver('removeMany'),
 };

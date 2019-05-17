@@ -8,6 +8,11 @@ module.exports = {
   runtimeCompiler: true,
   devServer: {
     proxy: {
+      '/graphql': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true,
+      },
       '/api': {
         target: apiUrl,
         ws: true,

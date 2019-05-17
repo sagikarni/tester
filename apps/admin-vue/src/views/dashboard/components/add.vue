@@ -65,14 +65,10 @@ export default class Add extends Vue {
   }
 
   async onSubmit() {
-    console.log('submit!', this.activity);
+    console.log({activity: this.activity });
 
-    const res: any = await request({
-      url: `/api/v1/activities`,
-      method: 'post',
-      baseURL: '',
-      data: { activity: this.activity },
-    });
+
+    await ActivitiesModule.AddActivity(this.activity);
 
     Message({
       message: 'saved',
@@ -80,10 +76,7 @@ export default class Add extends Vue {
       duration: 5 * 1000,
     });
 
-    await ActivitiesModule.AddActivity(res.activity);
-
-    this.$router.push(`/dashboard/activities/${res.activity._id}`);
-    // res.up[0]._id;
+    this.$router.push(`/dashboard/activities/${this.activity._id}`);
 
     console.log('done');
   }

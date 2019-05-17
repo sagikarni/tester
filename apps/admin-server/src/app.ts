@@ -22,7 +22,7 @@ const morganFormat =
     ? ':remote-addr - :method :url [:status], resp. :response-time ms, :res[content-length] bytes, referrer ":referrer"'
     : 'dev';
 
-app.use(morgan(morganFormat, { stream: morganStreamWriter }));
+// app.use(morgan(morganFormat, { stream: morganStreamWriter }));
 
 app.use(json());
 app.use(urlencoded({ extended: true }));

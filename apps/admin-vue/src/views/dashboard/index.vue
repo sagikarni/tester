@@ -1,91 +1,72 @@
 <template>
   <div class="dashboard-container" style="position:relative">
-    <div
-      style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;"
-    >
+    <div style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;">
       <el-row type="flex" justify="space-between">
         <el-col :span="24" style="display:flex;">
           <el-select placeholder="All Domain" v-model="form.domain" clearable>
             <el-option
-              v-for="domain in domainNames"
-              :label="domain"
-              :value="domain"
-              :key="domain"
+              v-for="domain in domains"
+              :label="domain.name"
+              :value="domain._id"
+              :key="domain._id"
             />
           </el-select>
 
           <el-select placeholder="Activity Type" v-model="form.type" clearable>
-            <el-option
-              v-for="type in types"
-              :label="type.name"
-              :value="type.name"
-              :key="type._id"
-            />
+            <el-option v-for="type in types" :label="type.name" :value="type._id" :key="type._id"/>
           </el-select>
 
           <el-select placeholder="Media" v-model="form.mediaType" clearable>
-            <el-option label="Video" value="Video" />
-            <el-option label="Photo" value="Photo" />
+            <el-option label="Video" value="Video"/>
+            <el-option label="Photo" value="Photo"/>
           </el-select>
 
           <el-select placeholder="Category" v-model="form.category" clearable>
             <el-option
               :key="category.name"
               :label="category.name"
-              :value="category.name"
+              :value="category._id"
               v-for="category in categories"
             ></el-option>
           </el-select>
-          <el-select
-            placeholder="Sub Category"
-            v-model="form.subcategory"
-            clearable
-          >
+
+          <el-select placeholder="Sub Category" v-model="form.subcategory" clearable>
             <el-option
               :key="category._id"
               :label="category.name"
-              :value="category.name"
+              :value="category._id"
               v-for="category in subcategories"
             ></el-option>
           </el-select>
 
           <el-select placeholder="Audience" v-model="form.audience" clearable>
-            <el-option label="All" value="All" />
-            <el-option label="Kids" value="Kids" />
-            <el-option label="Elderly" value="Elderly" />
+            <el-option label="All" value="All"/>
+            <el-option label="Kids" value="Kids"/>
+            <el-option label="Elderly" value="Elderly"/>
           </el-select>
 
           <el-select placeholder="Status" v-model="form.status" clearable>
             <el-option label="Started" value="Started"></el-option>
-            <el-option
-              label="Waiting For Review"
-              value="WaitingForReview"
-            ></el-option>
-            <el-option
-              label="Technical Writer Pending"
-              value="TechnicalWriterPending"
-            ></el-option>
-            <el-option
-              label="Technical Writer Approved"
-              value="TechnicalWriterApproved"
-            ></el-option>
+            <el-option label="Waiting For Review" value="WaitingForReview"></el-option>
+            <el-option label="Technical Writer Pending" value="TechnicalWriterPending"></el-option>
+            <el-option label="Technical Writer Approved" value="TechnicalWriterApproved"></el-option>
             <el-option label="Ready" value="Ready"></el-option>
             <el-option label="Published" value="Published"></el-option>
           </el-select>
 
           <el-select placeholder="Printable" v-model="form.printable" clearable>
-            <el-option label="Yes" :value="true" />
-            <el-option label="No" :value="false" />
+            <el-option label="Yes" :value="true"/>
+            <el-option label="No" :value="false"/>
           </el-select>
 
           <el-select placeholder="License" v-model="form.free" clearable>
-            <el-option label="Free" :value="true" />
-            <el-option label="Paid" :value="false" />
+            <el-option label="Free" :value="true"/>
+            <el-option label="Paid" :value="false"/>
           </el-select>
 
           <el-select placeholder="Editorial" v-model="form.editorial" clearable>
-            <el-option label="Yes" :value="true" />
-            <el-option label="No" :value="false" />
+            <el-option label="Yes" :value="true"/>
+            <el-option label="No" :value="false"/>
           </el-select>
 
           <el-select
@@ -96,110 +77,93 @@
             collapse-tags
             style="flex-grow: 0;flex-shrink: 0;flex-basis: 13%;"
           >
-            <el-option label="Basic" value="Basic" />
-            <el-option label="Intermediate" value="Intermediate" />
-            <el-option label="Advanced" value="Advanced" />
+            <el-option label="Basic" value="Basic"/>
+            <el-option label="Intermediate" value="Intermediate"/>
+            <el-option label="Advanced" value="Advanced"/>
           </el-select>
         </el-col>
       </el-row>
     </div>
 
-    <div style>
-      <div style>
-        <el-row>
-          <el-col :span="6">
-            <div>
-              <el-row style>
-                <el-col :span="24">
-                  <div
-                    style="font-size:13px;background:khaki;;color:#444;font-weight:bold;padding:10px;"
-                  >
-                    {{
-                      $options.filters.limitArray(items, form).length
-                    }}
-                    Activities Founds
-                  </div>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-scrollbar
-                    wrap-class="list"
-                    view-class="view-box"
-                    :native="false"
-                    class="colscrol-first"
-                  >
-                    <!-- <div style="height:calc(100vh - 50px);overflow-y:auto;display:inline-block;width:50%;"> -->
-                    <!-- <div style="height:3000px;background:red;">bla</div> -->
-                    <router-link
-                      style="display:block;"
-                      :to="`/dashboard/activities/${item._id}`"
-                      v-for="item in $options.filters.limitArray(items, form)"
-                      :key="item._id"
-                      class="activity-item"
-                    >
-                      <div class="name">{{ item.name }}</div>
-
-                      <div class="tags">
-                        <span>{{ item.type.name }}</span>
-                        <span>{{ item._id }}</span>
-                      </div>
-                    </router-link>
-
-                    <!-- </div> -->
-                  </el-scrollbar>
-                </el-col>
-              </el-row>
+    <el-row>
+      <el-col :span="6">
+        <el-row style>
+          <el-col :span="24">
+            <div style="font-size:13px;background:khaki;;color:#444;font-weight:bold;padding:10px;">
+              {{ $options.filters.limitArray(items, form).length }}
+              Activities Founds
             </div>
           </el-col>
-          <el-col :span="18">
+        </el-row>
+        <el-row>
+          <el-col :span="24">
             <el-scrollbar
               wrap-class="list"
               view-class="view-box"
               :native="false"
-              class="colscrol"
+              class="colscrol-first"
             >
-              <!-- <div style="height:2000px;background:blue;">lllbla</div> -->
-              <div
-                style="background:white;display:flex;justify-content:center;align-items:center;min-height:100%;padding:20px;"
+              <router-link
+                style="display:block;"
+                :to="`/dashboard/activities/${item._id}`"
+                v-for="item in $options.filters.limitArray(items, form)"
+                :key="item._id"
+                class="activity-item"
               >
-                <router-view />
-              </div>
+                <div class="name">{{ item.name }}</div>
+
+                <div class="tags">
+                  <span>{{ getType(item.type).name }}</span>
+                  <span>{{ item._id }}</span>
+                </div>
+              </router-link>
             </el-scrollbar>
           </el-col>
         </el-row>
-      </div>
-    </div>
+      </el-col>
+      <el-col :span="18">
+        <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
+          <div
+            style="background:white;display:flex;justify-content:center;align-items:center;min-height:100%;padding:20px;"
+          >
+            <router-view/>
+          </div>
+        </el-scrollbar>
+      </el-col>
+    </el-row>
+
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
-// import { UserModule } from '@/store/modules/user';
-import request from '../../utils/request';
 import { ActivitiesModule } from '../../store/modules/activities';
+import { CategoryModule } from '../../store/modules/category';
+import { DomainModule } from '../../store/modules/domains';
 import { flatten } from 'lodash';
 
 @Component({
   filters: {
     limitArray: (arr, form) => {
       let f = arr;
+      const types = DomainModule.types;
 
       if (form.domain) {
-        f = f.filter((a) => a.type.domain.name === form.domain);
+        f = f.filter((a) => types.find(t => t._id === a.type).domain._id === form.domain ); // a.type.domain.name === form.domain);
       }
       if (form.type) {
-        f = f.filter((a) => a.type.name === form.type);
+        f = f.filter((a) => a.type === form.type);
       }
       if (form.mediaType) {
         f = f.filter((a) => a.mediaType === form.mediaType);
       }
       if (form.category) {
-        f = f.filter((a) => a.category && a.category.name === form.category);
+        f = f.filter((a) => a.category && a.category === form.category);
       }
       if (form.subcategory) {
         f = f.filter(
-          (a) => a.subCategory && a.subCategory.name === form.subcategory
+          (a) => a.subCategory && a.subCategory === form.subcategory
         );
       }
       if (form.level && form.level.length > 0) {
@@ -233,27 +197,35 @@ import { flatten } from 'lodash';
 })
 export default class Dashboard extends Vue {
   get categories() {
-    return ActivitiesModule.categories;
+    return CategoryModule.categories;
   }
 
   get subcategories() {
-    return ActivitiesModule.subcategories;
+    return CategoryModule.subCategories;
   }
 
-  get domainNames() {
-    return Object.keys(ActivitiesModule.domains);
+  get domains() {
+    return DomainModule.domains;
   }
 
   get types() {
-    return ActivitiesModule.types;
+    return DomainModule.types;
   }
 
   get items() {
     return ActivitiesModule.activities;
   }
 
+  getType(id) {
+    return this.types.find((t) => t._id === id);
+  }
+
   @Prop() searchKey;
-  // searchKey
+  @Watch('searchKey') onChangeSearchKey(n, o) {
+    console.log({ n });
+    this.form.text = n;
+  }
+
   form = {
     domain: null,
     type: null,
@@ -271,11 +243,6 @@ export default class Dashboard extends Vue {
 
   constructor() {
     super();
-  }
-
-  @Watch('searchKey') onChangeSearchKey(n, o) {
-    console.log({ n });
-    this.form.text = n;
   }
 }
 </script>
@@ -305,7 +272,7 @@ export default class Dashboard extends Vue {
 
 .activity-item.router-link-active {
   // box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05), 0 -5px 5px 0 rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+  background-color: lightgoldenrodyellow;
 }
 .colscrol {
   height: calc(100vh - (140px));
