@@ -18,7 +18,7 @@ import { startCase } from 'lodash';
 
 // import { activities } from 'tera-core';
 const undasherize = (str) => {
-  if (str.indexOf('-') === -1) return str;
+  if (str.indexOf('-') === -1) { return str; }
   return str
     .split('-')
     .map((s) => startCase(s))
@@ -66,7 +66,7 @@ export default class Activity extends Vue {
     // this.item = activities.find((i) => i.name === id);
     this.routeName = `${category}/start`;
 
-console.log('route: ', this.routeName);
+    console.log('route: ', this.routeName);
 
     this.load();
   }

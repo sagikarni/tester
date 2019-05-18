@@ -49,7 +49,7 @@ export default class Detail extends Vue {
     this.articulation = ActivitiesModule.articulations.find(
       (r) => r._id === to.params.articulation
     );
- 
+
 
     next();
   }
@@ -64,7 +64,7 @@ export default class Detail extends Vue {
     if (!articulation) {
       debugger;
     }
-   
+
 
     next((vm) => {
       // debugger;
@@ -72,7 +72,7 @@ export default class Detail extends Vue {
 
     });
 
-  
+
   }
 
   public async onSubmit() {

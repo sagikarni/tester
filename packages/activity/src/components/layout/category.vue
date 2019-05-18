@@ -42,7 +42,7 @@ import dasherize from 'dasherize';
 import { startCase } from 'lodash';
 
 const undasherize = (str) => {
-  if (str.indexOf('-') === -1) return str;
+  if (str.indexOf('-') === -1) { return str; }
   return str
     .split('-')
     .map((s) => startCase(s))

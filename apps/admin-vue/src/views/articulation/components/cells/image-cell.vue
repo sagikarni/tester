@@ -11,7 +11,7 @@ export default class DeleteCell extends Vue {
 
   get articulationName() {
     // return this.params.context.storageUrl + im;
-    
+
     return this.params.context.componentParent.articulation.name;
   }
 

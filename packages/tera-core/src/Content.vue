@@ -24,8 +24,8 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
 })
 export default class About extends Vue {
 
-  maps = { about: 'AboutUs', 
-  faq: 'Faq', 
+  maps = { about: 'AboutUs',
+  faq: 'Faq',
   team: 'Team',
   tips: 'Tips',
   contactus: 'ContactUs',

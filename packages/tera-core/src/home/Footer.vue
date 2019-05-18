@@ -60,7 +60,7 @@
   </v-footer>
 </template>
 
-<script>
+<script lang="ts"> as; script;
 export default {
   computed: {
     links() {

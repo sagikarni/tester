@@ -51,10 +51,6 @@ export default class SpeechStrips extends Vue {
     .toString(36)
     .substring(7);
 
-  getU(v) {
-    return `${v}-${this.id}`;
-  }
-
   public articulations = null;
   swiperOption = {
     slidesPerView: 'auto',
@@ -96,6 +92,10 @@ export default class SpeechStrips extends Vue {
     //   },
     // },
   };
+
+  getU(v) {
+    return `${v}-${this.id}`;
+  }
 
   mounted() {
     this.load();

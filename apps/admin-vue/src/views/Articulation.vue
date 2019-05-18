@@ -36,7 +36,7 @@ Component.registerHooks([
 export default class Articulation extends Vue {
   public async beforeRouteEnter(to, from, next) {
 
-    
+
     await Promise.all([ActivitiesModule.LoadArticulations()]);
 
     next();

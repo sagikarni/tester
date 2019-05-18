@@ -67,14 +67,10 @@ export default class Strip extends Vue {
     .toString(36)
     .substring(7);
 
-  getU(v) {
-    return `${v}-${this.id}`;
-  }
-
   swiperOption = {
     slidesPerView: 'auto',
     spaceBetween: 10,
-    speed:500,
+    speed: 500,
     //  effect: 'fade',
     // on: {
     //   beforeResize() {
@@ -120,6 +116,10 @@ export default class Strip extends Vue {
 
   @Prop() title;
   @Prop() activities;
+
+  getU(v) {
+    return `${v}-${this.id}`;
+  }
 
   // mounted() {
   // }

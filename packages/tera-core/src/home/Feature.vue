@@ -28,7 +28,7 @@
   <!-- </v-responsive> -->
 </template>
 
-<script>
+<script lang="ts"> as; script;
 export default {
   data: () => ({
     images: [

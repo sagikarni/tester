@@ -216,15 +216,7 @@ export default class Dashboard extends Vue {
     return ActivitiesModule.activities;
   }
 
-  getType(id) {
-    return this.types.find((t) => t._id === id);
-  }
-
   @Prop() searchKey;
-  @Watch('searchKey') onChangeSearchKey(n, o) {
-    console.log({ n });
-    this.form.text = n;
-  }
 
   form = {
     domain: null,
@@ -243,6 +235,14 @@ export default class Dashboard extends Vue {
 
   constructor() {
     super();
+  }
+
+  getType(id) {
+    return this.types.find((t) => t._id === id);
+  }
+  @Watch('searchKey') onChangeSearchKey(n, o) {
+    console.log({ n });
+    this.form.text = n;
   }
 }
 </script>

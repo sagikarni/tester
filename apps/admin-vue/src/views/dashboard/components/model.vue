@@ -183,13 +183,6 @@ import { DomainModule } from '../../../store/modules/domains';
   },
 })
 export default class Modely extends Vue {
-  getType(type) {
-    return DomainModule.types.find((t) => t._id === type);
-  }
-
-  getCurrentType() {
-    return DomainModule.types.find((t) => t._id === this.activity.type);
-  }
 
   get categories() {
     return CategoryModule.categories;
@@ -358,6 +351,13 @@ export default class Modely extends Vue {
     resource: '',
     desc: '',
   };
+  getType(type) {
+    return DomainModule.types.find((t) => t._id === type);
+  }
+
+  getCurrentType() {
+    return DomainModule.types.find((t) => t._id === this.activity.type);
+  }
 
   // mounted() {
 

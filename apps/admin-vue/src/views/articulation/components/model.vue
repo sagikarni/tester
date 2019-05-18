@@ -1,5 +1,6 @@
 <template>
   <el-form :model="form" label-width="120px" v-if="articulation">
+    {{form}}
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
         <div>
@@ -174,24 +175,7 @@ import ImageCell from './cells/image-cell.vue';
     DeleteCell,
     AgGridVue,
     draggable,
-    // "vue-transmit": VueTransmit
     dropper,
-    // Plain,
-    // Facts,
-    // Questions,
-    // Categorization,
-    // PhotoAssembly,
-    // WhatsInThePicture,
-    // MemoryCards,
-    // WhatIsWrong,
-    // Zoom,
-    // SpotTheDifference,
-    // ISee,
-    // Meaning,
-    // WHQuestions,
-    // GoodStory,
-    // SoundOfLifePhoto,
-    // WhatsInThePicture //() => import('./WhatsInThePicture.vue').then(d => d.default),
   },
   filters: {
     json(value) {
@@ -200,20 +184,12 @@ import ImageCell from './cells/image-cell.vue';
   },
 })
 export default class Modely extends Vue {
-  blendRows = 0;
-  syllableRows = 0;
-
-  onBlendModelUpdated(event) {
-    this.blendRows = event.api.getDisplayedRowCount();
-  }
-
-  onSyllableModelUpdated(event) {
-    this.syllableRows = event.api.getDisplayedRowCount();
-  }
 
   get storageUrl() {
     return `E:/sagi-tera-files/speech/Articulation/${this.articulation.name}`;
   }
+  blendRows = 0;
+  syllableRows = 0;
   gridOptionsBlend = {
     defaultColDef: {
       filter: true,
@@ -282,11 +258,14 @@ export default class Modely extends Vue {
     { headerName: 'Syllable', field: 'syllable', width: 90 },
     { headerName: 'Isolate', field: 'isolate', width: 90 },
 
-    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell',
-    filter: false,
+    {
+      headerName: 'Image',
+      field: 'media',
+      cellRenderer: 'imageCell',
+      filter: false,
       sortable: false,
-      resizable: false
-       },
+      resizable: false,
+    },
     {
       headerName: 'Recording',
       field: 'audio',
@@ -299,7 +278,7 @@ export default class Modely extends Vue {
     {
       cellRenderer: 'deleteCell',
       pinned: 'right',
-        filter: false,
+      filter: false,
       sortable: false,
       resizable: false,
     },
@@ -311,17 +290,19 @@ export default class Modely extends Vue {
     { headerName: 'Type', field: 'type', width: 90 },
     { headerName: 'Blend', field: 'blend', width: 90 },
     { headerName: 'Isolate', field: 'isolate', width: 90 },
-    { headerName: 'Image', field: 'media', cellRenderer: 'imageCell',
-     filter: false,
+    {
+      headerName: 'Image',
+      field: 'media',
+      cellRenderer: 'imageCell',
+      filter: false,
       sortable: false,
-      resizable: false
-      
-      },
+      resizable: false,
+    },
     {
       headerName: 'Recording',
       field: 'audio',
       cellRenderer: 'audioCell',
- filter: false,
+      filter: false,
       sortable: false,
       resizable: false,
     },
@@ -358,6 +339,14 @@ export default class Modely extends Vue {
     media: [],
     syllable: null,
   };
+
+  onBlendModelUpdated(event) {
+    this.blendRows = event.api.getDisplayedRowCount();
+  }
+
+  onSyllableModelUpdated(event) {
+    this.syllableRows = event.api.getDisplayedRowCount();
+  }
 
   getItems() {
     // this.articulation.name
@@ -429,7 +418,9 @@ export default class Modely extends Vue {
       return;
     }
 
-    const it = this.articulation.metadata.syllable.find((s) => s._id === data._id);
+    const it = this.articulation.metadata.syllable.find(
+      (s) => s._id === data._id
+    );
 
     it.emphasis = data.emphasis;
     it.text = data.text;
