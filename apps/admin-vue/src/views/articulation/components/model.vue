@@ -1,6 +1,5 @@
 <template>
   <el-form :model="form" label-width="120px" v-if="articulation">
-    {{form}}
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
         <div>
@@ -357,7 +356,7 @@ export default class Modely extends Vue {
 
   public addSyllable() {
     this.form = this.createNewSyllable();
-
+debugger;
     this.dialogSyllableVisible = true;
   }
 
@@ -409,6 +408,7 @@ export default class Modely extends Vue {
 
   onSaveSyllable() {
     const data = this.form as any;
+    debugger;
 
     if (!data._id) {
       this.articulation.metadata.syllable.push(data);

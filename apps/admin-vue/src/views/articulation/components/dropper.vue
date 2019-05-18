@@ -8,11 +8,7 @@
     @drop="onDrop"
     style="position:relative;"
   >
-    <span id="dropper-text" style="text-align:center;display:block;">
-      {{
-      placeholder
-      }}
-    </span>
+    <span id="dropper-text" style="text-align:center;display:block;">{{ placeholder }}</span>
 
     <div style="display:flex;flex-wrap:wrap;">
       <el-card
@@ -112,8 +108,13 @@ export default class Dropper extends Vue {
 
     const added = [];
 
+    this.items = [...this.value];
+
     [...e.dataTransfer.files].forEach((f, i) => {
-      const filename = f.name.replace(/(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g, '.');
+      const filename = f.name.replace(
+        /(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g,
+        '.'
+      );
 
       if (added.includes(filename)) {
         return;
