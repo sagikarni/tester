@@ -2,30 +2,33 @@ import { json, urlencoded } from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
 import expressSession from 'express-session';
 import helmet from 'helmet';
 import methodOverride from 'method-override';
 import path from 'path';
+import graphqlHTTP from 'express-graphql';
+import schema from 'cognishine/src/graphql/schema';
+import morgan from 'morgan';
+import { morganStreamWriter } from 'express-zone';
+
+import 'cognishine/src/mongodb';
 
 import { clientErrorHandler, errorHandler } from 'express-zone';
 import { routes } from './routes';
 
-import passport from 'passport';
+// import passport from 'passport';
 
-import {
-  facebookStrategy,
-  googleStrategy,
-  linkedinStrategy,
-  twitterStrategy,
-} from 'auth-node';
+// import {
+//   facebookStrategy,
+//   googleStrategy,
+//   linkedinStrategy,
+//   twitterStrategy,
+// } from 'auth-node';
 
-import schema from './graphql/schema';
-
-passport.use(facebookStrategy);
-passport.use(twitterStrategy);
-passport.use(linkedinStrategy);
-passport.use(googleStrategy);
+// passport.use(facebookStrategy);
+// passport.use(twitterStrategy);
+// passport.use(linkedinStrategy);
+// passport.use(googleStrategy);
 
 const app = express();
 
@@ -44,7 +47,6 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    // rootValue: root,
     graphiql: true,
   })
 );

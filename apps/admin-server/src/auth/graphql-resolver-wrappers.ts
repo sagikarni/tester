@@ -2,7 +2,7 @@ import {
   Resolver,
   ResolveParams as GqlComposeResolveParams,
 } from 'graphql-compose';
-import { IMongooseUserRole } from '../mongodb';
+import { IMongooseUserRole } from 'cognishine/src/mongodb';
 import { getUserFromJwtToken, IJwtToken } from './index';
 import { NoAnonymousAccessError, UnmetPermissionsError } from './auth-errors';
 

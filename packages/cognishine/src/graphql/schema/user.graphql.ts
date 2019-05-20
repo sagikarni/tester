@@ -7,7 +7,7 @@ import {
 
 import { TYPE_COMPOSER as userRoleType } from './graphql-user-role';
 import { login } from './login';
-import { User, UserRole } from 'src/mongodb';
+import { User, UserRole } from '../../mongodb';
 
 const UserTC = composeWithMongoose(User, {
   fields: { remove: ['role', 'password'] },

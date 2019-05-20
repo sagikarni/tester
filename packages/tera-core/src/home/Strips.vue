@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-responsive class="primary--text py-2">
-      <v-container>
+      <v-container :fluid="$vuetify.breakpoint.xlAndUp">
         <v-layout align-center justify-center wrap>
           <div
             class="text-xs-center"

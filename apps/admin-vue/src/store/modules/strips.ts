@@ -10,31 +10,29 @@ import store from '@/store';
 import { flatten, values } from 'lodash';
 import gql from 'graphql-tag';
 
-import request from '../../utils/request';
 import axios from 'axios';
 import { print } from 'graphql';
 import { chain } from 'lodash';
 
-export interface IActivityCollectionState {
+export interface IStripsState {
   collection: any[];
 }
 
-@Module({ dynamic: true, store, name: 'activityCollection' })
-class ActivityCollection extends VuexModule
-  implements IActivityCollectionState {
+@Module({ dynamic: true, store, name: 'strips' })
+class Strips extends VuexModule implements IStripsState {
   public collection = [];
 
   @Action({ commit: 'SET_COLLECTION' })
-  async loadActivitiesCollection() {
+  async loadStrips() {
     const query = gql`
       {
-        activityCollectionMany {
+        stripsMany {
           _id
           name
-          items {
+          groups {
             _id
             name
-            activities
+            items
           }
         }
       }
@@ -50,15 +48,15 @@ class ActivityCollection extends VuexModule
       },
     });
 
-    return res2.data.data.activityCollectionMany;
+    return res2.data.data.stripsMany;
   }
 
   @Action({ commit: 'SET_COLLECTION' })
   async save(collections) {
-    // mutation updateOrCreate($collections: [ActivityCollectionInput!]) {
+    // mutation updateOrCreate($collections: [StripsInput!]) {
     const query = gql`
       mutation($collections: [JSON!]) {
-        activityCollectionUpdateOrCreate(collections: $collections) {
+        stripsUpdateOrCreate(collections: $collections) {
           name
         }
       }
@@ -86,4 +84,4 @@ class ActivityCollection extends VuexModule
   }
 }
 
-export const ActivityCollectionModule = getModule(ActivityCollection);
+export const StripsModule = getModule(Strips);

@@ -1,6 +1,6 @@
 <template>
   <v-footer id="footer" class="py-4" color="primary" dark height="auto">
-    <v-container fluid>
+    <v-container>
       <v-layout wrap>
         <v-flex xs12 md5>
           <v-card dark color="transparent" class="elevation-0">
@@ -60,7 +60,7 @@
   </v-footer>
 </template>
 
-<script lang="ts"> as; script;
+<script lang="ts"> 
 export default {
   computed: {
     links() {

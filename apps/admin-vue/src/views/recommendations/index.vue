@@ -1,5 +1,6 @@
 <template>
   <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
+
     <div class="dashboard-container" style="position:relative;padding:20px;">
       <div class="box-card" v-for="collection in collections" :key="collection._id">
         <el-form ref="form" :model="form" label-width="150px">
@@ -7,23 +8,23 @@
             <el-input :disabled="!collection.new" v-model="collection.name"></el-input>
           </el-form-item>
 
-          <el-form-item v-for="item in collection.items" :key="item._id">
+          <el-form-item v-for="group in collection.groups" :key="group._id">
             <el-form-item label="List name" style="border:1px solid #ddd;padding:20px">
-              <el-input v-model="item.name"></el-input>
+              <el-input v-model="group.name"></el-input>
 
               <el-form-item label="Activities">
-                <ActivityTags v-model="item.activities"/>
+                <ActivityTags v-model="group.items"/>
               </el-form-item>
               <el-button
-                @click="removeList(collection.items, item)"
+                @click="removeList(collection.groups, group)"
                 type="text"
-              >Delete {{ item.name }} list</el-button>
+              >Delete {{ group.name }} list</el-button>
             </el-form-item>
           </el-form-item>
 
           <el-form-item>
             <el-button
-              @click="addList(collection.items)"
+              @click="addList(collection.groups)"
               type="text"
             >Add new {{ collection.name }} list</el-button>
           </el-form-item>
@@ -41,7 +42,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import { ActivitiesModule } from '../../store/modules/activities';
-import { ActivityCollectionModule } from '../../store/modules/activities-collection';
+import { StripsModule } from '../../store/modules/strips';
 import { CategoryModule } from '../../store/modules/category';
 import { DomainModule } from '../../store/modules/domains';
 import { Message, MessageBox } from 'element-ui';
@@ -52,7 +53,7 @@ import ActivityTags from './activity-tags.vue';
 })
 export default class Recommendations extends Vue {
   get collections() {
-    return ActivityCollectionModule.collection;
+    return StripsModule.collection;
   }
 
   public form = { name: '' };
@@ -69,7 +70,7 @@ export default class Recommendations extends Vue {
       new: c.new ? false : true,
     }));
 
-    await ActivityCollectionModule.save(collections);
+    await StripsModule.save(collections);
 
     Message({
       message: 'saved',

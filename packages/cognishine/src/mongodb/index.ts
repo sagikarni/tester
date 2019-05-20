@@ -10,4 +10,4 @@ export * from './category';
 export * from './subcategory';
 export * from './activity';
 export * from './articulation';
-export * from './activity-collection';
+export * from './strips';

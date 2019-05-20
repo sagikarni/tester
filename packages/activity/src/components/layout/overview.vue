@@ -1,33 +1,43 @@
 <template>
   <div id="overview">
     <v-content>
+      <v-container fluid class="pa-0">
+        <div style="background:gray;">
+          <h2 class="text-xs-center headline mb-5 white--text">
+            <span>{{ name }}</span>
+          </h2>
+        </div>
+      </v-container>
       <v-container grid-list-xl="grid-list-xl">
-        <h2 class="text-xs-center headline mb-5 grey--text">
-          <span>{{ name }}</span>
-        </h2>
-        <v-layout wrap="wrap">
-          <v-flex v-for="(feature, i) in items" :key="i" xs12="xs12" sm6="sm6" md4="md4">
-            <v-card>
-              <v-img :src="`//picsum.photos/400/147?image=${i}`" aspect-ratio="2.75"></v-img>
-
-              <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">{{ feature.title }}</h3>
-                  <div>{{ feature.title }}...</div>
-                </div>
-              </v-card-title>
-
-              <v-card-actions>
-                <v-btn
-                  flat
-                  color="orange"
-                  :to="{ name: 'category', params: { category: feature.name } }"
-                >See all activites</v-btn>
-              </v-card-actions>
+        <v-layout wrap>
+          <v-flex v-for="(feature, i) in items" :key="i" xs6 md6 lg3 d-flex>
+            <v-card class="pa-0" fill-height :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }">
+              <v-img
+                width="100%"
+                height="100%"
+                :alt="feature"
+                :aspect-ratio="1.3"
+                :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
+              >
+                <v-layout
+                  fill-height
+                  class="ma-0 pa-2 lightbox white--text"
+                  style="background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
+                >
+                  <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
+                    <div>
+                      <div class="display-1" style="font-weight:600!important">{{feature.name}}</div>
+                      <div class="title">{{feature.title}}</div>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-img>
             </v-card>
           </v-flex>
         </v-layout>
       </v-container>
+
+      <strip-group value="homepage" />
     </v-content>
   </div>
 </template>
@@ -35,8 +45,23 @@
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
 import dasherize from 'dasherize';
+import { ActivitiesModule } from '@/store/modules/activities';
+import { CategoryModule } from '@/store/modules/category';
+import { DomainModule } from '@/store/modules/domains';
+import { AppModule } from '@/store/modules/app';
+import { StripsModule } from '@/store/modules/strips';
 
-@Component({})
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate', // for vue-router 2.2+
+]);
+
+@Component({
+  components: {
+    StripGroup: () => import('../../../../tera-core/src/home/StripGroup.vue'),
+  },
+})
 export default class Overview extends Vue {
   items = [];
   name = '';
@@ -53,12 +78,27 @@ export default class Overview extends Vue {
   }
 
   async load() {
-    const res = await this.axios.get(`/activity/types/${this.name}`);
+    
+    // const res = await this.axios.get(`/activity/types/${this.name}`);
 
-    this.items = res.data.types.map((t) => ({
+    this.items = DomainModule.types.map((t) => ({
       name: dasherize(t.name).toLocaleLowerCase(),
       title: t.name,
     }));
+  }
+
+  
+ public async beforeRouteEnter(to, from, next) {
+    await Promise.all([
+      ActivitiesModule.loadActivities(),
+      ActivitiesModule.LoadArticulations(),
+      
+      CategoryModule.loadCategory(),
+      DomainModule.loadDomains(),
+      StripsModule.loadStrips()
+    ]);
+
+    next();
   }
 }
 </script>

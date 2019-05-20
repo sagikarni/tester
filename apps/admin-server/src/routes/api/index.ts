@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { v1 } from './v1';
+// import { v1 } from './v1';
 
 const router = Router();
 
@@ -8,6 +8,6 @@ router.all('/', (req, res) => {
   res.json({ ok: true });
 });
 
-router.use('/v1', v1);
+// router.use('/v1', v1);
 
 export { router as api };

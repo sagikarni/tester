@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { ActivitiesModule } from '@/store/modules/activities';
 
 @Component({})
 export default class SpeechStrips extends Vue {
@@ -102,9 +103,12 @@ export default class SpeechStrips extends Vue {
   }
 
   async load() {
-    const res = await this.axios.get(`/activity/articulations`);
 
-    this.articulations = res.data.articulations;
+        this.articulations = ActivitiesModule.articulations;
+
+    // const res = await this.axios.get(`/activity/articulations`);
+
+    // this.articulations = res.data.articulations;
   }
 }
 </script>

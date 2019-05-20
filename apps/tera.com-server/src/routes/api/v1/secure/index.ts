@@ -1,13 +1,13 @@
-import { Router } from 'express';
+// import { Router } from 'express';
 
-import { authenticate } from 'auth-node';
+// import { authenticate } from 'auth-node';
 
-const router = Router();
+// const router = Router();
 
-router.all('/', authenticate, (req, res, next) => {
-  const { user } = req as any;
+// router.all('/', authenticate, (req, res, next) => {
+//   const { user } = req as any;
 
-  res.json({ msg: 'this is secure data', user: user.toJSON() });
-});
+//   res.json({ msg: 'this is secure data', user: user.toJSON() });
+// });
 
-export { router as secure };
+// export { router as secure };

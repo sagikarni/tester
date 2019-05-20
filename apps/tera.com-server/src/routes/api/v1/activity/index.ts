@@ -1,83 +1,83 @@
-import { Router } from 'express';
+// import { Router } from 'express';
 
-import { authenticate } from 'auth-node';
+// import { authenticate } from 'auth-node';
 
-// import { activitiesMetadata } from '@libs/tera-activities';
-import {
-  ActivityCollection,
-  Articulation,
-  ActivityType,
-  Activity,
-} from '../../../../models';
+// // import { activitiesMetadata } from '@libs/tera-activities';
+// import {
+//   ActivityCollection,
+//   Articulation,
+//   ActivityType,
+//   Activity,
+// } from '../../../../models';
 
-const router = Router();
+// const router = Router();
 
-// router.get('/:id', (req, res, next) => {
-//   const activity = {
-//     name: 'learning-photo',
-//     title: 'learning photo activity',
-//     description: 'this is activvity of what in the picture...',
-//     thumbnails: ['istock-488951890', 'istock-532348674', 'istock-664350152'],
-//     type: 'plain-slides',
-//   };
+// // router.get('/:id', (req, res, next) => {
+// //   const activity = {
+// //     name: 'learning-photo',
+// //     title: 'learning photo activity',
+// //     description: 'this is activvity of what in the picture...',
+// //     thumbnails: ['istock-488951890', 'istock-532348674', 'istock-664350152'],
+// //     type: 'plain-slides',
+// //   };
 
-//   res.json(activity);
+// //   res.json(activity);
+// // });
+
+// router.get('/collection/:group', async (req, res, next) => {
+//   const group = req.params.group;
+
+//   const activityCollection = await ActivityCollection.find({
+//     name: group,
+//   }).populate({
+//     path: 'items.activities',
+//     populate: [
+//       {
+//         path: 'type',
+//         model: 'Activity-Type',
+//         populate: { path: 'domain' },
+//       },
+//       // { path: 'domain', model: 'Activity-Domain' },
+//       // { path: 'category', model: 'Category' },
+//       // { path: 'subCategory', model: 'SubCategory' },
+//     ],
+//   });
+
+//   res.json({ activityCollection });
 // });
 
-router.get('/collection/:group', async (req, res, next) => {
-  const group = req.params.group;
+// router.get('/articulations', async (req, res, next) => {
+//   const articulations = await Articulation.find({});
 
-  const activityCollection = await ActivityCollection.find({
-    name: group,
-  }).populate({
-    path: 'items.activities',
-    populate: [
-      {
-        path: 'type',
-        model: 'Activity-Type',
-        populate: { path: 'domain' },
-      },
-      // { path: 'domain', model: 'Activity-Domain' },
-      // { path: 'category', model: 'Category' },
-      // { path: 'subCategory', model: 'SubCategory' },
-    ],
-  });
+//   res.json({ articulations, code: 20000 });
+// });
 
-  res.json({ activityCollection });
-});
+// router.get('/types/:domain', async (req, res, next) => {
+//   const domain = req.params.domain;
+//   console.log({ domain });
 
-router.get('/articulations', async (req, res, next) => {
-  const articulations = await Articulation.find({});
+//   let types = await ActivityType.find({}).populate('domain'); // One({ category: {name: domain} });
 
-  res.json({ articulations, code: 20000 });
-});
+//   types = types.filter(
+//     (t: any) => t.domain.name.toLocaleLowerCase() === domain
+//   );
 
-router.get('/types/:domain', async (req, res, next) => {
-  const domain = req.params.domain;
-  console.log({ domain });
+//   res.json({ types, code: 20000 });
+// });
 
-  let types = await ActivityType.find({}).populate('domain'); // One({ category: {name: domain} });
+// router.get('/activities/:category', async (req, res, next) => {
+//   const category = req.params.category;
 
-  types = types.filter(
-    (t: any) => t.domain.name.toLocaleLowerCase() === domain
-  );
+//   let activities = await Activity.find({})
+//     .populate('category')
+//     .populate('subCategory')
+//     .populate({ path: 'type', populate: { path: 'domain' } });
 
-  res.json({ types, code: 20000 });
-});
+//   activities = activities.filter(
+//     (a: any) => a.type.name.toLocaleLowerCase() === category.toLocaleLowerCase()
+//   );
 
-router.get('/activities/:category', async (req, res, next) => {
-  const category = req.params.category;
+//   res.json({ activities, code: 20000 });
+// });
 
-  let activities = await Activity.find({})
-    .populate('category')
-    .populate('subCategory')
-    .populate({ path: 'type', populate: { path: 'domain' } });
-
-  activities = activities.filter(
-    (a: any) => a.type.name.toLocaleLowerCase() === category.toLocaleLowerCase()
-  );
-
-  res.json({ activities, code: 20000 });
-});
-
-export { router as activity };
+// export { router as activity };

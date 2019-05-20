@@ -21,7 +21,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { ActivitiesModule } from '../store/modules/activities';
-import { ActivityCollectionModule } from '../store/modules/activities-collection';
+import { StripsModule } from '../store/modules/strips';
 import { CategoryModule } from '../store/modules/category';
 import { DomainModule } from '../store/modules/domains';
 import { AppModule } from '../store/modules/app';
@@ -42,7 +42,7 @@ export default class Recommendations extends Vue {
       ActivitiesModule.loadActivities(),
       CategoryModule.loadCategory(),
       DomainModule.loadDomains(),
-      ActivityCollectionModule.loadActivitiesCollection(),
+      StripsModule.loadStrips(),
     ]);
     next();
   }

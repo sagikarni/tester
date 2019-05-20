@@ -6,11 +6,11 @@ import helmet from 'helmet';
 import methodOverride from 'method-override';
 import path from 'path';
 import graphqlHTTP from 'express-graphql';
-import schema from './graphql/schema';
+import schema from 'cognishine/src/graphql/schema';
 import morgan from 'morgan';
 import { morganStreamWriter } from 'express-zone';
 
-import './mongodb';
+import 'cognishine/src/mongodb';
 
 import { clientErrorHandler, errorHandler } from 'express-zone';
 import { routes } from './routes';

@@ -1,4 +1,4 @@
-import { User, UserRole } from '../mongodb';
+import { User, UserRole } from 'cognishine/src/mongodb';
 
 export const name = 'create_base_users';
 

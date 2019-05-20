@@ -15,7 +15,7 @@ import * as fromCategory from './category.graphql';
 import * as fromSubCategory from './sub-category.graphql';
 import * as fromDomain from './domain.graphql';
 import * as fromActivityType from './activity-type.graphql';
-import * as fromActivityCollection from './activity-collection.graphql';
+import * as fromStrips from './strips.graphql';
 
 schemaComposer.Query.addFields({
   ...fromUser.QUERIES,
@@ -25,11 +25,11 @@ schemaComposer.Query.addFields({
   ...fromSubCategory.QUERIES,
   ...fromDomain.QUERIES,
   ...fromActivityType.QUERIES,
-  ...fromActivityCollection.QUERIES,
+  ...fromStrips.QUERIES,
 });
 
 schemaComposer.Mutation.addFields({
-  ...fromActivityCollection.MUTATIONS,
+  ...fromStrips.MUTATIONS,
   ...fromCategory.MUTATIONS,
   ...fromSubCategory.MUTATIONS,
   ...fromActivity.MUTATIONS,

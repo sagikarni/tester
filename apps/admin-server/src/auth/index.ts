@@ -1,7 +1,7 @@
 import express from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as pify from 'pify';
-import { IMongooseUser, User } from '../mongodb';
+import { IMongooseUser, User } from 'cognishine/src/mongodb';
 import { NoSuchUserError, InvalidPasswordError } from './auth-errors';
 // import localAuthenticationRouter from './local';
 

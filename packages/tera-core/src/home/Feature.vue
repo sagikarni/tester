@@ -14,10 +14,10 @@
               <v-layout
                 fill-height
                 class="ma-0 pa-2 lightbox white--text"
-                xstyle="background-image: linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
+                style="background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
               >
-                <v-flex d-flex xs12 align-end flexbox>
-                  <div class="text-xs-center title">{{feature}}</div>
+                <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
+                  <div class="display-1" style="font-weight:600!important">{{feature}}</div>
                 </v-flex>
               </v-layout>
             </v-img>
@@ -28,7 +28,7 @@
   <!-- </v-responsive> -->
 </template>
 
-<script lang="ts"> as; script;
+<script lang="ts">
 export default {
   data: () => ({
     images: [
