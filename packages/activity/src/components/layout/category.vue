@@ -1,5 +1,60 @@
 <template>
   <div id="category">
+  <v-layout
+    wrap
+    style="height: 200px;"
+  >
+    <v-container>
+      <v-layout justify-center>
+        <v-btn
+          color="pink"
+          dark
+          @click.stop="drawer = !drawer"
+        >
+          Toggle
+        </v-btn>
+      </v-layout>
+    </v-container>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="mini"
+      absolute
+      dark
+      temporary
+      clipped
+    >
+      <v-list class="pa-1">
+        <v-list-tile v-if="mini" @click.stop="mini = !mini">
+          <v-list-tile-action>
+            <v-icon>chevron_right</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+
+    
+      </v-list>
+
+      <v-list class="pt-0" dense>
+        <v-divider light></v-divider>
+
+        <v-list-tile
+          v-for="item in itemsx"
+          :key="item.title"
+          @click=""
+        >
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+  </v-layout>
+
+
     <v-content>
       <v-container fluid class="pa-0">
         <div style="background:gray;">
@@ -7,6 +62,7 @@
             <span>{{ name }}</span>
           </h2>
         </div>
+      
       </v-container>
       <!-- <v-container fluid class="pa-0">
         <div>
@@ -104,6 +160,18 @@ const undasherize = (str) => {
 
 @Component({})
 export default class Category extends Vue {
+
+
+    drawer= null;
+        itemsx = [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ];
+        mini= false;
+        right= null;
+
+
+
   items = [];
   name = '';
   overview = '';
