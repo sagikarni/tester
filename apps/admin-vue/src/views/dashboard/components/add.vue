@@ -41,7 +41,7 @@ export default class Add extends Vue {
     status: 'Started',
     orientation: 'Landscape',
     // category: {},
-    model: {
+    metadata: {
       slideCategories: [],
       slides: [],
     },

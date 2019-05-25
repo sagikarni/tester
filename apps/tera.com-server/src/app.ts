@@ -16,6 +16,9 @@ import 'cognishine/src/mongodb';
 import { clientErrorHandler, errorHandler } from 'express-zone';
 import { routes } from './routes';
 
+import { proxy } from 'aws3-proxy';
+const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET } = process.env;
+
 // import passport from 'passport';
 
 // import {
@@ -47,7 +50,7 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    graphiql: true,
+    graphiql: process.env.NODE_ENV === 'development',
   })
 );
 
@@ -55,6 +58,15 @@ app.use(routes);
 
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.static(path.resolve(__dirname, './assets')));
+
+app.get(
+  '/storage/*',
+  proxy({
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+    bucket: BUCKET,
+  })
+);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/index.html'));

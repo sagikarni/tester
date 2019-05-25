@@ -1,14 +1,12 @@
 import './bootstrap';
 
-// import { db } from 'auth-node';
 import { logger } from 'express-zone';
-import http from 'http';
 import { connect, connection } from 'mongoose';
-// import { migrate } from '../migrations/01_create_base_users';
+import http from 'http';
 
 import app from '../app';
 
-const PORT = process.env.SERVER_PORT || 3000;
+const { MONGODB_URI, SERVER_PORT } = process.env;
 
 async function createServer() {
   connection.once('open', async () => {
@@ -18,14 +16,12 @@ async function createServer() {
 
     const server = http.createServer(app);
 
-    server.listen(PORT, () => {
-      logger.log(`app listening on port ${PORT}!`);
+    server.listen(SERVER_PORT || 3000, () => {
+      logger.log(`app listening on port ${SERVER_PORT}!`);
     });
-
-    // migrate();
   });
 
-  await connect(process.env.MONGODB_URI);
+  await connect(MONGODB_URI);
 }
 
 createServer();

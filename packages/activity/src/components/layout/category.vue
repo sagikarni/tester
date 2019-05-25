@@ -1,59 +1,52 @@
 <template>
   <div id="category">
-  <v-layout
-    wrap
-    style="height: 200px;"
-  >
-    <v-container>
-      <v-layout justify-center>
-        <v-btn
-          color="pink"
-          dark
-          @click.stop="drawer = !drawer"
-        >
-          Toggle
-        </v-btn>
-      </v-layout>
-    </v-container>
+    <v-layout>
+      <v-navigation-drawer fixed left clipped app dark>
+        <v-list>
+          <v-subheader>Category</v-subheader>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="mini"
-      absolute
-      dark
-      temporary
-      clipped
-    >
-      <v-list class="pa-1">
-        <v-list-tile v-if="mini" @click.stop="mini = !mini">
-          <v-list-tile-action>
-            <v-icon>chevron_right</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
+          <v-list-group v-for="item in categories" :key="item._id" no-action>
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
 
-    
-      </v-list>
+            <v-list-tile v-for="subItem in item.sub" :key="subItem._id" @click>
+              {{ subItem.name }}
+            </v-list-tile>
+          </v-list-group>
 
-      <v-list class="pt-0" dense>
-        <v-divider light></v-divider>
+          <v-subheader>Media</v-subheader>
 
-        <v-list-tile
-          v-for="item in itemsx"
-          :key="item.title"
-          @click=""
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
+          <v-radio-group v-model="form.mediaType" :mandatory="false">
+            <v-radio label="All" :value="null"></v-radio>
+            <v-radio label="Photo" value="Photo"></v-radio>
+            <v-radio label="Video" value="Video"></v-radio>
+          </v-radio-group>
 
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-  </v-layout>
+          <v-divider></v-divider>
 
+          <v-checkbox v-model="form.printable" label="Printable" :value="true" :false-value="undefined"></v-checkbox>
+
+          <v-divider></v-divider>
+
+          <v-checkbox v-model="form.isolate" label="Isolate" :value="true" :false-value="undefined"></v-checkbox>
+
+          <v-divider></v-divider>
+
+          <v-subheader>Audience</v-subheader>
+
+          <v-radio-group v-model="form.audience" :mandatory="false">
+            <v-radio label="All" :value="null"></v-radio>
+            <v-radio label="Kids" value="Kids"></v-radio>
+            <v-radio label="Elderly" value="Elderly"></v-radio>
+          </v-radio-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-layout>
 
     <v-content>
       <v-container fluid class="pa-0">
@@ -62,7 +55,6 @@
             <span>{{ name }}</span>
           </h2>
         </div>
-      
       </v-container>
       <!-- <v-container fluid class="pa-0">
         <div>
@@ -93,11 +85,11 @@
             <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
           </v-radio-group>
         </div>
-      </v-container> -->
+      </v-container>-->
 
       <v-container grid-list-xl="grid-list-xl">
         <v-layout wrap>
-          <v-flex v-for="(feature, i) in items" :key="i" xs6 md6 lg3 d-flex>
+          <v-flex v-for="(feature, i) in displayItems" :key="i" xs6 md6 lg3 d-flex>
             <v-card
               class="pa-0"
               fill-height
@@ -141,6 +133,7 @@ import { CategoryModule } from '@/store/modules/category';
 import { DomainModule } from '@/store/modules/domains';
 import { AppModule } from '@/store/modules/app';
 import { StripsModule } from '@/store/modules/strips';
+import { filter } from 'lodash';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -158,19 +151,33 @@ const undasherize = (str) => {
     .join('');
 };
 
+// https://github.com/vuetifyjs/vuetify/issues/7269
+const removeEmpty = (obj) => {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] && typeof obj[key] === 'object') removeEmpty(obj[key]);
+    else if (obj[key] === null) delete obj[key];
+  });
+  return obj;
+};
+
 @Component({})
 export default class Category extends Vue {
+// https://github.com/vuetifyjs/vuetify/issues/7269
+  form = { 
+    printable: null,
+    isolate: null,
+    mediaType: null,
+    category: null,
+    audience: null
+  };
 
-
-    drawer= null;
-        itemsx = [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
-        ];
-        mini= false;
-        right= null;
-
-
+  drawer = null;
+  itemsx = [
+    { title: 'Home', icon: 'dashboard' },
+    { title: 'About', icon: 'question_answer' },
+  ];
+  mini = false;
+  right = null;
 
   items = [];
   name = '';
@@ -180,35 +187,77 @@ export default class Category extends Vue {
     super();
   }
 
+  get displayItems() {
+    // let x = this.items;
+
+    console.log({ x: this.items });
+
+console.log({ oldForm: this.form });
+    // const x = filter(this.items, this.form);
+
+    const form = removeEmpty({ ...this.form });
+
+    console.log({ form });
+
+    // if (this.form.printable) {
+    //   x = x.filter((xx) => xx.printable === this.form.printable);
+    // }
+    // if (this.form.isolate) {
+    //   x = x.filter((xx) => xx.isolate === this.form.isolate);
+    // }
+    // if (this.form.mediaType && this.form.mediaType.length) {
+    //   x = x.filter((xx) => this.form.mediaType.includes(xx.mediaType));
+    // }
+    // if (this.form.category && this.form.category.length) {
+    //   x = x.filter((xx) => this.form.category.includes(xx.category));
+    // }
+
+    return filter(this.items, form);
+  }
+
   type;
 
   mounted() {
     const { overview, category } = this.$route.params;
-    
+
     this.overview = startCase(overview);
     this.name = undasherize(category); // startCase(category);
 
-this.type = DomainModule.types.find(t =>t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase());
+    this.type = DomainModule.types.find(
+      (t) => t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
+    );
+
+    this.categories = CategoryModule.categories.map((c) => ({
+      ...c,
+      sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
+    }));
+
+    console.log({ o: this.categories });
 
     this.load();
   }
 
+  categories;
+
   async load() {
-    this.items = ActivitiesModule.activities.filter(a => a.type === this.type._id).map((t) => ({
-      name: t.name.toLocaleLowerCase(),
-      title: t.name,
-      _id: t._id,
-    }));
+    this.items = ActivitiesModule.activities
+      .filter((a) => a.type === this.type._id)
+      .map((t) => ({
+        ...t,
+        name: t.name.toLocaleLowerCase(),
+        title: t.name,
+        _id: t._id,
+      }));
   }
- 
- public async beforeRouteEnter(to, from, next) {
+
+  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ActivitiesModule.loadActivities(),
       ActivitiesModule.LoadArticulations(),
-      
+
       CategoryModule.loadCategory(),
       DomainModule.loadDomains(),
-      StripsModule.loadStrips()
+      StripsModule.loadStrips(),
     ]);
 
     next();
@@ -233,5 +282,48 @@ this.type = DomainModule.types.find(t =>t.name.toLocaleLowerCase() === this.name
   //       .map((n) => ({ ...n, name: dasherize(n.name) }));
   //   }
   // }
+
+  itemsy = [
+    {
+      action: 'local_activity',
+      title: 'Attractions',
+      items: [{ title: 'List Item' }],
+    },
+    {
+      action: 'restaurant',
+      title: 'Dining',
+      active: true,
+      items: [
+        { title: 'Breakfast & brunch' },
+        { title: 'New American' },
+        { title: 'Sushi' },
+      ],
+    },
+    {
+      action: 'school',
+      title: 'Education',
+      items: [{ title: 'List Item' }],
+    },
+    {
+      action: 'directions_run',
+      title: 'Family',
+      items: [{ title: 'List Item' }],
+    },
+    {
+      action: 'healing',
+      title: 'Health',
+      items: [{ title: 'List Item' }],
+    },
+    {
+      action: 'content_cut',
+      title: 'Office',
+      items: [{ title: 'List Item' }],
+    },
+    {
+      action: 'local_offer',
+      title: 'Promotions',
+      items: [{ title: 'List Item' }],
+    },
+  ];
 }
 </script>

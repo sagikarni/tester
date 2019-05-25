@@ -167,6 +167,16 @@ import DeleteCell from './delete-cell.vue';
 import AudioCell from './cells/audio-cell.vue';
 import ImageCell from './cells/image-cell.vue';
 
+const getObjectId = () => {
+  const ObjectId = (
+    m = Math,
+    d = Date,
+    h = 16,
+    s = (s) => m.floor(s).toString(h)
+  ) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
+  return ObjectId;
+};
+
 @Component({
   components: {
     ImageCell,
@@ -183,9 +193,8 @@ import ImageCell from './cells/image-cell.vue';
   },
 })
 export default class Modely extends Vue {
-
   get storageUrl() {
-    return `E:/sagi-tera-files/speech/Articulation/${this.articulation.name}`;
+    return `E:/sagi-tera-files/Speech/Articulation/${this.articulation.name}`;
   }
   blendRows = 0;
   syllableRows = 0;
@@ -356,7 +365,6 @@ export default class Modely extends Vue {
 
   public addSyllable() {
     this.form = this.createNewSyllable();
-debugger;
     this.dialogSyllableVisible = true;
   }
 
@@ -408,9 +416,10 @@ debugger;
 
   onSaveSyllable() {
     const data = this.form as any;
-    debugger;
 
     if (!data._id) {
+      data._id = getObjectId();
+
       this.articulation.metadata.syllable.push(data);
       this.dialogSyllableVisible = false;
 
@@ -440,6 +449,8 @@ debugger;
     const data = this.form as any;
 
     if (!data._id) {
+      data._id = getObjectId();
+
       this.articulation.metadata.blend.push(data);
       this.dialogBlendVisible = false;
 

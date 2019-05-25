@@ -11,6 +11,7 @@ export const types = {
   audience: ['All', 'Kids', 'Elderly'],
   mediaType: ['Photo', 'Video'],
   level: ['Basic', 'Intermediate', 'Advanced'],
+  articulationTypes: ['Word', 'Phrase', 'Sentence'],
 };
 
 export const domains = {

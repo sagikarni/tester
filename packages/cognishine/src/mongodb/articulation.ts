@@ -46,7 +46,7 @@ const ArticulationSchema = new Schema(
       syllable: [
         {
           text: { type: String },
-          type: { type: String, enum: types.level },
+          type: { type: String, enum: types.articulationTypes },
           emphasis: { type: String },
           location: { type: String },
           syllable: { type: String },
@@ -58,7 +58,7 @@ const ArticulationSchema = new Schema(
       blend: [
         {
           text: { type: String },
-          type: { type: String, enum: types.level },
+          type: { type: String, enum: types.articulationTypes },
           blend: { type: String },
           media: [{ name: { type: String } }],
           isolate: { type: Boolean },
