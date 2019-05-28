@@ -78,7 +78,7 @@ export default class Overview extends Vue {
   }
 
   async load() {
-    
+
     // const res = await this.axios.get(`/activity/types/${this.name}`);
 
     this.items = DomainModule.types.map((t) => ({
@@ -87,12 +87,12 @@ export default class Overview extends Vue {
     }));
   }
 
-  
+
  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ActivitiesModule.loadActivities(),
       ActivitiesModule.LoadArticulations(),
-      
+
       CategoryModule.loadCategory(),
       DomainModule.loadDomains(),
       StripsModule.loadStrips()

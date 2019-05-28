@@ -154,45 +154,21 @@ const undasherize = (str) => {
 // https://github.com/vuetifyjs/vuetify/issues/7269
 const removeEmpty = (obj) => {
   Object.keys(obj).forEach((key) => {
-    if (obj[key] && typeof obj[key] === 'object') removeEmpty(obj[key]);
-    else if (obj[key] === null) delete obj[key];
+    if (obj[key] && typeof obj[key] === 'object') { removeEmpty(obj[key]); }
+    else if (obj[key] === null) { delete obj[key]; }
   });
   return obj;
 };
 
 @Component({})
 export default class Category extends Vue {
-// https://github.com/vuetifyjs/vuetify/issues/7269
-  form = { 
-    printable: null,
-    isolate: null,
-    mediaType: null,
-    category: null,
-    audience: null
-  };
-
-  drawer = null;
-  itemsx = [
-    { title: 'Home', icon: 'dashboard' },
-    { title: 'About', icon: 'question_answer' },
-  ];
-  mini = false;
-  right = null;
-
-  items = [];
-  name = '';
-  overview = '';
-
-  constructor() {
-    super();
-  }
 
   get displayItems() {
     // let x = this.items;
 
     console.log({ x: this.items });
 
-console.log({ oldForm: this.form });
+    console.log({ oldForm: this.form });
     // const x = filter(this.items, this.form);
 
     const form = removeEmpty({ ...this.form });
@@ -214,54 +190,30 @@ console.log({ oldForm: this.form });
 
     return filter(this.items, form);
   }
+// https://github.com/vuetifyjs/vuetify/issues/7269
+  form = {
+    printable: null,
+    isolate: null,
+    mediaType: null,
+    category: null,
+    audience: null
+  };
+
+  drawer = null;
+  itemsx = [
+    { title: 'Home', icon: 'dashboard' },
+    { title: 'About', icon: 'question_answer' },
+  ];
+  mini = false;
+  right = null;
+
+  items = [];
+  name = '';
+  overview = '';
 
   type;
 
-  mounted() {
-    const { overview, category } = this.$route.params;
-
-    this.overview = startCase(overview);
-    this.name = undasherize(category); // startCase(category);
-
-    this.type = DomainModule.types.find(
-      (t) => t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
-    );
-
-    this.categories = CategoryModule.categories.map((c) => ({
-      ...c,
-      sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
-    }));
-
-    console.log({ o: this.categories });
-
-    this.load();
-  }
-
   categories;
-
-  async load() {
-    this.items = ActivitiesModule.activities
-      .filter((a) => a.type === this.type._id)
-      .map((t) => ({
-        ...t,
-        name: t.name.toLocaleLowerCase(),
-        title: t.name,
-        _id: t._id,
-      }));
-  }
-
-  public async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.loadActivities(),
-      ActivitiesModule.LoadArticulations(),
-
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
-      StripsModule.loadStrips(),
-    ]);
-
-    next();
-  }
 
   // items = [];
   // name = '';
@@ -325,5 +277,53 @@ console.log({ oldForm: this.form });
       items: [{ title: 'List Item' }],
     },
   ];
+
+  constructor() {
+    super();
+  }
+
+  mounted() {
+    const { overview, category } = this.$route.params;
+
+    this.overview = startCase(overview);
+    this.name = undasherize(category); // startCase(category);
+
+    this.type = DomainModule.types.find(
+      (t) => t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
+    );
+
+    this.categories = CategoryModule.categories.map((c) => ({
+      ...c,
+      sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
+    }));
+
+    console.log({ o: this.categories });
+
+    this.load();
+  }
+
+  async load() {
+    this.items = ActivitiesModule.activities
+      .filter((a) => a.type === this.type._id)
+      .map((t) => ({
+        ...t,
+        name: t.name.toLocaleLowerCase(),
+        title: t.name,
+        _id: t._id,
+      }));
+  }
+
+  public async beforeRouteEnter(to, from, next) {
+    await Promise.all([
+      ActivitiesModule.loadActivities(),
+      ActivitiesModule.LoadArticulations(),
+
+      CategoryModule.loadCategory(),
+      DomainModule.loadDomains(),
+      StripsModule.loadStrips(),
+    ]);
+
+    next();
+  }
 }
 </script>

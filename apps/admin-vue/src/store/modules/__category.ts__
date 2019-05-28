@@ -25,70 +25,8 @@ class Category extends VuexModule implements ICategoryState {
   public categories = [];
   public subCategories = [];
 
-  @Action({ commit: 'SET_CATEGORIES' })
-  async loadCategory() {
-    const query = gql`
-      {
-        categoryMany {
-          name
-          _id
-        }
-        subCategoryMany {
-          name
-          _id
-          category {
-            _id
-          }
-        }
-      }
-    `;
+  
 
-    console.log({ query });
-
-    const res2 = await axios({
-      url: '/graphql',
-      method: 'post',
-      data: {
-        query: print(query),
-      },
-    });
-
-    const {
-      categoryMany: category,
-      subCategoryMany: subCategory,
-    } = res2.data.data;
-
-    return { category, subCategory };
-    //    return res2.data.data.subCategoryMany;
-  }
-
-  @Action({ commit: 'REMOVE_CATEGORY' })
-  async RemoveCategory({ id }) {
-    const query = gql`
-      mutation($id: MongoID!) {
-        categoryRemoveOne(filter: { _id: $id }) {
-          recordId
-        }
-      }
-    `;
-
-    console.log({ query });
-
-    const res2 = await axios({
-      url: '/graphql',
-      method: 'post',
-      data: {
-        query: print(query),
-        variables: {
-          id,
-        },
-      },
-    });
-
-    debugger;
-
-    return id;
-  }
 
   @Action({ commit: 'REMOVE_SUBCATEGORY' })
   async RemoveSubCategory({ id }) {
@@ -118,34 +56,6 @@ class Category extends VuexModule implements ICategoryState {
     return id;
   }
 
-  @Action({ commit: 'ADD_TO_CATEGORY' })
-  async AddCategory({ category }) {
-    const query = gql`
-      mutation($record: CreateOneCategoryInput!) {
-        categoryCreateOne(record: $record) {
-          record {
-            _id
-            name
-          }
-        }
-      }
-    `;
-
-    const res2 = await axios({
-      url: '/graphql',
-      method: 'post',
-      data: {
-        query: print(query),
-        variables: {
-          record: { name: category },
-        },
-      },
-    });
-
-    debugger;
-
-    return res2.data.data.categoryCreateOne.record;
-  }
 
   @Action({ commit: 'ADD_TO_SUBCATEGORY' })
   async AddSubCategory(opt) {

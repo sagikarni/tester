@@ -3,7 +3,7 @@ import aws from 'aws-sdk';
 export const proxy = ({ accessKeyId, secretAccessKey, bucket }) => {
   const s3 = new aws.S3({ accessKeyId, secretAccessKey });
 
-  return (req, res, next) => {
+  return (req, res) => {
     const fileKey = (req.params && req.params[0]) || '';
 
     const options = {

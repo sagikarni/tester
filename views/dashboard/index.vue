@@ -3,6 +3,8 @@
     <div style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;">
       <el-row type="flex" justify="space-between">
         <el-col :span="24" style="display:flex;">
+          <!-- 
+
           <el-select placeholder="All Domain" v-model="form.domain" clearable>
             <el-option
               v-for="domain in domains"
@@ -15,22 +17,27 @@
           <el-select placeholder="Activity Type" v-model="form.type" clearable>
             <el-option v-for="type in types" :label="type.name" :value="type._id" :key="type._id"/>
           </el-select>
-
+ 
           <el-select placeholder="Media" v-model="form.mediaType" clearable>
             <el-option label="Video" value="Video"/>
             <el-option label="Photo" value="Photo"/>
           </el-select>
 
-          <el-select placeholder="Category" v-model="form.category" clearable>
+          
+
+          
+          -->
+          <!-- <el-select placeholder="Category" v-model="form.subCategory" clearable>
             <el-option
-              :key="category.name"
+              :key="category._id"
               :label="category.name"
-              :value="category._id"
+              value-key="category"
+              :value="{ category: { _id: category._id } }"
               v-for="category in categories"
             ></el-option>
-          </el-select>
+          </el-select> -->
 
-          <el-select placeholder="Sub Category" v-model="form.subcategory" clearable>
+          <el-select placeholder="Sub Category" v-model="form.subCategory._id" clearable>
             <el-option
               :key="category._id"
               :label="category.name"
@@ -68,7 +75,7 @@
             <el-option label="Yes" :value="true"/>
             <el-option label="No" :value="false"/>
           </el-select>
-
+          
           <el-select
             placeholder="Level"
             v-model="form.level"
@@ -81,6 +88,7 @@
             <el-option label="Intermediate" value="Intermediate"/>
             <el-option label="Advanced" value="Advanced"/>
           </el-select>
+
         </el-col>
       </el-row>
     </div>
@@ -90,7 +98,7 @@
         <el-row style>
           <el-col :span="24">
             <div style="font-size:13px;background:khaki;;color:#444;font-weight:bold;padding:10px;">
-              {{ $options.filters.limitArray(items, form).length }}
+              {{ itemsX.length }}
               Activities Founds
             </div>
           </el-col>
@@ -106,7 +114,7 @@
               <router-link
                 style="display:block;"
                 :to="`/dashboard/activities/${item._id}`"
-                v-for="item in $options.filters.limitArray(items, form)"
+                v-for="item in itemsX"
                 :key="item._id"
                 class="activity-item"
               >
@@ -131,8 +139,6 @@
         </el-scrollbar>
       </el-col>
     </el-row>
-
-    
   </div>
 </template>
 
@@ -141,61 +147,111 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { ActivitiesModule } from '../../store/modules/activities';
 import { CategoryModule } from '../../store/modules/category';
 import { DomainModule } from '../../store/modules/domains';
-import { flatten } from 'lodash';
+import { flatten, filter } from 'lodash';
+
+// https://github.com/vuetifyjs/vuetify/issues/7269
+const removeEmpty = (obj) => {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] && typeof obj[key] === 'object') { removeEmpty(obj[key]); }
+    else if (obj[key] === null) { delete obj[key]; }
+    if (obj[key] && typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0) {
+       delete obj[key];
+     }
+  });
+  return obj;
+};
 
 @Component({
-  filters: {
-    limitArray: (arr, form) => {
-      let f = arr;
-      const types = DomainModule.types;
-
-      if (form.domain) {
-        f = f.filter((a) => types.find(t => t._id === a.type).domain._id === form.domain ); // a.type.domain.name === form.domain);
-      }
-      if (form.type) {
-        f = f.filter((a) => a.type === form.type);
-      }
-      if (form.mediaType) {
-        f = f.filter((a) => a.mediaType === form.mediaType);
-      }
-      if (form.category) {
-        f = f.filter((a) => a.category && a.category === form.category);
-      }
-      if (form.subcategory) {
-        f = f.filter(
-          (a) => a.subCategory && a.subCategory === form.subcategory
-        );
-      }
-      if (form.level && form.level.length > 0) {
-        f = f.filter((a) => form.level.includes(a.level));
-      }
-      if (form.audience) {
-        f = f.filter((a) => a.audience === form.audience);
-      }
-      if (form.status) {
-        f = f.filter((a) => a.status === form.status);
-      }
-      if (form.printable != null) {
-        f = f.filter((a) => a.printable === form.printable);
-      }
-      if (form.free != null) {
-        f = f.filter((a) => a.free === form.free);
-      }
-      if (form.editorial != null) {
-        f = f.filter((a) => a.editorial === form.editorial);
-      }
-      if (form.text) {
-        f = f.filter((obj) =>
-          JSON.stringify(obj)
-            .toLowerCase()
-            .includes(form.text.toLowerCase())
-        );
-      }
-      return f;
-    },
-  },
+  // filters: {
+  //   limitArray: (arr, form) => {
+  //     let f = arr;
+  //     const types = DomainModule.types;
+  //     if (form.domain) {
+  //       f = f.filter((a) => types.find(t => t._id === a.type).domain._id === form.domain ); // a.type.domain.name === form.domain);
+  //     }
+  //     if (form.type) {
+  //       f = f.filter((a) => a.type === form.type);
+  //     }
+  //     if (form.mediaType) {
+  //       f = f.filter((a) => a.mediaType === form.mediaType);
+  //     }
+  //     if (form.category) {
+  //       f = f.filter((a) => a.category && a.category === form.category);
+  //     }
+  //     if (form.subcategory) {
+  //       f = f.filter(
+  //         (a) => a.subCategory && a.subCategory === form.subcategory
+  //       );
+  //     }
+  //     if (form.level && form.level.length > 0) {
+  //       f = f.filter((a) => form.level.includes(a.level));
+  //     }
+  //     if (form.audience) {
+  //       f = f.filter((a) => a.audience === form.audience);
+  //     }
+  //     if (form.status) {
+  //       f = f.filter((a) => a.status === form.status);
+  //     }
+  //     if (form.printable != null) {
+  //       f = f.filter((a) => a.printable === form.printable);
+  //     }
+  //     if (form.free != null) {
+  //       f = f.filter((a) => a.free === form.free);
+  //     }
+  //     if (form.editorial != null) {
+  //       f = f.filter((a) => a.editorial === form.editorial);
+  //     }
+  //     if (form.text) {
+  //       f = f.filter((obj) =>
+  //         JSON.stringify(obj)
+  //           .toLowerCase()
+  //           .includes(form.text.toLowerCase())
+  //       );
+  //     }
+  //     return f;
+  //   },
+  // },
 })
 export default class Dashboard extends Vue {
+  form = {
+    //    domain: null,
+    audience: null,
+    status: null,
+    printable: null,
+    free: null,
+    editorial: null,
+    level: null,
+    subCategory: { _id: null },
+    // type: null,
+    // mediaType: null,
+    // category: null,
+    // subcategory: null,
+    // level: [],
+    // audience: null,
+    // status: null,
+    // printable: null,
+    // free: null,
+    // editorial: null,
+    // text: null,
+  };
+
+  get itemsX() {
+    let a = ActivitiesModule.activities;
+
+    a = a.map(aa => ({...aa, subCategory: this.subcategories.find(s => s._id === aa.subCategory ) }));
+
+    console.log({ a });
+
+    const form = removeEmpty({ ...this.form });
+
+    console.log({ form });
+    console.log({ length: a.length });
+    let u = filter(a, form);
+    console.log({ u });
+
+    return u;
+  }
+
   get categories() {
     return CategoryModule.categories;
   }
@@ -218,21 +274,6 @@ export default class Dashboard extends Vue {
 
   @Prop() searchKey;
 
-  form = {
-    domain: null,
-    type: null,
-    mediaType: null,
-    category: null,
-    subcategory: null,
-    level: [],
-    audience: null,
-    status: null,
-    printable: null,
-    free: null,
-    editorial: null,
-    text: null,
-  };
-
   constructor() {
     super();
   }
@@ -242,7 +283,7 @@ export default class Dashboard extends Vue {
   }
   @Watch('searchKey') onChangeSearchKey(n, o) {
     console.log({ n });
-    this.form.text = n;
+   // this.form.text = n;
   }
 }
 </script>

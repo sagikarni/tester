@@ -21,66 +21,57 @@ export interface IActivitiesState {
   // domains: any[];
 }
 
-@Module({ dynamic: true, store, name: 'activities' })
-class Activities extends VuexModule implements IActivitiesState {
-  // public categories = [];
-  // public subcategories = [];
-  public activities = [];
-  // public domains = [];
-  // public collections = [];
-  public articulations = [];
-
-  // public get domainsKeys() {
-  //   return Object.keys(this.domains);
-  // }
-
-  // public get types() {
-  //   return flatten(this.domainsKeys.map((k) => this.domains[k]));
-  // }
-  @Action({ commit: 'SET_ACTIVITIES' })
-  async loadActivities() {
-    const query = gql`
-      {
-        activityMany {
-          _id
-          name
-          type
-          level
-          description
-          free
-          printable
-          editorial
-          notes
-          orientation
-          mediaType
-          category
-          subCategory
-          status
-          audience
-          isolate
-          updated_at
-          created_at
-          metadata {
-            slideCategories
-            slides {
-              media {
-                name
-                _id
-              }
-              phrases
-              category
-              size
-              audio {
-                name
-                _id
-              }
-              mediaIndex
-              _id
-            }
+const LOAD_ACTIVITIES = gql`
+  {
+    activityMany {
+      _id
+      name
+      type
+      level
+      description
+      free
+      printable
+      editorial
+      notes
+      orientation
+      mediaType
+      category
+      subCategory
+      status
+      audience
+      isolate
+      updated_at
+      created_at
+      metadata {
+        slideCategories
+        slides {
+          media {
+            name
+            _id
           }
+          phrases
+          category
+          size
+          audio {
+            name
+            _id
+          }
+          mediaIndex
+          _id
         }
       }
-    `;
+    }
+  }
+`;
+
+@Module({ dynamic: true, store, name: 'activities' })
+class Activities extends VuexModule implements IActivitiesState {
+  public activities = [];
+  public articulations = [];
+
+  @Action({ commit: 'SET_ACTIVITIES' })
+  async loadActivities() {
+    const query = LOAD_ACTIVITIES;
 
     console.log({ query });
 
@@ -91,6 +82,9 @@ class Activities extends VuexModule implements IActivitiesState {
         query: print(query),
       },
     });
+
+    debugger;
+    
     return res2.data.data.activityMany;
   }
 

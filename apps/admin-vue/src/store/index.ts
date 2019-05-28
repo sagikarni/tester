@@ -1,14 +1,24 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { IAppState } from './modules/app';
-import { IUserState } from './modules/user';
+import VuexORM from '@vuex-orm/core';
+
+import * as fromEntities from './entities';
+
+import { IAppState } from './app';
+export interface IRootState {
+  app: IAppState;
+}
 
 Vue.use(Vuex);
 
-export interface IRootState {
-  app: IAppState;
-  user: IUserState;
-}
+const database = new VuexORM.Database();
 
-// Declare empty store first, dynamically register all modules later.
-export default new Vuex.Store<IRootState>({});
+Object.keys(fromEntities).forEach((entity) =>
+  database.register(fromEntities[entity])
+);
+
+const store = new Vuex.Store<IRootState>({
+  plugins: [VuexORM.install(database)],
+});
+
+export default store;

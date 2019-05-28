@@ -49,7 +49,7 @@ export default class Home extends Vue {
     await Promise.all([
       ActivitiesModule.loadActivities(),
       ActivitiesModule.LoadArticulations(),
-      
+
       CategoryModule.loadCategory(),
       DomainModule.loadDomains(),
       StripsModule.loadStrips()
@@ -57,7 +57,7 @@ export default class Home extends Vue {
 
     next();
   }
-  
+
 }
 </script>
 
