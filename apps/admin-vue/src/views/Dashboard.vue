@@ -53,14 +53,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { AppModule } from '../store/modules/app';
+import { AppModule } from '../store/app';
 
 @Component
 export default class Dashboard extends Vue {
-  private source = '';
-
-  private dialog = false;
-
   private get drawer() {
     return AppModule.sidebar.opened;
   }

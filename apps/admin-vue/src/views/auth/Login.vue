@@ -39,33 +39,28 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { UserModule } from '../store/modules/user';
+import { AuthModule } from '../../store/auth.module';
 
 @Component
 export default class Login extends Vue {
-  private source = '';
-
-  private drawer = null;
-
   private loginForm = {
-    username: '',
+    email: '',
     password: '',
   };
 
   get token() {
-    return UserModule.token;
+    return AuthModule.token;
   }
 
   @Watch('token', { immediate: true, deep: true })
-  public onisAuthenticatedChanged(val: string, oldVal: string) {
-    console.log({ val });
-    if (val) {
+  public onisAuthenticatedChanged(value) {
+    if (value) {
       this.$router.push('/dashboard/activities');
     }
   }
 
   public login() {
-    UserModule.Login(this.loginForm);
+    AuthModule.login(this.loginForm);
   }
 }
 </script>

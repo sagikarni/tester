@@ -15,11 +15,11 @@
           <el-input v-model="formSubcategory.name" placeholder="name"></el-input>
         </el-form-item>
         <el-form-item label="In Category:">
-          <el-select placeholder="Category" v-model="formSubcategory.category" clearable>
+          <el-select placeholder="Category" value-key="_id" v-model="formSubcategory.category" clearable>
             <el-option
               :key="category.name"
               :label="category.name"
-              :value="category.name"
+              :value="category"
               v-for="category in categories"
             ></el-option>
           </el-select>
@@ -55,36 +55,42 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { ActivitiesModule } from '../../store/modules/activities';
-import { CategoryModule } from '../../store/modules/category';
-import { DomainModule } from '../../store/modules/domains';
+import { ActivitiesModule, Activities } from '../../store/activities.module';
+import { DomainsModule } from '../../store/domains.module';
+import { CategoriesModule } from '../../store/categories.module';
+import { StripsModule } from '../../store/strips.module';
+import { ArticulationsModule } from '../../store/articulations.module';
+import { AppModule } from '../../store/app';
+
 import { Message } from 'element-ui';
 
 @Component({})
 export default class Categories extends Vue {
-  get activities() {
-    return ActivitiesModule.activities;
-  }
-
   get categories() {
-    return CategoryModule.categories;
+    return CategoriesModule.category.all();
   }
 
   get subcategories() {
-    return CategoryModule.subCategories;
+    return CategoriesModule.subCategory.all();
   }
 
   get datasource() {
-    const ds = this.categories.map((category) => ({
+    const a = ActivitiesModule.activity.all();
+    const ids = a.map((t) => t.category_id);
+    const subids = a.map((t) => t.subCategory_id);
+
+    console.log({ a });
+
+    const ds = this.categories.map((category: any) => ({
       id: category._id,
       label: category.name,
-      used: this.activities.some((a) => a.category === category._id),
+      used: ids.indexOf(category._id) > -1, // this.activities.some((a) => a.category === category._id),
       children: this.subcategories
-        .filter((a) => a.category._id === category._id)
-        .map((sub) => ({
+        .filter((a) => a.category_id === category._id)
+        .map((sub: any) => ({
           label: sub.name,
           id: sub._id,
-          used: this.activities.some((a) => a.subCategory === sub._id),
+          used: subids.indexOf(sub._id) > -1, // this.activities.some((a) => a.subCategory === sub._id),
         })),
     }));
 
@@ -99,14 +105,12 @@ export default class Categories extends Vue {
   }
 
   async addSubcategory() {
-    const sub = {
+    const subCategory = {
       name: this.formSubcategory.name,
-      category: this.categories.find(
-        (c) => c.name === this.formSubcategory.category
-      )._id,
+      category: this.formSubcategory.category._id
     };
 
-    await CategoryModule.AddSubCategory(sub);
+    await CategoriesModule.addSubcategory({ subCategory });
 
     Message({
       message: 'sub-category saved!',
@@ -115,8 +119,8 @@ export default class Categories extends Vue {
     });
   }
 
-  addCategory() {
-    CategoryModule.AddCategory({ category: this.formCategory.name });
+  async addCategory() {
+    await CategoriesModule.add({ category: { name: this.formCategory.name } });
 
     Message({
       message: 'category saved!',
@@ -135,7 +139,7 @@ export default class Categories extends Vue {
         type: 'warning',
       }
     ).then(async () => {
-      await CategoryModule.RemoveSubCategory({ id: tag.id });
+      await CategoriesModule.removeSubcategory({ subCategory: { _id: tag.id } });
 
       Message({
         message: `${tag.label} removed!`,
@@ -146,23 +150,24 @@ export default class Categories extends Vue {
   }
 
   removeCategory(some) {
-    this.$confirm(
-      'This will permanently delete this item. Continue?',
-      'Warning',
-      {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }
-    ).then(async () => {
-      await CategoryModule.RemoveCategory({ id: some.id });
 
-      Message({
-        message: `${some.label} removed!`,
-        type: 'success',
-        duration: 5 * 1000,
+      this.$confirm(
+        'This will permanently delete this item. Continue?',
+        'Warning',
+        {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+        }
+      ).then(async () => {
+        await CategoriesModule.remove({ category: { _id: some.id } });
+
+        Message({
+          message: `${some.label} removed!`,
+          type: 'success',
+          duration: 5 * 1000,
+        });
       });
-    });
   }
 }
 </script>

@@ -12,7 +12,12 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '../../../store/modules/activities';
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
 
 const ObjectId = (
   m = Math,
@@ -67,12 +72,12 @@ export default class Add extends Vue {
   public async onSubmit() {
     console.log('submit!', this.activity);
 
-    const res: any = await request({
-      url: `/api/v1/activities`,
-      method: 'post',
-      baseURL: '',
-      data: { activity: this.activity },
-    });
+    // const res: any = await request({
+    //   url: `/api/v1/activities`,
+    //   method: 'post',
+    //   baseURL: '',
+    //   data: { activity: this.activity },
+    // });
 
     Message({
       message: 'saved',
@@ -80,11 +85,12 @@ export default class Add extends Vue {
       duration: 5 * 1000,
     });
 
-    await ActivitiesModule.AddActivity(res.activity);
+throw 'TODO onSubn=mit!';
 
-    this.$router.push(`/dashboard/activities/${res.activity._id}`);
-    // res.up[0]._id;
+    // await ActivitiesModule.AddActivity(res.activity);
 
+    // this.$router.push(`/dashboard/activities/${res.activity._id}`);
+    
     console.log('done');
   }
 }

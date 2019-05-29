@@ -3,9 +3,7 @@
     <div style="padding:10px;background:#F8F8F8;border-bottom:1px solid #F5F5F5;">
       <el-row type="flex" justify="space-between">
         <el-col :span="24" style="display:flex;">
-          <!-- 
-
-          <el-select placeholder="All Domain" v-model="form.domain" clearable>
+          <el-select placeholder="All Domain" v-model="form.type.domain._id" clearable>
             <el-option
               v-for="domain in domains"
               :label="domain.name"
@@ -14,35 +12,30 @@
             />
           </el-select>
 
-          <el-select placeholder="Activity Type" v-model="form.type" clearable>
+          <el-select placeholder="Activity Type" v-model="form.type._id" clearable>
             <el-option v-for="type in types" :label="type.name" :value="type._id" :key="type._id"/>
           </el-select>
- 
+
           <el-select placeholder="Media" v-model="form.mediaType" clearable>
             <el-option label="Video" value="Video"/>
             <el-option label="Photo" value="Photo"/>
           </el-select>
 
-          
-
-          
-          -->
-          <!-- <el-select placeholder="Category" v-model="form.subCategory" clearable>
+          <el-select placeholder="Category" v-model="form.subCategory.category._id" clearable>
             <el-option
               :key="category._id"
               :label="category.name"
-              value-key="category"
-              :value="{ category: { _id: category._id } }"
+              :value="category._id"
               v-for="category in categories"
             ></el-option>
-          </el-select> -->
+          </el-select>
 
           <el-select placeholder="Sub Category" v-model="form.subCategory._id" clearable>
             <el-option
               :key="category._id"
               :label="category.name"
               :value="category._id"
-              v-for="category in subcategories"
+              v-for="category in subCategories"
             ></el-option>
           </el-select>
 
@@ -75,7 +68,7 @@
             <el-option label="Yes" :value="true"/>
             <el-option label="No" :value="false"/>
           </el-select>
-          
+
           <el-select
             placeholder="Level"
             v-model="form.level"
@@ -88,7 +81,6 @@
             <el-option label="Intermediate" value="Intermediate"/>
             <el-option label="Advanced" value="Advanced"/>
           </el-select>
-
         </el-col>
       </el-row>
     </div>
@@ -121,7 +113,7 @@
                 <div class="name">{{ item.name }}</div>
 
                 <div class="tags">
-                  <span>{{ getType(item.type).name }}</span>
+                  <span>{{ item.type.name }}</span>
                   <span>{{ item._id }}</span>
                 </div>
               </router-link>
@@ -144,19 +136,29 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
-import { ActivitiesModule } from '../../store/modules/activities';
-import { CategoryModule } from '../../store/modules/category';
-import { DomainModule } from '../../store/modules/domains';
 import { flatten, filter } from 'lodash';
 
-// https://github.com/vuetifyjs/vuetify/issues/7269
+import { ActivitiesModule } from '../../store/activities.module';
+import { DomainsModule } from '../../store/domains.module';
+import { CategoriesModule } from '../../store/categories.module';
+import { StripsModule } from '../../store/strips.module';
+import { ArticulationsModule } from '../../store/articulations.module';
+import { AppModule } from '../../store/app';
+
 const removeEmpty = (obj) => {
   Object.keys(obj).forEach((key) => {
-    if (obj[key] && typeof obj[key] === 'object') { removeEmpty(obj[key]); }
-    else if (obj[key] === null) { delete obj[key]; }
-    if (obj[key] && typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0) {
-       delete obj[key];
-     }
+    if (obj[key] && typeof obj[key] === 'object') {
+      removeEmpty(obj[key]);
+    } else if (obj[key] === null) {
+      delete obj[key];
+    }
+    if (
+      obj[key] &&
+      typeof obj[key] === 'object' &&
+      Object.keys(obj[key]).length === 0
+    ) {
+      delete obj[key];
+    }
   });
   return obj;
 };
@@ -214,62 +216,61 @@ const removeEmpty = (obj) => {
 })
 export default class Dashboard extends Vue {
   form = {
-    //    domain: null,
     audience: null,
     status: null,
     printable: null,
     free: null,
     editorial: null,
     level: null,
-    subCategory: { _id: null },
-    // type: null,
-    // mediaType: null,
-    // category: null,
-    // subcategory: null,
-    // level: [],
-    // audience: null,
-    // status: null,
-    // printable: null,
-    // free: null,
-    // editorial: null,
-    // text: null,
+    mediaType: null,
+    type: {
+      _id: null,
+      domain: {
+        _id: null,
+      },
+    },
+    subCategory: {
+      _id: null,
+      category: { _id: null },
+    },
   };
 
   get itemsX() {
-    let a = ActivitiesModule.activities;
+    const a = ActivitiesModule.activity
+      .query()
+      .with(['type.domain', 'category', 'subCategory.category'])
+      .all();
 
-    a = a.map(aa => ({...aa, subCategory: this.subcategories.find(s => s._id === aa.subCategory ) }));
-
-    console.log({ a });
-
-    const form = removeEmpty({ ...this.form });
+    const form = removeEmpty(JSON.parse(JSON.stringify(this.form)));
 
     console.log({ form });
-    console.log({ length: a.length });
-    let u = filter(a, form);
-    console.log({ u });
 
-    return u;
+    const filteredActivities = filter(a, form);
+
+    console.log({ filteredActivities });
+
+    return filteredActivities;
   }
 
   get categories() {
-    return CategoryModule.categories;
+    return CategoriesModule.category.all();
   }
 
-  get subcategories() {
-    return CategoryModule.subCategories;
+  get subCategories() {
+    return CategoriesModule.subCategory.all();
   }
 
   get domains() {
-    return DomainModule.domains;
+    return DomainsModule.domain.all();
   }
 
   get types() {
-    return DomainModule.types;
+    return DomainsModule.types.all();
   }
 
   get items() {
-    return ActivitiesModule.activities;
+    throw 'TODO items';
+    // return ActivitiesModule.activities;
   }
 
   @Prop() searchKey;
@@ -279,11 +280,12 @@ export default class Dashboard extends Vue {
   }
 
   getType(id) {
-    return this.types.find((t) => t._id === id);
+    throw 'TODO getType!';
+    // return this.types.find((t) => t._id === id);
   }
   @Watch('searchKey') onChangeSearchKey(n, o) {
     console.log({ n });
-   // this.form.text = n;
+    // this.form.text = n;
   }
 }
 </script>

@@ -28,7 +28,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
-import { ActivitiesModule } from '../../store/modules/activities';
+
+import { ActivitiesModule } from '../../store/activities.module';
+import { DomainsModule } from '../../store/domains.module';
+import { CategoriesModule } from '../../store/categories.module';
+import { StripsModule } from '../../store/strips.module';
+import { ArticulationsModule } from '../../store/articulations.module';
+import { AppModule } from '../../store/app';
+
 import draggable from 'vuedraggable';
 
 @Component({
@@ -72,11 +79,12 @@ export default class ActivityTags extends Vue {
   handleInputConfirm() {
     console.log({ inputValue: this.inputValue });
     if (!this.items.includes(this.inputValue)) {
-      const { activities } = ActivitiesModule;
-      if (activities.find((a) => a._id === this.inputValue)) {
-        this.items.push(this.inputValue);
-        // this.$emit('input', this.radio3);
-      }
+      throw 'TODO!';
+      // const { activities } = ActivitiesModule;
+      // if (activities.find((a) => a._id === this.inputValue)) {
+      //   this.items.push(this.inputValue);
+      //   // this.$emit('input', this.radio3);
+      // }
     }
     this.edit = false;
     this.inputValue = '';

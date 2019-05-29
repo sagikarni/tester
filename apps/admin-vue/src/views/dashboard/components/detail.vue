@@ -14,9 +14,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '../../../store/modules/activities';
 import lodash from 'lodash';
-import { DomainModule } from '../../../store/modules/domains';
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -39,19 +43,19 @@ export default class Detail extends Vue {
   async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
 
-    this.activity = ActivitiesModule.activities.find(
-      (r) => r._id === to.params.activity
-    );
+    const activity = ActivitiesModule.activity
+      .query()
+      .whereId(to.params.activity)
+      .with(['type.domain', 'category', 'subCategory.category'])
+      .first();
+
+    this.activity = activity;
 
     if (this.activity.metadata.slides.length > 0) {
       this.activity.metadata.slides.forEach((s) => {
-        const type = DomainModule.types.find(
-          (t) => t._id === this.activity.type
-        );
-
-        s.path = `/storage/${type.domain.name}/${type.name}/${
-          this.activity._id
-        }/thumbnails/__FILE__`;
+        s.path = `/storage/${this.activity.type.domain.name}/${
+          this.activity.type.name
+        }/${this.activity._id}/thumbnails/__FILE__`;
       });
     }
 
@@ -61,9 +65,11 @@ export default class Detail extends Vue {
   async beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter..');
 
-    const activity = ActivitiesModule.activities.find(
-      (r) => r._id === to.params.activity
-    );
+    const activity = ActivitiesModule.activity
+      .query()
+      .whereId(to.params.activity)
+      .with(['type.domain', 'category', 'subCategory.category'])
+      .first();
 
     if (!activity) {
       debugger;
@@ -71,67 +77,28 @@ export default class Detail extends Vue {
 
     next((vm) => {
       vm.activity = activity;
-      // debugger;
-
-      // var oldValue = vm.activity.type;
-
-      // Object.defineProperty(vm.activity, 'type', {
-      //   get: function() {
-      //     return DomainModule.types.find(b => b._id === oldValue);
-      //     }
-      // });
-
-      // on('activity.type', (o) => DomainModule.types.find(b => b._id === oldValue);
-
-      // console.log({ a: vm.activity.type });
-      // debugger;
 
       if (vm.activity.metadata.slides.length > 0) {
         vm.activity.metadata.slides.forEach((s) => {
-          const type = DomainModule.types.find(
-            (t) => t._id === vm.activity.type
-          );
+          s.path = `/storage/${vm.activity.type.domain.name}/${
+            vm.activity.type.name
+          }/${vm.activity._id}/thumbnails/__FILE__`;
 
-          s.path = `/storage/${type.domain.name}/${type.name}/${
-            vm.activity._id
-          }/thumbnails/__FILE__`;
+          console.log({ p: s.path });
         });
       }
     });
   }
 
   async onSubmit() {
-    // console.log('submit!', this.activity);
-
-    // const res: any = await request({
-    //   url: `/api/v1/activities`,
-    //   method: 'post',
-    //   baseURL: '',
-    //   data: { activity: this.activity },
-    // });
-
-    // Message({
-    //   message: 'saved',
-    //   type: 'success',
-    //   duration: 5 * 1000,
-    // });
-
-    // ActivitiesModule.UpdateActivity(res.activity);
-
-    // console.log('done');
-
     console.log({ activity: this.activity });
-
-    await ActivitiesModule.AddActivity(this.activity);
-
+    await ActivitiesModule.add({ activity: this.activity });
     Message({
       message: 'saved',
       type: 'success',
       duration: 5 * 1000,
     });
-
-    this.$router.push(`/dashboard/activities/${this.activity._id}`);
-
+    // this.$router.push(`/dashboard/activities/${this.activity._id}`);
     console.log('done');
   }
 
@@ -146,16 +113,13 @@ export default class Detail extends Vue {
       }
     )
       .then(async () => {
-        await ActivitiesModule.RemoveActivity(this.activity._id);
-
+        await ActivitiesModule.remove({ activity: this.activity });
         this.$message({
           message: 'Delete completed',
           type: 'success',
           duration: 5 * 1000,
         });
-
         console.log('done');
-
         this.$router.push(`/dashboard/activities`);
       })
       .catch(() => {

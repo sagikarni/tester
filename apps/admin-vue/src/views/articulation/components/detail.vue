@@ -12,8 +12,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '../../../store/modules/activities';
 import lodash from 'lodash';
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
+
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -46,9 +52,10 @@ export default class Detail extends Vue {
 
   public async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
-    this.articulation = ActivitiesModule.articulations.find(
-      (r) => r._id === to.params.articulation
-    );
+    throw 'TODO Befor rou';
+    // this.articulation = ActivitiesModule.articulations.find(
+    //   (r) => r._id === to.params.articulation
+    // );
 
 
     next();
@@ -57,20 +64,21 @@ export default class Detail extends Vue {
   public async beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter..');
 
-    const articulation = ActivitiesModule.articulations.find(
-      (r) => r._id === to.params.articulation
-    );
+    throw 'TODO JFSKJDKDHKLDSHKLF';
+    // const articulation = ActivitiesModule.articulations.find(
+    //   (r) => r._id === to.params.articulation
+    // );
 
-    if (!articulation) {
-      debugger;
-    }
+    // if (!articulation) {
+    //   debugger;
+    // }
 
 
-    next((vm) => {
-      // debugger;
-      vm.articulation = articulation;
+    // next((vm) => {
+    //   // debugger;
+    //   vm.articulation = articulation;
 
-    });
+    // });
 
 
   }
@@ -78,15 +86,16 @@ export default class Detail extends Vue {
   public async onSubmit() {
     console.log('submit!', this.articulation);
 
-    await ActivitiesModule.UpdateArticulation(this.articulation);
+throw 'kjdfklshfdklshldfsk';
+    // await ActivitiesModule.UpdateArticulation(this.articulation);
 
-    Message({
-      message: 'saved',
-      type: 'success',
-      duration: 5 * 1000,
-    });
+    // Message({
+    //   message: 'saved',
+    //   type: 'success',
+    //   duration: 5 * 1000,
+    // });
 
-    console.log('done');
+    // console.log('done');
   }
 }
 </script>

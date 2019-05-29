@@ -40,10 +40,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardView from './dashboard/index.vue';
-import { ActivitiesModule } from '../store/modules/activities';
-import { CategoryModule } from '../store/modules/category';
-import { DomainModule } from '../store/modules/domains';
-import { AppModule } from '../store/modules/app';
+import { ActivitiesModule } from '../store/activities.module';
+import { DomainsModule } from '../store/domains.module';
+import { CategoriesModule } from '../store/categories.module';
+import { StripsModule } from '../store/strips.module';
+import { ArticulationsModule } from '../store/articulations.module';
+import { AppModule } from '../store/app';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -59,9 +61,9 @@ export default class Activities extends Vue {
 
   async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.loadActivities(),
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
+      ActivitiesModule.load(),
+      CategoriesModule.load(),
+      DomainsModule.load(),
     ]);
 
     next();

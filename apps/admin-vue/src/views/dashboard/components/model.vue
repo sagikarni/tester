@@ -3,23 +3,24 @@
     <el-form-item label="Activity Type">
       <el-select
         :disabled="!add"
+        value-key="_id"
         v-model="activity.type"
         placeholder="Activity Type"
-        value-key="_id"
       >
-        <el-option v-for="item in types" :key="item._id" :label="item.name" :value="item._id"></el-option>
+        <el-option v-for="item in types" :key="item._id" :label="item.name" :value="item"></el-option>
       </el-select>
     </el-form-item>
 
     <el-form-item label="Storage" v-if="activity.type">
       <span>{{ storageUrl }}</span>
     </el-form-item>
+
     <el-form-item label="Cover" v-if="activity.type">
       <img
         width="150px"
         height="100px"
         :src="
-          `/storage/${getType(activity.type).domain.name}/${getType(activity.type).name}/${
+          `/storage/${activity.type.domain.name}/${activity.type.name}/${
             activity._id
           }/cover-l.jpg`
         "
@@ -59,6 +60,7 @@
         <el-option label="Published" value="Published"></el-option>
       </el-select>
     </el-form-item>
+
     <el-form-item label="Category">
       <el-col :span="11">
         <el-select
@@ -66,11 +68,12 @@
           v-model="activity.category"
           placeholder="please select your zone"
           clearable
+          value-key="_id"
         >
           <el-option
             :key="category._id"
             :label="category.name"
-            :value="category._id"
+            :value="category"
             v-for="category in categories"
           ></el-option>
         </el-select>
@@ -82,11 +85,12 @@
           v-model="activity.subCategory"
           placeholder="please select your zone"
           clearable
+          value-key="_id"
         >
           <el-option
             :key="subCategory._id"
             :label="subCategory.name"
-            :value="subCategory._id"
+            :value="subCategory"
             v-for="subCategory in filterX"
           ></el-option>
         </el-select>
@@ -119,7 +123,7 @@
       <el-input type="textarea" v-model="activity.notes"></el-input>
     </el-form-item>
 
-    <component v-if="activity.type" :is="getCurrentType().name" v-model="activity.metadata"></component>
+    <component v-if="activity.type" :is="activity.type.name" v-model="activity.metadata"></component>
   </el-form>
 </template>
 
@@ -150,9 +154,13 @@ import WHQuestions from './WHQuestions.vue';
 import GoodStory from './GoodStory.vue';
 import SoundOfLifePhoto from './SoundOfLifePhoto.vue';
 // import conf from './c.json';
-import { ActivitiesModule } from '../../../store/modules/activities';
-import { CategoryModule } from '../../../store/modules/category';
-import { DomainModule } from '../../../store/modules/domains';
+
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
 
 @Component({
   components: {
@@ -183,35 +191,55 @@ import { DomainModule } from '../../../store/modules/domains';
   },
 })
 export default class Modely extends Vue {
-
   get categories() {
-    return CategoryModule.categories;
+    return CategoriesModule.category.all();
   }
 
   get subcategories() {
-    return CategoryModule.subCategories;
+    return CategoriesModule.subCategory.all();
   }
 
   get domains() {
-    return DomainModule.domains;
+    return DomainsModule.domain.all();
   }
 
   get types() {
-    return DomainModule.types;
+    return DomainsModule.types
+      .query()
+      .with('domain')
+      .all();
   }
 
   get storageUrl() {
-    const type = DomainModule.types.find((t) => t._id === this.activity.type);
-
-    return `E:/sagi-tera-files/${type.domain.name}/${type.name}/${
-      this.activity._id
-    }`;
+    return `E:/sagi-tera-files/${this.activity.type.domain.name}/${
+      this.activity.type.name
+    }/${this.activity._id}`;
+    return '';
   }
 
   get filterX() {
-    return CategoryModule.subCategories.filter(
-      (t) => t.category._id === this.activity.category
-    );
+    if (!this.activity.category) return null;
+    // const a = CategoriesModule.subCategory.query()
+    // .where('category._id', this.activity.category._id).all(); //5c67e5a1c7cc90124ccfaf47
+    // return a;
+
+    const a = CategoriesModule.subCategory
+      .query()
+      .with('category')
+      .all();
+
+    const y = a.filter((aa) => aa.category._id === this.activity.category._id);
+    //     .with('category', (query) => {
+    //   query.where('_id', this.activity.category._id)
+    // }).get();
+    console.log({ y });
+    return y;
+    // return a.filter(b => b.category._id === this.);
+
+    // find({ wh}) filter(
+    //   (t) => t.category._id === this.activity.category
+    // );
+
     // if (!this.activity.category) {
     //   return [];
     // }
@@ -220,6 +248,7 @@ export default class Modely extends Vue {
     //   (xx) => xx.category === this.activity.category._id
     // );
   }
+
   @Prop() activity;
 
   @Prop() add;
@@ -352,11 +381,13 @@ export default class Modely extends Vue {
     desc: '',
   };
   getType(type) {
-    return DomainModule.types.find((t) => t._id === type);
+    throw 'TODO getType';
+    // return DomainModule.types.find((t) => t._id === type);
   }
 
   getCurrentType() {
-    return DomainModule.types.find((t) => t._id === this.activity.type);
+    throw 'TODO get curren';
+    // return DomainModule.types.find((t) => t._id === this.activity.type);
   }
 
   // mounted() {

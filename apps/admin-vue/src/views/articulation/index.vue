@@ -57,13 +57,19 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 // import { UserModule } from '@/store/modules/user';
 import request from '../../utils/request';
-import { ActivitiesModule } from '../../store/modules/activities';
+import { ActivitiesModule } from '../../store/activities.module';
+import { DomainsModule } from '../../store/domains.module';
+import { CategoriesModule } from '../../store/categories.module';
+import { StripsModule } from '../../store/strips.module';
+import { ArticulationsModule } from '../../store/articulations.module';
+import { AppModule } from '../../store/app';
 import { flatten } from 'lodash';
 
 @Component({})
 export default class Dashboard extends Vue {
   get items() {
-    return ActivitiesModule.articulations;
+    throw 'TODO items';
+    // return ActivitiesModule.articulations;
   }
 
   constructor() {

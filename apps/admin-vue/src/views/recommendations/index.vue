@@ -1,6 +1,5 @@
 <template>
   <el-scrollbar wrap-class="list" view-class="view-box" :native="false" class="colscrol">
-
     <div class="dashboard-container" style="position:relative;padding:20px;">
       <div class="box-card" v-for="collection in collections" :key="collection._id">
         <el-form ref="form" :model="form" label-width="150px">
@@ -40,20 +39,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-// import { UserModule } from '@/store/modules/user';
-import { ActivitiesModule } from '../../store/modules/activities';
-import { StripsModule } from '../../store/modules/strips';
-import { CategoryModule } from '../../store/modules/category';
-import { DomainModule } from '../../store/modules/domains';
 import { Message, MessageBox } from 'element-ui';
 import ActivityTags from './activity-tags.vue';
+import { ActivitiesModule } from '../../store/activities.module';
+import { DomainsModule } from '../../store/domains.module';
+import { CategoriesModule } from '../../store/categories.module';
+import { StripsModule } from '../../store/strips.module';
+import { ArticulationsModule } from '../../store/articulations.module';
+import { AppModule } from '../../store/app';
 
 @Component({
   components: { ActivityTags },
 })
 export default class Recommendations extends Vue {
   get collections() {
-    return StripsModule.collection;
+    throw 'TODO!! collections';
+    // return StripsModule.collection;
   }
 
   public form = { name: '' };
@@ -65,12 +66,13 @@ export default class Recommendations extends Vue {
   public async save() {
     console.log('submit!', this.collections);
 
-    const collections = this.collections.map((c) => ({
-      ...c,
-      new: c.new ? false : true,
-    }));
+    throw 'TODO save()';
+    // const collections = this.collections.map((c) => ({
+    //   ...c,
+    //   new: c.new ? false : true,
+    // }));
 
-    await StripsModule.save(collections);
+    // await StripsModule.save(collections);
 
     Message({
       message: 'saved',
@@ -88,11 +90,12 @@ export default class Recommendations extends Vue {
   }
 
   public addCollection() {
-    this.collections.push({
-      new: true,
-      name: '',
-      items: [{ name: '', activities: [] }],
-    });
+    throw 'TODO addCollection';
+    // this.collections.push({
+    //   new: true,
+    //   name: '',
+    //   items: [{ name: '', activities: [] }],
+    // });
   }
 }
 </script>

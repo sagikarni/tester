@@ -32,10 +32,10 @@ export class Activities extends VuexModule {
   @Action({ commit: 'UPSERT_ACTIVITY' })
   async add({ activity }) {
     const { activityUpdateOrCreate } = await gqlHttp(UPSERT_ACTIVITY, {
-      record: activity,
+      collections: [activity],
     });
 
-    return { activity: activityUpdateOrCreate.record };
+    return { activity: activityUpdateOrCreate[0] };
   }
 
   @Action({ commit: 'REMOVE_ACTIVITY' })

@@ -161,7 +161,13 @@ import draggable from 'vuedraggable';
 import dropper from './dropper.vue';
 import { AgGridVue } from 'ag-grid-vue';
 
-import { ActivitiesModule } from '../../../store/modules/activities';
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
+
 
 import DeleteCell from './delete-cell.vue';
 import AudioCell from './cells/audio-cell.vue';

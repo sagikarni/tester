@@ -18,6 +18,18 @@ export class Activity extends Model {
       category_id: this.attr(''),
       subCategory: this.belongsTo(SubCategory, 'subCategory_id'),
       subCategory_id: this.attr(''),
+      level: this.attr(null),
+      description: this.attr(null),
+      free: this.attr(null),
+      printable: this.attr(null),
+      editorial: this.attr(null),
+      notes: this.attr(null),
+      orientation: this.attr(null),
+      mediaType: this.attr(null),
+      status: this.attr(null),
+      audience: this.attr(null),
+      isolate: this.attr(null),
+      metadata: this.attr(null),
     };
   }
 }

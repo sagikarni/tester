@@ -14,18 +14,20 @@
         <v-icon>notifications</v-icon>
       </v-btn>
     </v-toolbar>
-    <RecommendationsView/>
+    <ArticulationView/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { ActivitiesModule } from '../store/modules/activities';
-import { StripsModule } from '../store/modules/strips';
-import { CategoryModule } from '../store/modules/category';
-import { DomainModule } from '../store/modules/domains';
-import { AppModule } from '../store/modules/app';
-import RecommendationsView from './recommendations/index.vue';
+import ArticulationView from './articulation/index.vue';
+
+import { ActivitiesModule } from '../store/activities.module';
+import { DomainsModule } from '../store/domains.module';
+import { CategoriesModule } from '../store/categories.module';
+import { StripsModule } from '../store/strips.module';
+import { ArticulationsModule } from '../store/articulations.module';
+import { AppModule } from '../store/app';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -34,16 +36,12 @@ Component.registerHooks([
 ]);
 
 @Component({
-  components: { RecommendationsView },
+  components: { ArticulationView },
 })
-export default class Recommendations extends Vue {
+export default class Articulation extends Vue {
   public async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.loadActivities(),
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
-      StripsModule.loadStrips(),
-    ]);
+    await Promise.all([ArticulationsModule.load()]);
+
     next();
   }
 

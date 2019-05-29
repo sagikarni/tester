@@ -12,7 +12,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import request from '../../../utils/request';
 import Model from './model.vue';
 import { Message, MessageBox } from 'element-ui';
-import { ActivitiesModule } from '../../../store/modules/activities';
+import { ActivitiesModule } from '../../../store/activities.module';
+import { DomainsModule } from '../../../store/domains.module';
+import { CategoriesModule } from '../../../store/categories.module';
+import { StripsModule } from '../../../store/strips.module';
+import { ArticulationsModule } from '../../../store/articulations.module';
+import { AppModule } from '../../../store/app';
+
 
 const ObjectId = (
   m = Math,
@@ -40,7 +46,6 @@ export default class Add extends Vue {
     level: ['Basic'],
     status: 'Started',
     orientation: 'Landscape',
-    // category: {},
     metadata: {
       slideCategories: [],
       slides: [],
@@ -48,18 +53,7 @@ export default class Add extends Vue {
   };
 
   region = '';
-
-  form = {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [''],
-    resource: '',
-    desc: '',
-  };
-
+  
   onCancel() {
     this.$router.push(`/dashboard/activities`);
   }
@@ -68,7 +62,7 @@ export default class Add extends Vue {
     console.log({activity: this.activity });
 
 
-    await ActivitiesModule.AddActivity(this.activity);
+    await ActivitiesModule.add({ activity: this.activity });
 
     Message({
       message: 'saved',

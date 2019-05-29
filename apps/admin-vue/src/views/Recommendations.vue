@@ -14,15 +14,19 @@
         <v-icon>notifications</v-icon>
       </v-btn>
     </v-toolbar>
-    <ArticulationView/>
+    <RecommendationsView/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ArticulationView from './articulation/index.vue';
-import { ActivitiesModule } from '../store/modules/activities';
-import { AppModule } from '../store/modules/app';
+import { ActivitiesModule } from '../store/activities.module';
+import { DomainsModule } from '../store/domains.module';
+import { CategoriesModule } from '../store/categories.module';
+import { StripsModule } from '../store/strips.module';
+import { ArticulationsModule } from '../store/articulations.module';
+import { AppModule } from '../store/app';
+import RecommendationsView from './recommendations/index.vue';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -31,14 +35,16 @@ Component.registerHooks([
 ]);
 
 @Component({
-  components: { ArticulationView },
+  components: { RecommendationsView },
 })
-export default class Articulation extends Vue {
+export default class Recommendations extends Vue {
   public async beforeRouteEnter(to, from, next) {
-
-
-    await Promise.all([ActivitiesModule.LoadArticulations()]);
-
+    await Promise.all([
+      ActivitiesModule.load(),
+      CategoriesModule.load(),
+      DomainsModule.load(),
+      StripsModule.load(),
+    ]);
     next();
   }
 

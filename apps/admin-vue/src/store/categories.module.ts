@@ -22,7 +22,7 @@ import {
   REMOVE_SUBCATEGORY,
 } from '../graphql/categories';
 
-@Module({ dynamic: true, store, name: 'activities', namespaced: true })
+@Module({ dynamic: true, store, name: 'categories', namespaced: true })
 export class Categories extends VuexModule {
   loaded = false;
 
