@@ -12,7 +12,7 @@
               <el-input v-model="group.name"></el-input>
 
               <el-form-item label="Activities">
-                <ActivityTags v-model="group.items"/>
+                <ActivityTags v-model="group.items" :ids="ids"/>
               </el-form-item>
               <el-button
                 @click="removeList(collection.groups, group)"
@@ -52,9 +52,10 @@ import { AppModule } from '../../store/app';
   components: { ActivityTags },
 })
 export default class Recommendations extends Vue {
+  ids = ActivitiesModule.activity.all().map((a: any) => a._id);
+
   get collections() {
-    throw 'TODO!! collections';
-    // return StripsModule.collection;
+    return StripsModule.strip.all();
   }
 
   public form = { name: '' };
@@ -66,13 +67,16 @@ export default class Recommendations extends Vue {
   public async save() {
     console.log('submit!', this.collections);
 
-    throw 'TODO save()';
-    // const collections = this.collections.map((c) => ({
-    //   ...c,
-    //   new: c.new ? false : true,
-    // }));
+    const collections = this.collections.map((c) => ({
+      ...c,
+    }));
 
-    // await StripsModule.save(collections);
+    collections.forEach((c: any) => {
+      delete c.$id;
+      delete c.new;
+    });
+
+    await StripsModule.add({ strip: collections });
 
     Message({
       message: 'saved',
@@ -89,13 +93,13 @@ export default class Recommendations extends Vue {
     items.splice(items.indexOf(item), 1);
   }
 
-  public addCollection() {
-    throw 'TODO addCollection';
+  public async addCollection() {
+     await StripsModule.addNew();
     // this.collections.push({
     //   new: true,
     //   name: '',
     //   items: [{ name: '', activities: [] }],
-    // });
+    // } as any);
   }
 }
 </script>

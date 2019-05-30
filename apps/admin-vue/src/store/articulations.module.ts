@@ -31,10 +31,10 @@ export class Articulations extends VuexModule {
   @Action({ commit: 'UPSERT_ARTICULATION' })
   async add({ articulation }) {
     const { articulationUpdateOrCreate } = await gqlHttp(UPSERT_ARTICULATION, {
-      record: articulation,
+      collections: [articulation],
     });
 
-    return { activity: articulationUpdateOrCreate.record };
+    return { articulation: articulationUpdateOrCreate };
   }
 
   @Mutation

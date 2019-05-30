@@ -20,7 +20,6 @@ import { StripsModule } from '../../../store/strips.module';
 import { ArticulationsModule } from '../../../store/articulations.module';
 import { AppModule } from '../../../store/app';
 
-
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -52,11 +51,10 @@ export default class Detail extends Vue {
 
   public async beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
-    throw 'TODO Befor rou';
-    // this.articulation = ActivitiesModule.articulations.find(
-    //   (r) => r._id === to.params.articulation
-    // );
-
+    this.articulation = ArticulationsModule.articulation
+      .query()
+      .whereId(to.params.articulation)
+      .first();
 
     next();
   }
@@ -64,38 +62,33 @@ export default class Detail extends Vue {
   public async beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter..');
 
-    throw 'TODO JFSKJDKDHKLDSHKLF';
-    // const articulation = ActivitiesModule.articulations.find(
-    //   (r) => r._id === to.params.articulation
-    // );
+    const articulation = ArticulationsModule.articulation
+      .query()
+      .whereId(to.params.articulation)
+      .first();
 
-    // if (!articulation) {
-    //   debugger;
-    // }
+    if (!articulation) {
+      debugger;
+    }
 
-
-    // next((vm) => {
-    //   // debugger;
-    //   vm.articulation = articulation;
-
-    // });
-
-
+    next((vm) => {
+      // debugger;
+      vm.articulation = articulation;
+    });
   }
 
   public async onSubmit() {
     console.log('submit!', this.articulation);
 
-throw 'kjdfklshfdklshldfsk';
-    // await ActivitiesModule.UpdateArticulation(this.articulation);
+    await ArticulationsModule.add({ articulation: this.articulation });
 
-    // Message({
-    //   message: 'saved',
-    //   type: 'success',
-    //   duration: 5 * 1000,
-    // });
+    Message({
+      message: 'saved',
+      type: 'success',
+      duration: 5 * 1000,
+    });
 
-    // console.log('done');
+    console.log('done');
   }
 }
 </script>

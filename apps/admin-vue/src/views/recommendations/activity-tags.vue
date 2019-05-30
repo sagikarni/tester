@@ -42,6 +42,8 @@ import draggable from 'vuedraggable';
   components: { draggable },
 })
 export default class ActivityTags extends Vue {
+  @Prop() ids;
+
   @Prop() value;
   items = [];
 
@@ -79,12 +81,9 @@ export default class ActivityTags extends Vue {
   handleInputConfirm() {
     console.log({ inputValue: this.inputValue });
     if (!this.items.includes(this.inputValue)) {
-      throw 'TODO!';
-      // const { activities } = ActivitiesModule;
-      // if (activities.find((a) => a._id === this.inputValue)) {
-      //   this.items.push(this.inputValue);
-      //   // this.$emit('input', this.radio3);
-      // }
+      if (this.ids.indexOf(this.inputValue) > -1) {
+        this.items.push(this.inputValue);
+      }
     }
     this.edit = false;
     this.inputValue = '';

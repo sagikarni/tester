@@ -228,7 +228,7 @@ export default class Modely extends Vue {
       .with('category')
       .all();
 
-    const y = a.filter((aa) => aa.category._id === this.activity.category._id);
+    const y = a.filter((aa: any) => aa.category._id === this.activity.category._id);
     //     .with('category', (query) => {
     //   query.where('_id', this.activity.category._id)
     // }).get();

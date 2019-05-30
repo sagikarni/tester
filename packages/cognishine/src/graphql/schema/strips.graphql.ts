@@ -1,7 +1,13 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import { Strips } from '../../mongodb';
 import { GraphQLJSON } from 'graphql-compose';
-import { GraphQLInputObjectType, GraphQLNonNull } from 'graphql';
+import {
+  GraphQLInputObjectType,
+  GraphQLNonNull,
+  GraphQLString,
+  GraphQLObjectType,
+  GraphQLList,
+} from 'graphql';
 import mongoose from 'mongoose';
 
 async function asyncForEach(array, callback) {
@@ -21,22 +27,34 @@ StripsTC.addResolver({
       type: ['JSON!'], // StripsTC.getITC()],
     },
   },
-  type: StripsTC.getType(),
+  type: new GraphQLNonNull(
+    new GraphQLList(new GraphQLNonNull(StripsTC.getType()))
+  ),
+
+  // type: StripsTC.getType(),
   resolve: async ({ source, args, context, info }) => {
     debugger;
+
+    const cols = [];
 
     await asyncForEach(args.collections, async (collection) => {
       if (!collection._id) {
         collection._id = mongoose.Types.ObjectId();
       }
 
-      await Strips.findByIdAndUpdate(collection._id, collection, {
-        upsert: true,
-        setDefaultsOnInsert: true,
-      });
+      // if (typeof collection._id === 'string') {
+      //   collection._id = mongoose.Types.ObjectId(collection._id);
+      // }
+
+      cols.push(
+        await Strips.findByIdAndUpdate(collection._id, collection, {
+          upsert: true,
+          setDefaultsOnInsert: true,
+        })
+      );
     });
 
-    return await Strips.find({});
+    return await Strips.find();
   },
 });
 

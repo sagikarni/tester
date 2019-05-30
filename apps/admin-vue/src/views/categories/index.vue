@@ -76,8 +76,8 @@ export default class Categories extends Vue {
 
   get datasource() {
     const a = ActivitiesModule.activity.all();
-    const ids = a.map((t) => t.category_id);
-    const subids = a.map((t) => t.subCategory_id);
+    const ids = a.map((t: any) => t.category_id);
+    const subids = a.map((t: any) => t.subCategory_id);
 
     console.log({ a });
 
@@ -86,7 +86,7 @@ export default class Categories extends Vue {
       label: category.name,
       used: ids.indexOf(category._id) > -1, // this.activities.some((a) => a.category === category._id),
       children: this.subcategories
-        .filter((a) => a.category_id === category._id)
+        .filter((a: any) => a.category_id === category._id)
         .map((sub: any) => ({
           label: sub.name,
           id: sub._id,

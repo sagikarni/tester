@@ -68,8 +68,7 @@ import { flatten } from 'lodash';
 @Component({})
 export default class Dashboard extends Vue {
   get items() {
-    throw 'TODO items';
-    // return ActivitiesModule.articulations;
+    return ArticulationsModule.articulation.all();
   }
 
   constructor() {

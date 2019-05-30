@@ -17,7 +17,13 @@ export const LOAD_STRIPS = gql`
 export const UPSERT_STRIP = gql`
   mutation($collections: [JSON!]) {
     stripsUpdateOrCreate(collections: $collections) {
+      _id
       name
+      groups {
+        name
+        items
+        _id
+      }
     }
   }
 `;
