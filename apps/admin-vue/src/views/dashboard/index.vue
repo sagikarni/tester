@@ -269,7 +269,7 @@ export default class Dashboard extends Vue {
   }
 
   get items() {
-    throw 'TODO items';
+    throw new Error('TODO items');
     // return ActivitiesModule.activities;
   }
 
@@ -280,7 +280,7 @@ export default class Dashboard extends Vue {
   }
 
   getType(id) {
-    throw 'TODO getType!';
+    throw new Error('TODO getType!');
     // return this.types.find((t) => t._id === id);
   }
   @Watch('searchKey') onChangeSearchKey(n, o) {

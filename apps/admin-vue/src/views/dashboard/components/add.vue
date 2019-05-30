@@ -53,7 +53,7 @@ export default class Add extends Vue {
   };
 
   region = '';
-  
+
   onCancel() {
     this.$router.push(`/dashboard/activities`);
   }

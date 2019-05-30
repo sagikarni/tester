@@ -218,7 +218,7 @@ export default class Modely extends Vue {
   }
 
   get filterX() {
-    if (!this.activity.category) return null;
+    if (!this.activity.category) { return null; }
     // const a = CategoriesModule.subCategory.query()
     // .where('category._id', this.activity.category._id).all(); //5c67e5a1c7cc90124ccfaf47
     // return a;
@@ -381,12 +381,12 @@ export default class Modely extends Vue {
     desc: '',
   };
   getType(type) {
-    throw 'TODO getType';
+    throw new Error('TODO getType');
     // return DomainModule.types.find((t) => t._id === type);
   }
 
   getCurrentType() {
-    throw 'TODO get curren';
+    throw new Error('TODO get curren');
     // return DomainModule.types.find((t) => t._id === this.activity.type);
   }
 
