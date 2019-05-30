@@ -215,6 +215,8 @@ const removeEmpty = (obj) => {
   // },
 })
 export default class Dashboard extends Vue {
+  text = null;
+
   form = {
     audience: null,
     status: null,
@@ -245,9 +247,19 @@ export default class Dashboard extends Vue {
 
     console.log({ form });
 
-    const filteredActivities = filter(a, form);
+    let filteredActivities = filter(a, form);
 
     console.log({ filteredActivities });
+
+    if (this.text) {
+      filteredActivities = filteredActivities.filter((obj) =>
+        JSON.stringify(obj)
+          .toLowerCase()
+          .includes(this.text.toLowerCase())
+      );
+
+      console.log({ text: filteredActivities });
+    }
 
     return filteredActivities;
   }
@@ -285,6 +297,7 @@ export default class Dashboard extends Vue {
   }
   @Watch('searchKey') onChangeSearchKey(n, o) {
     console.log({ n });
+    this.text = n;
     // this.form.text = n;
   }
 }
