@@ -4,7 +4,8 @@ import 'event-source-polyfill';
 
 // Packages
 import Vue from 'vue';
-import { store } from 'vuex-store';
+// import { store } from 'vuex-store';
+import store from 'tera-core/src/store';
 
 // Bootstrap
 import '@/plugins';

@@ -25,6 +25,7 @@ import { CategoriesModule } from './store/categories.module';
 import { DomainsModule } from './store/domains.module';
 import { AppModule } from './store/app';
 import { StripsModule } from './store/strips.module';
+import { ArticulationsModule } from './store/articulations.module';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -47,9 +48,8 @@ export default class Home extends Vue {
 
  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
+      ArticulationsModule.load(),
       ActivitiesModule.load(),
-      // ActivitiesModule.LoadArticulations(),
-
       CategoriesModule.load(),
       DomainsModule.load(),
       StripsModule.load()

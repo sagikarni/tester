@@ -11,11 +11,14 @@
       <v-container grid-list-xl="grid-list-xl">
         <v-layout wrap>
           <v-flex v-for="(feature, i) in items" :key="i" xs6 md6 lg3 d-flex>
-            <v-card class="pa-0" fill-height :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }">
+            <v-card
+              class="pa-0"
+              fill-height
+              :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }"
+            >
               <v-img
                 width="100%"
                 height="100%"
-                :alt="feature"
                 :aspect-ratio="1.3"
                 :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
               >
@@ -37,7 +40,7 @@
         </v-layout>
       </v-container>
 
-      <strip-group value="homepage" />
+      <strip-group value="homepage"/>
     </v-content>
   </div>
 </template>
@@ -79,21 +82,37 @@ export default class Overview extends Vue {
 
   async load() {
 
-    // const res = await this.axios.get(`/activity/types/${this.name}`);
+    const types = DomainsModule.types
+      .query()
+      .with(['domain'])
+      .all();
 
-    // this.items = DomainModule.types.map((t) => ({
-    //   name: dasherize(t.name).toLocaleLowerCase(),
-    //   title: t.name,
-    // }));
+    console.log({ d: types });
+    this.items = types
+      .filter((t: any) => t.domain.name.toLocaleLowerCase() === this.name)
+      .map((t: any) => ({
+        name: dasherize(t.name).toLocaleLowerCase(),
+        title: t.name,
+      }));
+
+    console.log({ items: this.items });
   }
 
+  public async beforeRouteUpdate(to, from, next) {
+    const { overview } = to.params;
+    this.name = overview;
 
- public async beforeRouteEnter(to, from, next) {
+    await this.load();
+
+    next();
+  }
+
+  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ActivitiesModule.load(),
       CategoriesModule.load(),
       DomainsModule.load(),
-      StripsModule.load()
+      StripsModule.load(),
     ]);
 
     next();
