@@ -13,9 +13,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { StripsModule } from '@/store/modules/strips';
-import { ActivitiesModule } from '@/store/modules/activities';
-import { DomainModule } from '@/store/modules/domains';
+import { StripsModule } from '../store/strips.module';
+import { ActivitiesModule } from '../store/activities.module';
+import { DomainsModule } from '../store/domains.module';
 
 @Component({
   components: {
@@ -32,20 +32,21 @@ export default class StripGroup extends Vue {
   }
 
   getActivites(items) {
-    const activities = ActivitiesModule.activities;
-    return items.map((aa) => {
-      const uu = activities.find((aaa) => aaa._id === aa);
-      const type = DomainModule.types.find(pp => pp._id === uu.type);
+    const activities = ActivitiesModule.activity;
+    return null;
+    // return items.map((aa) => {
+    //   const uu = activities.find((aaa) => aaa._id === aa);
+    //   const type = DomainsModule.types.find((pp) => pp._id === uu.type);
 
-      return { ...uu, type };
-    });
+    //   return { ...uu, type };
+    // });
   }
 
   async load() {
     // await StripsModule.loadStrips();
 
-    const strips = StripsModule.collection;
-    this.groups = strips[0].groups;
+    const strips = StripsModule.strip.all();
+    this.groups = []; // strips[0].groups;
 
     // this.items = x.map((aa) => activities.find((aaa) => aaa._id === aa));
 

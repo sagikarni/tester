@@ -45,11 +45,11 @@
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
 import dasherize from 'dasherize';
-import { ActivitiesModule } from '@/store/modules/activities';
-import { CategoryModule } from '@/store/modules/category';
-import { DomainModule } from '@/store/modules/domains';
-import { AppModule } from '@/store/modules/app';
-import { StripsModule } from '@/store/modules/strips';
+import { ActivitiesModule } from 'tera-core/src/store/activities.module';
+import { CategoriesModule } from 'tera-core/src/store/categories.module';
+import { DomainsModule } from 'tera-core/src/store/domains.module';
+import { AppModule } from 'tera-core/src/store/app';
+import { StripsModule } from 'tera-core/src/store/strips.module';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -81,21 +81,19 @@ export default class Overview extends Vue {
 
     // const res = await this.axios.get(`/activity/types/${this.name}`);
 
-    this.items = DomainModule.types.map((t) => ({
-      name: dasherize(t.name).toLocaleLowerCase(),
-      title: t.name,
-    }));
+    // this.items = DomainModule.types.map((t) => ({
+    //   name: dasherize(t.name).toLocaleLowerCase(),
+    //   title: t.name,
+    // }));
   }
 
 
  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.loadActivities(),
-      ActivitiesModule.LoadArticulations(),
-
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
-      StripsModule.loadStrips()
+      ActivitiesModule.load(),
+      CategoriesModule.load(),
+      DomainsModule.load(),
+      StripsModule.load()
     ]);
 
     next();

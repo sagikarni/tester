@@ -1,0 +1,469 @@
+import {
+  VuexModule,
+  Module,
+  MutationAction,
+  Mutation,
+  Action,
+  getModule,
+} from 'vuex-module-decorators';
+import store from '@/store';
+import { flatten, values } from 'lodash';
+import gql from 'graphql-tag';
+
+import request from '../../utils/request';
+import axios from 'axios';
+import { print } from 'graphql';
+import { chain } from 'lodash';
+
+export interface IActivitiesState {
+  // categories: any[];
+  activities: any[];
+  // domains: any[];
+}
+
+const LOAD_ACTIVITIES = gql`
+  {
+    activityMany {
+      _id
+      name
+      type
+      level
+      description
+      free
+      printable
+      editorial
+      notes
+      orientation
+      mediaType
+      category
+      subCategory
+      status
+      audience
+      isolate
+      updated_at
+      created_at
+      metadata {
+        slideCategories
+        slides {
+          media {
+            name
+            _id
+          }
+          phrases
+          category
+          size
+          audio {
+            name
+            _id
+          }
+          mediaIndex
+          _id
+        }
+      }
+    }
+  }
+`;
+
+@Module({ dynamic: true, store, name: 'activities' })
+class Activities extends VuexModule implements IActivitiesState {
+  public activities = [];
+  public articulations = [];
+
+  @Action({ commit: 'SET_ACTIVITIES' })
+  async loadActivities() {
+    const query = LOAD_ACTIVITIES;
+
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+      },
+    });
+
+    debugger;
+    
+    return res2.data.data.activityMany;
+  }
+
+  // @Action({ commit: 'SET_COLLECTIONS' })
+  // public async LoadCollections() {
+  //   const res = await request({
+  //     url: '/api/v1/collections',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+  //   return (res as any).collections;
+  // }
+
+  @Action({ commit: 'SET_ARTICULATIONS' })
+  public async LoadArticulations() {
+    const query = gql`
+      {
+        articulationMany {
+          _id
+          name
+          display
+          title
+          description
+          notes
+          updated_at
+          created_at
+          metadata {
+            syllable {
+              text
+              type
+              emphasis
+              location
+              syllable
+              isolate
+              _id
+              media {
+                _id
+                name
+              }
+              audio {
+                _id
+                name
+              }
+            }
+            blend {
+              text
+              type
+              blend
+              isolate
+              _id
+              media {
+                _id
+                name
+              }
+              audio {
+                _id
+                name
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+      },
+    });
+
+    return res2.data.data.articulationMany;
+  }
+
+  @Action({ commit: 'REMOVE_ACTIVITY' })
+  public async RemoveActivity(id) {
+    const query = gql`
+      mutation($id: MongoID!) {
+        activityRemoveOne(filter: { _id: $id }) {
+          recordId
+        }
+      }
+    `;
+
+    console.log({ query });
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+        variables: {
+          id,
+        },
+      },
+    });
+
+    debugger;
+
+    return id;
+  }
+
+  @Action({ commit: 'ADD_ACTIVITY' })
+  public async AddActivity(activity) {
+    const query = gql`
+      mutation($collections: [JSON!]) {
+        activityUpdateOrCreate(collections: $collections) {
+          _id
+          name
+          type
+          description
+          free
+          printable
+          editorial
+          notes
+          level
+          orientation
+          mediaType
+          category
+          subCategory
+          status
+          audience
+          isolate
+          updated_at
+          created_at
+          metadata {
+            slideCategories
+            slides {
+              media {
+                name
+                _id
+              }
+              phrases
+              category
+              size
+              audio {
+                name
+                _id
+              }
+              mediaIndex
+              _id
+            }
+          }
+        }
+      }
+    `;
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+        variables: {
+          collections: [activity],
+        },
+      },
+    });
+
+    debugger;
+
+    // return res2.data.data.categoryCreateOne.record;
+    return res2.data.data.activityUpdateOrCreate;
+  }
+
+  @Action({ commit: 'UPDATE_ACTIVITY' })
+  public async UpdateActivity(activity) {
+    return activity;
+  }
+
+  @Action({ commit: 'UPDATE_ARTICULATION' })
+  public async UpdateArticulation(articulation) {
+    const query = gql`
+      mutation($collections: [JSON!]) {
+        articulationUpdateOrCreate(collections: $collections) {
+          _id
+          name
+          display
+          title
+          description
+          notes
+          updated_at
+          created_at
+          metadata {
+            syllable {
+              text
+              type
+              emphasis
+              location
+              syllable
+              isolate
+              _id
+            }
+            blend {
+              text
+              type
+              blend
+              isolate
+              _id
+            }
+          }
+        }
+      }
+    `;
+
+    const res2 = await axios({
+      url: '/graphql',
+      method: 'post',
+      data: {
+        query: print(query),
+        variables: {
+          collections: [articulation],
+        },
+      },
+    });
+
+    debugger;
+
+    // return res2.data.data.categoryCreateOne.record;
+    return res2.data.data.articulationUpdateOrCreate;
+  }
+
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async LoadCategories() {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async AddCategory({ category }) {
+  //   debugger;
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'post',
+  //     baseURL: '',
+  //     data: { category },
+  //   });
+
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async RemoveCategory({ name }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories`,
+  //     method: 'delete',
+  //     baseURL: '',
+  //     data: { name },
+  //   });
+
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async RemoveSubCategory({ name }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories/sub`,
+  //     method: 'delete',
+  //     baseURL: '',
+  //     data: { name },
+  //   });
+
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_CATEGORIES' })
+  // public async AddSubCategory({ name, category }) {
+  //   const res2 = await request({
+  //     url: `/api/v1/categories/sub`,
+  //     method: 'post',
+  //     baseURL: '',
+  //     data: { name, category },
+  //   });
+
+  //   return (res2 as any).categories;
+  // }
+
+  // @Action({ commit: 'SET_ACTIVITIES' })
+  // public async LoadActivities() {
+  //   const res = await request({
+  //     url: '/api/v1/activities',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+
+  //   return (res as any).activities;
+  // }
+
+  // @Action({ commit: 'SET_DOMAINS' })
+  // public async LoadDomains() {
+  //   const res = await request({
+  //     url: '/api/v1/domains',
+  //     method: 'get',
+  //     baseURL: '',
+  //   });
+
+  //   return (res as any).domains;
+  // }
+
+  @Mutation
+  private ADD_ACTIVITY(activities: any) {
+    debugger;
+
+    activities.forEach((a, i) => {
+      if (this.activities.find((aa) => aa._id === a._id)) {
+        this.activities[i] = a;
+      } else {
+        this.activities = [...this.activities, a];
+      }
+    });
+  }
+
+  @Mutation
+  private UPDATE_ACTIVITY(activity: any) {
+    const i = this.activities.findIndex((s) => s._id === activity._id);
+    this.activities[i] = activity;
+    // this.activities.push(activity);
+  }
+
+  @Mutation
+  private UPDATE_ARTICULATION(articulation: any) {
+    articulation.forEach((a, i) => {
+      if (this.articulations.find((aa) => aa._id === a._id)) {
+        this.articulations[i] = a;
+      } else {
+        this.articulations = [...this.articulations, a];
+      }
+    });
+
+    // const i = this.articulations.findIndex((s) => s._id === articulation._id);
+    // this.articulations[i] = articulation;
+  }
+
+  // @Mutation
+  // private SET_CATEGORIES(categories: any) {
+  //   this.categories = categories;
+
+  //   let r = [];
+
+  //   this.categories.forEach((a) => {
+  //     r = [...r, ...a.subcategory];
+  //   });
+
+  //   console.log({ r });
+  //   this.subcategories = r;
+  // }
+
+  // @Mutation
+  // private SET_DOMAINS(domains: any) {
+  //   this.domains = domains;
+  // }
+
+  @Mutation
+  private REMOVE_ACTIVITY(id: any) {
+    this.activities = this.activities.filter((f) => f._id !== id);
+  }
+
+  @Mutation
+  private SET_ACTIVITIES(activities: any) {
+    this.activities = activities;
+  }
+
+  // @Mutation
+  // private SET_COLLECTIONS(collections: any) {
+  //   this.collections = collections;
+  // }
+
+  @Mutation
+  private SET_ARTICULATIONS(articulations: any) {
+    debugger;
+    this.articulations = articulations;
+  }
+}
+
+export const ActivitiesModule = getModule(Activities);

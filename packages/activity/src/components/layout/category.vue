@@ -14,7 +14,7 @@
               </v-list-tile>
             </template>
 
-            <v-list-tile v-for="subItem in item.sub" :key="subItem._id" @click>
+            <v-list-tile v-for="subItem in item.sub" :key="subItem._id">
               {{ subItem.name }}
             </v-list-tile>
           </v-list-group>
@@ -128,11 +128,11 @@ import { Component, Watch, Vue } from 'vue-property-decorator';
 // import { DrawerItems } from 'tera-core';
 import dasherize from 'dasherize';
 import { startCase } from 'lodash';
-import { ActivitiesModule } from '@/store/modules/activities';
-import { CategoryModule } from '@/store/modules/category';
-import { DomainModule } from '@/store/modules/domains';
-import { AppModule } from '@/store/modules/app';
-import { StripsModule } from '@/store/modules/strips';
+import { ActivitiesModule } from 'tera-core/src/store/activities.module';
+import { CategoriesModule } from 'tera-core/src/store/categories.module';
+import { DomainsModule } from 'tera-core/src/store/domains.module';;
+import { AppModule } from 'tera-core/src/store/app';
+import { StripsModule } from 'tera-core/src/store/strips.module';
 import { filter } from 'lodash';
 
 Component.registerHooks([
@@ -282,44 +282,42 @@ export default class Category extends Vue {
   }
 
   mounted() {
-    const { overview, category } = this.$route.params;
+    // const { overview, category } = this.$route.params;
 
-    this.overview = startCase(overview);
-    this.name = undasherize(category); // startCase(category);
+    // this.overview = startCase(overview);
+    // this.name = undasherize(category); // startCase(category);
 
-    this.type = DomainModule.types.find(
-      (t) => t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
-    );
+    // this.type = DomainModule.types.find(
+    //   (t) => t.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
+    // );
 
-    this.categories = CategoryModule.categories.map((c) => ({
-      ...c,
-      sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
-    }));
+    // this.categories = CategoryModule.categories.map((c) => ({
+    //   ...c,
+    //   sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
+    // }));
 
-    console.log({ o: this.categories });
+    // console.log({ o: this.categories });
 
-    this.load();
+    // this.load();
   }
 
   async load() {
-    this.items = ActivitiesModule.activities
-      .filter((a) => a.type === this.type._id)
-      .map((t) => ({
-        ...t,
-        name: t.name.toLocaleLowerCase(),
-        title: t.name,
-        _id: t._id,
-      }));
+    // this.items = ActivitiesModule.activities
+    //   .filter((a) => a.type === this.type._id)
+    //   .map((t) => ({
+    //     ...t,
+    //     name: t.name.toLocaleLowerCase(),
+    //     title: t.name,
+    //     _id: t._id,
+    //   }));
   }
 
   public async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.loadActivities(),
-      ActivitiesModule.LoadArticulations(),
-
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
-      StripsModule.loadStrips(),
+      ActivitiesModule.load(),
+      CategoriesModule.load(),
+      DomainsModule.load(),
+      StripsModule.load(),
     ]);
 
     next();

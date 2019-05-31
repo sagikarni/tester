@@ -20,11 +20,11 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { ActivitiesModule } from '@/store/modules/activities';
-import { CategoryModule } from '@/store/modules/category';
-import { DomainModule } from '@/store/modules/domains';
-import { AppModule } from '@/store/modules/app';
-import { StripsModule } from '@/store/modules/strips';
+import { ActivitiesModule } from './store/activities.module';
+import { CategoriesModule } from './store/categories.module';
+import { DomainsModule } from './store/domains.module';
+import { AppModule } from './store/app';
+import { StripsModule } from './store/strips.module';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -47,12 +47,12 @@ export default class Home extends Vue {
 
  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
-      ActivitiesModule.loadActivities(),
-      ActivitiesModule.LoadArticulations(),
+      ActivitiesModule.load(),
+      // ActivitiesModule.LoadArticulations(),
 
-      CategoryModule.loadCategory(),
-      DomainModule.loadDomains(),
-      StripsModule.loadStrips()
+      CategoriesModule.load(),
+      DomainsModule.load(),
+      StripsModule.load()
     ]);
 
     next();
