@@ -3,15 +3,16 @@
     color="primary"
     dark
     id="app-toolbar"
-    class="elevation-0"
+    class="elevation-1"
     app
     clipped-left
     clipped-right
     fixed
-    height="44"
+    height="56"
   >
-  
     <v-toolbar-side-icon/>
+
+    <v-spacer class="hidden-md-and-up"/>
 
     <router-link to="/" :class="`bk-${$vuetify.breakpoint.name}`">
       <v-img
@@ -23,10 +24,6 @@
         width="28px"
       />
     </router-link>
-
-    <!-- cognishine.svg -->
-
-    <!-- <v-toolbar-title class="ma-2">Tera</v-toolbar-title> -->
 
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn

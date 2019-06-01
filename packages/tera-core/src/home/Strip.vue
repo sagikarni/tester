@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="activities" class="mb-4">
-      <h3 class="text-uppercase mb-2 headline">{{title}}</h3>
+      <h3 class=" mb-2 headline">{{title}}</h3>
       <div style="position:relative;">
         <swiper :options="swiperOption">
           <swiper-slide v-for="activity in activities" :key="activity._id">

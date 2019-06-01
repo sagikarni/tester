@@ -9,7 +9,7 @@
           >
             <h3
               :class="$vuetify.breakpoint.smAndDown && 'display-1' || 'display-3'"
-              class="font-weight-regular mb-4 mx-3"
+              class="font-weight-regular mb-3 mx-3"
               v-html="$t('Vuetify.Home.strips.header')"
             />
           </div>
@@ -23,7 +23,7 @@
 
       <strip group="homepage"/>-->
     </v-responsive>
-    <v-container>
+    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <strip-group value="homepage" />
     </v-container>
   </div>

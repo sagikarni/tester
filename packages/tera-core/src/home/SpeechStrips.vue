@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4 white">
-    <v-container>
+    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <h3 class="text-uppercase mb-2 headline">SPEECH ACTIVITIES</h3>
       <div v-if="articulations" style="position:relative;">
         <swiper :options="swiperOption">

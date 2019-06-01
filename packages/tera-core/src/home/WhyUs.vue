@@ -12,19 +12,20 @@
       </v-layout>
     </v-container>
 
-    <v-container >
-      <v-layout justify-center align-center :column="$vuetify.breakpoint.xsOnly" class="white--text">
-        <div>
-          <v-layout :column="$vuetify.breakpoint.mdAndDown">
-            <div class="f-feature feature-photos py-5 px-4">
-              <div class="display-1 mb-2">{{features.photos.text}}</div>
-              <div class="subheading">{{features.photos.description}}</div>
-            </div>
-            <div class="f-feature feature-printable py-5 px-4">
-              <div class="display-1 mb-2">{{features.printable.text}}</div>
-              <div class="subheading">{{features.printable.description}}</div>
-            </div>
-          </v-layout>
+    <v-container fluid>
+      <v-layout
+        justify-center
+        align-center
+        :column="$vuetify.breakpoint.xsOnly"
+        class="white--text"
+      >
+        <div class="f-feature feature-photos py-5 px-4">
+          <div class="display-1 mb-2">{{features.photos.text}}</div>
+          <div class="subheading">{{features.photos.description}}</div>
+        </div>
+        <div class="f-feature feature-printable py-5 px-4">
+          <div class="display-1 mb-2">{{features.printable.text}}</div>
+          <div class="subheading">{{features.printable.description}}</div>
         </div>
         <div class="f-feature feature-videos py-5 px-4">
           <div class="display-1 mb-2">{{features.videos.text}}</div>
@@ -53,10 +54,7 @@
                   >{{$t('Vuetify.Feature.start')}}</v-btn>
                 </v-layout>
               </v-card-actions>
-              <v-img
-                :src="`https://unsplash.it/300/300?image=${Math.floor(Math.random() * 100) + 1}`"
-                :aspect-ratio="1.6"
-              ></v-img>
+              <v-img :src="`/storage/${domain.text}/cover.jpg`" :aspect-ratio="1.6"></v-img>
             </v-card>
           </v-flex>
         </v-layout>
