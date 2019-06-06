@@ -2,13 +2,13 @@
   <div id="overview">
     <v-content>
       <v-container fluid class="pa-0">
-        <div style="background:gray;">
-          <h2 class="text-xs-center headline mb-5 white--text">
+        <div style="background:#000;" class="pa-3">
+          <h2 class="text-xs-center display-1 white--text">
             <span>{{ name }}</span>
           </h2>
         </div>
       </v-container>
-      <v-container grid-list-xl="grid-list-xl">
+      <v-container fluid class="pa-0 mb-4" grid-list-xs>
         <v-layout wrap>
           <v-flex v-for="(feature, i) in items" :key="i" xs6 md6 lg3 d-flex>
             <v-card
@@ -19,7 +19,7 @@
               <v-img
                 width="100%"
                 height="100%"
-                :aspect-ratio="1.3"
+                :aspect-ratio="1.2"
                 :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
               >
                 <v-layout
@@ -29,8 +29,8 @@
                 >
                   <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
                     <div>
-                      <div class="display-1" style="font-weight:600!important">{{feature.name}}</div>
-                      <div class="title">{{feature.title}}</div>
+                      <div class="display-1 mb-3" style="font-weight:500!important">{{feature.name}}</div>
+                      <div class="title">{{feature.title}}_description</div>
                     </div>
                   </v-flex>
                 </v-layout>
@@ -40,7 +40,9 @@
         </v-layout>
       </v-container>
 
-      <strip-group value="homepage"/>
+      <v-container :fluid="$vuetify.breakpoint.lgAndDown">
+        <strip-group value="homepage"/>
+      </v-container>
     </v-content>
   </div>
 </template>
@@ -81,7 +83,6 @@ export default class Overview extends Vue {
   }
 
   async load() {
-
     const types = DomainsModule.types
       .query()
       .with(['domain'])
