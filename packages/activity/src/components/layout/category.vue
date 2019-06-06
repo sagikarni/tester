@@ -399,7 +399,7 @@ debugger;
       // id: c._id,
       name: c.name,
       type: 'category',
-      children: [{ id: c._id, name: 'All', type: 'category'}, ...subs.filter((s: any) => s.category_id === c._id).map(r => ({ id: r._id, name: r.name, type: 'sub' })) ],
+      children: [{ id: c._id, name: 'All', type: 'category'}, ...subs.filter((s: any) => s.category_id === c._id).map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })) ],
     }));
 
     // this.categories = CategoriesModule.categories.map((c) => ({

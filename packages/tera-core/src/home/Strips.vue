@@ -16,12 +16,6 @@
         </v-layout>
       </v-container>
 
-      <!-- 
-    <strip group="homepage"/>
-
-    <strip group="homepage"/>
-
-      <strip group="homepage"/>-->
     </v-responsive>
     <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <strip-group value="homepage" />

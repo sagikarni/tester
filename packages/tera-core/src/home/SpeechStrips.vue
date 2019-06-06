@@ -1,43 +1,11 @@
 <template>
   <div class="pa-4 white">
-    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
-      <h3 class="text-uppercase mb-2 headline">SPEECH ACTIVITIES</h3>
-      <div v-if="articulations" style="position:relative;">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="articulation in articulations" :key="articulation._id">
-            <v-card class="display-4 pa-3 speech-feature" style>
-              <v-card-title class="inner">{{articulation.name}}</v-card-title>
-            </v-card>
-          </swiper-slide>
-        </swiper>
-
-        <v-btn
-          class="swiper-button swiper-button-prev"
-          :class="getU('swiper-button-prev')"
-          slot="button-prev"
-          fab
-          light
-          small
-          color="white"
-        >
-          <v-icon dark class="font-weight-bold">chevron_left</v-icon>
-        </v-btn>
-        <v-btn
-          class="swiper-button swiper-button-next"
-          :class="getU('swiper-button-next')"
-          slot="button-next"
-          fab
-          light
-          small
-          color="white"
-        >
-          <v-icon dark class="font-weight-bold">chevron_right</v-icon>
-        </v-btn>
-      </div>
-
-      <div class="text-xs-center">
-        <v-btn round color="white" large>View All</v-btn>
-      </div>
+    <v-container :fluid="$vuetify.breakpoint.xlAndUp">
+      <strip :items="articulations" title="Speech Activities">
+        <v-card class="display-4 pa-3 speech-feature" slot-scope="slotProps">
+          <v-card-title class="inner">{{slotProps.item.name}}</v-card-title>
+        </v-card>
+      </strip>
     </v-container>
   </div>
 </template>
@@ -46,57 +14,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { ArticulationsModule } from '../store/articulations.module';
 
-@Component({})
+@Component({
+  components: {
+    Strip: () => import('./Strip.vue'),
+  },
+})
 export default class SpeechStrips extends Vue {
-  id = Math.random()
-    .toString(36)
-    .substring(7);
-
   public articulations = null;
-  swiperOption = {
-    slidesPerView: 'auto',
-    spaceBetween: 10,
-    // on: {
-    //   beforeResize() {
-    //     if (window.innerWidth >= 640) {
-    //       swiper.slides.css('width', '');
-    //     }
-    //   },
-    // },
-    // centeredSlides: true,
-    // spaceBetween: 30,
-    // initialSlide: 0,
-    // slidesPerView: 3,
-    // spaceBetween: 30,
-    // slidesPerView: 3,
-    // spaceBetween: 30,
-    // watchOverflow: true,
-
-    // slidesPerView: 'auto',
-    navigation: {
-      nextEl: `.swiper-button-next-${this.id}`,
-      prevEl: `.swiper-button-prev-${this.id}`,
-    },
-
-    // breakpoints: {
-    //   1264: {
-    //     slidesPerView: 3,
-    //     spaceBetween: 30,
-    //   },
-    //   960: {
-    //     slidesPerView: 2,
-    //     spaceBetween: 10,
-    //   },
-    //   400: {
-    //     slidesPerView: 1,
-    //     spaceBetween: 0,
-    //   },
-    // },
-  };
-
-  getU(v) {
-    return `${v}-${this.id}`;
-  }
 
   mounted() {
     this.load();
@@ -121,10 +45,11 @@ export default class SpeechStrips extends Vue {
   border-radius: 10px;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16);
   width: 250px;
-  height: 195px;
+  height: 180px;
 }
 
 .speech-feature .inner {
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   align-items: center;
