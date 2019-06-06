@@ -12,7 +12,7 @@
       </v-layout>
     </v-container>-->
 
-    <v-container :fluid="$vuetify.breakpoint.xlAndUp">
+    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <v-layout wrap class="white--text text-xs-center">
         <v-flex xs12 sm4 class="f-feature feature-printable elevation-4">
           <v-icon color="white" size="85">card_giftcard</v-icon>
@@ -34,7 +34,7 @@
       </v-layout>
     </v-container>
 
-    <v-container grid-list-xl :fluid="$vuetify.breakpoint.xlAndUp">
+    <v-container grid-list-xl :fluid="$vuetify.breakpoint.lgAndDown">
       <v-layout justify-center wrap>
         <v-flex v-for="(domain, i) in domains" :key="i" xs12 sm3>
           <v-card class="elevation-4">

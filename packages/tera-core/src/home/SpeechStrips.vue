@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4 white">
-    <v-container :fluid="$vuetify.breakpoint.xlAndUp">
+    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <strip :items="articulations" title="Speech Activities">
         <v-card class="display-4 pa-3 speech-feature" slot-scope="slotProps">
           <v-card-title class="inner">{{slotProps.item.name}}</v-card-title>

@@ -11,7 +11,7 @@
         </div>
       </v-layout>
     </v-container>-->
-    <v-container :fluid="$vuetify.breakpoint.xlAndUp">
+    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <strip class="feedbacks" :items="feedbacks" title="What customers think about us">
         <v-card :color="slidesColors[slotProps.item.key]" dark slot-scope="slotProps">
           <v-card-title class="px-3 py-3">

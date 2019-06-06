@@ -18,7 +18,7 @@
           </v-list-group>-->
 
           <v-treeview
-          return-object
+            return-object
             :active.sync="active"
             v-model="tree"
             :items="categories"
@@ -66,70 +66,17 @@
 
     <v-content>
       <v-container fluid class="pa-0">
-        <div style="background:gray;">
-          <h2 class="text-xs-center headline mb-5 white--text">
+        <div style="background:#000;" class="pa-3">
+          <h2 class="text-xs-center display-1 white--text" style="text-transform:capitalize;">
             <span>{{ name }}</span>
           </h2>
         </div>
       </v-container>
-      <!-- <v-container fluid class="pa-0">
-        <div>
-          <h3>Activity</h3>
-          <v-radio-group v-model="radioGroup">
-            <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-          </v-radio-group>
-          <h3>Media Type</h3>
-          <v-radio-group v-model="radioGroup">
-            <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-          </v-radio-group>
 
-          <v-checkbox v-model="checkbox" :label="`Checkbox 1: ${checkbox.toString()}`"></v-checkbox>
-          <v-checkbox v-model="checkbox" :label="`Checkbox 1: ${checkbox.toString()}`"></v-checkbox>
-
-          <h3>Audience</h3>
-          <v-radio-group v-model="radioGroup">
-            <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-          </v-radio-group>
-
-          <h3>Category</h3>
-          <v-radio-group v-model="radioGroup">
-            <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-          </v-radio-group>
-
-          <h3>Sub Category</h3>
-          <v-radio-group v-model="radioGroup">
-            <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
-          </v-radio-group>
-        </div>
-      </v-container>-->
       <v-container grid-list-xl="grid-list-xl">
         <v-layout wrap>
           <v-flex v-for="(feature, i) in displayItems" :key="i" xs6 md6 lg3 d-flex>
-            <v-card
-              class="pa-0"
-              fill-height
-              :to="{ name: 'activity', params: { id: feature._id } }"
-            >
-              <v-img
-                width="100%"
-                height="100%"
-                aspect-ratio="1.3"
-                :src="`/storage/${overview}/${name}/${feature._id}/cover-l.jpg`"
-              >
-                <v-layout
-                  fill-height
-                  class="ma-0 pa-2 lightbox white--text"
-                  style="background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
-                >
-                  <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
-                    <div>
-                      <div class="display-1" style="font-weight:600!important">{{feature.name}}</div>
-                      <div class="title">{{feature.title}}</div>
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-img>
-            </v-card>
+            <activity-preview :activity="feature"></activity-preview>
           </v-flex>
         </v-layout>
       </v-container>
@@ -183,7 +130,11 @@ const removeEmpty = (obj) => {
   return obj;
 };
 
-@Component({})
+@Component({
+  components: {
+    ActivityPreview: () => import('tera-core/src/home/activity-preview.vue'),
+  },
+})
 export default class Category extends Vue {
   get displayItems() {
     const form = removeEmpty(JSON.parse(JSON.stringify(this.form)));
@@ -198,7 +149,7 @@ export default class Category extends Vue {
         form.subCategory = { _id: a.id };
       }
     }
-debugger;
+    debugger;
     let filteredActivities = filter(this.items, form);
 
     if (this.mediaType && this.mediaType.length) {
@@ -212,7 +163,6 @@ debugger;
         this.audience.includes(aa.audience)
       );
     }
-
 
     console.log({ filteredActivities });
 
@@ -399,7 +349,12 @@ debugger;
       // id: c._id,
       name: c.name,
       type: 'category',
-      children: [{ id: c._id, name: 'All', type: 'category'}, ...subs.filter((s: any) => s.category_id === c._id).map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })) ],
+      children: [
+        { id: c._id, name: 'All', type: 'category' },
+        ...subs
+          .filter((s: any) => s.category_id === c._id)
+          .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
+      ],
     }));
 
     // this.categories = CategoriesModule.categories.map((c) => ({
@@ -420,7 +375,10 @@ debugger;
 
     console.log({ activities });
 
-const a = activities.filter((aa: any) => aa.type.name.toLocaleLowerCase() === this.name.toLocaleLowerCase());
+    const a = activities.filter(
+      (aa: any) =>
+        aa.type.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
+    );
 
     this.items = a;
 

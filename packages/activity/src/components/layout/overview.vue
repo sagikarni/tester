@@ -3,14 +3,14 @@
     <v-content>
       <v-container fluid class="pa-0">
         <div style="background:#000;" class="pa-3">
-          <h2 class="text-xs-center display-1 white--text">
+          <h2 class="text-xs-center display-1 white--text" style="text-transform:capitalize;">
             <span>{{ name }}</span>
           </h2>
         </div>
       </v-container>
       <v-container fluid class="pa-0 mb-4" grid-list-xs>
         <v-layout wrap>
-          <v-flex v-for="(feature, i) in items" :key="i" xs6 md6 lg3 d-flex>
+          <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
             <v-card
               class="pa-0"
               fill-height
@@ -19,7 +19,7 @@
               <v-img
                 width="100%"
                 height="100%"
-                :aspect-ratio="1.2"
+                :aspect-ratio="1.6"
                 :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
               >
                 <v-layout
