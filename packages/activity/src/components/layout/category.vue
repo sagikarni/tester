@@ -2,64 +2,60 @@
   <div id="category">
     <v-layout>
       <v-navigation-drawer fixed left clipped app dark>
-        <v-list>
-          <v-subheader>Category</v-subheader>
-          <!-- 
-          <v-list-group v-for="item in categories" :key="item._id" no-action>
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </template>
-
-            <v-list-tile v-for="subItem in item.items" :key="subItem._id">{{ subItem.name }}</v-list-tile>
-          </v-list-group>-->
+        <v-list class="pa-3">
+          <h3 class="mb-2">Category</h3>
 
           <v-treeview
+            class="tree-category"
             return-object
             :active.sync="active"
             v-model="tree"
             :items="categories"
             activatable
-            active-class="grey lighten-4 indigo--text"
+            active-class="font-weight-bold"
             selected-color="indigo"
             open-on-click
             selectable
-            expand-icon="fa-chevron-down"
-            on-icon="mdi-bookmark"
-            off-icon="mdi-bookmark-outline"
-            indeterminate-icon="mdi-bookmark-minus"
+            expand-icon
+            on-icon
+            off-icon
+            indeterminate-icon
           ></v-treeview>
 
-          <v-divider></v-divider>
+          <v-divider class="mt-2"></v-divider>
 
-          <v-subheader>Media</v-subheader>
+          <h3 class="my-2">Media</h3>
 
-          <v-checkbox v-model="mediaType" label="Video" value="Video"></v-checkbox>
-          <v-checkbox v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
+          <v-checkbox hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
+          <v-checkbox hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
 
-          <v-divider></v-divider>
+          <v-divider class="mt-2"></v-divider>
 
           <v-checkbox
             v-model="form.printable"
             label="Printable"
             :value="true"
             :false-value="undefined"
+            hide-details="true"
           ></v-checkbox>
 
-          <v-divider></v-divider>
+          <v-divider class="mt-2"></v-divider>
 
-          <v-checkbox v-model="form.isolate" label="Isolate" :value="true" :false-value="undefined"></v-checkbox>
+          <v-checkbox
+            hide-details="true"
+            v-model="form.isolate"
+            label="Isolate"
+            :value="true"
+            :false-value="undefined"
+          ></v-checkbox>
 
-          <v-divider></v-divider>
+          <v-divider class="mt-2"></v-divider>
 
-          <v-subheader>Audience</v-subheader>
+          <h3 class="my-2">Audience</h3>
 
-          <v-checkbox v-model="audience" label="All" value="All"></v-checkbox>
-          <v-checkbox v-model="audience" label="Kids" value="Kids"></v-checkbox>
-          <v-checkbox v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
+          <v-checkbox hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
+          <v-checkbox hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
+          <v-checkbox hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
         </v-list>
       </v-navigation-drawer>
     </v-layout>
@@ -80,6 +76,10 @@
           </v-flex>
         </v-layout>
       </v-container>
+
+      <div
+        v-if="displayItems.length === 0"
+      >Sorry, We could not find activities which fit your filter(s) criterias</div>
     </v-content>
   </div>
 </template>
@@ -143,13 +143,15 @@ export default class Category extends Vue {
 
     if (this.active && this.active.length) {
       const a = this.active[0];
-      if (a.type === 'category') {
-        form.category = { _id: a.id };
-      } else {
-        form.subCategory = { _id: a.id };
+      if (a.type) {
+        if (a.type === 'category') {
+          form.category = { _id: a.id };
+        } else {
+          form.subCategory = { _id: a.id };
+        }
       }
     }
-    debugger;
+
     let filteredActivities = filter(this.items, form);
 
     if (this.mediaType && this.mediaType.length) {
@@ -345,17 +347,24 @@ export default class Category extends Vue {
 
     const subs = CategoriesModule.subCategory.all();
 
-    this.categories = CategoriesModule.category.all().map((c: any) => ({
-      // id: c._id,
-      name: c.name,
-      type: 'category',
-      children: [
-        { id: c._id, name: 'All', type: 'category' },
-        ...subs
-          .filter((s: any) => s.category_id === c._id)
-          .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
-      ],
-    }));
+    const a = { id: null, name: 'All' };
+
+    this.categories = [
+      a,
+      ...CategoriesModule.category.all().map((c: any) => ({
+        // id: c._id,
+        name: c.name,
+        type: 'category',
+        children: [
+          { id: c._id, name: 'All', type: 'category' },
+          ...subs
+            .filter((s: any) => s.category_id === c._id)
+            .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
+        ],
+      })),
+    ];
+
+    // this.categories.shift(0, );
 
     // this.categories = CategoriesModule.categories.map((c) => ({
     //   ...c,
@@ -404,3 +413,13 @@ export default class Category extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.tree-category.v-treeview > .v-treeview-node--leaf {
+  margin-left: 0 !important;
+}
+
+.v-treeview-node--leaf {
+  margin-left: 20px !important;
+}
+</style>
