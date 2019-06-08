@@ -1,9 +1,9 @@
 <template>
-  <v-card width="260" class="card">
+  <v-card :width="width" class="card" :to="clickable && url">
     <v-img
       :src="picture"
       class="white--text"
-      height="205px"
+      :height="height"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
     >
       <v-card-title class="fill-height">
@@ -31,10 +31,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import dasherize from 'dasherize';
 
 @Component({})
 export default class ActivitiyPreview extends Vue {
   @Prop() activity;
+
+  @Prop() height;
+  @Prop() width;
+  @Prop({ default: true }) clickable;
 
   get picture() {
     return `/storage/${this.activity.type.domain.name}/${
@@ -60,6 +65,10 @@ export default class ActivitiyPreview extends Vue {
 
   get mediaType() {
     return this.activity.mediaType === 'Video' ? 'videocam' : 'photo';
+  }
+
+  get url() {
+    return `/${this.domain}/${dasherize(this.type)}/${this.activity._id}`;
   }
 }
 </script>

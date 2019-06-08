@@ -1,7 +1,7 @@
 <template>
   <div>
     <strip v-for="group in groups" :key="group._id" :items="group.items" :title="group.name">
-      <activity-preview :activity="slotProps.item" slot-scope="slotProps"></activity-preview>
+      <activity-preview :width="'260px'" :height="'205px'" :activity="slotProps.item" slot-scope="slotProps"></activity-preview>
     </strip>
   </div>
 </template>

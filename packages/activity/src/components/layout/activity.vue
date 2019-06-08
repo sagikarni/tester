@@ -1,57 +1,34 @@
 <template>
   <div id="activity">
     <v-content>
-      <Cta :item="item" v-if="item" :baseUrl="`/storage/${overview}/${category}/${id}/cover-l.jpg`" />
-
-      <v-btn :to="{ name: routeName }">start!</v-btn>
-
-      <Gallery :images="thumbnails" v-if="thumbnails"/>
+      <activity-details :activity="activity"></activity-details>
     </v-content>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-// import { DrawerItems } from 'tera-core';
 import dasherize from 'dasherize';
 import { startCase } from 'lodash';
+import { ActivitiesModule } from 'tera-core/src/store/activities.module';
+import { CategoriesModule } from 'tera-core/src/store/categories.module';
+import { DomainsModule } from 'tera-core/src/store/domains.module';
+import { AppModule } from 'tera-core/src/store/app';
+import { StripsModule } from 'tera-core/src/store/strips.module';
 
-// import { activities } from 'tera-core';
-const undasherize = (str) => {
-  if (str.indexOf('-') === -1) { return str; }
-  return str
-    .split('-')
-    .map((s) => startCase(s))
-    .join('');
-};
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate', // for vue-router 2.2+
+]);
 
 @Component({
   components: {
-    Cta: () => import(/* webpackChunkName: "cta" */ '../helpers/cta.vue'),
-    Gallery: () =>
-      import(/* webpackChunkName: "gallery" */ '../helpers/gallery.vue'),
+    ActivityDetails: () => import('./activity-details.vue'),
   },
 })
 export default class Activity extends Vue {
-  category = '';
-  id = '';
-  routeName = '';
-  item = null;
-  overview = '';
-
-  // get thumbnails() {
-  //   return (
-  //     (this.item &&
-  //       this.item.thumbnails.map((thumbnail) => ({
-  //         pic: `/activities/${this.item.name}/thumbnails/${thumbnail}-l.jpg`,
-  //         lazy: `/activities/${this.item.name}/thumbnails/${thumbnail}-m.jpg`,
-  //       }))) ||
-  //     []
-  //   );
-  // }
-  get thumbnails() {
-    return null;
-  }
+  activity = null;
 
   constructor() {
     super();
@@ -59,27 +36,22 @@ export default class Activity extends Vue {
 
   mounted() {
     const { overview, category, id } = this.$route.params;
-    this.overview = startCase(overview);
-    this.category = undasherize(category); // startCase(category);
-    this.id = id;
-
-    // this.item = activities.find((i) => i.name === id);
-    this.routeName = `${category}/start`;
-
-    console.log('route: ', this.routeName);
-
-    this.load();
+    console.log({ id });
+    this.activity = ActivitiesModule.activity
+      .query()
+      .whereId(id)
+      .with(['type.domain', 'category', 'subCategory.category'])
+      .first();
   }
 
-  async load() {
-    const res = await this.axios.get(`/activity/activities/${this.category}`);
-
-    this.item = res.data.activities.find((a) => a._id === this.id);
-    // this.items = res.data.activities.map((t) => ({
-    //       name: t.name.toLocaleLowerCase(),
-    //       title: t.name,
-    //       _id: t._id
-    //     }));
+  public async beforeRouteEnter(to, from, next) {
+    await Promise.all([
+      ActivitiesModule.load(),
+      CategoriesModule.load(),
+      DomainsModule.load(),
+      StripsModule.load(),
+    ]);
+    next();
   }
 }
 </script>
