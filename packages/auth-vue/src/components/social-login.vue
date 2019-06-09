@@ -1,38 +1,18 @@
 <template>
-  <div>
-    <v-btn
-      @click="loginWith('facebook', '/auth/facebook')"
-      flat
-      icon
-      color="blue darken-4"
-    >
-      <v-icon large>fab fa-facebook</v-icon>
+  <v-layout column>
+    <v-btn @click="loginWith('facebook', '/auth/facebook')" dark large color="blue darken-4">
+      <v-icon left dark>fab fa-facebook-f</v-icon>Facebook
     </v-btn>
-    <v-btn
-      @click="loginWith('twitter', '/auth/twitter')"
-      flat
-      icon
-      color="blue lighten-3"
-    >
-      <v-icon large>fab fa-twitter</v-icon>
+    <v-btn @click="loginWith('twitter', '/auth/twitter')" dark large color="blue lighten-3">
+      <v-icon left dark>fab fa-twitter</v-icon>Twitter
     </v-btn>
-    <v-btn
-      @click="loginWith('google', '/auth/google')"
-      flat
-      icon
-      color="red darken-4"
-    >
-      <v-icon large>fab fa-google</v-icon>
+    <v-btn @click="loginWith('google', '/auth/google')" dark large color="red darken-4">
+      <v-icon left dark>fab fa-google-plus-g</v-icon>Google
     </v-btn>
-    <v-btn
-      @click="loginWith('linkedin', '/auth/linkedin')"
-      flat
-      icon
-      color="blue darken-1"
-    >
-      <v-icon large>fab fa-linkedin</v-icon>
+    <v-btn @click="loginWith('linkedin', '/auth/linkedin')" dark large color="blue darken-1">
+      <v-icon left dark>fab fa-linkedin-in</v-icon>Linkedin
     </v-btn>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">

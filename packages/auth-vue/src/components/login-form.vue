@@ -1,25 +1,33 @@
 <template>
-  <v-card>
-    <v-toolbar dark color="primary">
+  <v-card class="elevation-0">
+    <!-- <v-toolbar dark color="primary">
       <v-toolbar-title>Login</v-toolbar-title>
     </v-toolbar>
 
     <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">
-        Invalid Credentials
-      </div>
+      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
       <div v-else>Cannot login right now, try again later</div>
-    </v-alert>
+    </v-alert>-->
 
-    <v-subheader>With Your Social Account</v-subheader>
+    <!-- <v-container>
+      <v-layout wrap>
+        <v-flex xs6>
+          <v-subheader>Connect with:</v-subheader>
+          <social-login-component></social-login-component>
+        </v-flex>
+        <v-flex xs6>vccmbm,gk</v-flex>
+      </v-layout>
+    </v-container>-->
+
+    <!-- 
 
     <v-layout justify-space-around>
       <social-login-component></social-login-component>
-    </v-layout>
+    </v-layout>-->
 
-    <v-divider></v-divider>
+    <!-- <v-divider></v-divider>
 
-    <v-subheader>Or</v-subheader>
+    <v-subheader>Or</v-subheader>-->
 
     <v-card-text>
       <v-form v-model="valid" ref="form">
@@ -29,38 +37,27 @@
           label="What's your email?"
           required
           type="email"
-          prepend-icon="person"
         ></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
-          prepend-icon="lock"
           label="What's your password?"
           type="password"
           required
         ></v-text-field>
       </v-form>
 
-      <v-list>
-        <v-list-tile>
-          <v-list-tile-action>
-            <v-switch v-model="rememberMe" color="purple"></v-switch>
-          </v-list-tile-action>
-          <v-list-tile-title>Remember Me</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile>
-          <router-link to="/recover-account">Forgot your password?</router-link>
-        </v-list-tile>
-        <v-list-tile
+      <v-switch v-model="rememberMe" color="purple" label="Keep me loggedin"></v-switch>
+      <router-link to="/recover-account">Forgot your password?</router-link>
+
+      <!-- <v-list-tile
           >Need an account? &nbsp;
           <router-link to="/register">Register</router-link>
-        </v-list-tile>
-      </v-list>
+      </v-list-tile>-->
     </v-card-text>
 
-    <v-card-actions class="pa-3">
-      <v-spacer></v-spacer>
-      <v-btn color="primary" @click="submit">Login</v-btn>
+    <v-card-actions>
+      <v-btn color="primary" @click="submit" block>Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>
