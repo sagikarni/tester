@@ -60,7 +60,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Toolbar extends Vue {
   linksLeft = ['cognition', 'speech', 'communication', 'learning'];
-  linksRight = ['pricing']; // hidden in 678px.
+  linksRight = ['products']; // hidden in 678px.
 
   // stateless = false;
   // constructor() {

@@ -1,6 +1,6 @@
 export default [
   {
-    path: 'products',
+    path: '/products',
     name: 'products',
     component: () =>
       import(
