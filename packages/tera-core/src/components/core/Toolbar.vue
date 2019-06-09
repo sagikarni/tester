@@ -10,11 +10,15 @@
     fixed
     height="56"
   >
-    <v-toolbar-side-icon/>
+    <div
+      style="position:fixed;top:0;left:0;width:22px;height:22px;background:#555;color:#fff;opacity:.5;"
+    >{{$vuetify.breakpoint.name}}</div>
+
+    <v-toolbar-side-icon @click="toggleDrawer"/>
 
     <v-spacer class="hidden-md-and-up"/>
 
-    <router-link to="/" :class="`bk-${$vuetify.breakpoint.name}`">
+    <router-link to="/">
       <v-img
         alt="Tera Logo"
         :src="require(`@/assets/logo.svg`)"
@@ -55,13 +59,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-// import { TeraStoreModule } from '../../store';
+import { AppModule } from '../../store/app';
 
 @Component
 export default class Toolbar extends Vue {
   linksLeft = ['cognition', 'speech', 'communication', 'learning'];
   linksRight = ['products']; // hidden in 678px.
 
+  toggleDrawer() {
+    AppModule.toggleDrawer();
+  }
   // stateless = false;
   // constructor() {
   //   super();

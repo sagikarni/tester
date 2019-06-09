@@ -45,19 +45,17 @@ Component.registerHooks([
   },
 })
 export default class Home extends Vue {
-
- public async beforeRouteEnter(to, from, next) {
+  public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       ArticulationsModule.load(),
       ActivitiesModule.load(),
       CategoriesModule.load(),
       DomainsModule.load(),
-      StripsModule.load()
+      StripsModule.load(),
     ]);
 
     next();
   }
-
 }
 </script>
 
