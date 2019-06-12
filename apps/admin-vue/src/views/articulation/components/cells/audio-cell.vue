@@ -2,10 +2,7 @@
   <div>
     <div v-for="im in audio" :key="im.name" style="display:flex;align-items:center;">
       <audio controls style="width:150px;">
-        <source
-          :src="`/storage/Speech/Articulation/${articulationName}/${im.name}`"
-          type="audio/mpeg"
-        >Your browser does not support the audio element.
+        <source :src="getPath(im.name)" type="audio/mpeg">Your browser does not support the audio element.
       </audio>
     </div>
   </div>
@@ -18,10 +15,13 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 export default class AudioCell extends Vue {
   params;
 
-  get articulationName() {
-    // return this.params.context.storageUrl + im;
-
-    return this.params.context.componentParent.articulation.name;
+  getPath(name) {
+    const a = this.params.context.componentParent.urlPrefix.replace(
+      '__FILE__',
+      name
+    );
+    console.log({ a });
+    return a;
   }
 
   get audio() {

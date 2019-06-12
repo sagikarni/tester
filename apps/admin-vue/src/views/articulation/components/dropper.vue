@@ -114,7 +114,7 @@ export default class Dropper extends Vue {
       const filename = f.name.replace(
         /(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g,
         '.'
-      );
+      ).toLocaleLowerCase();
 
       if (added.includes(filename)) {
         return;

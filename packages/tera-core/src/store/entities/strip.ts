@@ -1,15 +1,6 @@
 import { Model } from '@vuex-orm/core';
 import { Activity } from './activity';
-
-const getObjectId = () => {
-  const ObjectId = (
-    m = Math,
-    d = Date,
-    h = 16,
-    s = (s) => m.floor(s).toString(h)
-  ) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
-  return ObjectId;
-};
+import { ObjectID } from 'bson';
 
 export class Strip extends Model {
   static entity = 'strips';
@@ -18,7 +9,7 @@ export class Strip extends Model {
 
   static fields() {
     return {
-      _id: this.attr(getObjectId()),
+      _id: this.attr(new ObjectID()),
       name: this.attr(''),
       groups: this.attr([]),
       new: this.attr(null), // private

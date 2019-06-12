@@ -1,137 +1,48 @@
 <template>
-  <el-form :model="form" label-width="120px" v-if="articulation">
+  <el-form label-width="120px" v-if="articulation">
     <el-tabs value="syllable">
       <el-tab-pane label="Syllable" name="syllable">
-        <div>
-          <div style="display:flex;justify-content: space-between;align-items: center;">
-            <el-button icon="el-icon-plus" type="primary" @click="addSyllable">Add Syllable</el-button>
+        <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
+          <syllable-form
+            v-if="dialogSyllableVisible"
+            :syllable="syllable"
+            :urlPrefix="`/storage/speech/articulation/${articulation.name}/__FILE__`"
+            @discard="onSyllableDiscard"
+            @submit="onSyllableSubmit"
+          ></syllable-form>
+        </el-dialog>
 
-            <div style="margin:0 20px;font-weight:bold;">{{syllableRows}} Rows</div>
-          </div>
-
-          <el-dialog title="Add/Edit" :visible.sync="dialogSyllableVisible">
-            <el-form :model="form" label-width="120px">
-              <el-form-item label="Type">
-                <el-select v-model="form.type" placeholder="select...">
-                  <el-option label="Word" value="Word"></el-option>
-                  <el-option label="Phrase" value="Phrase"></el-option>
-                  <el-option label="Sentence" value="Sentence"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="Text">
-                <el-input v-model="form.text" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="Emphasis">
-                <el-input v-model="form.emphasis" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="Location">
-                <el-select v-model="form.location" placeholder="select...">
-                  <el-option label="Initial" value="Initial"></el-option>
-                  <el-option label="Medial" value="Medial"></el-option>
-                  <el-option label="Final" value="Final"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="Syllable">
-                <el-select v-model="form.syllable" placeholder="select...">
-                  <el-option label="1" value="1"></el-option>
-                  <el-option label="2" value="2"></el-option>
-                  <el-option label="3" value="3"></el-option>
-                  <el-option label="4" value="4"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="Image:">
-                <dropper
-                  :path="`/storage/Speech/Articulation/${articulation.name}/__FILE__`"
-                  v-model="form.media"
-                  placeholder="Drop here image files"
-                ></dropper>
-              </el-form-item>
-              <el-form-item label="Audio:">
-                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
-              </el-form-item>
-              <el-form-item label="Properties">
-                <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
-              </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogSyllableVisible = false">Cancel</el-button>
-              <el-button type="primary" @click="onSaveSyllable">Save</el-button>
-            </span>
-          </el-dialog>
-        </div>
-
-        <ag-grid-vue
-          style="width: 100%;height: 500px;margin:20px 0;"
-          class="ag-theme-balham"
+        <articulation-grid
+          @add="addSyllable"
+          @edit="editSyllable"
+          @delete="deleteSyllable"
+          :data="articulation.metadata.syllable"
           :columnDefs="syllableColumnDefs"
-          :rowData="articulation.metadata.syllable"
-          :context="syllableContext"
-          :frameworkComponents="frameworkComponents"
-          :enableCellChangeFlash="true"
-          rowHeight="80"
           :gridOptions="gridOptionsSyllable"
-          @modelUpdated="onSyllableModelUpdated"
-          :floatingFilter="true"
-        ></ag-grid-vue>
+          :urlPrefix="`/storage/speech/articulation/${articulation.name}/__FILE__`"
+        ></articulation-grid>
       </el-tab-pane>
-      <el-tab-pane label="By Blend" name="blend" :disabled="!articulation.metadata.blend.length">
-        <div>
-          <div style="display:flex;justify-content: space-between;align-items: center;">
-            <el-button icon="el-icon-plus" type="primary" @click="addBlend">Add Blend</el-button>
+      <el-tab-pane label="By Blend" name="blend">
+        <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
+          <blend-form
+            v-if="dialogBlendVisible"
+            :blend="blend"
+            :items="items"
+            :urlPrefix="`/storage/speech/articulation/${articulation.name}/__FILE__`"
+            @discard="onBlendDiscard"
+            @submit="onBlendSubmit"
+          ></blend-form>
+        </el-dialog>
 
-            <div style="margin:0 20px;font-weight:bold;">{{blendRows}} Rows</div>
-          </div>
-
-          <el-dialog title="Add/Edit" :visible.sync="dialogBlendVisible">
-            <el-form :model="form">
-              <el-form-item label="Type">
-                <el-select v-model="form.type" placeholder="select...">
-                  <el-option label="Word" value="Word"></el-option>
-                  <el-option label="Phrase" value="Phrase"></el-option>
-                  <el-option label="Sentence" value="Sentence"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="Text" label-width="120px">
-                <el-input v-model="form.text" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="Emphasis" label-width="120px">
-                <el-input v-model="form.emphasis" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="Blend">
-                <el-select v-model="form.blend" placeholder="select...">
-                  <el-option v-for="item in getItems()" :label="item" :value="item" :key="item"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="Image:">
-                <dropper v-model="form.media" placeholder="Drop here image files"></dropper>
-              </el-form-item>
-              <el-form-item label="Audio:">
-                <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
-              </el-form-item>
-              <el-form-item label="Properties">
-                <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
-              </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogBlendVisible = false">Cancel</el-button>
-              <el-button type="primary" @click="onSaveBlend">Save</el-button>
-            </span>
-          </el-dialog>
-        </div>
-
-        <ag-grid-vue
-          style="width:100%;height:500px;margin:20px 0;"
-          class="ag-theme-balham"
+        <articulation-grid
+          @add="addBlend"
+          @edit="editBlend"
+          @delete="deleteBlend"
+          :data="articulation.metadata.blend"
           :columnDefs="blendColumnDefs"
-          :rowData="articulation.metadata.blend"
-          :context="blendContext"
-          :frameworkComponents="frameworkComponents"
-          :enableCellChangeFlash="true"
-          rowHeight="80"
           :gridOptions="gridOptionsBlend"
-          @modelUpdated="onBlendModelUpdated"
-          :floatingFilter="true"
-        ></ag-grid-vue>
+          :urlPrefix="`/storage/speech/articulation/${articulation.name}/__FILE__`"
+        ></articulation-grid>
       </el-tab-pane>
     </el-tabs>
 
@@ -168,20 +79,13 @@ import { StripsModule } from '../../../store/strips.module';
 import { ArticulationsModule } from '../../../store/articulations.module';
 import { AppModule } from '../../../store/app';
 
-
 import DeleteCell from './delete-cell.vue';
 import AudioCell from './cells/audio-cell.vue';
 import ImageCell from './cells/image-cell.vue';
-
-const getObjectId = () => {
-  const ObjectId = (
-    m = Math,
-    d = Date,
-    h = 16,
-    s = (s) => m.floor(s).toString(h)
-  ) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h));
-  return ObjectId;
-};
+import ArticulationGrid from './articulation-grid.vue';
+import SyllableForm from './syllable-form.vue';
+import BlendForm from './blend-form.vue';
+import { ObjectID } from 'bson';
 
 @Component({
   components: {
@@ -191,6 +95,9 @@ const getObjectId = () => {
     AgGridVue,
     draggable,
     dropper,
+    ArticulationGrid,
+    SyllableForm,
+    BlendForm,
   },
   filters: {
     json(value) {
@@ -199,27 +106,17 @@ const getObjectId = () => {
   },
 })
 export default class Modely extends Vue {
+  @Prop() public articulation;
+
   get storageUrl() {
-    return `E:/sagi-tera-files/Speech/Articulation/${this.articulation.name}`;
+    return `E:/sagi-tera-files/speech/articulation/${this.articulation.name}`;
   }
-  blendRows = 0;
-  syllableRows = 0;
-  gridOptionsBlend = {
-    defaultColDef: {
-      filter: true,
-      sortable: true,
-      resizable: false,
-      //            filter: "agTextColumnFilter"
-    },
-  };
-  gridOptionsSyllable = {
-    defaultColDef: {
-      filter: true,
-      sortable: true,
-      resizable: true,
-      //            filter: "agTextColumnFilter"
-    },
-  };
+
+  get items() {
+    const a = this.all[this.articulation.name.toLocaleLowerCase()];
+
+    return this.all[this.articulation.name.toLocaleLowerCase()];
+  }
 
   public all = {
     s: [
@@ -257,13 +154,6 @@ export default class Modely extends Vue {
     w: ['kw'],
   };
 
-  public dialogSyllableVisible = false;
-  public dialogBlendVisible = false;
-
-  public blendContext;
-  public syllableContext;
-  public frameworkComponents;
-
   public syllableColumnDefs = [
     { headerName: 'Text', field: 'text', suppressSizeToFit: true },
     { headerName: 'Emphasis', field: 'emphasis' },
@@ -271,7 +161,6 @@ export default class Modely extends Vue {
     { headerName: 'Location', field: 'location', width: 90 },
     { headerName: 'Syllable', field: 'syllable', width: 90 },
     { headerName: 'Isolate', field: 'isolate', width: 90 },
-
     {
       headerName: 'Image',
       field: 'media',
@@ -329,234 +218,105 @@ export default class Modely extends Vue {
     },
   ];
 
-  @Prop() public articulation;
-
-  @Prop() public add;
-
-  public conf = {
-    WhatsInThePicture: ['phrases'],
-    SpotTheDifference: ['mediaIndex'],
-    PhotoAssembly: ['picker'],
+  private gridOptionsSyllable = {
+    defaultColDef: {
+      filter: true,
+      sortable: true,
+      resizable: true,
+    },
   };
 
-  public slides = [];
-  public myArray = [];
-  public d = 1;
-
-  public form = {
-    emphasis: null,
-    text: null,
-    isolate: false,
-    audio: [],
-    type: null,
-    location: null,
-    media: [],
-    syllable: null,
+  private gridOptionsBlend = {
+    defaultColDef: {
+      filter: true,
+      sortable: true,
+      resizable: false,
+    },
   };
 
-  onBlendModelUpdated(event) {
-    this.blendRows = event.api.getDisplayedRowCount();
-  }
+  private dialogSyllableVisible = false;
+  private dialogBlendVisible = false;
+  private syllable = null;
+  private blend = null;
 
-  onSyllableModelUpdated(event) {
-    this.syllableRows = event.api.getDisplayedRowCount();
-  }
-
-  getItems() {
-    // this.articulation.name
-    const a = this.all[this.articulation.name.toLocaleLowerCase()];
-
-    return this.all[this.articulation.name.toLocaleLowerCase()];
-  }
-
-  public addSyllable() {
-    this.form = this.createNewSyllable();
+  addSyllable() {
+    this.syllable = null;
     this.dialogSyllableVisible = true;
   }
 
-  public addBlend() {
-    this.form = this.createNewBlend() as any;
-
-    this.dialogBlendVisible = true;
-  }
-
-  public createNewSyllable() {
-    const form = {
-      emphasis: null,
-      text: null,
-      isolate: false,
-      audio: [],
-      type: null,
-      location: null,
-      media: [],
-      syllable: null,
-    };
-
-    return { ...form };
-  }
-
-  public createNewBlend() {
-    const form = {
-      emphasis: null,
-      text: null,
-      isolate: false,
-      audio: [],
-      type: null,
-      blend: null,
-      media: [],
-    };
-
-    return { ...form };
-  }
-
-  public beforeMount() {
-    this.blendContext = { componentParent: this, source: 'blend' };
-    this.syllableContext = { componentParent: this, source: 'syllable' };
-
-    this.frameworkComponents = {
-      deleteCell: DeleteCell,
-      audioCell: AudioCell,
-      imageCell: ImageCell,
-    };
-  }
-
-  onSaveSyllable() {
-    const data = this.form as any;
-
-    if (!data._id) {
-      data._id = getObjectId();
-
-      this.articulation.metadata.syllable.push(data);
-      this.dialogSyllableVisible = false;
-
-      (this.gridOptionsSyllable as any).api.refreshCells();
-      return;
-    }
-
-    const it = this.articulation.metadata.syllable.find(
-      (s) => s._id === data._id
-    );
-
-    it.emphasis = data.emphasis;
-    it.text = data.text;
-    it.isolate = data.isolate;
-    it.audio = data.audio;
-    it.type = data.type;
-    it.location = data.location;
-    it.media = data.media;
-    it.syllable = data.syllable;
-    // articulation.metadata.syllable
+  onSyllableDiscard() {
+    this.syllable = null;
     this.dialogSyllableVisible = false;
+  }
+
+  onSyllableSubmit({ form }) {
+    this.dialogSyllableVisible = false;
+
+    const i = this.articulation.metadata.syllable.findIndex(
+      (s) => s._id === form._id
+    );
+    if (i > -1) {
+      this.articulation.metadata.syllable = this.articulation.metadata.syllable.map(
+        (s) => (s._id === form._id ? form : s)
+      );
+    } else {
+      this.articulation.metadata.syllable.push({ ...form });
+    }
 
     (this.gridOptionsSyllable as any).api.refreshCells();
   }
 
-  onSaveBlend() {
-    const data = this.form as any;
-
-    if (!data._id) {
-      data._id = getObjectId();
-
-      this.articulation.metadata.blend.push(data);
-      this.dialogBlendVisible = false;
-
-      (this.gridOptionsBlend as any).api.refreshCells();
-      return;
-    }
-
-    const it = this.articulation.metadata.blend.find((s) => s._id === data._id);
-
-    it.emphasis = data.emphasis;
-    it.text = data.text;
-    it.type = data.type;
-    it.blend = data.blend;
-    it.audio = data.audio;
-    it.media = data.media;
-    // articulation.metadata.syllable
-    this.dialogBlendVisible = false;
-
-    (this.gridOptionsBlend as any).api.refreshCells();
-  }
-
-  edit(data, source) {
-    if (source === 'blend') {
-      this.editBlend(data);
-      return;
-    }
-
-    this.editSyllable(data);
-  }
-
-  editBlend(data) {
-    this.form = data;
-
-    this.dialogBlendVisible = true;
-  }
-
-  editSyllable(data) {
-    this.form = data;
-
-    this.dialogSyllableVisible = true;
-  }
-
-  delete(data, source) {
-    if (source === 'blend') {
-      this.deleteBlend(data);
-      return;
-    }
-
-    this.deleteSyllable(data);
-  }
-
-  deleteBlend(data) {
-    this.articulation.metadata.blend = this.articulation.metadata.blend.filter(
-      (s) => s._id !== data._id
-    );
-
-    this.dialogBlendVisible = false;
-
-    (this.gridOptionsBlend as any).api.refreshCells();
-  }
-
-  deleteSyllable(data) {
+  deleteSyllable(syllable) {
     this.articulation.metadata.syllable = this.articulation.metadata.syllable.filter(
-      (s) => s._id !== data._id
+      (s) => s._id !== syllable._id
     );
-
-    this.dialogSyllableVisible = false;
-
     (this.gridOptionsSyllable as any).api.refreshCells();
   }
 
-  public some() {
-    // const files = this.$refs.myVueDropzone[0].getQueuedFiles();
-
-    // console.log({ files });
-
-    const img = new Image();
-    // img.src="
-    // https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
-    // const mockFile = {
-    //   id: 'bla',
-    //   uploaded: true,
-    //   path: '',
-    //   size: 0,
-    // };
-    const file = { size: 123, name: 'Icon', type: 'image/png' };
-    const url =
-      'https://rowanwins.github.io/vue-dropzone/docs/dist/vue2-dropzone1.png?93d2bf4221b4c9873561d5644497b414';
-
-    // var f = new File([""], "filename.png", { type: 'image/png' });
-
-    const fileUrl = img.src;
-    this.$refs.myVueDropzone[0].manuallyAddFile(file, url, null, null, {
-      dontSubtractMaxFiles: false,
-      addToFiles: true,
-    });
+  editSyllable(syllable) {
+    console.log({ syllable });
+    this.syllable = JSON.parse(JSON.stringify(syllable));
+    this.dialogSyllableVisible = true;
   }
 
-  public onSubmit() {
-    console.log('submit!');
+  addBlend() {
+    this.blend = null;
+    this.dialogBlendVisible = true;
+  }
+
+  onBlendDiscard() {
+    this.blend = null;
+    this.dialogBlendVisible = false;
+  }
+
+  onBlendSubmit({ form }) {
+    this.dialogBlendVisible = false;
+
+    const i = this.articulation.metadata.blend.findIndex(
+      (s) => s._id === form._id
+    );
+    if (i > -1) {
+      this.articulation.metadata.blend = this.articulation.metadata.blend.map(
+        (s) => (s._id === form._id ? form : s)
+      );
+    } else {
+      this.articulation.metadata.blend.push({ ...form });
+    }
+
+    (this.gridOptionsBlend as any).api.refreshCells();
+  }
+
+  deleteBlend(blend) {
+    this.articulation.metadata.blend = this.articulation.metadata.blend.filter(
+      (s) => s._id !== blend._id
+    );
+    (this.gridOptionsBlend as any).api.refreshCells();
+  }
+
+  editBlend(blend) {
+    console.log({ blend });
+    this.blend = JSON.parse(JSON.stringify(blend));
+    this.dialogBlendVisible = true;
   }
 }
 </script>

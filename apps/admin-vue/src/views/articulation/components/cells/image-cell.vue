@@ -1,5 +1,13 @@
 <template>
-  <span style="display:flex;align-items:center"><img style="height:75px;width:120px;margin:2px;" :src="`/storage/Speech/Articulation/${articulationName}/${im.name}`" :alt="im.name" v-for="im in media" :key="im.name"></span>
+  <span style="display:flex;align-items:center">
+    <img
+      style="height:75px;width:120px;margin:2px;"
+      :src="getPath(im.name)"
+      :alt="im.name"
+      v-for="im in media"
+      :key="im.name"
+    >
+  </span>
 </template>
 
 <script lang="ts">
@@ -9,10 +17,13 @@ import { Component, Vue, Prop, Model, Watch } from 'vue-property-decorator';
 export default class DeleteCell extends Vue {
   params;
 
-  get articulationName() {
-    // return this.params.context.storageUrl + im;
-
-    return this.params.context.componentParent.articulation.name;
+  getPath(name) {
+    const a = this.params.context.componentParent.urlPrefix.replace(
+      '__FILE__',
+      name
+    );
+    console.log({ a });
+    return a;
   }
 
   get media() {
