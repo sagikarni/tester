@@ -30,14 +30,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Image:">
-        <dropper
-          :path="urlPrefix"
-          v-model="form.media"
-          placeholder="Drop here image files"
-        ></dropper>
+        <dropper :path="urlPrefix" v-model="form.media" placeholder="Drop here image files"></dropper>
       </el-form-item>
       <el-form-item label="Audio:">
-        <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+        <dropper v-model="form.audio" :path="urlPrefix" placeholder="Drop here audio files"></dropper>
       </el-form-item>
       <el-form-item label="Properties">
         <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
@@ -75,7 +71,10 @@ export default class SyllableForm extends Vue {
 
   @Watch('syllable', { immediate: true, deep: true })
   onPersonChanged1(val: any, oldVal: any) {
-    if (val) { this.form = val; return; }
+    if (val) {
+      this.form = val;
+      return;
+    }
 
     const form = {
       _id: new ObjectID().toString(),

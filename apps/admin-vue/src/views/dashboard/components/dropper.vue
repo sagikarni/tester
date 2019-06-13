@@ -8,28 +8,29 @@
     @drop="onDrop"
     style="position:relative;"
   >
-    <span id="dropper-text" style="text-align:center;display:block;">
-      {{ placeholder }}
-    </span>
+    <span id="dropper-text" style="text-align:center;display:block;">{{ placeholder }}</span>
 
     <div style="display:flex;flex-wrap:wrap;">
       <el-card
-        v-for="item in value"
-        :key="item.image"
+        v-for="(item, i) in value"
+        :key="i"
         :body-style="{ padding: '0px' }"
         style="width:200px;"
       >
-        <img :src="getImage(item)" class="image" />
+        <div>
+          <div v-if="isImage(item)">
+            <img :src="getPath(item)" class="image">
+          </div>
+          <div v-if="isAudio(item)">
+            <audio controls style="width:150px;">
+              <source :src="getPath(item)" type="audio/mpeg">Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
 
-        <div
-          style="padding: 10px;display: flex;justify-content: space-between;"
-        >
+        <div style="padding: 10px;display: flex;justify-content: space-between;">
           <span>{{ item.name }}</span>
-          <el-button
-            type="text"
-            @click="remove(item)"
-            icon="el-icon-delete"
-          ></el-button>
+          <el-button type="text" @click="remove(item)" icon="el-icon-delete"></el-button>
         </div>
       </el-card>
     </div>
@@ -53,25 +54,20 @@ export default class Dropper extends Vue {
   hover = false;
   items = [];
 
-  getImage(item) {
-    if (!item) {
-      return;
-    }
+  isImage(x) {
+    return /\.(png|jpg|jpeg|gif|bmp|webp|svg)$/i.test(x.name);
+  }
+
+  isAudio(x) {
+    return /\.(mp3|mp4)$/i.test(x.name);
+  }
+
+  getPath(item) {
     if (item.blob) {
       return item.blob;
     }
 
-    if (this.path) {
-      let name = item.name;
-      const validImageTypes = ['gif', 'jpeg', 'png', 'jpg'];
-
-      if (!validImageTypes.some((a) => item.name.endsWith(a))) {
-        name = item.name + '.jpg';
-      }
-
-      return this.path.replace('__FILE__', name);
-    }
-    return item.name;
+    return this.path.replace('__FILE__', item.name);
   }
 
   onDrag(e) {
@@ -117,7 +113,9 @@ export default class Dropper extends Vue {
     const added = [];
 
     [...e.dataTransfer.files].forEach((f, i) => {
-      const filename = f.name.replace(/(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g, '.').toLocaleLowerCase();
+      const filename = f.name
+        .replace(/(-l|-s|-m|-xs|hd|web-l|web-s|4k|retina)\./g, '.')
+        .toLocaleLowerCase();
 
       if (added.includes(filename)) {
         return;

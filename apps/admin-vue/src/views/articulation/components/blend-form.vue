@@ -23,7 +23,7 @@
         <dropper :path="urlPrefix" v-model="form.media" placeholder="Drop here image files"></dropper>
       </el-form-item>
       <el-form-item label="Audio:">
-        <dropper v-model="form.audio" placeholder="Drop here audio files"></dropper>
+        <dropper :path="urlPrefix" v-model="form.audio" placeholder="Drop here audio files"></dropper>
       </el-form-item>
       <el-form-item label="Properties">
         <el-checkbox v-model="form.isolate">Isolate</el-checkbox>
