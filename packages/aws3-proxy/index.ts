@@ -4,7 +4,7 @@ export const proxy = ({ accessKeyId, secretAccessKey, bucket }) => {
   const s3 = new aws.S3({ accessKeyId, secretAccessKey });
 
   return (req, res) => {
-    const fileKey = (req.params && req.params[0]) || '';
+    const fileKey = ((req.params && req.params[0]) || '').toLocaleLowerCase();
 
     const options = {
       Bucket: bucket,

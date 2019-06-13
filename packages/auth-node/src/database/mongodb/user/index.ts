@@ -183,12 +183,9 @@ userSchema.method('toJSON', function(): any {
   // return { user: { email, name, verified, picture } };
 });
 
-userSchema.static(
-  'hashPassword',
-  (password: string): string => {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-  }
-);
+userSchema.static('hashPassword', (password: string): string => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+});
 
 export const User: IUserModel = model<IUser, IUserModel>('User', userSchema);
 
