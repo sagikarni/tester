@@ -27,6 +27,24 @@ class App extends VuexModule implements IAppState {
     withoutAnimation: false,
   };
   public device = DeviceType.Desktop;
+  public hasToolbar = true;
+  public hasDrawer = true;
+  public hasFooter = true;
+
+  @Action({ commit: 'SHOW_TOOLBAR' })
+  public showToolbar(hasToolbar) {
+    return hasToolbar;
+  }
+
+  @Action({ commit: 'SHOW_DRAWER' })
+  public showDrawer(hasDrawer) {
+    return hasDrawer;
+  }
+
+  @Action({ commit: 'SHOW_FOOTER' })
+  public showFooter(hasFooter) {
+    return hasFooter;
+  }
 
   @Action({ commit: 'TOGGLE_SIDEBAR' })
   public toggleDrawer() {
@@ -47,10 +65,26 @@ class App extends VuexModule implements IAppState {
   }
 
   @Mutation
+  private SHOW_TOOLBAR(hasToolbar: boolean) {
+    this.hasToolbar = hasToolbar;
+  }
+
+  @Mutation
+  private SHOW_DRAWER(hasDrawer: boolean) {
+    this.hasDrawer = hasDrawer;
+  }
+
+  @Mutation
+  private SHOW_FOOTER(hasFooter: boolean) {
+    this.hasFooter = hasFooter;
+  }
+
+  @Mutation
   private TOGGLE_SIDEBAR(withoutAnimation: boolean) {
     this.sidebar.opened = !this.sidebar.opened;
     this.sidebar.withoutAnimation = withoutAnimation;
   }
+
   @Mutation
   private CLOSE_SIDEBAR(withoutAnimation: boolean) {
     this.sidebar.opened = false;

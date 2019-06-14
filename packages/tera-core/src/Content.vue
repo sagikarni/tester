@@ -10,7 +10,6 @@
       </v-container>
     </v-content>
 
-    <home-footer/>
   </div>
 </template>
 
@@ -18,9 +17,9 @@
 import { Component, Watch, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-      HomeFooter: () => import('./home/Footer.vue'),
-  },
+  // components: {
+      // HomeFooter: () => import('./home/Footer.vue'),
+  // },
 })
 export default class About extends Vue {
 

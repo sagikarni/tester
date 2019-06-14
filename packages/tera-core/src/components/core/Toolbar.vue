@@ -24,8 +24,7 @@
         :src="require(`@/assets/logo.svg`)"
         contain
         transition="scale-transition"
-        height="28px"
-        width="28px"
+        width="143px"
       />
     </router-link>
 

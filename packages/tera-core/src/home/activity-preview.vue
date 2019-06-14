@@ -78,7 +78,7 @@ export default class ActivitiyPreview extends Vue {
 .card {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15);
   // box-shadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-  border-radius: 5px;
+  // border-radius: 5px;
   &:hover {
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform: scale(1.01);

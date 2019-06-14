@@ -8,7 +8,7 @@
         </swiper-slide>
       </swiper>
 
-      <section slot="button-prev">
+      <section slot="button-prev" v-if="$vuetify.breakpoint.mdAndUp">
         <v-btn
           class="swiper-button swiper-button-prev"
           :class="`swiper-button-prev-${this.unique}`"
@@ -20,7 +20,7 @@
           <v-icon dark class="font-weight-bold">chevron_left</v-icon>
         </v-btn>
       </section>
-      <section slot="button-next" class="wrap-next">
+      <section slot="button-next" v-if="$vuetify.breakpoint.mdAndUp" class="wrap-next">
         <v-btn
           class="swiper-button swiper-button-next"
           :class="`swiper-button-next-${this.unique}`"
@@ -50,7 +50,7 @@ export default class Strip extends Vue {
 
   swiperOption = {
     slidesPerView: 'auto',
-    spaceBetween: 10,
+    spaceBetween: 6,
     speed: 500,
     navigation: {
       nextEl: `.swiper-button-next-${this.unique}`,
@@ -72,7 +72,7 @@ export default class Strip extends Vue {
 }
 .wrap-next {
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   top: 0%;
   right: 0;
   height: 100%;
@@ -87,7 +87,7 @@ export default class Strip extends Vue {
 
 .swiper-button {
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   top: 50%;
   margin: 0;
   transform: translateY(-50%);

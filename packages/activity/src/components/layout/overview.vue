@@ -2,12 +2,13 @@
   <div id="overview">
     <v-content>
       <v-container fluid class="pa-0">
-        <div style="background:#000;" class="pa-3">
-          <h2 class="text-xs-center display-1 white--text" style="text-transform:capitalize;">
+        <div style="background:#eee;" class="pa-3 elevation-4 mb-3">
+          <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
             <span>{{ name }}</span>
           </h2>
         </div>
       </v-container>
+      
       <v-container fluid class="pa-0 mb-4" grid-list-xs>
         <v-layout wrap>
           <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
@@ -20,7 +21,7 @@
                 width="100%"
                 height="100%"
                 :aspect-ratio="1.6"
-                :src="`https://unsplash.it/400/400?image=${Math.floor(Math.random() * 100) + 1}`"
+                :src="`/storage/${feature.domain}/${feature.title.toLocaleLowerCase()}/cover.jpg`"
               >
                 <v-layout
                   fill-height
@@ -70,7 +71,7 @@ Component.registerHooks([
 export default class Overview extends Vue {
   items = [];
   name = '';
-
+ 
   constructor() {
     super();
   }
@@ -93,6 +94,7 @@ export default class Overview extends Vue {
       .filter((t: any) => t.domain.name.toLocaleLowerCase() === this.name)
       .map((t: any) => ({
         name: dasherize(t.name).toLocaleLowerCase(),
+        domain: t.domain.name.toLocaleLowerCase(),
         title: t.name,
       }));
 

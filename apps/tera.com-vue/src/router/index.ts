@@ -4,6 +4,7 @@ import Router from 'vue-router';
 // import scrollBehavior from './scroll-behavior';
 // import redirects from './301.json';
 // import languages from '@/data/i18n/languages.json';
+import { Route } from 'vue-router';
 
 import { Shell, routes as coreRoutes } from 'tera-core';
 import { routes as authRoutes } from 'auth-vue';
@@ -12,6 +13,8 @@ import { routes as activityRoutes } from 'activity';
 import { routes as productsRoutes } from 'products';
 
 import activitiesRoutes from './activities-routes';
+
+import { AppModule } from 'tera-core/src/store/app';
 
 Vue.use(Router);
 
@@ -104,6 +107,19 @@ export function createRouter() {
   //       }
   //     : false,
   // });
+
+  router.beforeEach((to: Route, from: Route, next: any) => {
+    // if (to.meta.hasFooter) {
+    //   debugger;
+
+    AppModule.showToolbar(!to.meta.hasToolbar);
+    AppModule.showDrawer(!to.meta.hasDrawer);
+    AppModule.showFooter(!to.meta.hasFooter);
+
+    //   debugger;
+    // }
+    next();
+  });
 
   return router;
 }

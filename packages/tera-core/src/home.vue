@@ -13,8 +13,6 @@
         <recommendations/>
       </v-container>
     </v-content>
-
-    <home-footer/>
   </div>
 </template>
 
@@ -37,7 +35,7 @@ Component.registerHooks([
   components: {
     Hero: () => import('./home/Hero.vue'),
     // Strip: () => import('./home/Strip'),
-    HomeFooter: () => import('./home/Footer.vue'),
+    // HomeFooter: () => import('./home/Footer.vue'),
     HomeStrips: () => import('./home/Strips.vue'),
     SpeechStrips: () => import('./home/SpeechStrips.vue'),
     WhyUs: () => import('./home/WhyUs.vue'),

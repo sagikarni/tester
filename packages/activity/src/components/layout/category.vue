@@ -62,8 +62,8 @@
 
     <v-content>
       <v-container fluid class="pa-0">
-        <div style="background:#000;" class="pa-3">
-          <h2 class="text-xs-center display-1 white--text" style="text-transform:capitalize;">
+        <div style="background:#eee;" class="pa-3">
+          <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
             <span>{{ name }}</span>
           </h2>
         </div>
