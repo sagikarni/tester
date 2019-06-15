@@ -1,53 +1,55 @@
 <template>
-  <v-container fluid class="pa-0">
-    <v-card flat class="pa-0 mb-4">
-      <activity-preview :clickable="false" :width="'100%'" :height="'400px'" :activity="activity"></activity-preview>
+  <div>
+    <v-container class="pa-0" style="max-width:1024px;">
+      <v-card flat class="pa-0 mb-4">
+        <preview :activity="activity"></preview>
 
-      <div class="nav-container">
-        <v-flex order-xs3 order-sm1 d-flex>
-          <div class="item item--1">
-            <span>Category</span>
-            <span>{{category}}</span>
-          </div>
-          <div class="item item--2">
-            <span>Sub Category</span>
-            <span>{{subCategory}}</span>
-          </div>
-          <div class="item item--3">
-            <span>Slides</span>
-            <span>{{slidesCount}}</span>
-          </div>
-        </v-flex>
-        <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
-        <v-flex order-xs1 order-sm3 d-flex>
-          <router-link to="/" class="item item--4">
-            <v-icon>favorite</v-icon>
-            <span>Pin</span>
-          </router-link>
-          <router-link to="/" class="item item--5">
-            <v-icon>print</v-icon>
-            <span>Print</span>
-          </router-link>
-          <router-link to="/" class="item item--6">
-            <v-icon>share</v-icon>
-            <span>Share</span>
-          </router-link>
-        </v-flex>
-      </div>
-    </v-card>
+        <div class="nav-container">
+          <v-flex order-xs3 order-sm1 d-flex>
+            <div class="item item--1">
+              <span>Category</span>
+              <span>{{category}}</span>
+            </div>
+            <div class="item item--2">
+              <span>Sub Category</span>
+              <span>{{subCategory}}</span>
+            </div>
+            <div class="item item--3">
+              <span>Slides</span>
+              <span>{{slidesCount}}</span>
+            </div>
+          </v-flex>
+          <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
+          <v-flex order-xs1 order-sm3 d-flex>
+            <router-link to="/" class="item item--4">
+              <v-icon>favorite</v-icon>
+              <span>Pin</span>
+            </router-link>
+            <router-link to="/" class="item item--5">
+              <v-icon>print</v-icon>
+              <span>Print</span>
+            </router-link>
+            <router-link to="/" class="item item--6">
+              <v-icon>share</v-icon>
+              <span>Share</span>
+            </router-link>
+          </v-flex>
+        </div>
+      </v-card>
 
-    <h2>What's Inside?</h2>
+      <h2 class="display-1 mb-3">What's Inside?</h2>
 
-    <v-layout class="pa-0" grid-list-xs>
-      <v-layout wrap>
-        <v-flex v-for="(thumbnail, i) in thumbnails" :key="i" xs12 md6 lg4 d-flex>
-          <v-card class="pa-0" fill-height>
-            <v-img width="100%" height="100%" :aspect-ratio="1.6" :src="thumbnail"></v-img>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-layout>
-  </v-container>
+      <v-container grid-list-md fluid class="pa-0 mb-3">
+        <v-layout row wrap>
+          <v-flex v-for="(thumbnail, i) in thumbnails" :key="i" xs12 md6 lg4 d-flex>
+            <v-card flat tile class="d-flex">
+              <v-img :src="thumbnail" aspect-ratio="1.6"></v-img>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,7 +57,7 @@ import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
 
 @Component({
   components: {
-    ActivityPreview: () => import('tera-core/src/home/activity-preview.vue'),
+    Preview: () => import('./preview.vue'),
   },
 })
 export default class ActivityDetails extends Vue {
@@ -66,9 +68,7 @@ export default class ActivityDetails extends Vue {
       .map((s) =>
         s.media.map(
           (ss) =>
-            `/storage/${this.activity.type.domain.name}/${
-              this.activity.type.name
-            }/${this.activity._id}/thumbnails/${ss.name}`
+            `/storage/${this.activity.type.domain.name}/${this.activity.type.name}/${this.activity._id}/thumbnails/${ss.name}`
         )
       )
       .flat();
@@ -124,4 +124,5 @@ export default class ActivityDetails extends Vue {
     flex-direction: column;
   }
 }
+
 </style>

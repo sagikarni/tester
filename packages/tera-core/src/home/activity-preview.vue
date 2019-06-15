@@ -1,5 +1,5 @@
 <template>
-  <v-card :width="width" class="card" :to="clickable && url">
+  <v-card :width="width" class="card" :to="url">
     <v-img
       :src="picture"
       class="white--text"
