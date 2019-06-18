@@ -11,6 +11,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@mdi/font": "^3.6.95",
+    "material-design-icons-iconfont": "^5.0.1",
     "@vuex-orm/core": "^0.31.12",
     "graphql-tag": "^2.10.1",
     "normalizr": "^3.3.0",

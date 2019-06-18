@@ -76,8 +76,8 @@ export default class LoginFormComponent extends Vue {
   valid = false;
   rememberMe = true;
 
-  email = '';
-  password = '';
+  email = 'wizardnet972@gmail.com';
+  password = 'Shlomi972';
 
   emailRules = [
     (v: string) => !!v || 'E-mail is required',

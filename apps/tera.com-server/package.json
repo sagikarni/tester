@@ -13,6 +13,8 @@
   "author": "Shlomi Levi <wizardnet972@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "html-loader": "^0.5.5",
+    "crypto-js": "^3.1.9-1",
     "aws3-proxy": "0.0.0",
     "cognishine": "0.0.0",
     "aws-sdk": "^2.396.0",

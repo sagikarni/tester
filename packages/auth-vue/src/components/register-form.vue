@@ -84,9 +84,9 @@ export default class RegisterFormComponent extends Vue {
 
   public valid = false;
 
-  public name = '';
-  public email = '';
-  public password = '';
+  public name = 'shlomi levi';
+  public email = 'wizardnet972@gmail.com';
+  public password = 'Shlomi972';
 
   public nameRules = [
     (v: string) => !!v || 'Name is required',

@@ -144,7 +144,7 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator';
-import { AuthModule } from '../store';
+import { AuthModule } from 'tera-core/src/store/auth.module';
 import { connectWith, ApiService } from '../services';
 
 @Component({

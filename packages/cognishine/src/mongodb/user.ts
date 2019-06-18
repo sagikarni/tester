@@ -8,10 +8,39 @@ const BCRYPT_SALT_ROUNDS = 13; // strong, but not too much, ~1 hash/sec
 
 export interface IUser {
   email?: string;
-  firstName?: string;
-  lastName?: string;
+  name?: string;
   role?: IUserRole;
   password: string;
+  verified: boolean;
+  picture: string;
+  facebook: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    code: string;
+    _raw: string;
+  };
+  twitter: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    code: string;
+    _raw: string;
+  };
+  linkedin: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    code: string;
+    _raw: string;
+  };
+  google: {
+    id: string;
+    token: string;
+    refreshToken: string;
+    code: string;
+    _raw: string;
+  };
 }
 
 export interface IMongooseUser extends IUser, Document {
@@ -23,17 +52,40 @@ export interface IMongooseUser extends IUser, Document {
 }
 
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    lowercase: true,
-    required: true,
-    unique: true,
-    index: true,
-  },
-  firstName: { type: String },
-  lastName: { type: String },
   role: { type: Schema.Types.ObjectId, ref: 'UserRole' },
-  password: { type: String, required: true },
+  email: { type: String, required: true },
+  name: { type: String, required: true },
+  password: { type: String },
+  verified: { type: Boolean, default: false },
+  picture: { type: String },
+  facebook: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    code: { type: String },
+    _raw: { type: String },
+  },
+  twitter: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    code: { type: String },
+    _raw: { type: String },
+  },
+  linkedin: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    code: { type: String },
+    _raw: { type: String },
+  },
+  google: {
+    id: { type: String },
+    token: { type: String },
+    refreshToken: { type: String },
+    code: { type: String },
+    _raw: { type: String },
+  },
 });
 
 UserSchema.pre('save', async function(this: Document, next): Promise<void> {
@@ -41,7 +93,6 @@ UserSchema.pre('save', async function(this: Document, next): Promise<void> {
   if (this.isNew || this.isModified('password')) {
     that.password = await that.hashPassword(that.password);
   }
-
   next();
 });
 

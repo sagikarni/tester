@@ -1,11 +1,14 @@
 <template>
-  <v-navigation-drawer dark app :value="opened" absolute temporary>
-    <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.url">
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+  <v-navigation-drawer class="black" dark app :value="opened" absolute temporary>
+    <v-list two-line>
+      <template v-for="(item, index) in items">
+        <v-list-tile :key="item.title" :to="item.url">
+          <v-list-tile-content>
+            <v-list-tile-title style="font-size:20px;">{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>

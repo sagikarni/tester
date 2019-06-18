@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator';
-import { AuthModule } from '../store';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 import { connectWith } from '../services';
 
 @Component({})

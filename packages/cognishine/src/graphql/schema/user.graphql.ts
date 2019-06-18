@@ -6,7 +6,7 @@ import {
 } from '../../auth/graphql-resolver-wrappers';
 
 import { TYPE_COMPOSER as userRoleType } from './graphql-user-role';
-import { login } from './login';
+import { login, register } from './login';
 import { User, UserRole } from '../../mongodb';
 
 const UserTC = composeWithMongoose(User, {
@@ -52,12 +52,43 @@ UserTC.addResolver({
   }),
   resolve: async ({ args, context }) => {
     const { email, password } = args;
-    return login({ email, password });
+
+    const { token, user } = await login({ email, password });
+
+    context.res.set('ACCESS_TOKEN', token);
+
+    return { token, user };
+  },
+});
+
+UserTC.addResolver({
+  name: 'register',
+  args: {
+    name: { type: 'String!' },
+    email: { type: 'String!' },
+    password: { type: 'String!' },
+  },
+  type: new GraphQLObjectType({
+    name: 'register',
+    fields: () => ({
+      token: { type: GraphQLString },
+      user: { type: UserTC.getType() },
+    }),
+  }),
+  resolve: async ({ args, context }) => {
+    const { email, password, name } = args;
+
+    const { token, user } = await register({ name, email, password });
+
+    context.res.set('ACCESS_TOKEN', token);
+
+    return { token, user };
   },
 });
 
 export const QUERIES = {
   login: UserTC.get('$login'),
+  register: UserTC.get('$register'),
   currentUser: UserTC.get('$currentUser'),
   userById: UserTC.get('$findById'),
   userConnection: UserTC.get('$connection'),

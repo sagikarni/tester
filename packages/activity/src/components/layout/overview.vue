@@ -9,7 +9,7 @@
         </div>
       </v-container>
       
-      <v-container fluid class="pa-0 mb-4" grid-list-xs>
+      <v-container :fluid="$vuetify.breakpoint.xlAndDown" class="pa-0 mb-4" grid-list-xs>
         <v-layout wrap>
           <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
             <v-card

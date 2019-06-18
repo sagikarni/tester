@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { AuthModule } from '../store';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 import { getModule } from 'vuex-module-decorators';
 import SocialLoginComponent from './social-login.vue';
 
@@ -37,7 +37,8 @@ export default class Login extends Vue {
   submitted = false;
 
   get error() {
-    return AuthModule.error;
+    return '';
+    // return AuthModule.error;
   }
 
   get isAuthenticated() {

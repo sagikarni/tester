@@ -3,10 +3,7 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-container>
-          <register-form-component
-            :error="error"
-            @submit="submit"
-          ></register-form-component>
+          <register-form-component :error="error" @submit="submit"></register-form-component>
         </v-container>
       </v-flex>
     </v-layout>
@@ -15,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
-import { AuthModule } from '../store';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 import RegisterFormComponent from './register-form.vue';
 
 @Component({
@@ -25,7 +22,8 @@ export default class RegisterPage extends Vue {
   submitted = false;
 
   get error() {
-    return AuthModule.error;
+    return '';
+    // return AuthModule.error;
   }
 
   get isAuthenticated() {

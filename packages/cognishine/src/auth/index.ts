@@ -43,7 +43,7 @@ export async function getUserFromEmailAndPassword(
   const isPasswordValid = await user.verifyPassword(password);
   if (!isPasswordValid) {
     throw new InvalidPasswordError(
-      `Invalid password provided for user ${user.firstName} ${user.lastName}`
+      `Invalid password provided for user ${user.name}`
     );
   }
 

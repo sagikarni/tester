@@ -2,7 +2,7 @@ import Vue from 'vue';
 // import VueResource from 'vue-resource';
 import { get } from 'lodash';
 import { ApiService } from './api.service';
-import { LOGIN_SUCCESS, LOGOUT_ACCOUNT } from '../store/actions.type';
+// import { LOGIN_SUCCESS, LOGOUT_ACCOUNT } from '../store/actions.type';
 
 // Vue.use(VueResource);
 

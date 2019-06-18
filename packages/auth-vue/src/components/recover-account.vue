@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from 'vue-property-decorator';
 import RecoverAccountFormComponent from './recover-account-form.vue';
-import { AuthModule } from '../store';
+import { AuthModule } from 'tera-core/src/store/auth.module';
 
 @Component({
   components: { RecoverAccountFormComponent },
@@ -25,7 +25,8 @@ export default class RecoverAccountPage extends Vue {
   submitted = false;
 
   get error() {
-    return AuthModule.error;
+    return '';
+    // return AuthModule.error;
   }
 
   constructor() {

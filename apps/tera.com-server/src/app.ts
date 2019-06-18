@@ -19,17 +19,45 @@ import { routes } from './routes';
 import { proxy } from 'aws3-proxy';
 const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET } = process.env;
 
-// import passport from 'passport';
+import passport from 'passport';
+import { Strategy } from 'passport-facebook';
+
+import { facebookStrategy, twitterStrategy } from './strategies';
+
+// import { get } from 'lodash';
+
+// const credentials = {
+//   clientID: process.env.AUTH_FACEBOOK_CLIENT_ID,
+//   clientSecret: process.env.AUTH_FACEBOOK_CLIENT_SECRET,
+//   callbackURL: process.env.AUTH_FACEBOOK_CALLBACK_URL,
+//   profileFields: ['id', 'displayName', 'emails', 'photos'],
+// };
+
+// const strategy = (accessToken, refreshToken, strategyProfile, done) => {
+//   console.log('in strategy!!');
+//   console.log({ accessToken, refreshToken, strategyProfile });
+
+//   const userStrategy = {
+//     email: get(strategyProfile, 'emails[0].value'),
+//     name: get(strategyProfile, 'displayName'),
+//     picture: get(strategyProfile, 'photos[0].value'),
+//     _raw: strategyProfile,
+//   };
+
+//   done(null, { provider: 'facebook', accessToken, refreshToken, userStrategy });
+// };
+
+// const facebookStrategy = new Strategy(credentials, strategy);
 
 // import {
-//   facebookStrategy,
-//   googleStrategy,
-//   linkedinStrategy,
-//   twitterStrategy,
-// } from 'auth-node';
+//    facebookStrategy,
+// //   googleStrategy,
+// //   linkedinStrategy,
+// //   twitterStrategy,
+//  } from 'auth-node';
 
-// passport.use(facebookStrategy);
-// passport.use(twitterStrategy);
+passport.use(facebookStrategy);
+passport.use(twitterStrategy);
 // passport.use(linkedinStrategy);
 // passport.use(googleStrategy);
 
@@ -42,9 +70,10 @@ app.use(compression());
 app.use(methodOverride());
 app.use(helmet());
 
-// app.use(expressSession({ secret: 'SECRET' }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(expressSession({ secret: 'SECRET' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(routes);
 
 app.use(
   '/graphql',
@@ -53,8 +82,6 @@ app.use(
     graphiql: process.env.NODE_ENV === 'development',
   })
 );
-
-app.use(routes);
 
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.static(path.resolve(__dirname, './assets')));

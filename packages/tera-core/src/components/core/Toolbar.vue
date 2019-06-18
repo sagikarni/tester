@@ -50,6 +50,8 @@
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
+  
+
     <core-login-status/>
 
     <!-- <core-locales/> -->
