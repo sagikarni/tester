@@ -1,9 +1,9 @@
 <template>
-  <v-card :width="width" class="card" :to="url">
+  <v-card :width="width" :height="height" class="card" :to="url">
     <v-img
       :src="picture"
       class="white--text"
-      :height="height"
+      height="100%"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
     >
       <v-card-title class="fill-height">

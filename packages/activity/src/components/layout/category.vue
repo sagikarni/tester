@@ -20,7 +20,11 @@
             on-icon
             off-icon
             indeterminate-icon
-          ></v-treeview>
+          >
+            <template slot="label" slot-scope="{ item }">
+              <span @click="scrollToTop">{{ item.name }}</span>
+            </template>
+          </v-treeview>
 
           <v-divider class="mt-2"></v-divider>
 
@@ -136,6 +140,62 @@ const removeEmpty = (obj) => {
   },
 })
 export default class Category extends Vue {
+  scrollToTop() {
+    this.scrollToY(0, 1500, 'easeInOutQuint');
+  }
+
+  // main function
+  scrollToY(scrollTargetY = 0, speed = 2000, easing = 'easeOutSine') {
+    // scrollTargetY: the target scrollY property of the window
+    // speed: time in pixels per second
+    // easing: easing equation to use
+
+    let scrollY = window.scrollY || document.documentElement.scrollTop;
+    let currentTime = 0;
+
+    // min time .1, max time .8 seconds
+    let time = Math.max(
+      0.1,
+      Math.min(Math.abs(scrollY - scrollTargetY) / speed, 0.8)
+    );
+
+    // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+    let easingEquations = {
+      easeOutSine: function(pos) {
+        return Math.sin(pos * (Math.PI / 2));
+      },
+      easeInOutSine: function(pos) {
+        return -0.5 * (Math.cos(Math.PI * pos) - 1);
+      },
+      easeInOutQuint: function(pos) {
+        if ((pos /= 0.5) < 1) {
+          return 0.5 * Math.pow(pos, 5);
+        }
+        return 0.5 * (Math.pow(pos - 2, 5) + 2);
+      },
+    };
+
+    // add animation loop
+    function tick() {
+      currentTime += 1 / 60;
+
+      var p = currentTime / time;
+      var t = easingEquations[easing](p);
+
+      if (p < 1) {
+        window.requestAnimationFrame(tick);
+
+        window.scrollTo(0, scrollY + (scrollTargetY - scrollY) * t);
+      } else {
+        console.log('scroll done');
+        window.scrollTo(0, scrollTargetY);
+      }
+    }
+
+    // call it once to get started
+    tick();
+  }
+
   get displayItems() {
     const form = removeEmpty(JSON.parse(JSON.stringify(this.form)));
 
