@@ -1,37 +1,49 @@
 <template>
   <div id="category">
-    <v-layout>
-      <v-navigation-drawer fixed left clipped app dark>
+    <core-layout>
+      <template slot="extension">
+        <v-btn flat dark large color="black">
+          <v-icon dark>keyboard_backspace</v-icon>
+        </v-btn>
+
+        <v-btn flat dark large color="black" @click="idrawer =!idrawer">
+          <v-icon dark>tune</v-icon>Filters
+        </v-btn>
+
+        <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
+          <span>{{ name }}</span>
+        </h2>
+      </template>
+
+      <v-navigation-drawer
+        dark
+        v-model="idrawer"
+        :app="$vuetify.breakpoint.mdAndUp"
+        :clipped="$vuetify.breakpoint.mdAndUp"
+        :permanent="idrawer"
+        :temporary="$vuetify.breakpoint.smAndDown"
+        stateless
+        left
+        fixed
+      >
         <v-list class="pa-3">
+          <div style="display:flex;justify-content:center;">
+            <v-btn flat dark color="white" @click="drawer =!drawer">Reset</v-btn>
+            <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
+          </div>
+
+          <v-divider class="mb-2"></v-divider>
+
           <h3 class="mb-2">Category</h3>
 
-          <v-treeview
-            class="tree-category"
-            return-object
-            :active.sync="active"
-            v-model="tree"
-            :items="categories"
-            activatable
-            active-class="font-weight-bold"
-            selected-color="indigo"
-            open-on-click
-            selectable
-            expand-icon
-            on-icon
-            off-icon
-            indeterminate-icon
-          >
-            <template slot="label" slot-scope="{ item }">
-              <span @click="scrollToTop">{{ item.name }}</span>
-            </template>
-          </v-treeview>
+          <filter-list :items="categories" v-model="selected" style="font-size:16px;"></filter-list>
 
           <v-divider class="mt-2"></v-divider>
 
           <h3 class="my-2">Media</h3>
 
-          <v-checkbox hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
-          <v-checkbox hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
+          <v-checkbox :hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
+          <v-checkbox :hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
 
           <v-divider class="mt-2"></v-divider>
 
@@ -40,13 +52,13 @@
             label="Printable"
             :value="true"
             :false-value="undefined"
-            hide-details="true"
+            :hide-details="true"
           ></v-checkbox>
 
           <v-divider class="mt-2"></v-divider>
 
           <v-checkbox
-            hide-details="true"
+            :hide-details="true"
             v-model="form.isolate"
             label="Isolate"
             :value="true"
@@ -57,34 +69,27 @@
 
           <h3 class="my-2">Audience</h3>
 
-          <v-checkbox hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
-          <v-checkbox hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
-          <v-checkbox hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
+          <v-checkbox :hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
+          <v-checkbox :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
+          <v-checkbox :hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
         </v-list>
       </v-navigation-drawer>
-    </v-layout>
 
-    <v-content>
-      <v-container fluid class="pa-0">
-        <div style="background:#eee;" class="pa-3">
-          <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
-            <span>{{ name }}</span>
-          </h2>
-        </div>
-      </v-container>
-
-      <v-container grid-list-xl="grid-list-xl">
-        <v-layout wrap>
-          <v-flex v-for="(feature, i) in displayItems" :key="i" xs6 md6 lg3 d-flex>
-            <activity-preview :activity="feature"></activity-preview>
-          </v-flex>
-        </v-layout>
-      </v-container>
-
-      <div
-        v-if="displayItems.length === 0"
-      >Sorry, We could not find activities which fit your filter(s) criterias</div>
-    </v-content>
+      <v-content :class="{ 'p': idrawer && $vuetify.breakpoint.mdAndUp }">
+        <v-container fluid>
+          <v-layout row wrap>
+            <activity-preview
+              v-for="(feature, i) in displayItems.slice(0, 10)"
+              :key="i"
+              style="flex:0 0 auto;margin:0 5px 5px 0;"
+              :activity="feature"
+              width="260"
+              height="205"
+            ></activity-preview>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </core-layout>
   </div>
 </template>
 
@@ -137,9 +142,17 @@ const removeEmpty = (obj) => {
 @Component({
   components: {
     ActivityPreview: () => import('tera-core/src/home/activity-preview.vue'),
+    FilterList: () => import('./filter-list.vue'),
   },
 })
 export default class Category extends Vue {
+  idrawer = this.$vuetify.breakpoint.mdAndUp;
+  lorm = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
+
+  selected = null;
+
+  drawer = false;
+
   scrollToTop() {
     this.scrollToY(0, 1500, 'easeInOutQuint');
   }
@@ -243,84 +256,6 @@ export default class Category extends Vue {
   audience = [];
   active = [];
 
-  itemsXY = [
-    {
-      id: 1,
-      name: 'Applications :',
-      children: [
-        { id: 2, name: 'Calendar : app' },
-        { id: 3, name: 'Chrome : app' },
-        { id: 4, name: 'Webstorm : app' },
-      ],
-    },
-    {
-      id: 5,
-      name: 'Documents :',
-      children: [
-        {
-          id: 6,
-          name: 'vuetify :',
-          children: [
-            {
-              id: 7,
-              name: 'src :',
-              children: [
-                { id: 8, name: 'index : ts' },
-                { id: 9, name: 'bootstrap : ts' },
-              ],
-            },
-          ],
-        },
-        {
-          id: 10,
-          name: 'material2 :',
-          children: [
-            {
-              id: 11,
-              name: 'src :',
-              children: [
-                { id: 12, name: 'v-btn : ts' },
-                { id: 13, name: 'v-card : ts' },
-                { id: 14, name: 'v-window : ts' },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 15,
-      name: 'Downloads :',
-      children: [
-        { id: 16, name: 'October : pdf' },
-        { id: 17, name: 'November : pdf' },
-        { id: 18, name: 'Tutorial : html' },
-      ],
-    },
-    {
-      id: 19,
-      name: 'Videos :',
-      children: [
-        {
-          id: 20,
-          name: 'Tutorials :',
-          children: [
-            { id: 21, name: 'Basic layouts : mp4' },
-            { id: 22, name: 'Advanced techniques : mp4' },
-            { id: 23, name: 'All about app : dir' },
-          ],
-        },
-        { id: 24, name: 'Intro : mov' },
-        { id: 25, name: 'Conference introduction : avi' },
-      ],
-    },
-  ];
-
-  drawer = null;
-  itemsx = [
-    { title: 'Home', icon: 'dashboard' },
-    { title: 'About', icon: 'question_answer' },
-  ];
   mini = false;
   right = null;
 
@@ -407,31 +342,30 @@ export default class Category extends Vue {
 
     const subs = CategoriesModule.subCategory.all();
 
-    const a = { id: null, name: 'All' };
+    const a = { name: 'All', value: null };
 
     this.categories = [
       a,
       ...CategoriesModule.category.all().map((c: any) => ({
-        // id: c._id,
         name: c.name,
-        type: 'category',
         children: [
-          { id: c._id, name: 'All', type: 'category' },
+          { name: 'All', value: c._id },
           ...subs
             .filter((s: any) => s.category_id === c._id)
-            .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
+            .map((r: any) => ({ value: r._id, name: r.name })),
         ],
+        // type: 'category',
+        // children: [
+        //   { id: c._id, name: 'All', type: 'category' },
+        //   ...subs
+        //     .filter((s: any) => s.category_id === c._id)
+        //     .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
+        // ],
       })),
     ];
 
-    // this.categories.shift(0, );
-
-    // this.categories = CategoriesModule.categories.map((c) => ({
-    //   ...c,
-    //   sub: CategoryModule.subCategories.filter((a) => a.category._id === c._id),
-    // }));
-
-    // console.log({ o: this.categories });
+    this.selected = a;
+    console.log({ c: this.categories });
 
     this.load();
   }
@@ -442,23 +376,12 @@ export default class Category extends Vue {
       .with(['type.domain', 'category', 'subCategory.category'])
       .all();
 
-    console.log({ activities });
-
     const a = activities.filter(
       (aa: any) =>
         aa.type.name.toLocaleLowerCase() === this.name.toLocaleLowerCase()
     );
 
     this.items = a;
-
-    console.log({ a });
-    // .filter((a) => a.type === this.type._id)
-    // .map((t) => ({
-    //   ...t,
-    //   name: t.name.toLocaleLowerCase(),
-    //   title: t.name,
-    //   _id: t._id,
-    // }));
   }
 
   public async beforeRouteEnter(to, from, next) {
@@ -481,5 +404,18 @@ export default class Category extends Vue {
 
 .v-treeview-node--leaf {
   margin-left: 20px !important;
+}
+
+.v-treeview-node__label:hover {
+  color: #fff;
+  font-weight: bold;
+}
+
+.p {
+  padding-left: 300px !important;
+}
+
+.v-toolbar__extension {
+  background:#eee;
 }
 </style>

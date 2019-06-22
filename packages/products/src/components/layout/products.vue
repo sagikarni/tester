@@ -1,28 +1,41 @@
 <template>
   <div id="overview">
-    <v-content>
+    <core-header>
+      <template v-slot:top>
+        <v-btn flat dark large color="black">
+          <v-icon dark>keyboard_backspace</v-icon>
+        </v-btn>
+      </template>
       <v-container>
-        <v-layout align-center justify-center row fill-height class="mb-4">
+        <v-layout row align-center justify-center class="mb-5">
           <v-btn
+            class="text-capitalize"
             round
-            color="primary"
+            color="blue darken-4"
             dark
             :flat="monthlySelected"
             @click="packageType = 'yearly'"
           >Yearly</v-btn>
           <v-btn
+            class="text-capitalize"
             round
-            color="primary"
+            color="blue darken-4"
             dark
             :flat="!monthlySelected"
             @click="packageType = 'monthly'"
           >Monthly</v-btn>
         </v-layout>
+
         <v-layout align-center justify-center row fill-height wrap>
-          <package class="ma-2" v-for="packgr in packages" :package="packgr" :key="packgr.type"></package>
+          <package
+            class="ma-2 mb-4"
+            v-for="packgr in packages"
+            :package="packgr"
+            :key="packgr.type"
+          ></package>
         </v-layout>
       </v-container>
-    </v-content>
+    </core-header>
   </div>
 </template>
 
@@ -43,16 +56,17 @@ export default class Products extends Vue {
   }
 
   get packages() {
-    return this.Packages.filter((p) => p.frequency === this.packageType);
+    return this.Packages.filter((p) => p.plan === this.packageType);
   }
 
   Packages = [
     {
+      plan: 'monthly',
       recommended: false,
       title: 'Free',
       type: 'free',
       method: 'Start',
-      frequency: 'monthly',
+      frequency: 'month',
       description: '',
       price: {
         currency: '$',
@@ -61,11 +75,12 @@ export default class Products extends Vue {
       features: ['+ 200 free activities', 'video & photo activities'],
     },
     {
+      plan: 'monthly',
       recommended: true,
       title: 'Personal',
       type: 'personal',
       method: 'Buy',
-      frequency: 'monthly',
+      frequency: 'month',
       description: 'per licence (minimum 0)',
       price: {
         currency: '$',
@@ -78,11 +93,12 @@ export default class Products extends Vue {
       ],
     },
     {
+      plan: 'monthly',
       recommended: false,
       title: 'Business',
       type: 'business',
       method: 'Buy',
-      frequency: 'monthly',
+      frequency: 'month',
       description: 'per licence (minimum 0)',
       price: {
         currency: '$',
@@ -95,21 +111,23 @@ export default class Products extends Vue {
       ],
     },
     {
+      plan: 'monthly',
       recommended: false,
       title: 'Enterprice',
       type: 'enterprice',
       method: 'Concat Us',
       price: null,
-      frequency: 'monthly',
+      frequency: 'month',
       description: 'Contact us',
       features: ['All Business Features', 'Affect Content', 'Primier support'],
     },
     {
+      plan: 'yearly',
       recommended: false,
       title: 'Free',
       type: 'free',
       method: 'Start',
-      frequency: 'yearly',
+      frequency: 'month',
       description: '',
       price: {
         currency: '$',
@@ -118,11 +136,12 @@ export default class Products extends Vue {
       features: ['+ 200 free activities', 'video & photo activities'],
     },
     {
-      recommended: false,
+      plan: 'yearly',
+      recommended: true,
       title: 'Personal',
       type: 'personal',
       method: 'Buy',
-      frequency: 'yearly',
+      frequency: 'month',
       description: 'per licence (minimum 0)',
       price: {
         currency: '$',
@@ -135,11 +154,12 @@ export default class Products extends Vue {
       ],
     },
     {
+      plan: 'yearly',
       recommended: false,
       title: 'Business',
       type: 'business',
       method: 'Buy',
-      frequency: 'yearly',
+      frequency: 'month',
       description: 'per licence (minimum 0)',
       price: {
         currency: '$',
@@ -152,12 +172,13 @@ export default class Products extends Vue {
       ],
     },
     {
-      recommended: true,
+      plan: 'yearly',
+      recommended: false,
       title: 'Enterprice',
       type: 'enterprice',
       method: 'Concat Us',
       price: null,
-      frequency: 'yearly',
+      frequency: 'month',
       description: 'Contact us',
       features: ['All Business Features', 'Affect Content', 'Primier support'],
     },

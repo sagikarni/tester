@@ -1,5 +1,5 @@
 <template>
-  <v-card width="300" :class="{ 'recommended-highlight': recommended }">
+  <v-card width="300" :class="{ 'recommended-highlight': recommended }" class="elevation-6">
     <section class="recommended">
       <span v-if="recommended">Recommended</span>
     </section>
@@ -11,9 +11,12 @@
       <span v-if="price">
         <sup class="currency">{{price.currency}}</sup>
         <span class="figure">{{price.figure}}</span>
-        <sup class="frequency">{{frequency}}</sup>
+        <sup class="frequency">/{{frequency}}</sup>
+        <div class="description">{{description}}</div>
       </span>
-      <div class="description">{{description}}</div>
+      <span v-else>
+        <div class="message description">{{description}}</div>
+      </span>
     </section>
     <section class="features">
       <ul class="fa-ul">
@@ -25,7 +28,7 @@
         </li>
       </ul>
     </section>
-    <v-btn color="blue darken-4" dark>{{method}}</v-btn>
+    <v-btn class="round" color="blue darken-4" dark :outline="method === 'Start'">{{method}}</v-btn>
   </v-card>
 </template>
 
@@ -48,19 +51,19 @@ export default class Package extends Vue {
   }
 
   get description() {
-      return this.package.description;
+    return this.package.description;
   }
 
   get features() {
-      return this.package.features;
+    return this.package.features;
   }
 
   get method() {
-      return this.package.method;
+    return this.package.method;
   }
 
   get frequency() {
-      return this.package.frequency;
+    return this.package.frequency;
   }
 }
 </script>
@@ -71,8 +74,11 @@ export default class Package extends Vue {
   display: flex;
   align-items: center;
   flex-direction: column;
+  border-radius: 10px;
+  min-width: 300px;
 
   &.recommended-highlight {
+    border: 1px solid darkblue;
     transform: scale(1.05);
     z-index: 1;
   }
@@ -84,7 +90,7 @@ export default class Package extends Vue {
       background: forestgreen;
       color: #fff;
       text-align: center;
-      padding: 5px 20px;
+      padding: 5px 10px;
       display: inline-block;
       margin: 0 auto;
       font-weight: bold;
@@ -116,12 +122,18 @@ export default class Package extends Vue {
     height: 100px;
     margin-bottom: 20px;
 
+    sup {
+      color: #888;
+    }
     sup.currency {
-      top: -23px;
+      top: -16px;
     }
 
+    sup.frequency {
+      top: 0;
+    }
     .figure {
-      font-size: 50px;
+      font-size: 40px;
       margin: 0 5px;
     }
 
@@ -130,6 +142,11 @@ export default class Package extends Vue {
       font-weight: bold;
       font-size: 13px;
     }
+
+    .message {
+      margin-top:30px;
+      font-size:18px;
+    }
   }
 
   .features {
@@ -137,18 +154,23 @@ export default class Package extends Vue {
     margin-bottom: 10px;
 
     .fa-ul {
-      font-size: 18px;
-      color: #555;
+      font-size: 16px;
+      color: #777;
       height: 150px;
       margin-bottom: 20px;
 
       li {
-        margin: 2px 0 15px 0;
+        margin: 2px 0 15px 10px;
       }
       .fa-li {
         color: darkblue;
+        .fas.fa-check {
+          margin-right: 20px;
+        }
       }
     }
   }
+
+  .round { border-radius: 5px;}
 }
 </style>

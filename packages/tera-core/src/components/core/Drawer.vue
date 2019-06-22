@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class="black" dark app :value="opened" absolute temporary>
+  <v-navigation-drawer class="black" dark app :value="opened" fixed temporary>
     <v-list two-line>
       <template v-for="(item, index) in items">
         <v-list-tile :key="item.title" :to="item.url">

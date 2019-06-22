@@ -1,13 +1,14 @@
 <template>
   <v-app v-cloak>
+      
+      <router-view/>
 
-    <router-view/>
 
-    <core-toolbar v-if="hasToolbar" />
+    <!-- <core-toolbar v-if="hasToolbar" />
 
     <core-drawer v-if="hasDrawer" />
 
-    <core-footer v-if="hasFooter" />
+    <core-footer v-if="hasFooter" /> -->
   </v-app>
 </template>
 

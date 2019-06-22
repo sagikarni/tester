@@ -9,12 +9,19 @@
     clipped-right
     fixed
     height="56"
+    style="padding-left:0!important;"
+    extended
+    extension-height="80"
   >
     <div
       style="position:fixed;top:0;left:0;width:22px;height:22px;background:#555;color:#fff;opacity:.5;"
     >{{$vuetify.breakpoint.name}}</div>
 
-    <v-toolbar-side-icon @click="toggleDrawer"/>
+    <v-toolbar-side-icon @click.stop="toggleDrawer"/>
+    
+    <template slot="extension">
+      <slot name="extension"></slot>
+    </template>
 
     <v-spacer class="hidden-md-and-up"/>
 
@@ -49,8 +56,6 @@
         :to="`/${link}`"
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
-
-  
 
     <core-login-status/>
 

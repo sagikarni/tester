@@ -1,14 +1,13 @@
 <template>
   <div id="overview">
-    <v-content>
-      <v-container fluid class="pa-0">
+    <core-header height="120" min-height="60">
+      <template v-slot:top>
         <div style="background:#eee;" class="pa-3 elevation-4 mb-3">
           <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
             <span>{{ name }}</span>
           </h2>
         </div>
-      </v-container>
-      
+      </template>
       <v-container :fluid="$vuetify.breakpoint.xlAndDown" class="pa-0 mb-4" grid-list-xs>
         <v-layout wrap>
           <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
@@ -44,7 +43,7 @@
       <v-container :fluid="$vuetify.breakpoint.lgAndDown">
         <strip-group value="homepage"/>
       </v-container>
-    </v-content>
+    </core-header>
   </div>
 </template>
 
@@ -71,7 +70,7 @@ Component.registerHooks([
 export default class Overview extends Vue {
   items = [];
   name = '';
- 
+
   constructor() {
     super();
   }
