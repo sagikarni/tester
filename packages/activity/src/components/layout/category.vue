@@ -20,7 +20,7 @@
         >
           <span>{{name}}</span>
         </h2>
-        <div style="display:flex;" class="col">
+        <div style="display:flex;" class="col" v-if="!$vuetify.breakpoint.xsOnly">
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
               <v-btn small flat v-on="on" dark color="black">
@@ -53,22 +53,23 @@
             <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
           </div>
 
-          <v-divider class="mb-2"></v-divider>
+          <v-divider></v-divider>
 
           <h3 class="mb-2">Category</h3>
 
           <filter-list :items="categories" v-model="selected" style="font-size:16px;"></filter-list>
 
-          <v-divider class="mt-2"></v-divider>
+          <v-divider></v-divider>
 
           <h3 class="my-2">Media</h3>
 
-          <v-checkbox :hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
-          <v-checkbox :hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
+          <v-checkbox class="my-2" :hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
+          <v-checkbox class="my-2" :hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
 
-          <v-divider class="mt-2"></v-divider>
+          <v-divider class="mb-0 mt-1"></v-divider>
 
           <v-checkbox
+            class="my-2"
             v-model="form.printable"
             label="Printable"
             :value="true"
@@ -76,9 +77,10 @@
             :hide-details="true"
           ></v-checkbox>
 
-          <v-divider class="mt-2"></v-divider>
+          <v-divider class="mb-0 mt-1"></v-divider>
 
           <v-checkbox
+            class="my-2"
             :hide-details="true"
             v-model="form.isolate"
             label="Isolate"
@@ -86,13 +88,13 @@
             :false-value="undefined"
           ></v-checkbox>
 
-          <v-divider class="mt-2"></v-divider>
+           <v-divider class="mb-0 mt-1"></v-divider>
 
           <h3 class="my-2">Audience</h3>
 
-          <v-checkbox :hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
-          <v-checkbox :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
-          <v-checkbox :hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
+          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
+          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
+          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
         </v-list>
       </v-navigation-drawer>
 
