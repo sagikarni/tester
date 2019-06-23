@@ -42,6 +42,9 @@ export default class FilterList extends Vue {
       this.currentOpen = null;
     } else {
       this.currentOpen = item;
+      if (item.children) {
+        this.select(item.children[0]);
+      }
     }
   }
 }

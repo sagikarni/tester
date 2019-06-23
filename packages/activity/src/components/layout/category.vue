@@ -1,18 +1,39 @@
 <template>
   <div id="category">
-    <core-layout>
-      <template slot="extension">
-        <v-btn flat dark large color="black">
-          <v-icon dark>keyboard_backspace</v-icon>
-        </v-btn>
-
-        <v-btn flat dark large color="black" @click="idrawer =!idrawer">
-          <v-icon dark>tune</v-icon>Filters
-        </v-btn>
-
-        <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
-          <span>{{ name }}</span>
+    <core-layout :hasInnerDrawer="idrawer && $vuetify.breakpoint.mdAndUp">
+      <template slot="extension" style="flex-direction:column;">
+        <div
+          class="col"
+          style="display:flex;flex: 1;max-width: 300px;justify-content: space-evenly;"
+        >
+          <v-btn small flat dark color="black" @click="goBack">
+            <v-icon dark>keyboard_backspace</v-icon>
+          </v-btn>
+          <v-btn flat dark color="black" @click="idrawer =!idrawer">
+            <v-icon dark>tune</v-icon>Filters
+          </v-btn>
+        </div>
+        <h2
+          class="display-1 black--text"
+          :class="{ 'subheading': $vuetify.breakpoint.xsOnly, 'display-1': $vuetify.breakpoint.smAndUp }"
+          style="text-transform:capitalize;flex:1;text-align:center;display:flex;align-items:center;justify-content:center;"
+        >
+          <span>{{name}}</span>
         </h2>
+        <div style="display:flex;" class="col">
+          <v-menu offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn small flat v-on="on" dark color="black">
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-tile v-for="(item, index) in typesUrls" :key="index" :to="item.url">
+                <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </div>
       </template>
 
       <v-navigation-drawer
@@ -27,7 +48,7 @@
         fixed
       >
         <v-list class="pa-3">
-          <div style="display:flex;justify-content:center;">
+          <div style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;">
             <v-btn flat dark color="white" @click="drawer =!drawer">Reset</v-btn>
             <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
           </div>
@@ -75,17 +96,20 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-content :class="{ 'p': idrawer && $vuetify.breakpoint.mdAndUp }">
-        <v-container fluid>
+      <v-content class="mb-4" :class="{ 'p': idrawer && $vuetify.breakpoint.mdAndUp }">
+        <v-container :class="{ 'pa-0': $vuetify.breakpoint.smAndDown }" grid-list-sm fluid>
           <v-layout row wrap>
-            <activity-preview
+            <v-flex
+              xs12
+              sm6
+              lg4
+              xl2
+              :class="{ 't': $vuetify.breakpoint.xlOnly }"
               v-for="(feature, i) in displayItems.slice(0, 10)"
               :key="i"
-              style="flex:0 0 auto;margin:0 5px 5px 0;"
-              :activity="feature"
-              width="260"
-              height="205"
-            ></activity-preview>
+            >
+              <activity-preview :activity="feature"></activity-preview>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-content>
@@ -147,11 +171,19 @@ const removeEmpty = (obj) => {
 })
 export default class Category extends Vue {
   idrawer = this.$vuetify.breakpoint.mdAndUp;
-  lorm = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
 
   selected = null;
 
   drawer = false;
+
+  goto(item) {
+    console.log({ item });
+    debugger;
+  }
+
+  goBack() {
+    window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+  }
 
   scrollToTop() {
     this.scrollToY(0, 1500, 'easeInOutQuint');
@@ -334,13 +366,25 @@ export default class Category extends Vue {
     super();
   }
 
+  get subCategories() {
+    return CategoriesModule.subCategory.all();
+  }
+
+  get typesUrls() {
+    return DomainsModule.types
+      .query()
+      .with(['domain'])
+      .get().map((uu: any) => ({
+      name: uu.name,
+      url: `/${dasherize(uu.domain.name) + '/' + dasherize(uu.name)}`,
+    }))
+  }
+
   mounted() {
     const { overview, category } = this.$route.params;
     this.name = undasherize(category);
 
     this.overview = startCase(overview);
-
-    const subs = CategoriesModule.subCategory.all();
 
     const a = { name: 'All', value: null };
 
@@ -350,17 +394,10 @@ export default class Category extends Vue {
         name: c.name,
         children: [
           { name: 'All', value: c._id },
-          ...subs
+          ...this.subCategories
             .filter((s: any) => s.category_id === c._id)
             .map((r: any) => ({ value: r._id, name: r.name })),
         ],
-        // type: 'category',
-        // children: [
-        //   { id: c._id, name: 'All', type: 'category' },
-        //   ...subs
-        //     .filter((s: any) => s.category_id === c._id)
-        //     .map((r: any) => ({ id: r._id, name: r.name, type: 'sub' })),
-        // ],
       })),
     ];
 
@@ -415,7 +452,40 @@ export default class Category extends Vue {
   padding-left: 300px !important;
 }
 
+.t {
+  max-width: 332px !important;
+}
+
 .v-toolbar__extension {
-  background:#eee;
+  background: #eee;
+  align-items: stretch;
+  padding: 0;
+
+  .col {
+    // flex: 0 0 300px;
+
+    > button {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      min-width: 60px;
+      flex: 1;
+      border-right: 1px solid #ccc;
+    }
+  }
+}
+
+#category {
+  .caption {
+    grid-template-columns: 1fr auto auto;
+    grid-gap: 10px;
+  }
+
+  .caption > :first-child {
+    display: none;
+  }
+  .caption > :nth-child(2) {
+    order: 3;
+  }
 }
 </style>

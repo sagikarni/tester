@@ -10,25 +10,32 @@
 
     <slot></slot>
 
-    <core-footer v-if="hasFooter" />
+    <core-footer v-if="hasFooter" :class="{ p: hasInnerDrawer }"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from 'vue-property-decorator';
+import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
 import { AppModule } from '../../store/app';
 
 @Component({})
 export default class Layout extends Vue {
+  @Prop({ default: false }) hasInnerDrawer;
 
   get hasToolbar() {
     return AppModule.hasToolbar;
   }
-   get hasDrawer() {
+  get hasDrawer() {
     return AppModule.hasDrawer;
   }
-   get hasFooter() {
+  get hasFooter() {
     return AppModule.hasFooter;
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.p {
+  padding-left: 300px !important;
+}
+</style>
