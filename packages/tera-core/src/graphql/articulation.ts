@@ -9,6 +9,8 @@ export const LOAD_ARTICULATIONS = gql`
       title
       description
       notes
+      sound
+      category
       updated_at
       created_at
       metadata {
@@ -58,6 +60,8 @@ export const UPSERT_ARTICULATION = gql`
       title
       description
       notes
+      category
+      sound
       updated_at
       created_at
       metadata {

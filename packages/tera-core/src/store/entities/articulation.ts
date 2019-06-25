@@ -14,6 +14,8 @@ export class Articulation extends Model {
       description: this.attr(''),
       notes: this.attr(''),
       metadata: this.attr(null),
+      category: this.attr(null),
+      sound: this.attr(null),
     };
   }
 }

@@ -13,6 +13,14 @@
 
 export default [
   {
+    path: 'articulation',
+    name: 'articulation',
+    component: () =>
+      import(
+        /* webpackChunkName: "articulation" */ './components/layout/articulation.vue'
+      ),
+  },
+  {
     path: ':overview',
     name: 'overview',
     component: () =>

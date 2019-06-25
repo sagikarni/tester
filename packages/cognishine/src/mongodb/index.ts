@@ -11,3 +11,4 @@ export * from './subcategory';
 export * from './activity';
 export * from './articulation';
 export * from './strips';
+export * from './board';

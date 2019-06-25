@@ -5,3 +5,4 @@ export * from './subcategory';
 export * from './domain';
 export * from './strip';
 export * from './articulation';
+export * from './board';

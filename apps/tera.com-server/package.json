@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node www.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode development",
-    "watch": "webpack --mode development --watch"
+    "build": "webpack --mode development --display errors-only --progress",
+    "watch": "webpack --mode development --watch  --display errors-only --progress"
   },
   "keywords": [],
   "author": "Shlomi Levi <wizardnet972@gmail.com>",
