@@ -1,49 +1,65 @@
 <template>
   <div id="overview">
-    <core-header height="120" min-height="60">
-      <template v-slot:top>
-        <div style="background:#eee;" class="pa-3 elevation-4 mb-3">
-          <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">
-            <span>{{ name }}</span>
-          </h2>
+    <core-layout :extension="idrawer && $vuetify.breakpoint.mdAndUp">
+      <template slot="extension" style="flex-direction:column;">
+        <div
+          class="col"
+          style="display:flex;flex: 1;max-width: 300px;justify-content: space-evenly;"
+        >
+          <v-btn small flat dark color="black" @click="goBack">
+            <v-icon dark>keyboard_backspace</v-icon>
+          </v-btn>
         </div>
+        <h2
+          class="display-1 black--text"
+          :class="{ 'subheading': $vuetify.breakpoint.xsOnly, 'display-1': $vuetify.breakpoint.smAndUp }"
+          style="text-transform:capitalize;flex:1;text-align:center;display:flex;align-items:center;justify-content:center;"
+        >
+          <span>{{name}}</span>
+        </h2>
       </template>
-      <v-container :fluid="$vuetify.breakpoint.xlAndDown" class="pa-0 mb-4" grid-list-xs>
-        <v-layout wrap>
-          <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
-            <v-card
-              class="pa-0"
-              fill-height
-              :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }"
-            >
-              <v-img
-                width="100%"
-                height="100%"
-                :aspect-ratio="1.6"
-                :src="`/storage/${feature.domain}/${feature.title.toLocaleLowerCase()}/cover.jpg`"
-              >
-                <v-layout
-                  fill-height
-                  class="ma-0 pa-2 lightbox white--text"
-                  style="background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
-                >
-                  <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
-                    <div>
-                      <div class="display-1 mb-3" style="font-weight:500!important">{{feature.name}}</div>
-                      <div class="title">{{feature.title}}_description</div>
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-img>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
 
-      <v-container :fluid="$vuetify.breakpoint.lgAndDown">
-        <strip-group value="homepage"/>
-      </v-container>
-    </core-header>
+      <v-content class="mb-4">
+        <v-container :fluid="$vuetify.breakpoint.xlAndDown" class="pa-0 mb-4" grid-list-xs>
+          <v-layout wrap>
+            <v-flex v-for="(feature, i) in items" :key="i" xs12 md6 lg4 d-flex>
+              <v-card
+                class="pa-0"
+                fill-height
+                :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }"
+              >
+                <v-img
+                  width="100%"
+                  height="100%"
+                  :aspect-ratio="1.6"
+                  :src="`/storage/${feature.domain}/${feature.title.toLocaleLowerCase()}/cover.jpg`"
+                >
+                  <v-layout
+                    fill-height
+                    class="ma-0 pa-2 lightbox white--text"
+                    style="background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
+                  >
+                    <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
+                      <div>
+                        <div
+                          class="display-1 mb-3"
+                          style="font-weight:500!important"
+                        >{{feature.name}}</div>
+                        <div class="title">{{feature.title}}_description</div>
+                      </div>
+                    </v-flex>
+                  </v-layout>
+                </v-img>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+
+        <v-container :fluid="$vuetify.breakpoint.lgAndDown">
+          <strip-group value="homepage"/>
+        </v-container>
+      </v-content>
+    </core-layout>
   </div>
 </template>
 

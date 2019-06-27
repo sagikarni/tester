@@ -1,18 +1,20 @@
 <template>
   <div id="home">
-    <v-content>
-      <v-container fluid pa-0>
-        <hero/>
+    <core-layout>
+      <v-content>
+        <v-container fluid pa-0>
+          <hero/>
 
-        <home-strips/>
+          <home-strips/>
 
-        <speech-strips/>
+          <speech-strips/>
 
-        <why-us/>
+          <why-us/>
 
-        <recommendations/>
-      </v-container>
-    </v-content>
+          <recommendations/>
+        </v-container>
+      </v-content>
+    </core-layout>
   </div>
 </template>
 

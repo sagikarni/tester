@@ -10,7 +10,7 @@
 
     <slot></slot>
 
-    <core-footer v-if="hasFooter" :class="{ p: hasInnerDrawer }"/>
+    <core-footer v-if="hasFooter" :class="{ p: extension }"/>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ import { AppModule } from '../../store/app';
 
 @Component({})
 export default class Layout extends Vue {
-  @Prop({ default: false }) hasInnerDrawer;
+  @Prop({ default: false }) extension;
 
   get hasToolbar() {
     return AppModule.hasToolbar;

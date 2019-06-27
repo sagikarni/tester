@@ -13,22 +13,23 @@
     </v-container>-->
     <v-container :fluid="$vuetify.breakpoint.lgAndDown">
       <strip class="feedbacks" :items="feedbacks" title="What customers think about us">
-        <v-card :color="slidesColors[slotProps.item.key]" dark slot-scope="slotProps">
-          <v-card-title class="px-3 py-3">
-            <v-avatar :size="48" color="grey lighten-4">
+        <v-card color="#0f4d7b" dark slot-scope="slotProps" class="feedback-card">
+          <v-card-title>
+            <v-avatar :size="80" color="grey lighten-4" class="mr-3">
               <img :src="slotProps.item.avatar" alt="avatar">
             </v-avatar>
+            <div class="subheading">
+              <div class="font-weight-bold text-uppercase mb-2">{{slotProps.item.author}}</div>
+              <div>{{slotProps.item.location}}</div>
+            </div>
           </v-card-title>
 
-          <v-card-text class="body-1" style="width:auto;">"{{slotProps.item.text}}"</v-card-text>
+          <v-card-text class="text subheading" style="width:auto;">"{{slotProps.item.text}}"</v-card-text>
 
           <v-card-actions>
-            <v-list-tile class="grow">
-              <v-list-tile-content v-html="slotProps.item.author"/>
-
-              <v-spacer></v-spacer>
+            <div style="display:flex;flex:1;justify-content:flex-end;">
               <v-rating v-model="slotProps.item.rate" :readonly="true" color="white" small></v-rating>
-            </v-list-tile>
+            </div>
           </v-card-actions>
         </v-card>
       </strip>
@@ -45,8 +46,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   },
 })
 export default class Recommendations extends Vue {
-  slidesColors = ['#736eff', '#0e4d7b', '#17d6bc', 'red', 'pink', 'yellow'];
-
   get feedbacks() {
     return this.$t('Vuetify.Recommendations.feedbacks');
   }
@@ -54,6 +53,13 @@ export default class Recommendations extends Vue {
 </script>
 
 <style lang="scss">
+.feedback-card {
+  text-align: left;
+
+  .text {
+    line-height: 1.5;
+  }
+}
 .feedbacks .swiper-slide {
   width: 400px !important;
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="overview">
-    <core-layout :hasInnerDrawer="idrawer && $vuetify.breakpoint.mdAndUp">
+    <core-layout :extension="idrawer && $vuetify.breakpoint.mdAndUp">
       <template slot="extension" style="flex-direction:column;">
         <div style="background:#eee;" class="pa-3 elevation-4 mb-3">
           <h2 class="text-xs-center display-1 black--text" style="text-transform:capitalize;">

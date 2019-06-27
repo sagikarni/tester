@@ -1,15 +1,16 @@
 <template>
   <div>
-    <v-responsive class="primary--text py-2">
-      <v-container :fluid="$vuetify.breakpoint.xlAndUp">
+    <v-responsive class="white--text mb-2">
+      <v-container fluid class="pa-0">
         <v-layout align-center justify-center wrap>
           <div
             class="text-xs-center"
             :style="`flex: 1 1 ${$vuetify.breakpoint.mdAndDown ? '100%' : 'auto'}`"
           >
             <h3
-              :class="$vuetify.breakpoint.smAndDown && 'display-1' || 'display-3'"
-              class="font-weight-regular mb-3 mx-3"
+              :class="$vuetify.breakpoint.smAndDown && 'headline' || 'headline'"
+              class="font-weight-regular primary pa-3 ma-0"
+              
               v-html="$t('Vuetify.Home.strips.header')"
             />
           </div>

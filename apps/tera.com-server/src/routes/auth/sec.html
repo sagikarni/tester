@@ -3929,5 +3929,6 @@ code.google.com/p/crypto-js/wiki/License
   console.log({ t, u });
   ls.set('ct', JSON.stringify(t));
   ls.set('cu', JSON.stringify(u));
-  window.location = '/';
+  var t = ls.get('LL');
+  window.location = t || '/';
 </script>

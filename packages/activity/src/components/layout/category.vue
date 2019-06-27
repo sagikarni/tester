@@ -1,6 +1,6 @@
 <template>
   <div id="category">
-    <core-layout :hasInnerDrawer="idrawer && $vuetify.breakpoint.mdAndUp">
+    <core-layout :extension="idrawer && $vuetify.breakpoint.mdAndUp">
       <template slot="extension" style="flex-direction:column;">
         <div
           class="col"
@@ -433,6 +433,12 @@ export default class Category extends Vue {
 
     next();
   }
+
+  public async beforeRouteUpdate(to, from, next) {
+    this.load();
+    next();
+  }
+  
 }
 </script>
 

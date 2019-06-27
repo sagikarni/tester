@@ -21,18 +21,18 @@
           </v-flex>
           <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
           <v-flex order-xs1 order-sm3 d-flex>
-            <div @click="pinDialog = true" class="item item--4">
+            <a @click.prevent="pinDialog = true" class="item item--4">
               <v-icon>favorite</v-icon>
               <span>Pin</span>
-            </div>
-            <div @click="shareDialog = true" class="item item--5">
+            </a>
+            <a @click.prevent="shareDialog = true" class="item item--5">
               <v-icon>print</v-icon>
               <span>Print</span>
-            </div>
-            <div @click="shareDialog = true" class="item item--6">
+            </a>
+            <a @click.prevent="shareDialog = true" class="item item--6">
               <v-icon>share</v-icon>
               <span>Share</span>
-            </div>
+            </a>
           </v-flex>
         </div>
       </v-card>

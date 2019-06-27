@@ -5,7 +5,7 @@
     <v-flex v-for="(feature, i) in features" :key="i" xs6 md6 lg3 d-flex>
       <v-card
         class="pa-0 card-x"
-        style="position:relative;margin:1px;"
+        style="position:relative;margin:1px;border-radius:0;"
         fill-height
         :to="`${feature.toLocaleLowerCase()}`"
       >
@@ -20,15 +20,20 @@
 
           <v-layout
             fill-height
-            class="ma-0 pa-2 lightbox white--text"
+            class="ma-0 lightbox white--text"
             style="position:relative;background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
           >
-            <v-flex d-flex xs12 align-end flexbox style="padding:0 0 15px 15px;">
-              <div class="title">
-                <i class="hidden-sm-and-down cube" :class="feature.toLocaleLowerCase()"></i>
-                {{feature}}
-              </div>
+            <v-flex d-flex xs12 align-end flexbox style="">
+              <div class="title" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <i class="cube hidden-lg-and-up" :class="feature.toLocaleLowerCase()"></i>
+                <h3 class="display-1">{{feature}}</h3>
+
+                <v-btn round outline color="white" class="my-3 text-capitalize hidden-lg-and-down" :to="`${feature.toLocaleLowerCase()}`">Start</v-btn>
+
+                <div :class="feature.toLocaleLowerCase()" style="height:10px;width:100%;"></div>  
+              </div>              
             </v-flex>
+            
           </v-layout>
         </v-img>
       </v-card>
@@ -46,12 +51,6 @@ export default {
       ['left', 'bottom'],
       ['right', 'top'],
       ['left', 'top'],
-    ],
-    images: [
-      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
-      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
-      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
-      '50626c1b-9c5c-458b-a1d3-c2befef9a6ee.png',
     ],
   }),
   computed: {

@@ -2,56 +2,64 @@
   "header": "What customers <br> think about us",
   "feedbacks": [
     {
-      "author": "John Green <br> Israel",
+      "author": "John1 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 3
     },
     {
-      "author": "John2 Green <br> Israel",
+      "author": "John2 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 5
     },
     {
-      "author": "John3 Green <br> Israel",
+      "author": "John3 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 1
     },
     {
-      "author": "John4 Green <br> Israel",
+      "author": "John4 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 5
     },
     {
-      "author": "John5 Green <br> Israel",
-      "location": "Israel",
+      "author": "John5 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 2
     },
     {
-      "author": "John6 Green <br> Israel",
+      "author": "John6 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 4
     },
     {
-      "author": "John7 Green <br> Israel",
+      "author": "John7 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 5
     },
     {
-      "author": "John8 Green <br> Israel",
+      "author": "John8 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 1
     },
     {
-      "author": "John9 Green <br> Israel",
+      "author": "John9 Green",
+      "location": "Its from califonia",
       "text": "It made it so easy for me to work and prepare the treatments in advance and the contents are professional.",
       "avatar": "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light",
       "rate": 0

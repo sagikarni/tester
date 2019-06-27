@@ -1,23 +1,23 @@
 <template>
-  <v-responsive class="white--text">
+  <v-responsive class="black--text">
     <v-container fluid class="hero pa-0">
       <v-layout align-center justify-center row wrap fill-height>
         <v-flex xs12 md4 class="text-xs-center intro">
-          <div class="logo mb-3">
-            <v-img
+          <!-- <div class="logo mb-3"> -->
+            <!-- <v-img
               class="logo-image"
               alt="Tera Logo"
               :src="require('@/assets/logo.svg')"
               height="28px"
               width="28px"
-            />
+            /> -->
 
-            <v-img class="logo-text" :src="require('@/assets/cognishine.svg')" width="83px"/>
-          </div>
+            <!-- <v-img class="logo-text" :src="require('@/assets/cognishine.svg')" width="83px"/> -->
+          <!-- </div> -->
 
           <h1
-            :class="$vuetify.breakpoint.smAndDown && 'display-1' || 'display-2'"
-            class="font-weight-regular mb-3"
+            :class="$vuetify.breakpoint.smAndDown && 'headline' || 'display-1'"
+            class="font-weight-regular mb-3 pa-1"
             v-html="$t('Vuetify.Home.callout')"
           />
 
@@ -63,8 +63,9 @@ export default class Hero extends Vue {}
 
 <style lang="scss" scoped>
 .hero {
-  background: #010101;
-  background: linear-gradient(bottom right, #010101, #282828);
+  // background: #010101;
+  // background: linear-gradient(bottom right, #010101, #282828);
+  background:#eee;
 }
 
 .logo {

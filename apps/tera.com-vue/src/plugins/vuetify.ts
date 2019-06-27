@@ -7,6 +7,15 @@ import 'vuetify/src/stylus/app.styl';
 
 Vue.use(Vuetify, {
   // iconfont: 'mdi',
+
+  breakpoint: {
+    thresholds: {
+      xs: 576,
+      sm: 768,
+      md: 1024,
+      lg: 1400,
+    },
+  },
   theme: {
     primary: '#363636',
     // secondary: '#29B6F6',

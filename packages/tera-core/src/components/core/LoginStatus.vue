@@ -6,17 +6,15 @@
           <v-avatar size="36">
             <img :src="user.picture || require('@/assets/user.png')" alt="avatar">
           </v-avatar>
-          &nbsp; {{ user.name }} &nbsp;
-          <v-icon>expand_more</v-icon>
+          <span class="hidden-xs-only">&nbsp; {{ user.name }} &nbsp;</span>
+          <v-icon class="hidden-xs-only">expand_more</v-icon>
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile @click="logout">
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Logout</v-list-tile-title>
-        </v-list-tile>
+        <v-list-tile @click="gotoBoards">My Boards</v-list-tile>
+        <v-list-tile @click="gotoProfile">Profile</v-list-tile>
+        <v-divider></v-divider>
+        <v-list-tile @click="logout">Logout</v-list-tile>
       </v-list>
     </v-menu>
   </v-toolbar-items>
@@ -58,5 +56,14 @@ export default class LoginStatus extends Vue {
   logout() {
     AuthModule.logout();
   }
+
+  gotoBoards(){
+    this.$router.push(`/boards`);
+  }
+
+  gotoProfile(){
+    this.$router.push(`/profile`);
+  }
+   
 }
 </script>
