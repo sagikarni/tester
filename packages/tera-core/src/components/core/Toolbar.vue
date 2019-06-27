@@ -35,7 +35,7 @@
       />
     </router-link>
 
-    <v-toolbar-items class="hidden-sm-and-down">
+    <v-toolbar-items class="hidden-md-and-down">
       <v-btn
         class="font-weight-light"
         v-for="link in linksLeft"
@@ -47,7 +47,7 @@
 
     <v-spacer/>
 
-    <v-toolbar-items class="hidden-sm-and-down">
+    <v-toolbar-items class="hidden-md-and-down">
       <v-btn
         class="font-weight-light"
         v-for="link in linksRight"
@@ -57,7 +57,7 @@
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
-    <v-divider vertical class="hidden-sm-and-down"></v-divider>
+    <v-divider vertical class="hidden-md-and-down"></v-divider>
 
     <core-login-status/>
 

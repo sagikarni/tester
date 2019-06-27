@@ -2,12 +2,12 @@
   <v-toolbar-items v-if="user">
     <v-menu offset-y open-on-hover transition="scale-transition" origin="center center">
       <template v-slot:activator="{ on }">
-        <v-btn :ripple="false" flat v-on="on">
+        <v-btn :ripple="false" flat v-on="on" class="px-0">
           <v-avatar size="36">
             <img :src="user.picture || require('@/assets/user.png')" alt="avatar">
           </v-avatar>
-          <span class="hidden-xs-only">&nbsp; {{ user.name }} &nbsp;</span>
-          <v-icon class="hidden-xs-only">expand_more</v-icon>
+          <span class="hidden-sm-and-down">&nbsp; {{ user.name }} &nbsp;</span>
+          <v-icon class="hidden-sm-and-down">expand_more</v-icon>
         </v-btn>
       </template>
       <v-list>

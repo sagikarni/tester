@@ -2,7 +2,7 @@
   <!-- <v-responsive class="text-xs-center"> -->
   <!-- <v-container grid-list-md fluid class="pa-0"> -->
   <v-layout wrap>
-    <v-flex v-for="(feature, i) in features" :key="i" xs6 md6 lg3 d-flex>
+    <v-flex v-for="(feature, i) in features" :key="i" xs6 sm6 md6 lg6 xl3 d-flex>
       <v-card
         class="pa-0 card-x"
         style="position:relative;margin:1px;border-radius:0;"
@@ -16,24 +16,39 @@
           :aspect-ratio="1.3"
           :src="`/storage/${feature}/cover.jpg`"
         >
-          <div class="hidden-lg-and-up cube" :class="[cubes[i], feature.toLocaleLowerCase()]"></div>
+          <div class="hidden-xl-only cube" :class="[cubes[i], feature.toLocaleLowerCase()]"></div>
 
           <v-layout
             fill-height
             class="ma-0 lightbox white--text"
             style="position:relative;background-color:rgba(0,0,0,.55) !important;mask-image:linear-gradient(0deg,#000,#000 15%,transparent)"
           >
-            <v-flex d-flex xs12 align-end flexbox style="">
-              <div class="title" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                <i class="cube hidden-lg-and-up" :class="feature.toLocaleLowerCase()"></i>
-                <h3 class="display-1">{{feature}}</h3>
+            <v-flex d-flex xs12 align-end flexbox style>
+              <div
+                class="title"
+                style="display:flex;flex-direction:column;align-items:center;justify-content:center;"
+              >
+                <h3
+                  :class="{ 'title': $vuetify.breakpoint.xsOnly, 'display-1': $vuetify.breakpoint.smAndUp }"
+                  class="mb-3"
+                >{{feature}}</h3>
 
-                <v-btn round outline color="white" class="my-3 text-capitalize hidden-lg-and-down" :to="`${feature.toLocaleLowerCase()}`">Start</v-btn>
+                <v-btn
+                  v-if="$vuetify.breakpoint.xlOnly"
+                  round
+                  outline
+                  color="white"
+                  class="my-3 text-capitalize"
+                  :to="`${feature.toLocaleLowerCase()}`"
+                >Start</v-btn>
 
-                <div :class="feature.toLocaleLowerCase()" style="height:10px;width:100%;"></div>  
-              </div>              
+                <div
+                  v-if="$vuetify.breakpoint.xlOnly"
+                  :class="feature.toLocaleLowerCase()"
+                  style="height:10px;width:100%;"
+                ></div>
+              </div>
             </v-flex>
-            
           </v-layout>
         </v-img>
       </v-card>
@@ -81,8 +96,8 @@ export default {
 }
 
 .cube {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   display: inline-block;
   z-index: 10;
   position: absolute;
@@ -99,20 +114,30 @@ export default {
   &.right {
     right: 0;
   }
-}
 
-.title {
-  .cube {
-    position: relative;
-    margin: 0 5px 0 0;
-    width: 15px;
-    height: 15px;
+  &.right.bottom {
+    border-radius: 16px 0px 0px 0px;
   }
+
+  &.left.bottom {
+    border-radius: 0px 16px 0px 0px;
+  }
+
+&.right.top {
+    border-radius: 0px 0px 0px 16px;
+  }
+  
+&.left.top {
+    border-radius: 0px 0 16px 0px;
+  }
+
 }
 
 .card-x {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
-  &:hover { transform: scale(1.01); }
+  &:hover {
+    transform: scale(1.01);
+  }
 }
 </style>

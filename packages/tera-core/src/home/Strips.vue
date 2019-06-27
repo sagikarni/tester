@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-responsive class="white--text mb-2">
+    <v-responsive class="black--text mb-2">
       <v-container fluid class="pa-0">
         <v-layout align-center justify-center wrap>
           <div
@@ -9,7 +9,7 @@
           >
             <h3
               :class="$vuetify.breakpoint.smAndDown && 'headline' || 'headline'"
-              class="font-weight-regular primary pa-3 ma-0"
+              class="font-weight-regular pa-3 ma-0" style="background:#ededed;"
               
               v-html="$t('Vuetify.Home.strips.header')"
             />

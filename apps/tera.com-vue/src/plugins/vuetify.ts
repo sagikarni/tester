@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
+// import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
-import 'vuetify/dist/vuetify.min.css';
-import 'vuetify/src/stylus/app.styl';
+// import 'vuetify/dist/vuetify.min.css';
+// import 'vuetify/src/stylus/app.styl';
+
+import '../style-x.styl';
 
 Vue.use(Vuetify, {
   // iconfont: 'mdi',
@@ -12,9 +14,10 @@ Vue.use(Vuetify, {
     thresholds: {
       xs: 576,
       sm: 768,
-      md: 1024,
-      lg: 1400,
+      md: 1024 + 16,
+      lg: 1400 + 16,
     },
+    scrollbarWidth: 16,
   },
   theme: {
     primary: '#363636',
