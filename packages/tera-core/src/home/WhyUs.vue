@@ -12,8 +12,8 @@
       </v-layout>
     </v-container>-->
 
-    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
-      <v-layout wrap class="white--text text-xs-center">
+    <v-container fluid style="max-width:1500px;">
+      <v-layout wrap class="white--text text-xs-center" style="border-bottom:8px solid #17d6bc">
         <v-flex xs12 sm4 class="f-feature feature-printable elevation-4">
           <v-icon color="white" size="85">card_giftcard</v-icon>
           <h3 class="display-1 my-3">{{features.printable.text}}</h3>
@@ -34,9 +34,9 @@
       </v-layout>
     </v-container>
 
-    <v-container grid-list-xl :fluid="$vuetify.breakpoint.lgAndDown">
+    <v-container grid-list-xl fluid style="max-width:1500px;">
       <v-layout justify-center wrap>
-        <v-flex v-for="(domain, i) in domains" :key="i" xs12 sm3>
+        <v-flex v-for="(domain, i) in domains" :key="i" xs12 sm6 xl3>
           <v-card class="elevation-4">
             <v-card-title>
               <v-layout column align-center justify-center>
@@ -53,7 +53,7 @@
                 >{{$t('Vuetify.Feature.start')}}</v-btn>
               </v-layout>
             </v-card-actions>
-            <v-img :src="`/storage/${domain.text}/cover.jpg`" :aspect-ratio="1.6"></v-img>
+            <v-img :src="`/storage/${domain.text}/${domain.text}-isolate.jpg`" :aspect-ratio="1.6"></v-img>
           </v-card>
         </v-flex>
       </v-layout>

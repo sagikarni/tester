@@ -1,6 +1,6 @@
 <template>
   <v-footer id="footer" class="py-4" color="primary" dark height="auto">
-    <v-container>
+    <v-container fluid>
       <v-layout wrap>
         <v-flex xs12 md5>
           <v-card dark color="transparent" class="elevation-0">

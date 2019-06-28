@@ -1,11 +1,18 @@
 <template>
-  <div class="pa-4 white">
-    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
+  <div class="white">
+    <v-container fluid style="max-width:1500px;">
       <strip :items="articulations" title="Speech Activities">
-        <v-card class="display-4 pa-3 speech-feature" slot-scope="slotProps">
+
+        <SpeechPreview :articulation="slotProps.item" slot-scope="slotProps"></SpeechPreview>
+        <!-- <v-card class="display-4 pa-3 speech-feature" >
           <v-card-title class="inner">{{slotProps.item.name}}</v-card-title>
-        </v-card>
+        </v-card> -->
       </strip>
+      <v-layout class="my-2" column align-center justify-center>
+        <v-flex>
+          <v-btn round color="white" light large to="/articulation">View All</v-btn>
+        </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
@@ -17,6 +24,7 @@ import { ArticulationsModule } from '../store/articulations.module';
 @Component({
   components: {
     Strip: () => import('./Strip.vue'),
+    SpeechPreview: () => import('./speech-preview.vue'),
   },
 })
 export default class SpeechStrips extends Vue {
@@ -37,6 +45,11 @@ export default class SpeechStrips extends Vue {
 .swiper-slide {
   width: 250px;
   box-sizing: border-box;
+}
+
+.articulation-item {
+  width:250px;
+  height:180px;
 }
 
 .speech-feature {

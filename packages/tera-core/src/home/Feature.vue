@@ -123,21 +123,34 @@ export default {
     border-radius: 0px 16px 0px 0px;
   }
 
-&.right.top {
+  &.right.top {
     border-radius: 0px 0px 0px 16px;
   }
-  
-&.left.top {
+
+  &.left.top {
     border-radius: 0px 0 16px 0px;
   }
-
 }
 
-.card-x {
-  transition: all 0.2s ease-in-out;
+// .card-x:hover {
 
-  &:hover {
-    transform: scale(1.01);
-  }
+//   .v-image__image {
+//     border:1px solid red;
+//   }
+
+//   .v-image__image {
+//     transition: all 2.4s ease;
+//     transform: scale(1.8);
+//   }
+// }
+</style>
+
+<style lang="scss">
+.card-x .v-image .v-image__image {
+  transition: all 2.4s ease;
+}
+.card-x:hover .v-image .v-image__image {
+  transform: scale(1.08);
 }
 </style>
+

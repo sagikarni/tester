@@ -11,7 +11,7 @@
         </div>
       </v-layout>
     </v-container>-->
-    <v-container :fluid="$vuetify.breakpoint.lgAndDown">
+    <v-container fluid style="max-width:1500px;">
       <strip class="feedbacks" :items="feedbacks" title="What customers think about us">
         <v-card color="#0f4d7b" dark slot-scope="slotProps" class="feedback-card">
           <v-card-title>
@@ -24,7 +24,7 @@
             </div>
           </v-card-title>
 
-          <v-card-text class="text subheading" style="width:auto;">"{{slotProps.item.text}}"</v-card-text>
+          <v-card-text class="text subheading mx-2" style="width:auto;">"{{slotProps.item.text}}"</v-card-text>
 
           <v-card-actions>
             <div style="display:flex;flex:1;justify-content:flex-end;">
