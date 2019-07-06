@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/what-is-wrong/:id/start',
+    path: ':domain/what-is-wrong/:id/start',
     name: 'what-is-wrong/start',
     component: () =>
       import(

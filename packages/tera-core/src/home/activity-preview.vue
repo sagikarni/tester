@@ -5,20 +5,15 @@
       class="white--text"
       :aspect-ratio="1.5"
       height="100%"
-      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)"
     >
+    <!-- gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)" -->
       <v-card-title class="fill-height">
-        <div class="preview-overlay">
-          <div
-            class="left-border"
-            :class="domain"
-            style="position: absolute;height:64px;width:7px;left:0px;top:0;"
-          ></div>
-          <div class="caption">
-            <div style="font-size:14px;">{{type}}</div>
-            <v-icon color="white">{{mediaType}}</v-icon>
-            <div style="font-size:18px;font-weight:bold;">{{name}}</div>
-            <div style="font-size:14px;text-align:center;line-height:2;">{{audience}}</div>
+        <div class="preview-overlay" :class="`${domain}-border border-left`">
+          <div class="caption" >
+            <div style="font-size:13px;">{{type}}</div>
+            <v-icon size="18" color="white">{{mediaType}}</v-icon>
+            <div style="font-size:15px;font-weight:bold;">{{name}}</div>
+            <div style="font-size:13px;text-align:center;">{{audience}}</div>
           </div>
         </div>
       </v-card-title>
@@ -39,7 +34,7 @@ export default class ActivitiyPreview extends Vue {
   @Prop({ default: true }) clickable;
 
   get picture() {
-    return `/storage/${this.activity.type.domain.name}/${this.activity.type.name}/${this.activity._id}/cover-l.jpg`;
+    return `/storage/${this.activity.type.domain.name}/${this.activity.type.name}/${this.activity._id}/cover-s.jpg`;
   }
 
   get type() {
@@ -74,6 +69,7 @@ export default class ActivitiyPreview extends Vue {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15);
   transition: all 3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition: background 0.5s ease;
+  border-radius: 0;
 
   &:hover {
     .preview-overlay {
@@ -94,18 +90,16 @@ export default class ActivitiyPreview extends Vue {
   background: rgba(0, 0, 0, 0.3);
   flex: 1;
   text-align: left;
-  padding: 5px 8px 5px 15px;
+  padding: 2px 7px 1px 8px;
   position: relative;
   // transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition: background 0.5s ease;
-
-  // &:hover {
-  //   background: rgba(0, 0, 0, 0.5);
-  // }
 }
 
 .caption {
   display: grid;
   grid-template-columns: 1fr auto;
 }
+
+.border-left {border-left:7px solid;}
 </style>

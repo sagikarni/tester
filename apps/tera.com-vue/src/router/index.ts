@@ -4,6 +4,9 @@ import Router from 'vue-router';
 // import scrollBehavior from './scroll-behavior';
 // import redirects from './301.json';
 // import languages from '@/data/i18n/languages.json';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
 import { Route } from 'vue-router';
 
 import { Shell, routes as coreRoutes } from 'tera-core';
@@ -109,8 +112,9 @@ export function createRouter() {
   // });
 
   router.beforeEach((to: Route, from: Route, next: any) => {
-    // if (to.meta.hasFooter) {
-    //   debugger;
+    if (to.name) {
+      NProgress.start();
+    }
 
     AppModule.showToolbar(!to.meta.hasToolbar);
     AppModule.showDrawer(!to.meta.hasDrawer);
@@ -119,6 +123,10 @@ export function createRouter() {
     //   debugger;
     // }
     next();
+  });
+
+  router.afterEach(() => {
+    NProgress.done();
   });
 
   return router;

@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/howto-make/:id/start',
+    path: ':domain/howto-make/:id/start',
     name: 'howto-make/start',
     component: () =>
       import(

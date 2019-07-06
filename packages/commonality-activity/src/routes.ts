@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/commonality/:id/start',
+    path: ':domain/commonality/:id/start',
     name: 'commonality/start',
     component: () =>
       import(

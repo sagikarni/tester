@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/good-story/:id/start',
+    path: ':domain/good-story/:id/start',
     name: 'good-story/start',
     component: () =>
       import(

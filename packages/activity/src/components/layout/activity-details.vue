@@ -1,55 +1,52 @@
 <template>
-  <div>
-    <v-container class="pa-0" style="max-width:1024px;">
-      <v-card flat class="pa-0 mb-4">
-        <preview :activity="activity"></preview>
+  <core-layout id="activity-details">
+    <v-content>
+      <v-container class="pa-0" style="max-width:1024px;">
+        <v-card flat class="pa-0 mb-4">
+          <preview :activity="activity"></preview>
 
-        <div class="nav-container">
-          <v-flex order-xs3 order-sm1 d-flex>
-            <div class="item item--1">
-              <span>Category</span>
-              <span>{{category}}</span>
-            </div>
-            <div class="item item--2">
-              <span>Sub Category</span>
-              <span>{{subCategory}}</span>
-            </div>
-            <div class="item item--3">
-              <span>Slides</span>
-              <span>{{slidesCount}}</span>
-            </div>
-          </v-flex>
-          <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
-          <v-flex order-xs1 order-sm3 d-flex>
-            <a @click.prevent="pinDialog = true" class="item item--4">
-              <v-icon>favorite</v-icon>
-              <span>Pin</span>
-            </a>
-            <a @click.prevent="shareDialog = true" class="item item--5">
-              <v-icon>print</v-icon>
-              <span>Print</span>
-            </a>
-            <a @click.prevent="shareDialog = true" class="item item--6">
-              <v-icon>share</v-icon>
-              <span>Share</span>
-            </a>
-          </v-flex>
+          <div class="nav-container">
+            <v-flex order-xs3 order-sm1 d-flex>
+              <div class="item item--1">
+                <span>Category</span>
+                <span>{{category}}</span>
+              </div>
+              <div class="item item--2">
+                <span>Sub Category</span>
+                <span>{{subCategory}}</span>
+              </div>
+              <div class="item item--3">
+                <span>Slides</span>
+                <span>{{slidesCount}}</span>
+              </div>
+            </v-flex>
+            <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
+            <v-flex order-xs1 order-sm3 d-flex>
+              <a @click.prevent="pinDialog = true" class="item item--4">
+                <v-icon>favorite</v-icon>
+                <span>Pin</span>
+              </a>
+              <a @click.prevent="shareDialog = true" class="item item--5">
+                <v-icon>print</v-icon>
+                <span>Print</span>
+              </a>
+              <a @click.prevent="shareDialog = true" class="item item--6">
+                <v-icon>share</v-icon>
+                <span>Share</span>
+              </a>
+            </v-flex>
+          </div>
+        </v-card>
+
+        <h3 class="mx-2 title mb-3">What's Inside?</h3>
+
+        <div class="img-grid mb-4">
+          <v-card flat tile class="d-flex" v-for="(thumbnail, i) in thumbnails" :key="i">
+            <v-img :src="thumbnail" aspect-ratio="1.6"></v-img>
+          </v-card>
         </div>
-      </v-card>
-
-      <h2 class="display-1 mb-3">What's Inside?</h2>
-
-      <v-container grid-list-md fluid class="pa-0 mb-3">
-        <v-layout row wrap>
-          <v-flex v-for="(thumbnail, i) in thumbnails" :key="i" xs12 md6 lg4 d-flex>
-            <v-card flat tile class="d-flex">
-              <v-img :src="thumbnail" aspect-ratio="1.6"></v-img>
-            </v-card>
-          </v-flex>
-        </v-layout>
       </v-container>
-    </v-container>
-
+    </v-content>
     <v-dialog
       v-model="pinDialog"
       :width="pinDialogWidth"
@@ -80,9 +77,7 @@
               <v-divider :key="index"></v-divider>
             </template>
           </v-list>
-          <div v-else >
-            No board to present
-          </div>
+          <div v-else>No board to present</div>
         </v-card-text>
         <v-card-text style="height: 100px; position: relative" v-if="$vuetify.breakpoint.smAndDown">
           <v-btn absolute dark fab top right color="pink" @click="newBoardDialog = true">
@@ -110,7 +105,7 @@
           </v-layout>
           <v-layout>
             <h4>Link:</h4>
-            <input id="testing-code" readonly style="border:1px solid #000;" v-model="url">
+            <input id="testing-code" readonly style="border:1px solid #000;" v-model="url" />
           </v-layout>
         </v-card-text>
 
@@ -152,7 +147,7 @@
       {{ text }}
       <v-btn color="pink" flat @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-  </div>
+  </core-layout>
 </template>
 
 <script lang="ts">
@@ -169,13 +164,13 @@ export default class ActivityDetails extends Vue {
   text = '';
   dialogLogin = false;
   newBoard = '';
-  newBoardDialog=false;
+  newBoardDialog = false;
 
-addBoard() {
-  console.log({ board: this.newBoard });
-  this.newBoard = '';
-  this.newBoardDialog = false;
-}
+  addBoard() {
+    console.log({ board: this.newBoard });
+    this.newBoard = '';
+    this.newBoardDialog = false;
+  }
 
   addToBoard(board) {
     this.text = 'add !!';
@@ -285,6 +280,31 @@ addBoard() {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+}
+
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 2px;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 576px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .img-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
-  <div class="articulation-item display-1 elevation-4">
-    <i>{{articulation.sound}}</i>
-    {{articulation.name}}
+  <div class="articulation-item display-3 elevation-4">
+    <v-responsive :aspect-ratio="1.5">
+      <i>{{articulation.sound}}</i>
+      {{articulation.name}}
+    </v-responsive>
   </div>
 </template>
 
@@ -9,7 +11,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class SpeechPreview extends Vue {
+export default class ArticulationPreview extends Vue {
   @Prop() articulation;
 
   get sound() {
@@ -27,7 +29,8 @@ export default class SpeechPreview extends Vue {
 .articulation-item {
   background: #07395e;
   color: #fff;
-  height: 205px;
+  // min-height:130px;
+  // max-height: 205px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,8 +41,8 @@ export default class SpeechPreview extends Vue {
     position: absolute;
     color: #000;
     font-size: 20px;
-    top: -6px;
-    left: 3px;
+    top: -1px;
+    left: 4px;
     right: auto;
     z-index: 1;
     font-style: normal;
@@ -55,3 +58,10 @@ export default class SpeechPreview extends Vue {
 }
 </style>
 
+<style lang="scss">
+.articulation-item .v-responsive__content {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+</style>

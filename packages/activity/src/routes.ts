@@ -21,15 +21,13 @@ export default [
       ),
   },
   {
-    path: ':overview',
-    name: 'overview',
+    path: ':domain',
+    name: 'domain',
     component: () =>
-      import(
-        /* webpackChunkName: "overview" */ './components/layout/overview.vue'
-      ),
+      import(/* webpackChunkName: "domain" */ './components/layout/domain.vue'),
   },
   {
-    path: ':overview/:category',
+    path: ':domain/:category',
     name: 'category',
     component: () =>
       import(
@@ -37,7 +35,7 @@ export default [
       ),
   },
   {
-    path: ':overview/:category/:id',
+    path: ':domain/:category/:id',
     name: 'activity',
     component: () =>
       import(

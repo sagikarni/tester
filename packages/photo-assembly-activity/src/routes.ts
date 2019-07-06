@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/photo-assembly/:id/start',
+    path: ':domain/photo-assembly/:id/start',
     name: 'photo-assembly/start',
     component: () =>
       import(

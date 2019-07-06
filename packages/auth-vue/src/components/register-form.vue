@@ -1,9 +1,5 @@
 <template>
-  <v-card>
-    <v-toolbar dark color="primary">
-      <v-toolbar-title>Register</v-toolbar-title>
-    </v-toolbar>
-
+  <v-card class="elevation-0">
     <v-alert dismissible :value="error" color="error" icon="error">
       <div v-if="error === 'EMAIL_EXIST'">
         This email is already registered. Want to
@@ -13,22 +9,11 @@
       <div v-else>Cannot register right now, try again later</div>
     </v-alert>
 
-    <v-subheader>With Your Social Account</v-subheader>
-
-    <v-layout justify-space-around>
-      <social-login-component></social-login-component>
-    </v-layout>
-
-    <v-divider></v-divider>
-
-    <v-subheader>Or</v-subheader>
-
     <v-card-text>
       <v-form v-model="valid" ref="form">
         <v-text-field
           v-model="name"
           :rules="nameRules"
-          prepend-icon="person"
           name="Name"
           label="What's your name?"
           required
@@ -39,12 +24,10 @@
           label="What's your email?"
           required
           type="email"
-          prepend-icon="email"
         ></v-text-field>
         <v-text-field
           v-model="password"
           :rules="passwordRules"
-          prepend-icon="lock"
           label="New Password"
           type="password"
           required
@@ -53,20 +36,16 @@
 
       <v-list>
         <v-list-tile>
-          <router-link to="/login">Already have an account?</router-link>
-        </v-list-tile>
-        <v-list-tile>
-          <small
-            >By registering, you agree to Discord's Terms of Service and Privacy
-            Policy.</small
-          >
+          <small>
+            By registering, you agree to Discord's Terms of Service and Privacy
+            Policy.
+          </small>
         </v-list-tile>
       </v-list>
     </v-card-text>
 
-    <v-card-actions class="pa-3">
-      <v-spacer></v-spacer>
-      <v-btn color="primary" @click="submit">Register</v-btn>
+    <v-card-actions>
+      <v-btn color="indigo darken-1" dark @click="submit" block class="v-btn-round">Register</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -129,3 +108,9 @@ export default class RegisterFormComponent extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.v-btn-round {
+  border-radius: 8px;
+}
+</style>

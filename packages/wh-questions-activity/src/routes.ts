@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/wh-questions/:id/start',
+    path: ':domain/wh-questions/:id/start',
     name: 'wh-questions/start',
     component: () =>
       import(

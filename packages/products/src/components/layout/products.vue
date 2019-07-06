@@ -1,11 +1,7 @@
 <template>
-  <div id="overview">
-    <core-header>
-      <template v-slot:top>
-        <v-btn flat dark large color="black">
-          <v-icon dark>keyboard_backspace</v-icon>
-        </v-btn>
-      </template>
+  <core-layout id="products" extension="true">
+    <core-nav slot="extension"></core-nav>
+    <v-content>
       <v-container>
         <v-layout row align-center justify-center class="mb-5">
           <v-btn
@@ -35,8 +31,8 @@
           ></package>
         </v-layout>
       </v-container>
-    </core-header>
-  </div>
+    </v-content>
+  </core-layout>
 </template>
 
 <script lang="ts">

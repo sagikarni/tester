@@ -9,7 +9,7 @@
           >
             <h3
               :class="$vuetify.breakpoint.smAndDown && 'headline' || 'headline'"
-              class="font-weight-regular pa-3 ma-0" style="background:#eee;"
+              class="font-weight-regular pa-3 ma-0"
               
               v-html="$t('Vuetify.Home.strips.header')"
             />

@@ -47,8 +47,8 @@ class App extends VuexModule implements IAppState {
   }
 
   @Action({ commit: 'TOGGLE_SIDEBAR' })
-  public toggleDrawer() {
-    return false;
+  public toggleDrawer(val) {
+    return val;
   }
 
   @Action({ commit: 'TOGGLE_SIDEBAR' })
@@ -80,9 +80,8 @@ class App extends VuexModule implements IAppState {
   }
 
   @Mutation
-  private TOGGLE_SIDEBAR(withoutAnimation: boolean) {
-    this.sidebar.opened = !this.sidebar.opened;
-    this.sidebar.withoutAnimation = withoutAnimation;
+  private TOGGLE_SIDEBAR(opened: boolean) {
+    this.sidebar.opened = opened;
   }
 
   @Mutation

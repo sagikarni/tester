@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/articulation-word/:id/start',
+    path: ':domain/articulation-word/:id/start',
     name: 'articulation-word/start',
     component: () =>
       import(

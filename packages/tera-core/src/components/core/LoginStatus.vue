@@ -2,7 +2,7 @@
   <v-toolbar-items v-if="user">
     <v-menu offset-y open-on-hover transition="scale-transition" origin="center center">
       <template v-slot:activator="{ on }">
-        <v-btn :ripple="false" flat v-on="on" class="px-0">
+        <v-btn :ripple="false" flat v-on="on" class="pr-0">
           <v-avatar size="36">
             <img :src="user.picture || require('@/assets/user.png')" alt="avatar">
           </v-avatar>

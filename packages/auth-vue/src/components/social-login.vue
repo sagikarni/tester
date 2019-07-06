@@ -1,16 +1,40 @@
 <template>
   <v-layout column>
-    <v-btn @click="loginWith('facebook')" dark large color="blue darken-4">
-      <v-icon left dark>fab fa-facebook-f</v-icon>Facebook
+    <v-btn
+      @click="loginWith('facebook')"
+      dark
+      large
+      color="blue darken-4"
+      class="pa-0 text-capitalize btn-r"
+    >
+      <v-icon left class="lf">fab fa-facebook-f</v-icon>Facebook
     </v-btn>
-    <v-btn @click="loginWith('twitter')" dark large color="blue lighten-3">
-      <v-icon left dark>fab fa-twitter</v-icon>Twitter
+    <v-btn
+      @click="loginWith('twitter')"
+      dark
+      large
+      color="blue lighten-3"
+      class="pa-0 text-capitalize btn-r"
+    >
+      <v-icon left dark class="lf">fab fa-twitter</v-icon>Twitter
     </v-btn>
-    <v-btn @click="loginWith('google')" dark large color="red darken-4">
-      <v-icon left dark>fab fa-google-plus-g</v-icon>Google
+    <v-btn
+      @click="loginWith('google')"
+      dark
+      large
+      color="red darken-4"
+      class="pa-0 text-capitalize btn-r"
+    >
+      <v-icon left dark class="lf">fab fa-google-plus-g</v-icon>Google
     </v-btn>
-    <v-btn @click="loginWith('linkedin')" dark large color="blue darken-1">
-      <v-icon left dark>fab fa-linkedin-in</v-icon>Linkedin
+    <v-btn
+      @click="loginWith('linkedin')"
+      dark
+      large
+      color="blue darken-1"
+      class="pa-0 text-capitalize btn-r"
+    >
+      <v-icon left dark class="lf">fab fa-linkedin-in</v-icon>Linkedin
     </v-btn>
   </v-layout>
 </template>
@@ -36,3 +60,17 @@ export default class SocialLoginComponent extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.lf {
+  left: 21px;
+  position: absolute;
+}
+
+.btn-r {
+  border-radius: 8px;
+  max-width: 400px;
+  margin: auto;
+  width:100%;margin-bottom:10px;
+}
+</style>

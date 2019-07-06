@@ -67,7 +67,7 @@ export default class Strip extends Vue {
   padding: 5px 0 15px 0;
 }
 .swiper-slide {
-  width: 250px;
+  width: 270px;
   // box-shadow: 0 5px 11px 0 #dcdcdc;
 }
 .wrap-next {
@@ -78,11 +78,11 @@ export default class Strip extends Vue {
   height: 100%;
   width: 20px;
   // box-shadow: 5px 0 5px -5px #333;
-  background-image: linear-gradient(
-    to right,
-    rgba(242, 242, 242, 0),
-    rgba(242, 242, 242, 1)
-  );
+  // background-image: linear-gradient(
+  //   to right,
+  //   rgba(242, 242, 242, 0),
+  //   rgba(242, 242, 242, 1)
+  // );
 }
 
 .swiper-button {

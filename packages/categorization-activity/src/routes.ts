@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/categorization/:id/start',
+    path: ':domain/categorization/:id/start',
     name: 'categorization/start',
     component: () =>
       import(

@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/memory-cards/:id/start',
+    path: ':domain/memory-cards/:id/start',
     name: 'memory-cards/start',
     component: () =>
       import(

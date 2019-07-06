@@ -1,10 +1,10 @@
 <template>
-  <v-navigation-drawer class="primary" dark app :value="opened" fixed temporary>
+  <v-navigation-drawer class="primary" dark app v-model="drawer" fixed temporary>
     <v-list two-line>
       <template v-for="(item, index) in items">
-        <v-list-tile :key="item.title" :to="item.url">
+        <v-list-tile :key="item.title" @click="goto(item.url)" class="tiler">
           <v-list-tile-content>
-            <v-list-tile-title style="font-size:20px;">{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title :class="item.class || 'subheading'">{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
@@ -19,15 +19,24 @@ import { AppModule } from '../../store/app';
 
 @Component({})
 export default class Drawer extends Vue {
-  get opened() {
+  get drawer() {
     return AppModule.sidebar.opened;
   }
 
+  set drawer(val) {
+    AppModule.toggleDrawer(val);
+  }
+
+  goto(url) {
+    this.drawer = false;
+    this.$router.push(url);
+  }
+
   items = [
-    { title: 'Cognition', url: '/cognition' },
-    { title: 'Speech', url: '/speech' },
-    { title: 'Communication', url: '/communication' },
-    { title: 'Learning', url: '/learning' },
+    { title: 'Cognition', url: '/cognition', class: 'title' },
+    { title: 'Speech', url: '/speech', class: 'title' },
+    { title: 'Communication', url: '/communication', class: 'title' },
+    { title: 'Learning', url: '/learning', class: 'title' },
     { title: 'Home', url: '/' },
     { title: 'Pricing', url: '/products' },
     { title: 'Faq', url: '/faq' },
@@ -37,3 +46,7 @@ export default class Drawer extends Vue {
   ];
 }
 </script>
+
+<style lang="scss">
+.tiler .v-list__tile__title { height:auto;}
+</style>

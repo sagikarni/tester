@@ -3,7 +3,7 @@
     <v-container fluid style="max-width:1500px;">
       <strip :items="articulations" title="Speech Activities">
 
-        <SpeechPreview :articulation="slotProps.item" slot-scope="slotProps"></SpeechPreview>
+        <ArticulationPreview :articulation="slotProps.item" slot-scope="slotProps"></ArticulationPreview>
         <!-- <v-card class="display-4 pa-3 speech-feature" >
           <v-card-title class="inner">{{slotProps.item.name}}</v-card-title>
         </v-card> -->
@@ -24,7 +24,7 @@ import { ArticulationsModule } from '../store/articulations.module';
 @Component({
   components: {
     Strip: () => import('./Strip.vue'),
-    SpeechPreview: () => import('./speech-preview.vue'),
+    ArticulationPreview: () => import('./articulation-preview.vue'),
   },
 })
 export default class SpeechStrips extends Vue {
@@ -43,13 +43,13 @@ export default class SpeechStrips extends Vue {
 
 <style lang="scss" scoped>
 .swiper-slide {
-  width: 250px;
+  width: 270px;
   box-sizing: border-box;
 }
 
 .articulation-item {
-  width:250px;
-  height:180px;
+  width:270px;
+  // height:180px;
 }
 
 .speech-feature {
@@ -57,7 +57,7 @@ export default class SpeechStrips extends Vue {
   color: #fff;
   border-radius: 10px;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16);
-  width: 250px;
+  width: 270px;
   height: 180px;
 }
 

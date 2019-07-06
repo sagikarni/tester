@@ -10,7 +10,7 @@
 
     <slot></slot>
 
-    <core-footer v-if="hasFooter" :class="{ p: extension }"/>
+    <core-footer v-if="hasFooter" />
   </div>
 </template>
 
@@ -33,9 +33,3 @@ export default class Layout extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.p {
-  padding-left: 300px !important;
-}
-</style>

@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/sound-of-life-photo/:id/start',
+    path: ':domain/sound-of-life-photo/:id/start',
     name: 'sound-of-life-photo/start',
     component: () =>
       import(

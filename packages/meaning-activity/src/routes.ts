@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/meaning/:id/start',
+    path: ':domain/meaning/:id/start',
     name: 'meaning/start',
     component: () =>
       import(

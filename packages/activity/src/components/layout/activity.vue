@@ -1,9 +1,5 @@
 <template>
-  <div id="activity">
-    <v-content>
-      <activity-details :activity="activity"></activity-details>
-    </v-content>
-  </div>
+    <activity-details :activity="activity"></activity-details>
 </template>
 
 <script lang="ts">
@@ -35,7 +31,7 @@ export default class Activity extends Vue {
   }
 
   mounted() {
-    const { overview, category, id } = this.$route.params;
+    const { domain, category, id } = this.$route.params;
     console.log({ id });
     this.activity = ActivitiesModule.activity
       .query()

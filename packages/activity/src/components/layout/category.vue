@@ -1,122 +1,178 @@
 <template>
-  <div id="category">
-    <core-layout :extension="idrawer && $vuetify.breakpoint.mdAndUp">
-      <template slot="extension" style="flex-direction:column;">
+  <core-layout id="category" extension="true" :class="{ 'expand': expand }">
+    <core-nav slot="extension" :title="name">
+      <v-btn slot="left" flat dark color="black" @click="toggleFilter">
+        <v-icon dark>tune</v-icon>Filters
+      </v-btn>
+      <div slot="right" style="display:flex;" class="col" v-if="!$vuetify.breakpoint.xsOnly">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn small flat v-on="on" dark color="black">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile v-for="(item, index) in typesUrls" :key="index" :to="item.url">
+              <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </div>
+    </core-nav>
+
+    <v-navigation-drawer dark v-model="idrawerX" temporary left fixed>
+      <v-list class="pa-3">
         <div
-          class="col"
-          style="display:flex;flex: 1;max-width: 300px;justify-content: space-evenly;"
+          style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
         >
-          <v-btn small flat dark color="black" @click="goBack">
-            <v-icon dark>keyboard_backspace</v-icon>
-          </v-btn>
-          <v-btn flat dark color="black" @click="idrawer =!idrawer">
-            <v-icon dark>tune</v-icon>Filters
-          </v-btn>
+          <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Reset</v-btn>
+          <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Done</v-btn>
         </div>
-        <h2
-          class="display-1 black--text"
-          :class="{ 'subheading': $vuetify.breakpoint.xsOnly, 'display-1': $vuetify.breakpoint.smAndUp }"
-          style="text-transform:capitalize;flex:1;text-align:center;display:flex;align-items:center;justify-content:center;"
+
+        <v-divider></v-divider>
+
+        <h3 class="mb-2">Category</h3>
+
+        <filter-list :items="categories" v-model="selected" style="font-size:16px;"></filter-list>
+
+        <v-divider></v-divider>
+
+        <h3 class="my-2">Media</h3>
+
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="mediaType"
+          label="Video"
+          value="Video"
+        ></v-checkbox>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="mediaType"
+          label="Photo"
+          value="Photo"
+        ></v-checkbox>
+
+        <v-divider class="mb-0 mt-1"></v-divider>
+
+        <v-checkbox
+          class="my-2"
+          v-model="form.printable"
+          label="Printable"
+          :value="true"
+          :false-value="undefined"
+          :hide-details="true"
+        ></v-checkbox>
+
+        <v-divider class="mb-0 mt-1"></v-divider>
+
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="form.isolate"
+          label="Isolate"
+          :value="true"
+          :false-value="undefined"
+        ></v-checkbox>
+
+        <v-divider class="mb-0 mt-1"></v-divider>
+
+        <h3 class="my-2">Audience</h3>
+
+        <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
+        <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="audience"
+          label="Elderly"
+          value="Elderly"
+        ></v-checkbox>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer stateless app clipped left fixed dark v-model="expand">
+      <v-list class="pa-3">
+        <div
+          style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
         >
-          <span>{{name}}</span>
-        </h2>
-        <div style="display:flex;" class="col" v-if="!$vuetify.breakpoint.xsOnly">
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn small flat v-on="on" dark color="black">
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-tile v-for="(item, index) in typesUrls" :key="index" :to="item.url">
-                <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <v-btn flat dark color="white" @click="idrawer =!idrawer">Reset</v-btn>
+          <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
         </div>
-      </template>
 
-      <v-navigation-drawer
-        dark
-        v-model="idrawer"
-        :app="$vuetify.breakpoint.mdAndUp"
-        :clipped="$vuetify.breakpoint.mdAndUp"
-        :permanent="idrawer"
-        :temporary="$vuetify.breakpoint.smAndDown"
-        stateless
-        left
-        fixed
-      >
-        <v-list class="pa-3">
-          <div style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;">
-            <v-btn flat dark color="white" @click="drawer =!drawer">Reset</v-btn>
-            <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
-          </div>
+        <v-divider></v-divider>
 
-          <v-divider></v-divider>
+        <h3 class="mb-2">Category</h3>
 
-          <h3 class="mb-2">Category</h3>
+        <filter-list :items="categories" v-model="selected" style="font-size:16px;"></filter-list>
 
-          <filter-list :items="categories" v-model="selected" style="font-size:16px;"></filter-list>
+        <v-divider></v-divider>
 
-          <v-divider></v-divider>
+        <h3 class="my-2">Media</h3>
 
-          <h3 class="my-2">Media</h3>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="mediaType"
+          label="Video"
+          value="Video"
+        ></v-checkbox>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="mediaType"
+          label="Photo"
+          value="Photo"
+        ></v-checkbox>
 
-          <v-checkbox class="my-2" :hide-details="true" v-model="mediaType" label="Video" value="Video"></v-checkbox>
-          <v-checkbox class="my-2" :hide-details="true" v-model="mediaType" label="Photo" value="Photo"></v-checkbox>
+        <v-divider class="mb-0 mt-1"></v-divider>
 
-          <v-divider class="mb-0 mt-1"></v-divider>
+        <v-checkbox
+          class="my-2"
+          v-model="form.printable"
+          label="Printable"
+          :value="true"
+          :false-value="undefined"
+          :hide-details="true"
+        ></v-checkbox>
 
-          <v-checkbox
-            class="my-2"
-            v-model="form.printable"
-            label="Printable"
-            :value="true"
-            :false-value="undefined"
-            :hide-details="true"
-          ></v-checkbox>
+        <v-divider class="mb-0 mt-1"></v-divider>
 
-          <v-divider class="mb-0 mt-1"></v-divider>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="form.isolate"
+          label="Isolate"
+          :value="true"
+          :false-value="undefined"
+        ></v-checkbox>
 
-          <v-checkbox
-            class="my-2"
-            :hide-details="true"
-            v-model="form.isolate"
-            label="Isolate"
-            :value="true"
-            :false-value="undefined"
-          ></v-checkbox>
+        <v-divider class="mb-0 mt-1"></v-divider>
 
-           <v-divider class="mb-0 mt-1"></v-divider>
+        <h3 class="my-2">Audience</h3>
 
-          <h3 class="my-2">Audience</h3>
+        <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
+        <v-checkbox
+          class="my-2"
+          :hide-details="true"
+          v-model="audience"
+          label="Elderly"
+          value="Elderly"
+        ></v-checkbox>
+      </v-list>
+    </v-navigation-drawer>
 
-          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="All" value="All"></v-checkbox>
-          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Kids" value="Kids"></v-checkbox>
-          <v-checkbox class="my-2" :hide-details="true" v-model="audience" label="Elderly" value="Elderly"></v-checkbox>
-        </v-list>
-      </v-navigation-drawer>
-
-      <v-content class="mb-4" :class="{ 'p': idrawer && $vuetify.breakpoint.mdAndUp }">
-        <v-container :class="{ 'pa-0': $vuetify.breakpoint.smAndDown }" grid-list-sm fluid>
-          <v-layout row wrap>
-            <v-flex
-              xs12
-              sm6
-              lg4
-              xl2
-              :class="{ 't': $vuetify.breakpoint.xlOnly }"
-              v-for="(feature, i) in displayItems.slice(0, 10)"
-              :key="i"
-            >
-              <activity-preview :activity="feature"></activity-preview>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-content>
-    </core-layout>
-  </div>
+    <v-content class="mb-4">
+      <div class="img-grid">
+        <activity-preview
+          :key="feature._id"
+          :activity="feature"
+          v-for="(feature, i) in displayItems"
+        ></activity-preview>
+      </div>
+    </v-content>
+  </core-layout>
 </template>
 
 <script lang="ts">
@@ -172,6 +228,30 @@ const removeEmpty = (obj) => {
   },
 })
 export default class Category extends Vue {
+  expand = this.$vuetify.breakpoint.mdAndUp;
+
+  @Watch('$vuetify.breakpoint.name') onChange(o, n) {
+    if (this.$vuetify.breakpoint.mdAndUp) {
+      this.idrawerX = false;
+      if (!this.hideFilter) this.expand = true;
+    } else {
+      this.expand = false;
+    }
+  }
+
+  hideFilter = false;
+
+  toggleFilter() {
+    if (this.$vuetify.breakpoint.smAndDown) {
+      this.idrawerX = !this.idrawerX;
+    } else {
+      this.hideFilter = !this.hideFilter;
+      this.expand = !this.expand;
+    }
+  }
+
+  idrawerX = false;
+
   idrawer = this.$vuetify.breakpoint.mdAndUp;
 
   selected = null;
@@ -181,10 +261,6 @@ export default class Category extends Vue {
   goto(item) {
     console.log({ item });
     debugger;
-  }
-
-  goBack() {
-    window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
   }
 
   scrollToTop() {
@@ -295,74 +371,12 @@ export default class Category extends Vue {
 
   items = [];
   name = '';
-  overview = '';
+  domain = '';
 
   type;
 
   categories = [];
 
-  // items = [];
-  // name = '';
-  // constructor() {
-  //   super();
-  // }
-  // mounted() {
-  //   const { overview, category } = this.$route.params;
-  //   this.name = category;
-  //   const x = DrawerItems.find((d) => d.name === overview);
-  //   if (x) {
-  //     const d = x.items
-  //       .filter((n) => !n.default)
-  //       .map((n) => ({ ...n, name: dasherize(n.name) }));
-  //     this.items = d
-  //       .find((r) => r.name === category)
-  //       .items.filter((r) => !r.default)
-  //       .map((n) => ({ ...n, name: dasherize(n.name) }));
-  //   }
-  // }
-
-  itemsy = [
-    {
-      action: 'local_activity',
-      title: 'Attractions',
-      items: [{ title: 'List Item' }],
-    },
-    {
-      action: 'restaurant',
-      title: 'Dining',
-      active: true,
-      items: [
-        { title: 'Breakfast & brunch' },
-        { title: 'New American' },
-        { title: 'Sushi' },
-      ],
-    },
-    {
-      action: 'school',
-      title: 'Education',
-      items: [{ title: 'List Item' }],
-    },
-    {
-      action: 'directions_run',
-      title: 'Family',
-      items: [{ title: 'List Item' }],
-    },
-    {
-      action: 'healing',
-      title: 'Health',
-      items: [{ title: 'List Item' }],
-    },
-    {
-      action: 'content_cut',
-      title: 'Office',
-      items: [{ title: 'List Item' }],
-    },
-    {
-      action: 'local_offer',
-      title: 'Promotions',
-      items: [{ title: 'List Item' }],
-    },
-  ];
 
   constructor() {
     super();
@@ -376,17 +390,18 @@ export default class Category extends Vue {
     return DomainsModule.types
       .query()
       .with(['domain'])
-      .get().map((uu: any) => ({
-      name: uu.name,
-      url: `/${dasherize(uu.domain.name) + '/' + dasherize(uu.name)}`,
-    }))
+      .get()
+      .map((uu: any) => ({
+        name: uu.name,
+        url: `/${dasherize(uu.domain.name) + '/' + dasherize(uu.name)}`,
+      }));
   }
 
   mounted() {
-    const { overview, category } = this.$route.params;
+    const { domain, category } = this.$route.params;
     this.name = undasherize(category);
 
-    this.overview = startCase(overview);
+    this.domain = startCase(domain);
 
     const a = { name: 'All', value: null };
 
@@ -435,10 +450,33 @@ export default class Category extends Vue {
   }
 
   public async beforeRouteUpdate(to, from, next) {
+    
+    const { domain, category } = to.params;
+    this.name = undasherize(category);
+
+    this.domain = startCase(domain);
+
+    const a = { name: 'All', value: null };
+
+    this.categories = [
+      a,
+      ...CategoriesModule.category.all().map((c: any) => ({
+        name: c.name,
+        children: [
+          { name: 'All', value: c._id },
+          ...this.subCategories
+            .filter((s: any) => s.category_id === c._id)
+            .map((r: any) => ({ value: r._id, name: r.name })),
+        ],
+      })),
+    ];
+
+    this.selected = a;
+    console.log({ c: this.categories });
+
     this.load();
     next();
   }
-  
 }
 </script>
 
@@ -456,31 +494,8 @@ export default class Category extends Vue {
   font-weight: bold;
 }
 
-.p {
-  padding-left: 300px !important;
-}
-
 .t {
   max-width: 332px !important;
-}
-
-.v-toolbar__extension {
-  background: #eee;
-  align-items: stretch;
-  padding: 0;
-
-  .col {
-    // flex: 0 0 300px;
-
-    > button {
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      min-width: 60px;
-      flex: 1;
-      border-right: 1px solid #ccc;
-    }
-  }
 }
 
 #category {
@@ -495,5 +510,58 @@ export default class Category extends Vue {
   .caption > :nth-child(2) {
     order: 3;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 2px;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 576px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .img-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .img-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and (min-width: 3000px) {
+  .img-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media only screen and (min-width: 3600px) {
+  .img-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+</style>
+
+<style lang="scss">
+#category.expand main.v-content,
+#category.expand footer.v-footer {
+  padding-left: 300px !important;
 }
 </style>

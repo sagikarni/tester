@@ -1,35 +1,6 @@
 <template>
   <v-card class="elevation-0">
-    <!-- <v-toolbar dark color="primary">
-      <v-toolbar-title>Login</v-toolbar-title>
-    </v-toolbar>
-
-    <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'PASSWORD' || error === 'NOT_EXIST'">Invalid Credentials</div>
-      <div v-else>Cannot login right now, try again later</div>
-    </v-alert>-->
-
-    <!-- <v-container>
-      <v-layout wrap>
-        <v-flex xs6>
-          <v-subheader>Connect with:</v-subheader>
-          <social-login-component></social-login-component>
-        </v-flex>
-        <v-flex xs6>vccmbm,gk</v-flex>
-      </v-layout>
-    </v-container>-->
-
-    <!-- 
-
-    <v-layout justify-space-around>
-      <social-login-component></social-login-component>
-    </v-layout>-->
-
-    <!-- <v-divider></v-divider>
-
-    <v-subheader>Or</v-subheader>-->
-
-    <v-card-text>
+        <v-card-text>
       <v-form v-model="valid" ref="form">
         <v-text-field
           v-model="email"
@@ -57,7 +28,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="primary" @click="submit" block>Login</v-btn>
+      <v-btn color="indigo darken-1" dark @click="submit" block class="v-btn-round">Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -111,3 +82,9 @@ export default class LoginFormComponent extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.v-btn-round {
+  border-radius: 8px;
+}
+</style>

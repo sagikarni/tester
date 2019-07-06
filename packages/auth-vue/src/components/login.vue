@@ -1,27 +1,26 @@
 <template>
-  <v-content>
-    <v-container>
-      <div style="max-width:800px;margin:0 auto;background:#fff;">
-        <h2 class="text-xs-center mb-3">Login</h2>
-        <v-layout wrap justify-center class="mb-3">
-          <v-flex xs12 sm6 class="px-3">
-            <v-subheader style="justify-content:center">Connect with:</v-subheader>
+  <core-layout>
+    <v-content>
+      <div style="max-width: 800px;margin: 0 auto;background:#fff;padding:20px;">
+        <h2 style="text-align:center">Login</h2>
+        <div class="login-grid" style="padding:20px 0;">
+          <div style="padding:20px;">
+            <div style="font-weight:bold;text-align:center;margin-bottom:20px;">Connect With</div>
             <social-login-component></social-login-component>
-          </v-flex>
-          <v-flex xs12 sm6 class="px-3">
-            <v-subheader style="justify-content:center">Login to yours account</v-subheader>
+          </div>
+          <div style="background:#888;" class="separator"></div>
+          <div style="padding:20px;">
+            <div style="font-weight:bold;text-align:center;margin-bottom:20px;">Use your Cognishine account</div>
             <login-form-component :error="error" @submit="submit"></login-form-component>
-          </v-flex>
-        </v-layout>
-        <v-layout class="pb-3">
-          <v-flex class="text-xs-center">
-            Need an account? &nbsp;
-            <router-link to="/register">Register</router-link>
-          </v-flex>
-        </v-layout>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
+          <div>Need an account?</div>
+          <router-link to="/register">Register</router-link>
+        </div>
       </div>
-    </v-container>
-  </v-content>
+    </v-content>
+  </core-layout>
 </template>
 
 <script lang="ts">
@@ -58,3 +57,50 @@ export default class Login extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+ 
+}
+.separator {
+  height: 1px;
+  position: relative;
+}
+
+.separator:before {
+  content: 'or';
+  z-index: 2;
+  left: 44%;
+  top: -12px;
+  position: absolute;
+  background: #fff;
+  width: 55px;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr 1px 1fr;
+  }
+  .separator {
+    height: auto;
+  }
+
+  .separator:before {
+    content: 'or';
+    z-index: 2;
+    left: -5px;
+    top: 38%;
+    position: absolute;
+    background: #fff;
+    height: 55px;
+    display: flex;
+    width: auto;
+    align-items: center;
+  }
+}
+</style>

@@ -11,19 +11,17 @@
     height="56"
     style="padding-left:0!important;"
     :extended="!!extension"
-    extension-height="80"
+    :extension-height="expend"
   >
     <div
       style="position:fixed;top:0;left:0;width:22px;height:22px;background:#555;color:#fff;opacity:.5;"
-    >{{$vuetify.breakpoint.name}}</div>
+    >{{$vuetify.breakpoint.name}} {{extension}}</div>
 
-    <v-toolbar-side-icon @click.stop="toggleDrawer"/>
+    <v-toolbar-side-icon @click.stop="toggleDrawer" />
 
-    <template slot="extension">
-      <slot name="extension"></slot>
-    </template>
+    <slot slot="extension" name="extension"></slot>
 
-    <v-spacer class="hidden-md-and-up"/>
+    <v-spacer class="hidden-md-and-up" />
 
     <router-link to="/">
       <v-img
@@ -45,7 +43,7 @@
       >{{ $t(`Vuetify.AppToolbar.${link}`) }}</v-btn>
     </v-toolbar-items>
 
-    <v-spacer/>
+    <v-spacer />
 
     <v-toolbar-items class="hidden-md-and-down">
       <v-btn
@@ -59,7 +57,7 @@
 
     <v-divider vertical class="hidden-md-and-down"></v-divider>
 
-    <core-login-status/>
+    <core-login-status />
 
     <!-- <core-locales/> -->
   </v-toolbar>
@@ -71,26 +69,54 @@ import { AppModule } from '../../store/app';
 
 @Component
 export default class Toolbar extends Vue {
+  @Prop({ default: false }) extension;
+
+  expend = 56;
+
   linksLeft = ['cognition', 'speech', 'communication', 'learning'];
-  linksRight = ['products']; // hidden in 678px.
+  linksRight = ['products'];
 
   toggleDrawer() {
-    AppModule.toggleDrawer();
+    AppModule.toggleDrawer(true);
   }
-  // stateless = false;
-  // constructor() {
-  //   super();
+
+  // handleScroll(event) {
+  //   this.$nextTick(() => {
+  //     if (window.scrollY > 80) {
+  //       this.expend = 60;
+  //     } else {
+  //       this.expend = 80;
+  //     }
+  //   });
   // }
-  // toggle() {
-  //   TeraStoreModule.drawerToggle();
+
+  // created() {
+  //   window.addEventListener('scroll', this.handleScroll);
   // }
-  //   ({
-  //   // components: {
-  //   //   LanguageSwitcher: () =>
-  //   //     import(/* webpackChunkName: "language-switcher" */ '../helpers/language-switcher.vue'),
-  //   //   LoginStatus: () =>
-  //   //     import(/* webpackChunkName: "login-status" */ '../helpers/login-status.vue'),
-  //   // },
-  // })
+
+  // destroyed() {
+  //   window.removeEventListener('scroll', this.handleScroll);
+  // }
 }
 </script>
+
+<style lang="scss">
+.v-toolbar__extension {
+  background: #eee;
+  align-items: stretch;
+  padding: 0;
+
+  .col {
+    // flex: 0 0 300px;
+
+    > button {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      min-width: 60px;
+      flex: 1;
+      border-right: 1px solid #ccc;
+    }
+  }
+}
+</style>

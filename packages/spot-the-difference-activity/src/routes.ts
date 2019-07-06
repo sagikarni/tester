@@ -1,6 +1,6 @@
 export default [
   {
-    path: ':overview/spot-the-difference/:id/start',
+    path: ':domain/spot-the-difference/:id/start',
     name: 'spot-the-difference/start',
     component: () =>
       import(
