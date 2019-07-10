@@ -22,7 +22,7 @@
             </v-flex>
             <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
             <v-flex order-xs1 order-sm3 d-flex>
-              <a @click.prevent="pinDialog = true" class="item item--4">
+              <a @click.prevent="openPinActivity()" class="item item--4">
                 <v-icon>favorite</v-icon>
                 <span>Pin</span>
               </a>
@@ -152,6 +152,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 
 @Component({
   components: {
@@ -165,6 +166,15 @@ export default class ActivityDetails extends Vue {
   dialogLogin = false;
   newBoard = '';
   newBoardDialog = false;
+
+  openPinActivity() {
+    if (!AuthModule.user) {
+      this.dialogLogin = true;
+      return;
+    }
+    
+    this.pinDialog = true;
+  }
 
   addBoard() {
     console.log({ board: this.newBoard });

@@ -34,14 +34,14 @@ export const compose = (middlewares) =>
   );
 
 export class AppError extends Error {
-  constructor(message: string) {
+  constructor(message?: string) {
     super(message);
     Object.setPrototypeOf(this, AppError.prototype);
   }
 }
 
 export class AppHttpError extends AppError {
-  constructor(public httpCode, message: string) {
+  constructor(public httpCode, message?: string) {
     super(message);
     Object.setPrototypeOf(this, AppHttpError.prototype);
   }

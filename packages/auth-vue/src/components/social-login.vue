@@ -51,7 +51,7 @@ export default class SocialLoginComponent extends Vue {
   }
 
   public loginWith(vendor: string) {
-    (window as any).location = `/auth/${vendor}`;
+    (window as any).location = `/access/${vendor}`;
     // connectWith(vendor, vendorUrl)
     //   .then(({ accessToken, refreshToken, payload }: any) =>
     //     AuthModule.connectSocial({ accessToken, refreshToken, payload })

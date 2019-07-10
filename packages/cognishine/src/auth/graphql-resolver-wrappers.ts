@@ -2,9 +2,16 @@ import {
   Resolver,
   ResolveParams as GqlComposeResolveParams,
 } from 'graphql-compose';
-import { IMongooseUserRole } from '../mongodb';
+import { IMongooseUserRole, User } from '../mongodb';
 import { getUserFromJwtToken, IJwtToken } from './index';
 import { NoAnonymousAccessError, UnmetPermissionsError } from './auth-errors';
+import * as jwt from 'jsonwebtoken';
+import { AppHttpError } from 'express-zone';
+
+const {
+  ACCESS_TOKEN_SECRET: accessTokenSecrect,
+  ACCESS_TOKEN_EXPIRES_IN: expiresIn,
+} = process.env;
 
 export interface IContext {
   jwt?: IJwtToken;
@@ -144,4 +151,31 @@ function wrapResolvers(
   });
 
   return resolvers;
+}
+
+export function requireToken(
+  tokenType: string,
+  grant: string,
+  resolvers: IResolversMap
+): IResolversMap {
+  return wrapResolvers(resolvers, async ({ context }) => {
+    debugger;
+
+    const authorization = context.headers['authorization'];
+    console.log({ authorization });
+    const [type, token] = authorization.split(' ');
+    console.log({ type });
+    if (!type || type.toLocaleLowerCase() !== tokenType.toLowerCase())
+      throw new AppHttpError(401);
+
+    console.log({ token });
+
+    const decoded = jwt.verify(token, accessTokenSecrect);
+    if (!decoded) throw new AppHttpError(401);
+    if (decoded.grant !== grant) throw new AppHttpError(401);
+
+    console.log({ decoded });
+
+    context.user = await User.findById(decoded._id);
+  });
 }

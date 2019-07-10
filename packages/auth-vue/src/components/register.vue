@@ -1,22 +1,36 @@
 <template>
- <core-layout>
+  <core-layout>
     <v-content>
-      <div style="max-width: 800px;margin: 0 auto;background:#fff;padding:20px;">
-        <h2 style="text-align:center">Register</h2>
-        <div class="login-grid" style="padding:20px 0;">
-          <div style="padding:20px;">
-            <div style="font-weight:bold;text-align:center;margin-bottom:20px;">Connect With</div>
-            <social-login-component></social-login-component>
+      <div class="py-3">
+        <div style="max-width: 800px;margin: 0 auto;background:#fff;padding:20px;">
+          <header style="display:flex;justify-content:center;">
+            <h2 class="headline" style="text-align:center;margin:0 10px;">
+              <router-link style="text-decoration:none" to="/login">Login</router-link>
+            </h2>
+            <h2
+              class="headline"
+              style="text-align:center;margin:0 10px;border-bottom:2px solid darkblue;"
+            >Register</h2>
+          </header>
+          <div class="login-grid" style="padding:20px 0;">
+            <div style="padding:20px;">
+              <div style="font-weight:bold;text-align:center;margin-bottom:20px;">Connect With</div>
+              <social-login-component></social-login-component>
+            </div>
+            <div style="background:#888;" class="separator"></div>
+            <div style="padding:20px;">
+              <div
+                style="font-weight:bold;text-align:center;margin-bottom:20px;"
+              >Create a Cognishine account</div>
+              <register-form-component :error="error" @submit="submit"></register-form-component>
+            </div>
           </div>
-          <div style="background:#888;" class="separator"></div>
-          <div style="padding:20px;">
-            <div style="font-weight:bold;text-align:center;margin-bottom:20px;">Create a Cognishine account</div>
-            <register-form-component :error="error" @submit="submit"></register-form-component>
+          <div
+            style="display:flex;align-items:center;justify-content:center;flex-direction:column;"
+          >
+            <div>Already have an account?</div>
+            <router-link to="/login">Login</router-link>
           </div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
-          <div>Already have an account?</div>
-          <router-link to="/login">Login</router-link>
         </div>
       </div>
     </v-content>
@@ -36,8 +50,7 @@ export default class RegisterPage extends Vue {
   submitted = false;
 
   get error() {
-    return '';
-    // return AuthModule.error;
+    return AuthModule.error;
   }
 
   get isAuthenticated() {
@@ -62,17 +75,18 @@ export default class RegisterPage extends Vue {
     this.submitted = true;
     AuthModule.register(form);
   }
+
+   destroyed() {
+    AuthModule.clearErrors();
+  }
 }
 </script>
-
-
 
 <style lang="scss" scoped>
 .login-grid {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 10px;
- 
 }
 .separator {
   height: 1px;

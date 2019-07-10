@@ -20,6 +20,22 @@ export default [
       ),
   },
   {
+    path: 'change-password',
+    name: 'change-password',
+    component: () =>
+      import(
+        /* webpackChunkName: "change-password" */ './components/change-password.vue'
+      ),
+  },
+  {
+    path: 'verify',
+    name: 'verify',
+    component: () =>
+      import(
+        /* webpackChunkName: "verify-account" */ './components/verify-account.vue'
+      ),
+  },
+  {
     path: 'profile',
     name: 'profile',
     component: () =>

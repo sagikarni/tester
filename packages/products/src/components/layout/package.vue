@@ -28,7 +28,7 @@
         </li>
       </ul>
     </section>
-    <v-btn class="round" color="blue darken-4" dark :outline="method === 'Start'">{{method}}</v-btn>
+    <v-btn :to="url" class="round" color="blue darken-4" dark :outline="method === 'Start'">{{method}}</v-btn>
   </v-card>
 </template>
 
@@ -64,6 +64,10 @@ export default class Package extends Vue {
 
   get frequency() {
     return this.package.frequency;
+  }
+
+  get url() {
+    return this.package.url;
   }
 }
 </script>

@@ -27,3 +27,39 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const RECOVER_ACCOUNT = gql`
+  query RecoverAccount($email: String!) {
+    recoverAccount(email: $email) {
+      result
+    }
+  }
+`;
+
+export const VERIFY_ACCOUNT = gql`
+  query {
+    verifyAccount {
+      token
+      user {
+        email
+        name
+        picture
+        verified
+      }
+    }
+  }
+`;
+
+export const CHANGE_PASSWORD = gql`
+  query ChangePassword($password: String!) {
+    changePassword(password: $password) {
+      token
+      user {
+        email
+        name
+        picture
+        verified
+      }
+    }
+  }
+`;

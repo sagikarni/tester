@@ -4,11 +4,18 @@ import {
   Mutation,
   Action,
   getModule,
+  MutationAction,
 } from 'vuex-module-decorators';
 import store from './index';
 
 import { gqlHttp } from '../gql-http';
-import { LOGIN, REGISTER } from '../graphql/login';
+import {
+  LOGIN,
+  REGISTER,
+  RECOVER_ACCOUNT,
+  VERIFY_ACCOUNT,
+  CHANGE_PASSWORD,
+} from '../graphql/login';
 
 import { StorageService, StorageTypes } from '../storage';
 
@@ -24,20 +31,95 @@ export interface IAuthState {
 class Auth extends VuexModule implements IAuthState {
   public user = StorageService.get(StorageTypes.USER);
   public token = StorageService.get(StorageTypes.TOKEN);
+  public error = null;
+  public recoverAccountSubmitted = false;
+  public changePasswordSubmitted = false;
+
+  // public registerState = { pending: false, error: null, submitted: false };
+  // public loginState = { pending: false, error: null, submitted: false };
+  // public recoverAccountState = { pending: false, error: null, submitted: false };
+
   public name = '';
   public avatar = '';
   public roles = [];
 
-  @Action({ commit: 'LOGIN_SUCCESS' })
+  @Action //({ commit: 'LOGIN_SUCCESS' })
   public async login({ email, password }) {
-    const data = await gqlHttp(LOGIN, { email, password });
-    return data.login;
+    const data = await gqlHttp(LOGIN, { email, password }).catch(this.setError);
+
+    data && this.loginSuccess(data.login);
   }
 
-  @Action({ commit: 'LOGIN_SUCCESS' })
+  @Action
   public async register({ name, email, password }) {
-    const data = await gqlHttp(REGISTER, { name, email, password });
-    return data.register;
+    await this.clearErrors();
+    const data = await gqlHttp(REGISTER, { name, email, password }).catch(
+      this.setError
+    );
+
+    data && this.loginSuccess(data.register);
+  }
+
+  @Action
+  public async recoverAccount({ email }) {
+    await this.clearErrors();
+    const data = await gqlHttp(RECOVER_ACCOUNT, { email }).catch(this.setError);
+    data && (await this.accountRecoveredSuccess());
+  }
+
+  @Action
+  public async verifyAccount({ token }) {
+    await this.clearErrors();
+    const data = await gqlHttp(VERIFY_ACCOUNT, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).catch(this.setError);
+    data && this.loginSuccess(data.verifyAccount);
+  }
+
+  @Action
+  public async changePassword({ token, password }) {
+    await this.clearErrors();
+    const data = await gqlHttp(
+      CHANGE_PASSWORD,
+      { password },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).catch(this.setError);
+    data &&
+      this.loginSuccess(data.changePassword) &&
+      (await this.changePasswordSuccess());
+  }
+
+  @MutationAction({ mutate: ['recoverAccountSubmitted'] })
+  async accountRecoveredSuccess() {
+    return { recoverAccountSubmitted: true };
+  }
+
+  @MutationAction({ mutate: ['changePasswordSubmitted'] })
+  async changePasswordSuccess() {
+    return { changePasswordSubmitted: true };
+  }
+
+  @MutationAction({ mutate: ['token', 'user'] })
+  async loginSuccess(payload) {
+    StorageService.save(StorageTypes.USER, payload.user);
+    StorageService.save(StorageTypes.TOKEN, payload.token);
+    return payload;
+  }
+
+  @MutationAction({ mutate: ['error'] })
+  async setError(error) {
+    return { error: error.message };
+  }
+
+  @MutationAction({ mutate: ['error'] })
+  async clearErrors() {
+    return { error: null };
   }
 
   @Action({ commit: 'LOGOUT' })
@@ -51,6 +133,11 @@ class Auth extends VuexModule implements IAuthState {
     StorageService.save(StorageTypes.TOKEN, token);
     StorageService.save(StorageTypes.USER, user);
   }
+
+  // @Mutation
+  // private LOGIN_ERROR(error) {
+  //   this.error = error;
+  // }
 
   @Mutation
   private LOGOUT() {

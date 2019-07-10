@@ -1,14 +1,5 @@
 <template>
   <v-card class="elevation-0">
-    <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'EMAIL_EXIST'">
-        This email is already registered. Want to
-        <router-link to="/login">login</router-link>or
-        <router-link to="/recover-account">recover your password?</router-link>
-      </div>
-      <div v-else>Cannot register right now, try again later</div>
-    </v-alert>
-
     <v-card-text>
       <v-form v-model="valid" ref="form">
         <v-text-field
@@ -34,18 +25,19 @@
         ></v-text-field>
       </v-form>
 
-      <v-list>
-        <v-list-tile>
-          <small>
-            By registering, you agree to Discord's Terms of Service and Privacy
-            Policy.
-          </small>
-        </v-list-tile>
-      </v-list>
+      <small class="mb-2" style="display:block;">
+        By registering, you agree to Cognishine's Terms of Service and Privacy
+        Policy.
+      </small>
+
+      <p v-if="error" style="color:red;">
+        <span v-if="error === 'EXIST'" v-html="$t('Vuetify.Register.errors.exist')"></span>
+        <span v-else v-html="$t('Vuetify.Register.errors.general')"></span>
+      </p>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="indigo darken-1" dark @click="submit" block class="v-btn-round">Register</v-btn>
+      <v-btn color="#0E4D7B" dark @click="submit" block class="v-btn-round">Register</v-btn>
     </v-card-actions>
   </v-card>
 </template>

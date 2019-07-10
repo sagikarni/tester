@@ -1,6 +1,6 @@
 <template>
   <v-card class="elevation-0">
-        <v-card-text>
+    <v-card-text>
       <v-form v-model="valid" ref="form">
         <v-text-field
           v-model="email"
@@ -18,17 +18,17 @@
         ></v-text-field>
       </v-form>
 
-      <v-switch v-model="rememberMe" color="purple" label="Keep me loggedin"></v-switch>
+      <v-checkbox v-model="rememberMe" color="#0E4D7B" label="Keep me loggedin"></v-checkbox>
       <router-link to="/recover-account">Forgot your password?</router-link>
 
-      <!-- <v-list-tile
-          >Need an account? &nbsp;
-          <router-link to="/register">Register</router-link>
-      </v-list-tile>-->
+      <p v-if="error" style="color:red;">
+        <span v-if="error === 'INVALID_PASSWORD'" v-html="$t('Vuetify.Login.errors.invalidpassword')"></span>
+        <span v-else v-html="$t('Vuetify.Login.errors.general')"></span>
+      </p>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="indigo darken-1" dark @click="submit" block class="v-btn-round">Login</v-btn>
+      <v-btn color="#0E4D7B" dark @click="submit" block class="v-btn-round">Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>

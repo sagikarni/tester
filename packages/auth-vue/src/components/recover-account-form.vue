@@ -1,49 +1,41 @@
 <template>
-  <v-card>
-    <v-toolbar dark color="primary">
-      <v-toolbar-title>Account Recovery</v-toolbar-title>
-    </v-toolbar>
-
-    <v-alert dismissible :value="error" color="error" icon="error">
-      <div v-if="error === 'EMAIL_EXIST'">
-        This email is already registered. Want to
-        <router-link to="/login">login</router-link>or
-        <router-link to="/recover-account">recover your password?</router-link>
-      </div>
-      <div v-else>Cannot recover your account right now, try again later</div>
-    </v-alert>
-
-    <v-subheader>Recover your Account</v-subheader>
-
+  <div class="mb-3 pa-3">
     <template v-if="!submitted">
-      <v-card-text>
+      <v-img
+        :src="require(`@/assets/forgot.png`)"
+        style="clip-path:circle(118px at center);"
+        class="mb-3"
+      />
+      <h1 class="display-1 mb-3">Forgot Password?</h1>
+      <p class="mx-2" style="text-align:center;">
         Please provide the email address that you used when you signed up for
         your account. We will send you an email that will allow you to reset
         your password.
-        <v-spacer></v-spacer>
+      </p>
 
-        <v-form v-model="valid" ref="form">
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="What's your email?"
-            required
-            type="email"
-            prepend-icon="person"
-          ></v-text-field>
-        </v-form>
-      </v-card-text>
+      <v-form v-model="valid" ref="form" class="mb-3">
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="What's your email?"
+          required
+          type="email"
+        ></v-text-field>
+      </v-form>
 
-      <v-card-actions class="pa-3">
-        <v-spacer></v-spacer>
-        <v-btn color="primary" @click="submit">Send verification email</v-btn>
-      </v-card-actions>
+      <p v-if="error" style="color:red;">
+        <span v-if="error === 'NOTEXIST'" v-html="$t('Vuetify.RecoverAccount.errors.notexist')"></span>
+        <span v-else v-html="$t('Vuetify.RecoverAccount.errors.general')"></span>
+      </p>
+      <v-btn color="#0E4D7B" block @click="submit" dark>Send verification email</v-btn>
     </template>
-
     <template v-else>
-      <v-card-text>Please check your inbox to reset your account.</v-card-text>
+      <div style="text-align:center;">
+        <v-icon class="mb-3" dark size="130" color="#25AE88">check_circle</v-icon>
+        <p class="headline">Please check your inbox to reset your account</p>
+      </div>
     </template>
-  </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -54,8 +46,9 @@ export default class RecoverAccountFormComponent extends Vue {
   @Prop()
   error!: string;
 
+  @Prop() submitted: boolean;
+
   public valid = false;
-  public submitted = false;
 
   public email = '';
 
@@ -79,7 +72,6 @@ export default class RecoverAccountFormComponent extends Vue {
       return;
     }
 
-    this.submitted = true;
     const { email } = this;
     this.$emit('submit', { email });
   }

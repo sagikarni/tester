@@ -1,0 +1,6 @@
+{
+  "errors": {
+    "exist": "This email is already registered. Want to <a href=\"/\">login</a> or <a href=\"/recover-account\">recover your password?</a>",
+    "general": "Cannot register right now, try again later"
+  }
+}

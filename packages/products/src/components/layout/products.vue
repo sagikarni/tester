@@ -57,6 +57,7 @@ export default class Products extends Vue {
 
   Packages = [
     {
+      url: '/',
       plan: 'monthly',
       recommended: false,
       title: 'Free',
@@ -71,6 +72,7 @@ export default class Products extends Vue {
       features: ['+ 200 free activities', 'video & photo activities'],
     },
     {
+      url: '/',
       plan: 'monthly',
       recommended: true,
       title: 'Personal',
@@ -89,6 +91,7 @@ export default class Products extends Vue {
       ],
     },
     {
+      url: '/',
       plan: 'monthly',
       recommended: false,
       title: 'Business',
@@ -107,6 +110,7 @@ export default class Products extends Vue {
       ],
     },
     {
+      url: '/contactus?p=ep',
       plan: 'monthly',
       recommended: false,
       title: 'Enterprice',
@@ -118,6 +122,7 @@ export default class Products extends Vue {
       features: ['All Business Features', 'Affect Content', 'Primier support'],
     },
     {
+      url: '/',
       plan: 'yearly',
       recommended: false,
       title: 'Free',
@@ -132,6 +137,7 @@ export default class Products extends Vue {
       features: ['+ 200 free activities', 'video & photo activities'],
     },
     {
+      url: '/',
       plan: 'yearly',
       recommended: true,
       title: 'Personal',
@@ -150,6 +156,7 @@ export default class Products extends Vue {
       ],
     },
     {
+      url: '/',
       plan: 'yearly',
       recommended: false,
       title: 'Business',
@@ -168,6 +175,7 @@ export default class Products extends Vue {
       ],
     },
     {
+      url: '/contactus?p=ep',
       plan: 'yearly',
       recommended: false,
       title: 'Enterprice',

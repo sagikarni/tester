@@ -6,6 +6,6 @@ import { auth } from './auth';
 const router = Router();
 
 router.use('/api', cors(), api);
-router.use('/auth', auth);
+router.use('/access', auth);
 
 export { router as routes };
