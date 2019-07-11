@@ -1,5 +1,5 @@
 <template>
-    <activity-details :activity="activity"></activity-details>
+  <activity-details :activity="activity"></activity-details>
 </template>
 
 <script lang="ts">
@@ -12,6 +12,7 @@ import { DomainsModule } from 'tera-core/src/store/domains.module';
 import { AppModule } from 'tera-core/src/store/app';
 import { StripsModule } from 'tera-core/src/store/strips.module';
 import { BoardsModule } from 'tera-core/src/store/boards.module';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -42,13 +43,23 @@ export default class Activity extends Vue {
   }
 
   public async beforeRouteEnter(to, from, next) {
-    await Promise.all([
-      ActivitiesModule.load(),
-      CategoriesModule.load(),
-      DomainsModule.load(),
-      StripsModule.load(),
-      BoardsModule.load()
-    ]);
+    let loads = [];
+    if (AuthModule.user) {
+      await Promise.all([
+        ActivitiesModule.load(),
+        CategoriesModule.load(),
+        DomainsModule.load(),
+        StripsModule.load(),
+        BoardsModule.load(),
+      ]);
+    } else {
+      await Promise.all([
+        ActivitiesModule.load(),
+        CategoriesModule.load(),
+        DomainsModule.load(),
+        StripsModule.load(),
+      ]);
+    }
     next();
   }
 }

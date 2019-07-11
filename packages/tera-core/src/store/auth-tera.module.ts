@@ -6,6 +6,8 @@ import {
   getModule,
   MutationAction,
 } from 'vuex-module-decorators';
+import axios from 'axios';
+
 import store from './index';
 
 import { gqlHttp } from '../gql-http';

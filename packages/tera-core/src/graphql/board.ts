@@ -6,6 +6,7 @@ export const LOAD_BOARDS = gql`
       _id
       name
       user
+      items
       updated_at
       created_at
     }

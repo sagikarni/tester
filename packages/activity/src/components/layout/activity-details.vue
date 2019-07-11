@@ -69,9 +69,12 @@
         <v-card-text>
           <v-list v-if="boards.length">
             <template v-for="(board, index) in boards">
-              <v-list-tile :key="board" @click="addToBoard(board)">
+              <v-list-tile :key="board.name" @click="addToBoard(board)">
                 <v-list-tile-content>
-                  <v-list-tile-title>{{board.name}}</v-list-tile-title>
+                  <v-list-tile-title style="display:flex;justify-content:space-between">
+                    <span>{{board.name}}</span>
+                    <span>{{board.items.length}}</span>
+                  </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-divider :key="index"></v-divider>
@@ -173,7 +176,7 @@ export default class ActivityDetails extends Vue {
       this.dialogLogin = true;
       return;
     }
-    
+
     this.pinDialog = true;
   }
 
@@ -186,7 +189,10 @@ export default class ActivityDetails extends Vue {
   }
 
   async addToBoard(board) {
-    await BoardsModule.boardCreateItemOne({ id: board._id, item: this.activity._id });
+    await BoardsModule.boardCreateItemOne({
+      id: board._id,
+      item: this.activity._id,
+    });
 
     this.text = `${this.activity.name} activity added to ${board.name}.`;
     this.pinDialog = false;
@@ -196,9 +202,12 @@ export default class ActivityDetails extends Vue {
   get pinDialogWidth() {
     return this.$vuetify.breakpoint.mdAndUp ? 500 : 1000;
   }
-  
+
   get boards() {
-    return BoardsModule.board.all();
+    return BoardsModule.board
+      .query()
+      .with('items')
+      .get();
   }
 
   shareOnTwitter(e) {

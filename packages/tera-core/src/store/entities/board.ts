@@ -9,6 +9,8 @@ export class Board extends Model {
     return {
       _id: this.attr(null),
       name: this.attr(''),
+      user: this.attr(null),
+      items: this.attr([]),
     };
   }
 }

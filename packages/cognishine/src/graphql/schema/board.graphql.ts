@@ -1,6 +1,7 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
 import { Board, User } from '../../mongodb';
 import { GraphQLNonNull, GraphQLList } from 'graphql';
+import { requireToken } from '../../auth/graphql-resolver-wrappers';
 
 const BoardTC = composeWithMongoose(Board);
 
@@ -19,7 +20,8 @@ BoardTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     const { name } = args;
 
-    const user = await User.findById('5d2637aced78815a441c8400');
+    //const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     const board = await new Board({ name, user: user._id }).save();
 
@@ -37,7 +39,8 @@ BoardTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     const { id, item } = args;
 
-    const user = await User.findById('5d2637aced78815a441c8400');
+    // const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     const boardx = await Board.findOne({ _id: id, user: user._id });
 
@@ -58,7 +61,8 @@ BoardTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     const { id, item } = args;
 
-    const user = await User.findById('5d2637aced78815a441c8400');
+    // const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     const boardx = await Board.findOne({ _id: id, user: user._id });
 
@@ -78,7 +82,8 @@ BoardTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     const { id } = args;
 
-    const user = await User.findById('5d2637aced78815a441c8400');
+    // const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     await Board.deleteOne({ _id: id, user: user._id });
   },
@@ -94,7 +99,8 @@ BoardTC.addResolver({
   resolve: async ({ source, args, context, info }) => {
     const { id, item } = args;
 
-    const user = await User.findById('5d2637aced78815a441c8400');
+    // const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     const boardx = await Board.findOne({ _id: id, user: user._id });
 
@@ -114,8 +120,8 @@ BoardTC.addResolver({
   type: new GraphQLNonNull(BoardTC.getType()),
   resolve: async ({ source, args, context, info }) => {
     const { id, name } = args;
-
-    const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
+    // const user = await User.findById('5d2637aced78815a441c8400');
 
     const boardx = await Board.findOne({ _id: id, user: user._id });
     boardx.name = name;
@@ -129,7 +135,8 @@ BoardTC.addResolver({
   name: 'boardMany',
   type: new GraphQLList(new GraphQLNonNull(BoardTC.getType())),
   resolve: async ({ source, args, context, info }) => {
-    const user = await User.findById('5d2637aced78815a441c8400');
+    //const user = await User.findById('5d2637aced78815a441c8400');
+    const { user } = context;
 
     const boardx = await Board.find({ user: user._id });
 
@@ -138,8 +145,9 @@ BoardTC.addResolver({
 });
 
 export const QUERIES = {
-  boardMany: BoardTC.getResolver('boardMany'),
-
+  ...requireToken('bearer', 'access', {
+    boardMany: BoardTC.getResolver('boardMany'),
+  }),
   // boardById: BoardTC.getResolver('findById'),
   // boardByIds: BoardTC.getResolver('findByIds'),
   // boardOne: BoardTC.getResolver('findOne'),
@@ -150,13 +158,13 @@ export const QUERIES = {
 };
 
 export const MUTATIONS = {
-  // ...requireToken('bearer', 'access', {
-  boardCreateOne: BoardTC.getResolver('boardCreateOne'),
-  boardCreateItemOne: BoardTC.getResolver('boardCreateItemOne'),
-  boardRenameOne: BoardTC.getResolver('boardRenameOne'),
-  boardRemoveOne: BoardTC.getResolver('boardRemoveOne'),
-  boardRemoveItemOne: BoardTC.getResolver('boardRemoveItemOne'),
-  // }),
+  ...requireToken('bearer', 'access', {
+    boardCreateOne: BoardTC.getResolver('boardCreateOne'),
+    boardCreateItemOne: BoardTC.getResolver('boardCreateItemOne'),
+    boardRenameOne: BoardTC.getResolver('boardRenameOne'),
+    boardRemoveOne: BoardTC.getResolver('boardRemoveOne'),
+    boardRemoveItemOne: BoardTC.getResolver('boardRemoveItemOne'),
+  }),
 
   // boardCreateOne: BoardTC.getResolver('createOne'),
   // boardCreateMany: BoardTC.getResolver('createMany'),
