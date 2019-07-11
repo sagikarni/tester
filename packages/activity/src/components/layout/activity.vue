@@ -11,6 +11,7 @@ import { CategoriesModule } from 'tera-core/src/store/categories.module';
 import { DomainsModule } from 'tera-core/src/store/domains.module';
 import { AppModule } from 'tera-core/src/store/app';
 import { StripsModule } from 'tera-core/src/store/strips.module';
+import { BoardsModule } from 'tera-core/src/store/boards.module';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -46,6 +47,7 @@ export default class Activity extends Vue {
       CategoriesModule.load(),
       DomainsModule.load(),
       StripsModule.load(),
+      BoardsModule.load()
     ]);
     next();
   }

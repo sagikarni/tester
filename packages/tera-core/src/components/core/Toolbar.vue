@@ -17,6 +17,10 @@
       style="position:fixed;top:0;left:0;width:22px;height:22px;background:#555;color:#fff;opacity:.5;"
     >{{$vuetify.breakpoint.name}}</div>
 
+     <v-btn icon @click="goBack">
+        <v-icon>keyboard_backspace</v-icon>
+      </v-btn>
+
     <v-toolbar-side-icon @click.stop="toggleDrawer" />
 
     <slot slot="extension" name="extension"></slot>
@@ -24,12 +28,7 @@
     <v-spacer class="hidden-md-and-up" />
 
     <router-link to="/">
-      <v-img
-        alt="Tera Logo"
-        :src="require(`@/assets/logo.svg`)"
-        contain
-        width="143px"
-      />
+      <v-img alt="Tera Logo" :src="require(`@/assets/logo.svg`)" contain width="143px" />
     </router-link>
 
     <v-toolbar-items class="hidden-md-and-down">
@@ -79,6 +78,9 @@ export default class Toolbar extends Vue {
     AppModule.toggleDrawer(true);
   }
 
+  goBack() {
+
+  }
   // handleScroll(event) {
   //   this.$nextTick(() => {
   //     if (window.scrollY > 80) {

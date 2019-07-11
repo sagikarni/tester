@@ -71,7 +71,7 @@
             <template v-for="(board, index) in boards">
               <v-list-tile :key="board" @click="addToBoard(board)">
                 <v-list-tile-content>
-                  <v-list-tile-title>{{board}}</v-list-tile-title>
+                  <v-list-tile-title>{{board.name}}</v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-divider :key="index"></v-divider>
@@ -153,6 +153,7 @@
 <script lang="ts">
 import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
 import { AuthModule } from 'tera-core/src/store/auth-tera.module';
+import { BoardsModule } from 'tera-core/src/store/boards.module';
 
 @Component({
   components: {
@@ -176,14 +177,18 @@ export default class ActivityDetails extends Vue {
     this.pinDialog = true;
   }
 
-  addBoard() {
+  async addBoard() {
+    await BoardsModule.boardCreateOne({ name: this.newBoard });
+
     console.log({ board: this.newBoard });
     this.newBoard = '';
     this.newBoardDialog = false;
   }
 
-  addToBoard(board) {
-    this.text = 'add !!';
+  async addToBoard(board) {
+    await BoardsModule.boardCreateItemOne({ id: board._id, item: this.activity._id });
+
+    this.text = `${this.activity.name} activity added to ${board.name}.`;
     this.pinDialog = false;
     this.snackbar = true;
   }
@@ -191,7 +196,10 @@ export default class ActivityDetails extends Vue {
   get pinDialogWidth() {
     return this.$vuetify.breakpoint.mdAndUp ? 500 : 1000;
   }
-  boards = ['My board1', 'My board2', 'My board3'];
+  
+  get boards() {
+    return BoardsModule.board.all();
+  }
 
   shareOnTwitter(e) {
     const url = `https://twitter.com/intent/tweet?text=Onboarding%20CMP%20-%20ShareThis&url=https%3A%2F%2Fwww.sharethis.com%2F`;

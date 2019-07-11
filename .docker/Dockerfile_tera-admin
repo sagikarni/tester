@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ./dist/tera-admin .
 
-COPY ./apps/admin-server/.env .
+COPY ./apps/admin-server/.prod.env ./.env
 
 RUN npm install
 

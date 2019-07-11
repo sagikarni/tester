@@ -9,6 +9,7 @@ import * as fromSubCategory from './sub-category.graphql';
 import * as fromDomain from './domain.graphql';
 import * as fromActivityType from './activity-type.graphql';
 import * as fromStrips from './strips.graphql';
+import * as fromBoard from './board.graphql';
 
 schemaComposer.Query.addFields({
   ...fromUser.QUERIES,
@@ -19,6 +20,7 @@ schemaComposer.Query.addFields({
   ...fromDomain.QUERIES,
   ...fromActivityType.QUERIES,
   ...fromStrips.QUERIES,
+  ...fromBoard.QUERIES,
 });
 
 schemaComposer.Mutation.addFields({
@@ -27,6 +29,7 @@ schemaComposer.Mutation.addFields({
   ...fromSubCategory.MUTATIONS,
   ...fromActivity.MUTATIONS,
   ...fromArticulation.MUTATIONS,
+  ...fromBoard.MUTATIONS,
 });
 
 const graphqlSchema = schemaComposer.buildSchema();

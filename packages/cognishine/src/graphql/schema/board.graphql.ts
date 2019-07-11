@@ -1,7 +1,6 @@
 import composeWithMongoose from 'graphql-compose-mongoose';
-import { Board } from '../../mongodb';
+import { Board, User } from '../../mongodb';
 import { GraphQLNonNull, GraphQLList } from 'graphql';
-import mongoose from 'mongoose';
 
 const BoardTC = composeWithMongoose(Board);
 
@@ -12,57 +11,161 @@ async function asyncForEach(array, callback) {
 }
 // https://graphqlmastery.com/blog/graphql-list-how-to-use-arrays-in-graphql-schema
 BoardTC.addResolver({
-  name: 'updateOrCreate',
+  name: 'boardCreateOne',
   args: {
-    collections: {
-      type: ['JSON!'], // articulationTC.getITC()],
-    },
+    name: { type: 'String!' },
   },
-  type: new GraphQLNonNull(
-    new GraphQLList(new GraphQLNonNull(BoardTC.getType()))
-  ),
+  type: new GraphQLNonNull(BoardTC.getType()),
   resolve: async ({ source, args, context, info }) => {
-    debugger;
+    const { name } = args;
 
-    const cols = [];
+    const user = await User.findById('5d2637aced78815a441c8400');
 
-    await asyncForEach(args.collections, async (collection) => {
-      if (!collection._id) {
-        collection._id = mongoose.Types.ObjectId();
-      }
+    const board = await new Board({ name, user: user._id }).save();
 
-      cols.push(
-        await Board.findByIdAndUpdate(collection._id, collection, {
-          upsert: true,
-          setDefaultsOnInsert: true,
-          new: true,
-        })
-      );
-    });
+    return board;
+  },
+});
 
-    return cols;
+BoardTC.addResolver({
+  name: 'boardCreateItemOne',
+  args: {
+    id: { type: 'String!' },
+    item: { type: 'String!' },
+  },
+  type: new GraphQLNonNull(BoardTC.getType()),
+  resolve: async ({ source, args, context, info }) => {
+    const { id, item } = args;
+
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    const boardx = await Board.findOne({ _id: id, user: user._id });
+
+    boardx.items = [...boardx.items, item];
+
+    const board = await boardx.save();
+    return board;
+  },
+});
+
+BoardTC.addResolver({
+  name: 'boardRenameOne',
+  args: {
+    id: { type: 'String!' },
+    item: { type: 'String!' },
+  },
+  type: new GraphQLNonNull(BoardTC.getType()),
+  resolve: async ({ source, args, context, info }) => {
+    const { id, item } = args;
+
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    const boardx = await Board.findOne({ _id: id, user: user._id });
+
+    boardx.items = [...boardx.items, item];
+
+    const board = await boardx.save();
+    return board;
+  },
+});
+
+BoardTC.addResolver({
+  name: 'boardRemoveOne',
+  args: {
+    id: { type: 'String!' },
+  },
+  // type: new GraphQLNonNull(BoardTC.getType()),
+  resolve: async ({ source, args, context, info }) => {
+    const { id } = args;
+
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    await Board.deleteOne({ _id: id, user: user._id });
+  },
+});
+
+BoardTC.addResolver({
+  name: 'boardRemoveItemOne',
+  args: {
+    id: { type: 'String!' },
+    item: { type: 'String!' },
+  },
+  type: new GraphQLNonNull(BoardTC.getType()),
+  resolve: async ({ source, args, context, info }) => {
+    const { id, item } = args;
+
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    const boardx = await Board.findOne({ _id: id, user: user._id });
+
+    boardx.items = boardx.items.filter((b) => b !== item);
+
+    const board = await boardx.save();
+    return board;
+  },
+});
+
+BoardTC.addResolver({
+  name: 'boardRenameOne',
+  args: {
+    id: { type: 'String!' },
+    name: { type: 'String!' },
+  },
+  type: new GraphQLNonNull(BoardTC.getType()),
+  resolve: async ({ source, args, context, info }) => {
+    const { id, name } = args;
+
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    const boardx = await Board.findOne({ _id: id, user: user._id });
+    boardx.name = name;
+
+    const board = await boardx.save();
+    return board;
+  },
+});
+
+BoardTC.addResolver({
+  name: 'boardMany',
+  type: new GraphQLList(new GraphQLNonNull(BoardTC.getType())),
+  resolve: async ({ source, args, context, info }) => {
+    const user = await User.findById('5d2637aced78815a441c8400');
+
+    const boardx = await Board.find({ user: user._id });
+
+    return boardx;
   },
 });
 
 export const QUERIES = {
-  boardById: BoardTC.getResolver('findById'),
-  boardByIds: BoardTC.getResolver('findByIds'),
-  boardOne: BoardTC.getResolver('findOne'),
-  boardMany: BoardTC.getResolver('findMany'),
-  boardCount: BoardTC.getResolver('count'),
-  boardConnection: BoardTC.getResolver('connection'),
-  boardPagination: BoardTC.getResolver('pagination'),
+  boardMany: BoardTC.getResolver('boardMany'),
+
+  // boardById: BoardTC.getResolver('findById'),
+  // boardByIds: BoardTC.getResolver('findByIds'),
+  // boardOne: BoardTC.getResolver('findOne'),
+  // boardMany: BoardTC.getResolver('findMany'),
+  // boardCount: BoardTC.getResolver('count'),
+  // boardConnection: BoardTC.getResolver('connection'),
+  // boardPagination: BoardTC.getResolver('pagination'),
 };
 
 export const MUTATIONS = {
-  boardCreateOne: BoardTC.getResolver('createOne'),
-  boardCreateMany: BoardTC.getResolver('createMany'),
-  boardUpdateById: BoardTC.getResolver('updateById'),
-  boardUpdateOne: BoardTC.getResolver('updateOne'),
-  boardUpdateMany: BoardTC.getResolver('updateMany'),
-  boardRemoveById: BoardTC.getResolver('removeById'),
-  boardRemoveOne: BoardTC.getResolver('removeOne'),
-  boardRemoveMany: BoardTC.getResolver('removeMany'),
+  // ...requireToken('bearer', 'access', {
+  boardCreateOne: BoardTC.getResolver('boardCreateOne'),
+  boardCreateItemOne: BoardTC.getResolver('boardCreateItemOne'),
+  boardRenameOne: BoardTC.getResolver('boardRenameOne'),
+  boardRemoveOne: BoardTC.getResolver('boardRemoveOne'),
+  boardRemoveItemOne: BoardTC.getResolver('boardRemoveItemOne'),
+  // }),
 
-  boardUpdateOrCreate: BoardTC.getResolver('updateOrCreate'),
+  // boardCreateOne: BoardTC.getResolver('createOne'),
+  // boardCreateMany: BoardTC.getResolver('createMany'),
+  // boardUpdateById: BoardTC.getResolver('updateById'),
+  // boardUpdateOne: BoardTC.getResolver('updateOne'),
+  // boardUpdateMany: BoardTC.getResolver('updateMany'),
+  // boardRemoveById: BoardTC.getResolver('removeById'),
+  // boardRemoveOne: BoardTC.getResolver('removeOne'),
+  // boardRemoveMany: BoardTC.getResolver('removeMany'),
+
+  // boardUpdateOrCreate: BoardTC.getResolver('updateOrCreate'),
 };

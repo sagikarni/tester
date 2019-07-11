@@ -1,9 +1,6 @@
 <template>
   <div id="nav-toolbar" style="display:flex;flex:1;">
     <div class="col col-l">
-      <v-btn small flat dark color="black" @click="goBack">
-        <v-icon dark>keyboard_backspace</v-icon>
-      </v-btn>
       <slot name="left"></slot>
     </div>
     <h2
