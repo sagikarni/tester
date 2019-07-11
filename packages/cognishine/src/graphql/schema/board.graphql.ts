@@ -102,11 +102,21 @@ BoardTC.addResolver({
     // const user = await User.findById('5d2637aced78815a441c8400');
     const { user } = context;
 
-    const boardx = await Board.findOne({ _id: id, user: user._id });
+    console.log({ item });
+    console.log({ id });
 
-    boardx.items = boardx.items.filter((b) => b !== item);
+    await Board.update(
+      { _id: id, user: user._id },
+      { $pullAll: { items: [item] } }
+    );
 
-    const board = await boardx.save();
+    const board = await Board.findOne({ _id: id, user: user._id });
+
+    console.log({ board });
+    // console.log({ xx: boardx.items });
+    // boardx.items = boardx.items.filter((b) => b !== item);
+
+    // const board = await boardx.save();
     return board;
   },
 });

@@ -11,6 +11,7 @@ export class Activity extends Model {
   static fields() {
     return {
       _id: this.attr(null),
+      activity_id: this.attr(null),
       name: this.attr(''),
       type: this.belongsTo(ActivityType, 'type_id'),
       type_id: this.attr(''),
