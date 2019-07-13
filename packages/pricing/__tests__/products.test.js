@@ -3,5 +3,5 @@
 const activity = require('..');
 
 describe('activity', () => {
-    it('needs tests');
+  it('needs tests');
 });

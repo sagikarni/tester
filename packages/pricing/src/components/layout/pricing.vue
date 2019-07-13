@@ -1,5 +1,5 @@
 <template>
-  <core-layout id="products" extension="true">
+  <core-layout id="pricing" extension="true">
     <core-nav slot="extension"></core-nav>
     <v-content>
       <v-container>

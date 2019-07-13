@@ -1,6 +1,6 @@
 //https://github.com/vuejs/vue-cli/issues/1081
 module.exports = {
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     //Disable thread-loader, cache-loader
     const tsRule = config.module.rule('ts').test(/\.ts$/);
     const tsxRule = config.module.rule('tsx').test(/\.tsx$/);
@@ -14,7 +14,7 @@ module.exports = {
     tsRule
       .use('ts-loader')
       .loader('ts-loader')
-      .tap(opts => {
+      .tap((opts) => {
         // console.log({ opts});
         // process.exit();
         opts.compilerOptions = { declaration: true };
@@ -22,5 +22,5 @@ module.exports = {
         opts.happyPackMode = false;
         return opts;
       });
-  }
+  },
 };

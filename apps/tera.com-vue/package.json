@@ -36,7 +36,7 @@
     "what-is-wrong-activity": "^0.0.0",
     "whats-in-the-picture-activity": "^0.0.0",
     "zoom-activity": "^0.0.0",
-    "products": "0.0.0",
+    "pricing": "0.0.0",
     "event-source-polyfill": "^0.0.12",
     "babel-polyfill": "^6.26.0",
     "vuex-router-sync": "^5.0.0",

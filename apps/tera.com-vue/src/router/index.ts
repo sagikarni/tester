@@ -13,7 +13,7 @@ import { Shell, routes as coreRoutes } from 'tera-core';
 import { routes as authRoutes } from 'auth-vue';
 import { routes as activityRoutes } from 'activity';
 
-import { routes as productsRoutes } from 'products';
+import { routes as pricingRoutes } from 'pricing';
 
 import activitiesRoutes from './activities-routes';
 
@@ -30,7 +30,7 @@ const languageRegex = /^\/([a-z]{2,3}|[a-z]{2,3}-[a-zA-Z]{4}|[a-z]{2,3}-[A-Z]{2,
 const children = [
   ...coreRoutes,
   ...authRoutes,
-  ...productsRoutes,
+  ...pricingRoutes,
   ...activityRoutes,
   ...activitiesRoutes,
 ];
