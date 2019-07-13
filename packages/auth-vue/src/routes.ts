@@ -35,10 +35,10 @@ export default [
         /* webpackChunkName: "verify-account" */ './components/verify-account.vue'
       ),
   },
-  {
-    path: 'profile',
-    name: 'profile',
-    component: () =>
-      import(/* webpackChunkName: "profile" */ './components/profile.vue'),
-  },
+  // {
+  //   path: 'profile',
+  //   name: 'profile',
+  //   component: () =>
+  //     import(/* webpackChunkName: "profile" */ './components/profile.vue'),
+  // },
 ];

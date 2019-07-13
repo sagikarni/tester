@@ -5,16 +5,21 @@ export default [
     component: () => import(/* webpackChunkName: "home" */ './home.vue'),
   },
   {
-    path: '/boards',
+    path: 'boards',
     name: 'boards',
     component: () =>
       import(/* webpackChunkName: "my-boards" */ './my-boards.vue'),
   },
   {
-    path: '/boards/:id',
+    path: 'boards/:id',
     name: 'board',
     component: () =>
       import(/* webpackChunkName: "my-board" */ './my-board.vue'),
+  },
+  {
+    path: 'profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "profile" */ './profile.vue'),
   },
   {
     path: '/about',

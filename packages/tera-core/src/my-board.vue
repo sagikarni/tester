@@ -110,7 +110,7 @@ export default class MyBoard extends Vue {
   deleteBoardDialog = false;
   snackbar = false;
   get board() {
-    return BoardsModule.board.find(this.$route.params.id);
+    return BoardsModule.board.find(this.$route.params.id) as any;
   }
   text = '';
 

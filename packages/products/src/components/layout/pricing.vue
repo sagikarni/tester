@@ -4,6 +4,9 @@
     <v-content>
       <v-container>
         <v-layout row align-center justify-center class="mb-5">
+
+          <v-btn @click="onClick">click</v-btn>
+
           <v-btn
             class="text-capitalize"
             round
@@ -46,6 +49,10 @@ import dasherize from 'dasherize';
 })
 export default class Products extends Vue {
   packageType = 'monthly';
+
+  onClick() {
+    // this.vue
+  }
 
   get monthlySelected() {
     return this.packageType === 'monthly';

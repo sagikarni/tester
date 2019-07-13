@@ -1,10 +1,10 @@
 export default [
   {
-    path: '/products',
-    name: 'products',
+    path: '/pricing',
+    name: 'pricing',
     component: () =>
       import(
-        /* webpackChunkName: "products" */ './components/layout/products.vue'
+        /* webpackChunkName: "pricing" */ './components/layout/pricing.vue'
       ),
   },
 ];

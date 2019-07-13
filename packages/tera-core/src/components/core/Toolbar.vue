@@ -72,7 +72,7 @@ export default class Toolbar extends Vue {
   expend = 56;
 
   linksLeft = ['cognition', 'speech', 'communication', 'learning'];
-  linksRight = ['products'];
+  linksRight = ['pricing'];
 
   toggleDrawer() {
     AppModule.toggleDrawer(true);
