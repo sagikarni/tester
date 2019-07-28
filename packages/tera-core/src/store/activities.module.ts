@@ -32,7 +32,7 @@ export class Activities extends VuexModule {
   }
 
   @Action({ commit: 'LOAD_COMPLETE' })
-  public async loadByFilter({ filter, perPage, page }) {
+  public async loadByFilter({ filter, perPage, page, append }) {
     const results = await gqlHttp(FILTER_ACTIVITIES, {
       filter,
       perPage,
@@ -40,6 +40,8 @@ export class Activities extends VuexModule {
     });
 
     console.log({ results });
+    if (!append) await Activity.deleteAll();
+
     await Activity.insertOrUpdate({
       data: results.activityPagination.items,
     });

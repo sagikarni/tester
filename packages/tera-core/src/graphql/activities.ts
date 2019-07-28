@@ -101,7 +101,11 @@ export const FILTER_ACTIVITIES = gql`
         _id
         name
         type
+        level
         description
+        free
+        printable
+        editorial
         notes
         orientation
         mediaType
@@ -109,12 +113,27 @@ export const FILTER_ACTIVITIES = gql`
         subCategory
         status
         audience
-        free
-        printable
-        editorial
         isolate
         updated_at
         created_at
+        metadata {
+          slideCategories
+          slides {
+            media {
+              name
+              _id
+            }
+            phrases
+            category
+            size
+            audio {
+              name
+              _id
+            }
+            mediaIndex
+            _id
+          }
+        }
       }
       count
       pageInfo {

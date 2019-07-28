@@ -1,6 +1,9 @@
 <template>
   <core-layout id="subdomain" extension="true" :class="{ 'expand': expand }">
-    <section slot="extension" style="display:flex;flex:1;position:relative;align-items:center;justify-content:space-between;">
+    <section
+      slot="extension"
+      style="display:flex;flex:1;position:relative;align-items:center;justify-content:space-between;"
+    >
       <v-btn dark color="primary" @click="toggleFilter">
         <v-icon dark>tune</v-icon>Filters
       </v-btn>
@@ -32,7 +35,7 @@
         <div
           style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
         >
-          <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Reset</v-btn>
+          <v-btn flat dark color="white" @click="() => { resetFilter(); idrawerX =!idrawerX }">Reset</v-btn>
           <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Done</v-btn>
         </div>
 
@@ -49,14 +52,14 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.mediaType"
+          v-model="filterX.mediaType"
           label="Video"
           value="Video"
         ></v-checkbox>
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.mediaType"
+          v-model="filterX.mediaType"
           label="Photo"
           value="Photo"
         ></v-checkbox>
@@ -65,7 +68,7 @@
 
         <v-checkbox
           class="my-2"
-          v-model="filter.printable"
+          v-model="filterX.printable"
           label="Printable"
           :value="true"
           :false-value="undefined"
@@ -77,7 +80,7 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.isolate"
+          v-model="filterX.isolate"
           label="Isolate"
           :value="true"
           :false-value="undefined"
@@ -90,21 +93,21 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.audience"
+          v-model="filterX.audience"
           label="All"
           value="All"
         ></v-checkbox>
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.audience"
+          v-model="filterX.audience"
           label="Kids"
           value="Kids"
         ></v-checkbox>
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.audience"
+          v-model="filterX.audience"
           label="Elderly"
           value="Elderly"
         ></v-checkbox>
@@ -116,7 +119,7 @@
         <div
           style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
         >
-          <v-btn flat dark color="white" @click="idrawer =!idrawer">Reset</v-btn>
+          <v-btn flat dark color="white" @click="() => { resetFilter(); idrawer =!idrawer }">Reset</v-btn>
           <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
         </div>
 
@@ -133,7 +136,7 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.mediaType"
+          v-model="filterX.mediaType"
           label="Video"
           value="Video"
         ></v-checkbox>
@@ -141,7 +144,7 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.mediaType"
+          v-model="filterX.mediaType"
           label="Photo"
           value="Photo"
         ></v-checkbox>
@@ -150,7 +153,7 @@
 
         <v-checkbox
           class="my-2"
-          v-model="filter.printable"
+          v-model="filterX.printable"
           label="Printable"
           :value="true"
           :false-value="undefined"
@@ -162,7 +165,7 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.isolate"
+          v-model="filterX.isolate"
           label="Isolate"
           :value="true"
           :false-value="undefined"
@@ -175,14 +178,14 @@
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.audience"
+          v-model="filterX.audience"
           label="Kids"
           value="Kids"
         ></v-checkbox>
         <v-checkbox
           class="my-2"
           :hide-details="true"
-          v-model="filter.audience"
+          v-model="filterX.audience"
           label="Elderly"
           value="Elderly"
         ></v-checkbox>
@@ -190,10 +193,32 @@
     </v-navigation-drawer>
 
     <v-content class="mb-4" style="min-height:700px;">
-      <div class="img-grid">
-        <activity-preview :key="feature._id" :activity="feature" v-for="(feature, i) in act"></activity-preview>
+      <div v-if="act && act.length > 0">
+        <div class="img-grid">
+          <activity-preview :key="feature._id" :activity="feature" v-for="(feature, i) in act"></activity-preview>
+        </div>
+
+        <v-btn
+          :loading="loading4"
+          :disabled="loading4"
+          @click="loadMore"
+          style="margin:20px auto;display:block;"
+          v-if="pagination.hasNextPage"
+        >
+          Load More
+          <template v-slot:loader>
+            <span class="custom-loader">
+              <v-icon light>cached</v-icon>
+            </span>
+          </template>
+        </v-btn>
       </div>
-      <v-btn v-if="page.hasNextPage" @click="loadMore">Load More</v-btn>
+      <div v-else>
+        <div class="not-found-message display-1 pa-5">
+          <strong>Sorry, We could not find activities which fit your filter(s) criterias</strong>
+          <span class="headline">please refine your filters</span>
+        </div>
+      </div>
     </v-content>
   </core-layout>
 </template>
@@ -250,6 +275,10 @@ const removeEmpty = (obj) => {
 export default class Subdomain extends Vue {
   expand = this.$vuetify.breakpoint.mdAndUp;
 
+  resetFilter() {
+    this.filterX = this.newFilter();
+  }
+
   @Watch('$vuetify.breakpoint.name') onChange(o, n) {
     if (this.$vuetify.breakpoint.mdAndUp) {
       this.idrawerX = false;
@@ -268,6 +297,13 @@ export default class Subdomain extends Vue {
       this.hideFilter = !this.hideFilter;
       this.expand = !this.expand;
     }
+  }
+
+  get act() {
+    return ActivitiesModule.activity
+      .query()
+      .with(['type.domain', 'category', 'subCategory.category'])
+      .get();
   }
 
   idrawerX = false;
@@ -426,9 +462,7 @@ export default class Subdomain extends Vue {
   //   this.load(this.$route.params);
   // }
 
-  subDomain;
-
-  pagination = { count: 0, hasNextPage: false, perPage: 4, page: 0 };
+  pagination = { count: 0, hasNextPage: false, perPage: 30, page: 0 };
 
   limit = 2;
 
@@ -488,10 +522,6 @@ export default class Subdomain extends Vue {
   //   console.log({ x, l: x.length });
   //   return x;
   // }
-
-  hasNextPage = true;
-
-  act = [];
 
   // async loadMore() {
   //   this.limit = this.limit + 2;
@@ -557,10 +587,21 @@ export default class Subdomain extends Vue {
   //     await this.fetch();
   //   }
   // }
+  subDomain = null;
 
-  filterX = {
-    category: { name: 'All', value: null },
-  };
+  filterX = this.newFilter();
+
+  newFilter() {
+    return {
+      ...{
+        category: { name: 'All', value: null },
+        printable: null,
+        isolate: null,
+        mediaType: null,
+        audience: null,
+      },
+    };
+  }
 
   page = {
     limit: 0,
@@ -573,39 +614,21 @@ export default class Subdomain extends Vue {
 
     this.load(subDomain);
 
-    if (!this.categories.length) {
-      this.categories = CategoriesModule.subCategory
-        .query()
-        .with('category')
-        .where('types', (value) => value.indexOf(subDomain._id) > -1)
-        .get()
-        .reduce(
-          (a, sc: any) => {
-            const c = sc.category_id;
-            if (!a[c]) {
-              a[c] = {
-                name: sc.category.name,
-                children: [{ name: 'All', value: sc.category_id, type: 1 }],
-              };
-            }
-            a[c].children = a[c].children.concat({
-              name: sc.name,
-              value: sc._id,
-              type: 2,
-            });
-            return a;
-          },
-          { ['All']: this.filterX.category } as any
-        );
-    }
-
     this.$watch(
       'filterX',
       (val, old) => {
+        console.log('filterX changed!!');
         if (!val) return;
         console.log('watch filetrx');
-        this.page.limit = 0;
-        this.refreshGrid();
+
+        this.pagination = {
+          count: 0,
+          hasNextPage: false,
+          perPage: 30,
+          page: 0,
+        };
+
+        this.refreshGrid({ append: false });
       },
       {
         immediate: true,
@@ -623,69 +646,138 @@ export default class Subdomain extends Vue {
     console.log('in updateSubdomain');
     console.log({ subDomain });
     this.subDomain = subDomain;
-    // this.refreshGrid();
-  }
+    this.pagination = { count: 0, hasNextPage: false, perPage: 30, page: 0 };
 
-  // @Watch('filterX', { immediate: true, deep: true })
-  // onPersonChanged1(val: any, oldVal: any) {
-  //   if (val) {
-  //     console.log('watch filetrx');
-  //     this.refreshGrid();
-  //   }
-  // }
-
-  loadMore() {
-    this.refreshGrid();
-  }
-
-  async refreshGrid() {
-    console.log('in refreshGrid');
-    let q = ActivitiesModule.activity
+    this.categories = CategoriesModule.subCategory
       .query()
-      .with(['type.domain', 'category', 'subCategory.category'])
-      .where('type_id', this.subDomain._id);
+      .with('category')
+      .where('types', (value) => value.indexOf(subDomain._id) > -1)
+      .get()
+      .reduce(
+        (a, sc: any) => {
+          const c = sc.category_id;
+          if (!a[c]) {
+            a[c] = {
+              name: sc.category.name,
+              children: [{ name: 'All', value: sc.category_id, type: 1 }],
+            };
+          }
+          a[c].children = a[c].children.concat({
+            name: sc.name,
+            value: sc._id,
+            type: 2,
+          });
+          return a;
+        },
+        { ['All']: this.filterX.category } as any
+      );
+  }
 
-    console.log({ before: q.count() });
+  loader= null;
+   loading4= false;
+
+  async loadMore() {
+    this.loader = 'loading4';
+    this.loading4 = true;
+    await this.refreshGrid({ append: true });
+    this.loader = null;
+    this.loading4 = false;
+  }
+
+  async refreshGrid({ append }) {
+    console.log('in refreshGrid');
+    let filter = {
+      type: this.subDomain._id,
+    } as any;
 
     if (this.filterX.category) {
       if ((this.filterX.category as any).type === 1) {
-        q = q.where('category_id', this.filterX.category.value);
+        filter = { ...filter, category: this.filterX.category.value };
       }
       if ((this.filterX.category as any).type === 2) {
-        q = q.where('subCategory_id', this.filterX.category.value);
+        filter = { ...filter, subCategory: this.filterX.category.value };
       }
     }
 
-    console.log({ after: q.count() });
-
-    this.page.limit = this.page.limit + 2;
-
-    this.page.hasNextPage = q.count() > this.page.limit;
-
-    this.act = q.limit(this.page.limit).get();
-
-    if (!this.page.hasNextPage) {
-      console.log('call to api');
-
-      // const x = await ActivitiesModule.loadByFilter({
-      //   filter: { type: this.subDomain._id },
-      //   perPage: this.pagination.perPage,
-      //   page: this.pagination.page + 1,
-      // });
-
-      //  this.pagination.count = x.activityPagination.count;
-      //  this.pagination.hasNextPage = x.activityPagination.pageInfo.hasNextPage;
-      //  this.pagination.page = x.activityPagination.pageInfo.currentPage;
-
-      //  this.refreshGrid();
+    if (this.filterX.printable) {
+      console.log({ aaa: this.filterX.printable });
+      filter = { ...filter, printable: this.filterX.printable };
     }
+
+    if (this.filterX.isolate) {
+      console.log({ aaa: this.filterX.isolate });
+      filter = { ...filter, isolate: this.filterX.isolate };
+    }
+
+    if (this.filterX.audience) {
+      console.log({ l: this.filterX.audience });
+      filter = { ...filter, audience: this.filterX.audience };
+    }
+
+    if (this.filterX.mediaType) {
+      console.log({ l: this.filterX.mediaType });
+      filter = { ...filter, mediaType: this.filterX.mediaType };
+    }
+
+    const x = await ActivitiesModule.loadByFilter({
+      filter,
+      perPage: this.pagination.perPage,
+      page: this.pagination.page + 1,
+      append,
+    });
+
+    this.pagination.count = x.activityPagination.count;
+    this.pagination.hasNextPage = x.activityPagination.pageInfo.hasNextPage;
+    this.pagination.page = x.activityPagination.pageInfo.currentPage;
+    console.log({ x });
+
+    // console.log('in refreshGrid');
+    // let q = ActivitiesModule.activity
+    //   .query()
+    //   .with(['type.domain', 'category', 'subCategory.category'])
+    //   .where('type_id', this.subDomain._id);
+
+    // console.log({ before: q.count() });
+
+    // if (this.filterX.category) {
+    //   if ((this.filterX.category as any).type === 1) {
+    //     q = q.where('category_id', this.filterX.category.value);
+    //   }
+    //   if ((this.filterX.category as any).type === 2) {
+    //     q = q.where('subCategory_id', this.filterX.category.value);
+    //   }
+    // }
+
+    // console.log({ after: q.count() });
+
+    // this.page.limit = this.page.limit + 2;
+
+    // this.page.hasNextPage = q.count() > this.page.limit;
+
+    // this.act = q.limit(this.page.limit).get();
+
+    // if (!this.page.hasNextPage) {
+    //   console.log('call to api');
+
+    //   // const x = await ActivitiesModule.loadByFilter({
+    //   //   filter: { type: this.subDomain._id },
+    //   //   perPage: this.pagination.perPage,
+    //   //   page: this.pagination.page + 1,
+    //   // });
+
+    //   //  this.pagination.count = x.activityPagination.count;
+    //   //  this.pagination.hasNextPage = x.activityPagination.pageInfo.hasNextPage;
+    //   //  this.pagination.page = x.activityPagination.pageInfo.currentPage;
+
+    //   //  this.refreshGrid();
+    // }
   }
 
   public async beforeRouteEnter(to, from, next) {
     await Promise.all([
       CategoriesModule.load(),
       DomainsModule.load(),
-      ActivitiesModule.load(),
+      // ActivitiesModule.load(),
     ]);
     console.log('in beforeRouteEnter');
 
@@ -719,13 +811,30 @@ export default class Subdomain extends Vue {
 
     this.load(subDomain);
 
+    this.filterX = this.newFilter();
+
+    console.log({ aaa: this.filterX });
+    this.refreshGrid({ append: false });
+
     next();
   }
 }
 </script>
 
 <style lang="scss">
-.filter-activities.v-list .v-input--checkbox:hover .v-label {font-weight:bold!important;color:#fff!important;}
+.not-found-message {
+  text-align: center;
+
+  strong {
+    display: block;
+    margin-bottom: 30px;
+  }
+}
+
+.filter-activities.v-list .v-input--checkbox:hover .v-label {
+  font-weight: bold !important;
+  color: #fff !important;
+}
 
 .t {
   max-width: 332px !important;
@@ -747,9 +856,6 @@ export default class Subdomain extends Vue {
 </style>
 
 <style lang="scss" scoped>
-
-
-
 .img-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -799,4 +905,43 @@ export default class Subdomain extends Vue {
 #subdomain.expand footer.v-footer {
   padding-left: 300px !important;
 }
+
+
+
+ .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
