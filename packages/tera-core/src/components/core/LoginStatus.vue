@@ -6,7 +6,7 @@
           <v-avatar size="36">
             <img :src="user.picture || require('@/assets/user.png')" alt="avatar">
           </v-avatar>
-          <span class="hidden-sm-and-down">&nbsp; {{ user.name }} &nbsp;</span>
+          <span class="hidden-sm-and-down">&nbsp; {{ name }} &nbsp;</span>
           <v-icon class="hidden-sm-and-down">expand_more</v-icon>
         </v-btn>
       </template>
@@ -64,6 +64,13 @@ export default class LoginStatus extends Vue {
   gotoProfile(){
     this.$router.push(`/profile`);
   }
-   
+  get name() {
+    const x = this.user.name.split(' ');
+    if (x.length) {
+      return x[0];
+    }
+
+    return this.user.name;
+  }
 }
 </script>

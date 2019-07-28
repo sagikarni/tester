@@ -5,36 +5,35 @@
         <v-card flat class="pa-0 mb-4">
           <preview :activity="activity"></preview>
 
-          <div class="nav-container">
-            <v-flex order-xs3 order-sm1 d-flex>
-              <div class="item item--1">
-                <span>Category</span>
-                <span>{{category}}</span>
-              </div>
-              <div class="item item--2">
-                <span>Sub Category</span>
-                <span>{{subCategory}}</span>
-              </div>
-              <div class="item item--3">
-                <span>Slides</span>
-                <span>{{slidesCount}}</span>
-              </div>
-            </v-flex>
-            <div v-if="$vuetify.breakpoint.mdAndUp" style="flex-grow: 1;order:2;"></div>
-            <v-flex order-xs1 order-sm3 d-flex>
-              <a @click.prevent="openPinActivity()" class="item item--4">
+          <div class="product-bar">
+            <ul>
+              <li>
+                <label>Category</label>
+                {{category}}
+              </li>
+              <li>
+                <label>Sub Category</label>
+                {{subCategory}}
+              </li>
+              <li>
+                <label>Slides</label>
+                {{slidesCount}}
+              </li>
+            </ul>
+            <div>
+              <a @click.prevent="openPinActivity()" >
                 <v-icon>favorite</v-icon>
                 <span>Pin</span>
               </a>
-              <a @click.prevent="shareDialog = true" class="item item--5">
+              <a @click.prevent="shareDialog = true">
                 <v-icon>print</v-icon>
                 <span>Print</span>
               </a>
-              <a @click.prevent="shareDialog = true" class="item item--6">
+              <a @click.prevent="shareDialog = true">
                 <v-icon>share</v-icon>
                 <span>Share</span>
               </a>
-            </v-flex>
+            </div>
           </div>
         </v-card>
 
@@ -274,41 +273,28 @@ export default class ActivityDetails extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.nav-container {
-  background-color: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  text-align: center;
 
-  .item {
-    flex: 1;
-    width: 100px;
+.product-bar {
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-gap:10px;
+  ul, ul li {list-style: none;margin:0;padding:0;}
 
-    > span:first-child {
-      color: #888;
-    }
-  }
-  a {
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  > ul { display:grid; grid-template-columns:1fr 1fr 1fr; text-align:center; li { padding:10px;label {display:block; color:#888;}}}
+  > div { display:grid; grid-template-columns:1fr 1fr 1fr; > a { padding:10px;display:flex;flex-direction:column;align-items:center; &:hover {background:rgba(0, 0, 0, 0.1);}}}
 
-  a:hover {
-    background: rgba(0, 0, 0, 0.1);
-  }
-  .item {
-    padding: 10px;
-    height: 72px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+}
+
+@media only screen and (min-width: 576px) {
+  .product-bar {
+    grid-template-columns: 1fr auto;
+    grid-gap:0;
+
+    > ul { text-align:center;display:flex;margin-right:auto;  li { margin-right:20px;display:flex;flex-direction:column; label {display:block; color:#888;}}}
+    > div { grid-template-columns:50px 50px 50px; }
   }
 }
+
 
 .img-grid {
   display: grid;
