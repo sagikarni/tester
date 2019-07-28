@@ -10,6 +10,7 @@ import * as fromDomain from './domain.graphql';
 import * as fromActivityType from './activity-type.graphql';
 import * as fromStrips from './strips.graphql';
 import * as fromBoard from './board.graphql';
+import * as fromPlan from './plan.graphql';
 
 schemaComposer.Query.addFields({
   ...fromUser.QUERIES,
@@ -21,6 +22,7 @@ schemaComposer.Query.addFields({
   ...fromActivityType.QUERIES,
   ...fromStrips.QUERIES,
   ...fromBoard.QUERIES,
+  ...fromPlan.QUERIES,
 });
 
 schemaComposer.Mutation.addFields({

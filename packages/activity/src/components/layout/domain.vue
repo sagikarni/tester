@@ -8,7 +8,7 @@
           <v-card
             class="pa-0 card"
             fill-height
-            :to="{ name: 'category', params: { category: feature.name.toLocaleLowerCase() } }"
+            :to="{ name: 'subdomain', params: { subdomain: feature.name.toLocaleLowerCase() } }"
           >
             <v-img
               width="100%"

@@ -1,14 +1,17 @@
 import dotenv from 'dotenv';
+import { resolve } from 'path';
 
-let path = '.env';
+let envPath = '.env';
 
 if (
   process.env.DEBUG_ENV &&
   process.env.DEBUG_ENV.length > 0 &&
   process.env.DEBUG_ENV.toLocaleLowerCase() !== 'development'
 ) {
-  path = `.${process.env.DEBUG_ENV}.env`;
+  envPath = `.${process.env.DEBUG_ENV}.env`;
 }
+
+const path = resolve(__dirname, envPath);
 
 console.log(`[dotenv] file path: ${path}`);
 

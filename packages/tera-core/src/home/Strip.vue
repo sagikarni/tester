@@ -52,6 +52,7 @@ export default class Strip extends Vue {
     slidesPerView: 'auto',
     spaceBetween: 6,
     speed: 500,
+    lazy: true,
     navigation: {
       nextEl: `.swiper-button-next-${this.unique}`,
       prevEl: `.swiper-button-prev-${this.unique}`,
@@ -109,5 +110,4 @@ export default class Strip extends Vue {
 .swiper-button.swiper-button-next.swiper-button-disabled {
   opacity: 0 !important;
 }
-
 </style>

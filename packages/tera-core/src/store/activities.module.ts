@@ -13,6 +13,7 @@ import {
   LOAD_ACTIVITIES,
   UPSERT_ACTIVITY,
   REMOVE_ACTIVITY,
+  FILTER_ACTIVITIES,
 } from '../graphql/activities';
 
 @Module({ dynamic: true, store, name: 'activities', namespaced: true })
@@ -25,8 +26,24 @@ export class Activities extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { activityMany } = await gqlHttp(LOAD_ACTIVITIES);
     return await Activity.insertOrUpdate({ data: activityMany });
+  }
+
+  @Action({ commit: 'LOAD_COMPLETE' })
+  public async loadByFilter({ filter, perPage, page }) {
+    const results = await gqlHttp(FILTER_ACTIVITIES, {
+      filter,
+      perPage,
+      page,
+    });
+
+    console.log({ results });
+    await Activity.insertOrUpdate({
+      data: results.activityPagination.items,
+    });
+    return results;
   }
 
   @Action({ commit: 'UPSERT_ACTIVITY' })

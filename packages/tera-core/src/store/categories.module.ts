@@ -36,6 +36,7 @@ export class Categories extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { categoryMany, subCategoryMany } = await gqlHttp(LOAD_CATEGORIES);
     await Category.insertOrUpdate({ data: categoryMany });
     await SubCategory.insertOrUpdate({ data: subCategoryMany });

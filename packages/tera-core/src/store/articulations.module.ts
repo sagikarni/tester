@@ -24,6 +24,7 @@ export class Articulations extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { articulationMany } = await gqlHttp(LOAD_ARTICULATIONS);
     return await Articulation.insertOrUpdate({ data: articulationMany });
   }

@@ -28,6 +28,7 @@ export class Boards extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { boardMany } = await gqlHttp(LOAD_BOARDS);
     return await Board.insertOrUpdate({ data: boardMany });
   }

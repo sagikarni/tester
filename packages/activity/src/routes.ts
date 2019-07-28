@@ -27,11 +27,11 @@ export default [
       import(/* webpackChunkName: "domain" */ './components/layout/domain.vue'),
   },
   {
-    path: ':domain/:category',
-    name: 'category',
+    path: ':domain/:subdomain',
+    name: 'subdomain',
     component: () =>
       import(
-        /* webpackChunkName: "category" */ './components/layout/category.vue'
+        /* webpackChunkName: "subdomain" */ './components/layout/subdomain.vue'
       ),
   },
   {

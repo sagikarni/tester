@@ -1,6 +1,17 @@
 <template>
   <v-navigation-drawer class="primary" dark app v-model="drawer" fixed temporary>
     <v-list two-line>
+      <v-list-tile class="tiler">
+        <v-list-tile-content>
+          <v-list-tile-title class="subheading" style="text-align:right;" @click="drawer = false">
+            <v-btn icon dark color="primary">
+              <v-icon dark>close</v-icon>
+            </v-btn>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-divider></v-divider>
+
       <template v-for="(item, index) in items">
         <v-list-tile :key="item.title" @click="goto(item.url)" class="tiler">
           <v-list-tile-content>
@@ -48,5 +59,7 @@ export default class Drawer extends Vue {
 </script>
 
 <style lang="scss">
-.tiler .v-list__tile__title { height:auto;}
+.tiler .v-list__tile__title {
+  height: auto;
+}
 </style>

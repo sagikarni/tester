@@ -8,6 +8,7 @@
     >
     <!-- gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3), rgba(0,0,0,.7)" -->
       <v-card-title class="fill-height">
+        <div v-if="free" style="background:gold;color:#000;position:absolute;top:10%;transform:translateY(-10%);font-weight:bold;display:inline-block;padding:4px 15px;">Free</div>
         <div class="preview-overlay" :class="`${domain}-border border-left`">
           <div class="caption" >
             <div style="font-size:13px;">{{type}}</div>
@@ -59,6 +60,10 @@ export default class ActivitiyPreview extends Vue {
 
   get url() {
     return `/${this.domain}/${dasherize(this.type)}/${this.activity._id}`;
+  }
+
+  get free() {
+    return this.activity.free;
   }
 }
 </script>

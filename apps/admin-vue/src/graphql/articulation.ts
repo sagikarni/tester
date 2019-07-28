@@ -69,6 +69,14 @@ export const UPSERT_ARTICULATION = gql`
           syllable
           isolate
           _id
+          media {
+            _id
+            name
+          }
+          audio {
+            _id
+            name
+          }
         }
         blend {
           text
@@ -76,6 +84,14 @@ export const UPSERT_ARTICULATION = gql`
           blend
           isolate
           _id
+          media {
+            _id
+            name
+          }
+          audio {
+            _id
+            name
+          }
         }
       }
     }

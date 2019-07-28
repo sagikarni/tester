@@ -25,6 +25,7 @@ export class Domains extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { domainMany, activityTypeMany } = await gqlHttp(LOAD_DOMAINS);
     await Domain.insertOrUpdate({ data: domainMany });
     await ActivityType.insertOrUpdate({ data: activityTypeMany });

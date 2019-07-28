@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="item in items" :key="item.name" :class="{ active: item === value }">
-        <span v-if="item.children" @click="open(item)">{{item.name}}</span>
-        <span v-else @click="select(item);currentOpen=null">{{item.name}}</span>
-        <transition name="fade">
-          <template v-if="currentOpen === item">
-            <ul>
-              <li
-                v-for="child in item.children"
-                :key="child.name"
-                :class="{ active: child === value }"
-              >
-                <span @click="select(child)">{{child.name}}</span>
-              </li>
-            </ul>
-          </template>
-        </transition>
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li v-for="item in items" :key="item.name" :class="{ active: item === value }">
+      <span v-if="item.children" @click="open(item)">{{item.name}}</span>
+      <span v-else @click="select(item);currentOpen=null">{{item.name}}</span>
+      <transition name="fade">
+        <template v-if="currentOpen === item">
+          <ul>
+            <li
+              v-for="child in item.children"
+              :key="child.name"
+              :class="{ active: child === value }"
+            >
+              <span @click="select(child)">{{child.name}}</span>
+            </li>
+          </ul>
+        </template>
+      </transition>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">

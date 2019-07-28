@@ -10,6 +10,7 @@ export const LOAD_CATEGORIES = gql`
     subCategoryMany {
       name
       _id
+      types
       category {
         _id
       }

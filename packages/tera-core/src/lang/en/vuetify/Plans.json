@@ -1,0 +1,46 @@
+{
+  "monthly": {
+    "Free": ["+ 200 free activities", "video & photo activities"],
+    "Free_Button": "Start",
+    "Personal": [
+      "Aceess all activities",
+      "Video & Photo activities",
+      "Personal Boards"
+    ],
+    "Personal_Button": "Buy",
+    "Business": [
+      "All Personal Features",
+      "Distribute licenses",
+      "Priority support"
+    ],
+    "Business_Button": "Buy",
+    "Enterprise": [
+      "All Business Features",
+      "Affect Content",
+      "Primier support"
+    ],
+    "Enterprise_Button": "Contact Us"
+  },
+  "yearly": {
+    "Free": ["+ 200 free activities", "video & photo activities"],
+    "Free_Button": "Start",
+    "Personal": [
+      "Aceess all activities",
+      "Video & Photo activities",
+      "Personal Boards"
+    ],
+    "Personal_Button": "Buy",
+    "Business": [
+      "All Personal Features",
+      "Distribute licenses",
+      "Priority support"
+    ],
+    "Business_Button": "Buy",
+    "Enterprise": [
+      "All Business Features",
+      "Affect Content",
+      "Primier support"
+    ],
+    "Enterprise_Button": "Contact Us"
+  }
+}

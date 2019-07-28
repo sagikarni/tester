@@ -21,6 +21,7 @@ export class Strips extends VuexModule {
 
   @Action({ commit: 'LOAD_COMPLETE' })
   public async load() {
+    if (this.loaded) return;
     const { stripsMany } = await gqlHttp(LOAD_STRIPS);
     return await Strip.insertOrUpdate({ data: stripsMany });
   }

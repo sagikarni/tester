@@ -4,14 +4,14 @@
       <span v-if="recommended">Recommended</span>
     </section>
     <header>
-      <h2>{{title}}</h2>
-      <hr>
+      <h2>{{name}}</h2>
+      <hr />
     </header>
     <section class="price">
       <span v-if="price">
-        <sup class="currency">{{price.currency}}</sup>
+        <sup class="currency">{{codes[price.currency]}}</sup>
         <span class="figure">{{price.figure}}</span>
-        <sup class="frequency">/{{frequency}}</sup>
+        <sup class="frequency">/month</sup>
         <div class="description">{{description}}</div>
       </span>
       <span v-else>
@@ -28,22 +28,52 @@
         </li>
       </ul>
     </section>
-    <v-btn :to="url" class="round" color="blue darken-4" dark :outline="method === 'Start'">{{method}}</v-btn>
+    <v-btn
+      v-if="!hasPackage"
+      :to="url"
+      class="round"
+      color="blue darken-4"
+      dark
+      :outline="method === 'Start'"
+    >{{method}}</v-btn>
+    <div v-else>Already signed up</div>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue, Prop } from 'vue-property-decorator';
+import { AuthModule } from 'tera-core/src/store/auth-tera.module';
 
 @Component({})
 export default class Package extends Vue {
   @Prop() package;
 
+  codes = { usd: '$' };
+
+  get hasPackage() {
+    if (!AuthModule.user) return false;
+
+    const user = AuthModule.user === null ? -1 : (AuthModule.user.plan || 0) ;
+
+    if (this.level <= user) {
+      return true;
+    }
+
+    return false; // !!AuthModule.user;
+  }
+
+  get id() {
+    return this.package._id;
+  }
+
+  get level() {
+    return this.package.level;
+  }
   get recommended() {
     return this.package.recommended;
   }
-  get title() {
-    return this.package.title;
+  get name() {
+    return this.package.name;
   }
 
   get price() {
@@ -54,20 +84,22 @@ export default class Package extends Vue {
     return this.package.description;
   }
 
-  get features() {
-    return this.package.features;
-  }
-
   get method() {
-    return this.package.method;
+    return this.$t(`Vuetify.Plans.${this.category}.${this.name}_Button`);
   }
 
-  get frequency() {
-    return this.package.frequency;
+  get category() {
+    return this.package.category;
   }
 
   get url() {
-    return this.package.url;
+    return (
+      this.package.defaultUrl || `/pricing/${this.id}`
+    );
+  }
+
+  get features() {
+    return this.$t(`Vuetify.Plans.${this.category}.${this.name}`);
   }
 }
 </script>
@@ -148,8 +180,8 @@ export default class Package extends Vue {
     }
 
     .message {
-      margin-top:30px;
-      font-size:18px;
+      margin-top: 30px;
+      font-size: 18px;
     }
   }
 
@@ -175,6 +207,8 @@ export default class Package extends Vue {
     }
   }
 
-  .round { border-radius: 5px;}
+  .round {
+    border-radius: 5px;
+  }
 }
 </style>

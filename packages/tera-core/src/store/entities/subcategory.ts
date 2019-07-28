@@ -5,6 +5,7 @@ export interface SubCategoryModel {
   _id?: string;
   name: string;
   category: CategoryModel;
+  types: [];
 }
 
 export class SubCategory extends Model {
@@ -18,6 +19,7 @@ export class SubCategory extends Model {
       name: this.attr(''),
       category: this.belongsTo(Category, 'category_id'),
       category_id: this.attr(''),
+      types: this.attr(null),
     };
   }
 }

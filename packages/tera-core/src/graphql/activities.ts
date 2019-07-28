@@ -93,3 +93,38 @@ export const REMOVE_ACTIVITY = gql`
     }
   }
 `;
+
+export const FILTER_ACTIVITIES = gql`
+  query($filter: FilterFindManyActivityInput!, $perPage: Int!, $page: Int!) {
+    activityPagination(filter: $filter, perPage: $perPage, page: $page) {
+      items {
+        _id
+        name
+        type
+        description
+        notes
+        orientation
+        mediaType
+        category
+        subCategory
+        status
+        audience
+        free
+        printable
+        editorial
+        isolate
+        updated_at
+        created_at
+      }
+      count
+      pageInfo {
+        currentPage
+        perPage
+        itemCount
+        pageCount
+        hasPreviousPage
+        hasNextPage
+      }
+    }
+  }
+`;

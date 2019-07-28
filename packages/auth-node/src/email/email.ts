@@ -1,5 +1,5 @@
 import * as mail from '@sendgrid/mail';
-import { resolve } from 'path';
+import * as path from 'path';
 import { load, compile, app, emailDefaultSender } from './template';
 
 const emailContactMail = process.env.EMAIL_CONTACT_MAIL;
@@ -8,7 +8,7 @@ const urlChangePassword = process.env.URL_CHANGE_PASSWORD;
 
 mail.setApiKey(process.env.EMAIL_SENDGRID_KEY);
 
-load(resolve(__dirname, process.env.EMAIL_TEMPLATES_PATH));
+load(path.resolve(__dirname, process.env.EMAIL_TEMPLATES_PATH));
 
 export function sendWelcome({ emailTo, fullname, password }) {
   const msg = {
