@@ -4,7 +4,16 @@ import * as path from 'path';
 import * as uuid from 'uuid';
 import * as fs from 'fs';
 
-const { combine, timestamp, label, printf, prettyPrint, splat, json } = format;
+const {
+  combine,
+  timestamp,
+  label,
+  printf,
+  prettyPrint,
+  splat,
+  json,
+  simple,
+} = format;
 
 const logDirectory = path.resolve(__dirname, './logs');
 
@@ -20,8 +29,12 @@ if (!fs.existsSync(logDirectory)) {
 });
 
 const id = uuid.v4();
-const errorFilename = path.join(logDirectory, 'errors', `error-${id}.log`);
-const combinedFilename = path.join(
+export const errorFilename = path.join(
+  logDirectory,
+  'errors',
+  `error-${id}.log`
+);
+export const combinedFilename = path.join(
   logDirectory,
   'combined',
   `combined-${id}.log`
@@ -29,7 +42,7 @@ const combinedFilename = path.join(
 
 const logger: any = createLogger({
   level: 'info',
-  format: combine(timestamp(), prettyPrint()),
+  format: combine(splat(), simple(), timestamp(), prettyPrint()),
 
   transports: [
     new transports.Console({

@@ -2,6 +2,16 @@ import cors from 'cors';
 import { Router } from 'express';
 import { api } from './api';
 import { auth } from './auth';
+import AES from 'crypto-js/aes';
+
+import * as jwt from 'jsonwebtoken';
+import { AppHttpError } from 'express-zone';
+import { Purchase } from 'cognishine/src/mongodb/purchases';
+import { User } from 'cognishine/src/mongodb/user';
+import { Plan } from 'cognishine/src/mongodb/plan';
+import { generateToken } from 'cognishine/src/graphql/schema/token';
+const TestTemplate = require('html-loader!./sec.html');
+
 // import paypal from 'paypal-rest-sdk';
 
 const router = Router();
@@ -11,88 +21,67 @@ router.use('/access', auth);
 
 const routerx = Router();
 
-// routerx.get('/', (req, res, next) => {
-//   console.log('in pay!!');
+const {
+  ACCESS_TOKEN_SECRET: accessTokenSecrect,
+  ACCESS_TOKEN_EXPIRES_IN: expiresIn,
+} = process.env;
 
-//   const payments = paypal.v1.payments;
-
-//   let env;
-//   // if (process.env.NODE_ENV === 'production') {
-//   //   // Live Account details
-//   //   env = new paypal.core.LiveEnvironment('Your Live Client ID', 'Your Live Client Secret');
-//   // } else {
-//   env = new paypal.core.SandboxEnvironment(
-//     'AeZ74kItyHCZSnz9LVZBV_692LFmHRz6r37-eHDuYrRqVVX2Zfl-qWvj_U2EJUR-D0voSb97aM7Alv9P',
-//     'EJ777S3uuUWCHY0xSOv2DHpRorof3VClidLnQY7TOWJX5K0Age_x24h5qOWW4_yfxIkI9HRofMxNbpJw'
-//   );
-//   // }
-
-//   const packages = [
-//     {
-//       amount: {
-//         currency: 'USD',
-//         total: 10.0,
-//       },
-//       description: 'This is payment description.',
-//       item_list: {
-//         items: [
-//           {
-//             quantity: '1',
-//             name: 'ticket',
-//             price: 10.0,
-//             currency: 'USD',
-//           },
-//         ],
-//       },
-//     },
-//   ];
-
-//   const cpackage = packages[0];
-//   let client = new paypal.core.PayPalHttpClient(env);
-
-//   let payment = {
-//     intent: 'sale',
-//     transactions: [cpackage],
-//     redirect_urls: {
-//       cancel_url: 'http://localhost:3000/pay/cancel',
-//       return_url: 'http://localhost:3000/pay/return',
-//     },
-//     payer: {
-//       payment_method: 'paypal',
-//     },
-//   };
-
-//   let request = new payments.PaymentCreateRequest();
-//   request.requestBody(payment);
-
-//   client
-//     .execute(request)
-//     .then((response) => {
-//       console.log(response.statusCode);
-//       console.log(response.result);
-
-//       var id = response.result.id;
-//       var links = response.result.links;
-//       var counter = links.length;
-//       while (counter--) {
-//         if (links[counter].method === 'REDIRECT') {
-//           return res.redirect(links[counter].href);
-//         }
-//       }
-//     })
-//     .catch((error) => {
-//       console.error(error.statusCode);
-//       console.error(error.message);
-//     });
-
-//   // res.json({ work: true });
-// });
-
-routerx.all('/:some', (req, res, next) => {
+routerx.all('/:some', async (req, res, next) => {
+  const { t } = req.body;
   debugger;
-  console.log('hhhh');
-  res.json({ ok: true });
+
+  const decoded = jwt.verify(t, accessTokenSecrect);
+  if (!decoded) {
+    throw new AppHttpError(401);
+  }
+  if (decoded.grant !== 'purchase') {
+    throw new AppHttpError(401);
+  }
+
+  let user = await User.findById(decoded._id).populate('role');
+
+  let userPurchase = await Purchase.findOne({ user });
+  if (!userPurchase) {
+    throw new AppHttpError(401);
+  }
+
+  let purchasePlan = userPurchase.purchases.find(
+    (p) => p._id.toString() === decoded.purchasePlan && p.status === 'NEW'
+  );
   debugger;
+  purchasePlan.status = 'ACTIVE';
+  purchasePlan._raw = JSON.stringify({
+    body: req.body,
+    params: req.params,
+    headers: req.headers,
+  });
+
+  const planId = purchasePlan.plan.toString();
+  const plan = await Plan.findById(planId);
+  debugger;
+
+  user.role = plan.role;
+  user.save();
+  debugger;
+
+  await userPurchase.save();
+
+  const token = await generateToken({
+    _id: user._id,
+    hsh: user.password,
+    grant: 'access',
+  });
+
+  const secretkey = 'secretkey';
+
+  const tokenEncrypt = AES.encrypt(token, secretkey);
+  const userEncrypt = AES.encrypt(JSON.stringify(user), secretkey);
+
+  let html = TestTemplate.replace('__T__', tokenEncrypt.toString());
+  html = html.replace('__U__', userEncrypt.toString());
+  html = html.replace('__S__', secretkey);
+
+  res.send(html);
 });
 
 router.use('/pay', routerx);

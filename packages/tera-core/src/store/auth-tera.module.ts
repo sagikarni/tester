@@ -17,6 +17,7 @@ import {
   RECOVER_ACCOUNT,
   VERIFY_ACCOUNT,
   CHANGE_PASSWORD,
+  NEW_PURCHASE,
 } from '../graphql/login';
 
 import { StorageService, StorageTypes } from '../storage';
@@ -44,6 +45,15 @@ class Auth extends VuexModule implements IAuthState {
   public name = '';
   public avatar = '';
   public roles = [];
+
+  @Action //({ commit: 'LOGIN_SUCCESS' })
+  public async newPurchase({ plan }) {
+    const data = await gqlHttp(NEW_PURCHASE, { plan }).catch((e) => {
+      debugger;
+    });
+    debugger;
+    return data.newPurchase.token;
+  }
 
   @Action //({ commit: 'LOGIN_SUCCESS' })
   public async login({ email, password }) {

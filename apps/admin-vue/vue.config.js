@@ -24,6 +24,11 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/pay': {
+        target: apiUrl,
+        ws: true,
+        changeOrigin: true,
+      },
       '/storage': {
         target: apiUrl,
         ws: true,

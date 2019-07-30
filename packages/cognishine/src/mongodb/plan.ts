@@ -6,6 +6,7 @@ export interface IPlan {
     currency: string;
     figure: number;
   };
+  active: boolean;
   category: string;
   recommended: boolean;
   defaultUrl: string;
@@ -15,6 +16,7 @@ export interface IPlan {
     max?: number;
     min?: number;
   };
+  role: any;
 }
 
 export interface IMongoosePlan extends IPlan, Document {}
@@ -27,8 +29,10 @@ const PlanSchema = new Schema({
   },
   category: { type: String, enum: ['monthly', 'yearly'] },
   recommended: { type: Boolean },
+  active: { type: Boolean, default: true },
   defaultUrl: { type: String },
   level: { type: Number },
+  role: { type: Schema.Types.ObjectId, ref: 'UserRole' },
   licenses: {
     value: { type: Number },
     max: { type: Number },

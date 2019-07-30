@@ -63,3 +63,11 @@ export const CHANGE_PASSWORD = gql`
     }
   }
 `;
+
+export const NEW_PURCHASE = gql`
+  query newPurchase($plan: String!) {
+    newPurchase(plan: $plan) {
+      token
+    }
+  }
+`;

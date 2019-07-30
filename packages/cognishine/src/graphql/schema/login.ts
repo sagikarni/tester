@@ -1,5 +1,4 @@
 import { AppHttpError, async } from 'express-zone';
-import * as jwt from 'jsonwebtoken';
 import { User } from '../../mongodb';
 
 import {
@@ -10,10 +9,7 @@ import {
   sendPasswordChanged,
 } from '../../../../auth-node/src/email/index';
 
-const {
-  ACCESS_TOKEN_SECRET: accessTokenSecrect,
-  ACCESS_TOKEN_EXPIRES_IN: expiresIn,
-} = process.env;
+import { generateToken } from './token';
 
 export const login = async ({ email, password }) => {
   const user = await User.findOne({ email }).populate('role');
@@ -25,7 +21,6 @@ export const login = async ({ email, password }) => {
   if (!isPasswordValid) {
     throw new AppHttpError(400, 'INVALID_PASSWORD');
   }
-  console.log({ accessTokenSecrect });
 
   const token = await generateToken({
     _id: user._id,
@@ -121,10 +116,4 @@ export const changePassword = async ({ password, user }) => {
   });
 
   return { token, user };
-};
-
-export const generateToken = async (payload) => {
-  return jwt.sign(payload, accessTokenSecrect, {
-    expiresIn,
-  });
 };

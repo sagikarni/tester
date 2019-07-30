@@ -27,8 +27,8 @@ const morganFormat =
 
 // app.use(morgan(morganFormat, { stream: morganStreamWriter }));
 
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(compression());
 app.use(methodOverride());
