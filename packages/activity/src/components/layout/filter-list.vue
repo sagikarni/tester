@@ -37,7 +37,7 @@ export default class FilterList extends Vue {
 
   open(item) {
     if (this.currentOpen === item) {
-      this.currentOpen = null;
+      // this.currentOpen = null;
     } else {
       this.currentOpen = item;
       if (item.children) {
@@ -57,12 +57,12 @@ li {
   margin: 10px 0;
   &:hover > span {
     color: #fff;
-    font-weight: bold;
+    font-weight: 500;
   }
 
   &.active {
     color: #fff;
-    font-weight: bold;
+    font-weight: 700;
   }
 }
 
@@ -76,6 +76,8 @@ ul {
     }
     ul {
       padding-left: 10px;
+      border-left: 1px solid #fff;
+      margin-left: 10px;
     }
   }
 }

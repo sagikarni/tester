@@ -6,6 +6,7 @@
     >
       <v-btn dark color="primary" @click="toggleFilter">
         <v-icon dark>tune</v-icon>Filters
+        <span style="margin-left:3px;" v-if="filterCount > 0">({{filterCount}})</span>
       </v-btn>
       <h2
         class="display-1 black--text"
@@ -14,7 +15,7 @@
       >
         <span>{{subDomain.name}}</span>
       </h2>
-      <div style="display:flex;" class="col" v-if="!$vuetify.breakpoint.xsOnly">
+      <div style="display:flex;align-self:stretch;" class="col" v-if="!$vuetify.breakpoint.xsOnly">
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
             <v-btn small flat v-on="on" dark color="black">
@@ -30,18 +31,21 @@
       </div>
     </section>
 
+    <!-- POPUP-->
     <v-navigation-drawer dark v-model="idrawerX" temporary left fixed>
-      <v-list class="pa-3 filter-activities">
-        <div
-          style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
-        >
-          <v-btn flat dark color="white" @click="() => { resetFilter(); idrawerX =!idrawerX }">Reset</v-btn>
-          <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Done</v-btn>
+      <v-list class="px-3 py-0 filter-activities">
+        <div style="position:sticky;height:48px;top:0;background:#424242;">
+          <div style="display:flex;justify-content:center;">
+            <v-btn
+              flat
+              dark
+              color="white"
+              @click="() => { resetFilter(); idrawerX =!idrawerX }"
+            >Reset</v-btn>
+            <v-btn flat dark color="white" @click="idrawerX =!idrawerX">Done</v-btn>
+          </div>
+          <v-divider></v-divider>
         </div>
-
-        <v-divider></v-divider>
-
-        <h3 class="mb-2">Category</h3>
 
         <filter-list :items="categories" v-model="filterX.category" style="font-size:16px;"></filter-list>
 
@@ -115,17 +119,20 @@
     </v-navigation-drawer>
 
     <v-navigation-drawer stateless app clipped left fixed dark v-model="expand">
-      <v-list class="pa-3 filter-activities">
-        <div
-          style="display:flex;justify-content:center;position:sticky;height:48px;top:0;background:#424242;"
-        >
-          <v-btn flat dark color="white" @click="() => { resetFilter(); idrawer =!idrawer }">Reset</v-btn>
-          <v-btn flat dark color="white" @click="idrawer =!idrawer">Done</v-btn>
+       <v-list class="px-3 py-0 filter-activities">
+        <div style="position:sticky;height:48px;top:0;background:#424242;">
+          <div style="display:flex;justify-content:center;">
+            <v-btn
+              flat
+              dark
+              color="white"
+              @click="() => { resetFilter(); }"
+            >Reset</v-btn>
+            <v-btn flat dark color="white" @click="toggleFilter">Done</v-btn>
+          </div>
+          <v-divider></v-divider>
         </div>
 
-        <v-divider></v-divider>
-
-        <h3 class="mb-2">Category</h3>
 
         <filter-list :items="categories" v-model="filterX.category" style="font-size:16px;"></filter-list>
 
@@ -193,6 +200,7 @@
     </v-navigation-drawer>
 
     <v-content class="mb-4" style="min-height:700px;">
+
       <div v-if="act && act.length > 0">
         <div class="img-grid">
           <activity-preview :key="feature._id" :activity="feature" v-for="(feature, i) in act"></activity-preview>
@@ -202,7 +210,10 @@
           :loading="loading4"
           :disabled="loading4"
           @click="loadMore"
-          style="margin:20px auto;display:block;"
+          large
+          color="primary"
+          dark
+          style="margin:20px auto;display:block;padding-left:50px;padding-right:50px;"
           v-if="pagination.hasNextPage"
         >
           Load More
@@ -275,8 +286,10 @@ const removeEmpty = (obj) => {
 export default class Subdomain extends Vue {
   expand = this.$vuetify.breakpoint.mdAndUp;
 
+  filterCount = 0;
   resetFilter() {
     this.filterX = this.newFilter();
+    this.filterCount = 0;
   }
 
   @Watch('$vuetify.breakpoint.name') onChange(o, n) {
@@ -673,8 +686,8 @@ export default class Subdomain extends Vue {
       );
   }
 
-  loader= null;
-   loading4= false;
+  loader = null;
+  loading4 = false;
 
   async loadMore() {
     this.loader = 'loading4';
@@ -686,6 +699,9 @@ export default class Subdomain extends Vue {
 
   async refreshGrid({ append }) {
     console.log('in refreshGrid');
+
+    this.filterCount = 0;
+
     let filter = {
       type: this.subDomain._id,
     } as any;
@@ -693,30 +709,36 @@ export default class Subdomain extends Vue {
     if (this.filterX.category) {
       if ((this.filterX.category as any).type === 1) {
         filter = { ...filter, category: this.filterX.category.value };
+        this.filterCount = this.filterCount + 1;
       }
       if ((this.filterX.category as any).type === 2) {
         filter = { ...filter, subCategory: this.filterX.category.value };
+        this.filterCount = this.filterCount + 1;
       }
     }
 
     if (this.filterX.printable) {
       console.log({ aaa: this.filterX.printable });
       filter = { ...filter, printable: this.filterX.printable };
+      this.filterCount = this.filterCount + 1;
     }
 
     if (this.filterX.isolate) {
       console.log({ aaa: this.filterX.isolate });
       filter = { ...filter, isolate: this.filterX.isolate };
+      this.filterCount = this.filterCount + 1;
     }
 
     if (this.filterX.audience) {
       console.log({ l: this.filterX.audience });
       filter = { ...filter, audience: this.filterX.audience };
+      this.filterCount = this.filterCount + 1;
     }
 
     if (this.filterX.mediaType) {
       console.log({ l: this.filterX.mediaType });
       filter = { ...filter, mediaType: this.filterX.mediaType };
+      this.filterCount = this.filterCount + 1;
     }
 
     const x = await ActivitiesModule.loadByFilter({
@@ -731,46 +753,7 @@ export default class Subdomain extends Vue {
     this.pagination.page = x.activityPagination.pageInfo.currentPage;
     console.log({ x });
 
-    // console.log('in refreshGrid');
-    // let q = ActivitiesModule.activity
-    //   .query()
-    //   .with(['type.domain', 'category', 'subCategory.category'])
-    //   .where('type_id', this.subDomain._id);
-
-    // console.log({ before: q.count() });
-
-    // if (this.filterX.category) {
-    //   if ((this.filterX.category as any).type === 1) {
-    //     q = q.where('category_id', this.filterX.category.value);
-    //   }
-    //   if ((this.filterX.category as any).type === 2) {
-    //     q = q.where('subCategory_id', this.filterX.category.value);
-    //   }
-    // }
-
-    // console.log({ after: q.count() });
-
-    // this.page.limit = this.page.limit + 2;
-
-    // this.page.hasNextPage = q.count() > this.page.limit;
-
-    // this.act = q.limit(this.page.limit).get();
-
-    // if (!this.page.hasNextPage) {
-    //   console.log('call to api');
-
-    //   // const x = await ActivitiesModule.loadByFilter({
-    //   //   filter: { type: this.subDomain._id },
-    //   //   perPage: this.pagination.perPage,
-    //   //   page: this.pagination.page + 1,
-    //   // });
-
-    //   //  this.pagination.count = x.activityPagination.count;
-    //   //  this.pagination.hasNextPage = x.activityPagination.pageInfo.hasNextPage;
-    //   //  this.pagination.page = x.activityPagination.pageInfo.currentPage;
-
-    //   //  this.refreshGrid();
-    // }
+    this.scrollToTop();
   }
 
   public async beforeRouteEnter(to, from, next) {
@@ -832,7 +815,7 @@ export default class Subdomain extends Vue {
 }
 
 .filter-activities.v-list .v-input--checkbox:hover .v-label {
-  font-weight: bold !important;
+  font-weight: 500 !important;
   color: #fff !important;
 }
 
@@ -906,42 +889,40 @@ export default class Subdomain extends Vue {
   padding-left: 300px !important;
 }
 
-
-
- .custom-loader {
-    animation: loader 1s infinite;
-    display: flex;
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
   }
-  @-moz-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
-  @-webkit-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
   }
-  @-o-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
-  @keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
